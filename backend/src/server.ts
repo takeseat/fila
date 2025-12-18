@@ -15,11 +15,13 @@ import {
 import customersRoutes from './routes/customers.routes';
 import restaurantRoutes from './routes/restaurants.routes';
 
-const app = express();
+export const app = express();
 const httpServer = createServer(app);
 
-// Initialize WebSocket
-initializeWebSocket(httpServer);
+// Initialize WebSocket (only in non-Lambda environment)
+if (process.env.NODE_ENV !== 'production') {
+    initializeWebSocket(httpServer);
+}
 
 // Middleware
 app.use(cors({ origin: env.CORS_ORIGIN }));
@@ -44,12 +46,14 @@ app.use('/reports', reportsRouter);
 // Error handler (must be last)
 app.use(errorHandler);
 
-// Start server
-const PORT = parseInt(env.PORT);
-httpServer.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📚 API Documentation: http://localhost:${PORT}/api-docs`);
-    console.log(`🔌 WebSocket server ready`);
-});
+// Start server (only in development/non-Lambda)
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = parseInt(env.PORT);
+    httpServer.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+        console.log(`📚 API Documentation: http://localhost:${PORT}/api-docs`);
+        console.log(`🔌 WebSocket server ready`);
+    });
+}
 
 export default app;

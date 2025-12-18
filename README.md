@@ -9,6 +9,33 @@ Este é um sistema completo de gestão de filas para restaurantes, incluindo:
 - **Fila de Espera**: Gerenciamento em tempo real com WebSocket
 - **Relatórios**: Métricas operacionais e analytics
 
+## ☁️ Infraestrutura AWS
+
+O projeto está configurado para deploy serverless na AWS:
+
+### Arquitetura
+- **Frontend**: S3 + CloudFront → `https://takeseat.me`
+- **Backend**: Lambda + API Gateway → `https://api.takeseat.me`
+- **Database**: Aurora Serverless v2 (MySQL) + RDS Proxy
+- **CI/CD**: GitHub Actions com OIDC (sem access keys)
+
+### Custos Estimados
+- **MVP**: ~$90-120/mês
+- Aurora Serverless v2: $40-60/mês
+- RDS Proxy: $10/mês
+- NAT Gateway: $32/mês
+- Lambda + S3 + CloudFront: $5-10/mês
+
+### Deploy
+Veja instruções completas em [infra/README.md](./infra/README.md)
+
+```bash
+cd infra/terraform
+terraform init
+terraform apply
+```
+
+
 ## 📋 Pré-requisitos
 
 - **Node.js** 18+ e npm
@@ -21,7 +48,7 @@ Este é um sistema completo de gestão de filas para restaurantes, incluindo:
 - Node.js + TypeScript
 - Express.js
 - Prisma ORM
-- MySQL
+- MySQL (Aurora Serverless v2)
 - JWT (autenticação)
 - Socket.io (WebSocket)
 - Zod (validação)
@@ -36,6 +63,17 @@ Este é um sistema completo de gestão de filas para restaurantes, incluindo:
 - Axios
 - Socket.io Client
 - Recharts
+
+### AWS Infrastructure
+- Lambda (Node.js 20.x)
+- API Gateway HTTP API
+- Aurora Serverless v2 (MySQL)
+- RDS Proxy
+- S3 + CloudFront
+- Route53 + ACM
+- Secrets Manager
+- VPC + NAT Gateway
+
 
 ## 📦 Estrutura do Projeto
 
