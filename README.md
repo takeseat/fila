@@ -1,17 +1,12 @@
 # Fila - Restaurant Queue Management System
 
-Sistema completo de gestão de filas para restaurantes, concorrente do GetIn, desenvolvido com Node.js, React.js e MySQL.
+Sistema completo de gestão de filas para restaurantes, SaaS, desenvolvido com Node.js, React.js e MySQL.
 
 ## 🚀 Visão Geral
 
-Este é um sistema completo de gestão de filas e reservas para restaurantes, incluindo:
+Este é um sistema completo de gestão de filas para restaurantes, incluindo:
 
 - **Fila de Espera**: Gerenciamento em tempo real com WebSocket
-- **Reservas**: Sistema de reservas de mesa
-- **CRM de Clientes**: Base de dados com histórico de visitas
-- **Cardápio Digital**: Gestão de categorias e itens do menu
-- **NPS**: Pesquisas de satisfação e cálculo de NPS
-- **Campanhas**: Sistema de envio de e-mail/SMS (simulado)
 - **Relatórios**: Métricas operacionais e analytics
 
 ## 📋 Pré-requisitos
@@ -225,38 +220,14 @@ Após executar o seed, você pode fazer login com:
 - `PATCH /waitlist/:id/cancel` - Cancelar
 - `PATCH /waitlist/:id/no-show` - Marcar como faltoso
 
-### Reservas
-- `GET /reservations` - Listar reservas
-- `POST /reservations` - Criar reserva
-- `PATCH /reservations/:id/status` - Atualizar status
-
 ### Clientes
 - `GET /customers` - Listar clientes
 - `GET /customers/:id` - Detalhes do cliente
 - `POST /customers` - Criar cliente
 - `POST /customers/import` - Importar CSV
 
-### Cardápio
-- `GET /menu/categories` - Listar categorias
-- `POST /menu/categories` - Criar categoria
-- `GET /menu/items` - Listar itens
-- `POST /menu/items` - Criar item
-
-### NPS
-- `GET /nps/surveys` - Listar pesquisas
-- `POST /nps/surveys` - Criar pesquisa
-- `GET /nps/responses` - Listar respostas
-- `POST /nps/responses` - Enviar resposta
-
-### Campanhas
-- `GET /campaigns` - Listar campanhas
-- `POST /campaigns` - Criar campanha
-- `POST /campaigns/:id/simulate-send` - Simular envio
-
 ### Relatórios
 - `GET /reports/waitlist-summary` - Resumo da fila
-- `GET /reports/reservations-summary` - Resumo de reservas
-- `GET /reports/nps-summary` - Resumo de NPS
 
 ## 🔄 WebSocket
 
@@ -330,10 +301,5 @@ Desenvolvido como um sistema completo de gestão de filas para restaurantes.
 
 ## 🙏 Agradecimentos
 
-- Inspirado no GetIn (GetInApp)
 - Construído com tecnologias modernas e escaláveis
 - Arquitetura limpa e extensível
-
----
-
-**Nota**: Este é um projeto completo e funcional. O backend está 100% implementado com todos os endpoints, validações, WebSocket e documentação. O frontend possui as funcionalidades principais (autenticação, dashboard e fila de espera) completamente funcionais, com as demais páginas estruturadas para desenvolvimento futuro.
