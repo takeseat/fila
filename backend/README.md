@@ -6,12 +6,9 @@ Backend API for the restaurant queue management system built with Node.js, TypeS
 
 - 🔐 **Authentication**: JWT-based authentication with access and refresh tokens
 - 📋 **Waitlist Management**: Real-time queue management with WebSocket updates
-- 📅 **Reservations**: Table reservation system with status tracking
-- 👥 **Customer CRM**: Customer database with visit history and NPS tracking
-- 🍽️ **Digital Menu**: Menu categories and items management
-- 📊 **NPS Surveys**: Net Promoter Score collection and calculation
-- 📧 **Campaigns**: Mock email/SMS campaign system
+- 👥 **Customer Management**: Customer database with visit history
 - 📈 **Reports**: Operational analytics and metrics
+- ⚙️ **Queue Alerts**: Configurable time-based alerts for waiting and called customers
 
 ## Prerequisites
 
@@ -69,7 +66,7 @@ npm run seed
 This will create:
 - A sample restaurant
 - An admin user (email: `admin@restaurantedemo.com.br`, password: `admin123`)
-- Sample customers, waitlist entries, reservations, menu items, and NPS responses
+- Sample customers and waitlist entries
 
 ### 6. Start Development Server
 
@@ -136,11 +133,7 @@ backend/
 - `PATCH /waitlist/:id/seat` - Mark as seated
 - `PATCH /waitlist/:id/cancel` - Cancel entry
 - `PATCH /waitlist/:id/no-show` - Mark as no-show
-
-### Reservations
-- `GET /reservations` - List reservations (filter by date)
-- `POST /reservations` - Create reservation
-- `PATCH /reservations/:id/status` - Update status
+- `GET /queues/:id/metrics` - Get queue metrics (average wait time)
 
 ### Customers
 - `GET /customers` - List customers (with stats)
@@ -148,32 +141,12 @@ backend/
 - `POST /customers` - Create customer
 - `POST /customers/import` - Import customers from CSV
 
-### Menu
-- `GET /menu/categories` - List categories
-- `POST /menu/categories` - Create category
-- `PATCH /menu/categories/:id` - Update category
-- `DELETE /menu/categories/:id` - Delete category
-- `GET /menu/items` - List items
-- `POST /menu/items` - Create item
-- `PATCH /menu/items/:id` - Update item
-- `DELETE /menu/items/:id` - Delete item
-
-### NPS
-- `GET /nps/surveys` - List surveys
-- `POST /nps/surveys` - Create survey
-- `PATCH /nps/surveys/:id` - Update survey
-- `GET /nps/responses` - List responses
-- `POST /nps/responses` - Submit response
-
-### Campaigns
-- `GET /campaigns` - List campaigns
-- `POST /campaigns` - Create campaign
-- `POST /campaigns/:id/simulate-send` - Simulate sending
+### Restaurant Settings
+- `GET /restaurants/settings` - Get restaurant configuration
+- `PATCH /restaurants/settings` - Update restaurant settings (queue alerts, average wait time)
 
 ### Reports
-- `GET /reports/waitlist-summary` - Waitlist metrics
-- `GET /reports/reservations-summary` - Reservations analytics
-- `GET /reports/nps-summary` - NPS metrics
+- `GET /reports/waitlist-summary` - Waitlist metrics and analytics
 
 ## WebSocket Events
 
@@ -194,14 +167,10 @@ Events:
 See `prisma/schema.prisma` for the complete database schema.
 
 Key entities:
-- `Restaurant` - Restaurant information
+- `Restaurant` - Restaurant information with queue configuration
 - `User` - System users (admin, manager, hostess)
-- `Customer` - Customer database
-- `WaitlistEntry` - Queue entries
-- `Reservation` - Table reservations
-- `MenuCategory` & `MenuItem` - Digital menu
-- `NpsSurvey` & `NpsResponse` - NPS system
-- `Campaign` & `CampaignLog` - Marketing campaigns
+- `Customer` - Customer database with international phone support
+- `WaitlistEntry` - Queue entries with real-time status tracking
 
 ## Development
 

@@ -6,13 +6,10 @@ Frontend web application for the restaurant queue management system built with R
 
 - 🔐 **Authentication**: Login and registration with JWT tokens
 - 📊 **Dashboard**: Real-time metrics and analytics
-- ⏱️ **Waitlist Management**: Real-time queue with WebSocket updates
-- 📅 **Reservations**: Table reservation system (in development)
-- 👥 **Customer CRM**: Customer database and history (in development)
-- 🍽️ **Digital Menu**: Menu management (in development)
-- ⭐ **NPS**: Customer satisfaction surveys (in development)
-- 📧 **Campaigns**: Marketing campaigns (in development)
-- 📈 **Reports**: Operational analytics (in development)
+- ⏱️ **Waitlist Management**: Real-time queue with WebSocket updates and dynamic ETA
+- 👥 **Customer Management**: Customer database with international phone support
+- ⚙️ **Settings**: Restaurant configuration with queue alerts
+- 📈 **Reports**: Operational analytics
 
 ## Prerequisites
 
@@ -108,19 +105,21 @@ frontend/
 - Protected routes with authentication guards
 
 ### Dashboard
-- Real-time metrics cards (waitlist count, reservations, avg wait time)
+- Real-time metrics cards (waitlist count, average wait time)
 - Hourly volume chart
-- Quick overview of restaurant operations
+- Quick overview of restaurant queue operations
 
 ### Waitlist Management
 - Real-time list of customers in queue
-- Add new customers to waitlist
+- Add new customers to waitlist with international phone support
+- Dynamic ETA calculation with progress indicators
 - Call next customer
 - Mark as seated
 - Cancel entry
 - Mark as no-show
 - WebSocket real-time updates
 - Status badges and action buttons
+- Time-based visual alerts (configurable)
 
 ### Layout
 - Responsive sidebar navigation
@@ -150,17 +149,15 @@ WebSocket connection is established on login using Socket.io. The waitlist page 
 - **Context API**: Authentication state (user, restaurant, tokens)
 - **Local State**: Component-specific state (forms, modals)
 
-## Next Steps
+## Features in Development
 
-The following pages are placeholders and need implementation:
+The following features are planned or in development:
 
-- Reservations (list, calendar, create, manage)
-- Customers (list, details, CSV import)
-- Menu (categories, items, CRUD)
-- NPS (surveys, responses, analytics)
-- Campaigns (create, send, logs)
-- Reports (detailed analytics)
-- Settings (restaurant config, users)
+- Enhanced customer management (detailed history, notes)
+- Advanced analytics and reporting
+- Multi-user management with roles
+- SMS/WhatsApp notifications
+- Customer-facing queue status page
 
 ## Demo Account
 
