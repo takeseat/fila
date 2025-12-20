@@ -1,0 +1,4 @@
+# Customizações
+domain_name = "takeseat.me"
+aws_region  = "us-east-1"  # Se quiser mudar região
+db_name     = "takeseat"

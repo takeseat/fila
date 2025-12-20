@@ -1,0 +1,23 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ec2:*",
+                "rds:*",
+                "lambda:*",
+                "apigateway:*",
+                "s3:*",
+                "cloudfront:*",
+                "route53:*",
+                "acm:*",
+                "secretsmanager:*",
+                "iam:*",
+                "logs:*",
+                "sts:GetCallerIdentity"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

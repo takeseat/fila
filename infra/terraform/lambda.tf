@@ -13,9 +13,18 @@ resource "aws_lambda_function" "api" {
 
   environment {
     variables = {
-      NODE_ENV    = "production"
-      CORS_ORIGIN = "https://${var.domain_name}"
+      NODE_ENV       = "production"
+      CORS_ORIGIN    = "https://${var.domain_name}"
+      DATABASE_URL   = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_db_proxy.main.endpoint}:3306/${var.db_name}"
+      DB_SECRET_ARN  = aws_secretsmanager_secret.db_credentials.arn
+      JWT_SECRET     = random_password.jwt_secret.result
+      JWT_REFRESH_SECRET = random_password.jwt_refresh_secret.result
     }
+  }
+
+  vpc_config {
+    subnet_ids         = aws_subnet.private[*].id
+    security_group_ids = [aws_security_group.lambda.id]
   }
 
   tags = {
@@ -23,7 +32,9 @@ resource "aws_lambda_function" "api" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.lambda_basic
+    aws_iam_role_policy_attachment.lambda_basic,
+    aws_iam_role_policy_attachment.lambda_vpc,
+    aws_db_proxy.main
   ]
 }
 
@@ -55,6 +66,31 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+# Attach AWS managed policy for VPC execution
+resource "aws_iam_role_policy_attachment" "lambda_vpc" {
+  role       = aws_iam_role.lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
+
+# IAM policy for Secrets Manager access
+resource "aws_iam_role_policy" "lambda_secrets" {
+  name_prefix = "${var.project_name}-${var.environment}-lambda-secrets-"
+  role        = aws_iam_role.lambda.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Resource = aws_secretsmanager_secret.db_credentials.arn
+      }
+    ]
+  })
+}
+
 # Lambda function for migrations
 resource "aws_lambda_function" "migrate" {
   function_name = "${var.project_name}-migrate-${var.environment}"
@@ -70,8 +106,15 @@ resource "aws_lambda_function" "migrate" {
 
   environment {
     variables = {
-      NODE_ENV = "production"
+      NODE_ENV       = "production"
+      DATABASE_URL   = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_db_proxy.main.endpoint}:3306/${var.db_name}"
+      DB_SECRET_ARN  = aws_secretsmanager_secret.db_credentials.arn
     }
+  }
+
+  vpc_config {
+    subnet_ids         = aws_subnet.private[*].id
+    security_group_ids = [aws_security_group.lambda.id]
   }
 
   tags = {
@@ -79,7 +122,9 @@ resource "aws_lambda_function" "migrate" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.lambda_basic
+    aws_iam_role_policy_attachment.lambda_basic,
+    aws_iam_role_policy_attachment.lambda_vpc,
+    aws_db_proxy.main
   ]
 }
 

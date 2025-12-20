@@ -62,3 +62,29 @@ output "aws_account_id" {
   description = "AWS account ID"
   value       = data.aws_caller_identity.current.account_id
 }
+
+output "rds_proxy_endpoint" {
+  description = "RDS Proxy endpoint"
+  value       = aws_db_proxy.main.endpoint
+}
+
+output "aurora_cluster_endpoint" {
+  description = "Aurora cluster endpoint"
+  value       = aws_rds_cluster.main.endpoint
+}
+
+output "aurora_cluster_reader_endpoint" {
+  description = "Aurora cluster reader endpoint"
+  value       = aws_rds_cluster.main.reader_endpoint
+}
+
+output "db_secret_arn" {
+  description = "Database credentials secret ARN"
+  value       = aws_secretsmanager_secret.db_credentials.arn
+  sensitive   = true
+}
+
+output "vpc_id" {
+  description = "VPC ID"
+  value       = aws_vpc.main.id
+}

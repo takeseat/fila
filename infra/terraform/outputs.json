@@ -1,0 +1,67 @@
+{
+  "api_custom_domain": {
+    "sensitive": false,
+    "type": "string",
+    "value": "api.takeseat.me"
+  },
+  "api_gateway_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://18z0u2c3lc.execute-api.us-east-1.amazonaws.com/"
+  },
+  "api_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://api.takeseat.me"
+  },
+  "aws_account_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "151925247673"
+  },
+  "aws_region": {
+    "sensitive": false,
+    "type": "string",
+    "value": "us-east-1"
+  },
+  "cloudfront_distribution_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "E25O4T36RJ44KE"
+  },
+  "cloudfront_domain_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "d3adv47fcuxc3w.cloudfront.net"
+  },
+  "github_actions_role_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::151925247673:role/takeseat-prod-github-actions-20251220142022573000000004"
+  },
+  "lambda_api_function_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:lambda:us-east-1:151925247673:function:takeseat-api-prod"
+  },
+  "lambda_api_function_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "takeseat-api-prod"
+  },
+  "lambda_migrate_function_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "takeseat-migrate-prod"
+  },
+  "s3_bucket_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "takeseat-web-prod-20251220142021589500000003"
+  },
+  "website_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://takeseat.me"
+  }
+}
