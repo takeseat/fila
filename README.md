@@ -13,11 +13,112 @@ Este é um sistema completo de gestão de filas para restaurantes, incluindo:
 
 O projeto está configurado para deploy serverless na AWS:
 
-### Arquitetura
-- **Frontend**: S3 + CloudFront → `https://takeseat.me`
-- **Backend**: Lambda + API Gateway → `https://api.takeseat.me`
-- **Database**: Aurora Serverless v2 (MySQL) + RDS Proxy
-- **CI/CD**: GitHub Actions com OIDC (sem access keys)
+### Arquitetura AWS Serverless
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Internet / Users                         │
+└────────────────────┬────────────────────────────────────────┘
+                     │
+          ┌──────────▼──────────┐
+          │   Route53 DNS       │
+          │  takeseat.me        │
+          └──────────┬──────────┘
+                     │
+          ┌──────────▼──────────┐
+          │   CloudFront CDN    │
+          │  (S3 Origin)        │
+          │  SSL/TLS (ACM)      │
+          └──────────┬──────────┘
+                     │
+          ┌──────────▼──────────┐
+          │   S3 Bucket         │
+          │  React Frontend     │
+          └─────────────────────┘
+                     
+                     │
+          ┌──────────▼──────────┐
+          │   API Gateway       │
+          │ (api.takeseat.me)   │
+          │  SSL/TLS (ACM)      │
+          └──────────┬──────────┘
+                     │
+┌────────────────────▼────────────────────────────────────────┐
+│                         VPC (10.0.0.0/16)                   │
+│                                                             │
+│  ┌──────────────────┐        ┌──────────────────┐          │
+│  │  Public Subnet   │        │  Public Subnet   │          │
+│  │   10.0.1.0/24    │        │   10.0.2.0/24    │          │
+│  │   (us-east-1a)   │        │   (us-east-1b)   │          │
+│  │                  │        │                  │          │
+│  │  ┌────────────┐  │        │  ┌────────────┐  │          │
+│  │  │NAT Gateway │  │        │  │NAT Gateway │  │          │
+│  │  └──────┬─────┘  │        │  └──────┬─────┘  │          │
+│  └─────────┼────────┘        └─────────┼────────┘          │
+│            │                           │                    │
+│  ┌─────────▼────────┐        ┌────────▼─────────┐          │
+│  │  Private Subnet  │        │  Private Subnet  │          │
+│  │   10.0.11.0/24   │        │   10.0.12.0/24   │          │
+│  │   (us-east-1a)   │        │   (us-east-1b)   │          │
+│  │                  │        │                  │          │
+│  │  ┌────────────┐  │        │  ┌────────────┐  │          │
+│  │  │  Lambda    │  │        │  │  Lambda    │  │          │
+│  │  │    API     │  │        │  │ Migrations │  │          │
+│  │  │ (Node 20)  │  │        │  │ (Node 20)  │  │          │
+│  │  └──────┬─────┘  │        │  └──────┬─────┘  │          │
+│  │         │        │        │         │        │          │
+│  │         ▼        │        │         ▼        │          │
+│  │  ┌────────────┐  │        │  ┌────────────┐  │          │
+│  │  │ RDS Proxy  │◄─┼────────┼─►│ RDS Proxy  │  │          │
+│  │  │ (MySQL)    │  │        │  │ (MySQL)    │  │          │
+│  │  └──────┬─────┘  │        │  └──────┬─────┘  │          │
+│  │         │        │        │         │        │          │
+│  │         ▼        │        │         ▼        │          │
+│  │  ┌────────────┐  │        │  ┌────────────┐  │          │
+│  │  │  Aurora    │◄─┼────────┼─►│  Aurora    │  │          │
+│  │  │  Primary   │  │        │  │  Replica   │  │          │
+│  │  │ (0.5-2 ACU)│  │        │  │ (0.5-2 ACU)│  │          │
+│  │  │  MySQL 8.0 │  │        │  │  MySQL 8.0 │  │          │
+│  │  └────────────┘  │        │  └────────────┘  │          │
+│  └──────────────────┘        └──────────────────┘          │
+│                                                             │
+│  ┌─────────────────────────────────────────────┐            │
+│  │         Secrets Manager                     │            │
+│  │  - DB Credentials                           │            │
+│  │  - JWT Secrets                              │            │
+│  └─────────────────────────────────────────────┘            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+
+                     ┌──────────────────┐
+                     │  GitHub Actions  │
+                     │  (CI/CD OIDC)    │
+                     └──────────────────┘
+```
+
+### Componentes
+
+| Componente | Descrição | Escalabilidade |
+|------------|-----------|----------------|
+| **CloudFront** | CDN global para frontend | Auto-scaling |
+| **S3** | Hospedagem estática React | Ilimitado |
+| **API Gateway** | Gerenciamento de APIs | Auto-scaling |
+| **Lambda** | Compute serverless (Node 20) | Auto-scaling |
+| **RDS Proxy** | Connection pooling MySQL | Gerenciado |
+| **Aurora Serverless v2** | Database MySQL 8.0 | 0.5-2 ACUs |
+| **VPC** | Rede privada isolada | Multi-AZ |
+| **NAT Gateway** | Saída internet para Lambdas | Alta disponibilidade |
+| **Secrets Manager** | Gerenciamento de secrets | Criptografado |
+
+### AWS Infrastructure
+- Lambda (Node.js 20.x)
+- API Gateway HTTP API
+- Aurora Serverless v2 (MySQL)
+- RDS Proxy
+- S3 + CloudFront
+- Route53 + ACM
+- Secrets Manager
+- VPC + NAT Gateway
 
 ### Custos Estimados
 - **MVP**: ~$90-120/mês
@@ -64,10 +165,6 @@ terraform apply
 - Socket.io Client
 - Recharts
 
-### AWS Infrastructure
-- Lambda (Node.js 20.x)
-- API Gateway HTTP API
-- Aurora Serverless v2 (MySQL)
 - RDS Proxy
 - S3 + CloudFront
 - Route53 + ACM

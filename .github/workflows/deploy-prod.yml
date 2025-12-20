@@ -65,9 +65,10 @@ jobs:
           # Copy node_modules (production only)
           cp -r node_modules lambda-package/
           
-          # Copy Prisma files
+          # Copy Prisma files and binaries
           cp -r prisma lambda-package/
           cp -r node_modules/.prisma lambda-package/node_modules/
+          cp -r node_modules/@prisma lambda-package/node_modules/
           
           # Create ZIP
           cd lambda-package
