@@ -10,6 +10,7 @@ env:
   AWS_REGION: us-east-1
   NODE_VERSION: '20'
   S3_BUCKET: takeseat-web-prod-20251220142021589500000003
+  CLOUDFRONT_DISTRIBUTION_ID: E25O4T36RJ44KE
 
 permissions:
   id-token: write
@@ -151,15 +152,9 @@ jobs:
 
       - name: Invalidate CloudFront Cache
         run: |
-          # Get CloudFront distribution ID
-          DISTRIBUTION_ID=$(aws cloudfront list-distributions \
-            --query "DistributionList.Items[?Aliases.Items[?contains(@, 'takeseat.me')]].Id | [0]" \
-            --output text \
-            --region ${{ env.AWS_REGION }})
-          
           # Create invalidation
           aws cloudfront create-invalidation \
-            --distribution-id ${DISTRIBUTION_ID} \
+            --distribution-id ${{ env.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*" \
             --region ${{ env.AWS_REGION }}
 
