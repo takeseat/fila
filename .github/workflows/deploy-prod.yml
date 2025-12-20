@@ -75,12 +75,27 @@ jobs:
           # Copy for migrations Lambda (same package)
           cp lambda-api.zip lambda-migrate.zip
 
+      - name: Upload Lambda Package to S3
+        working-directory: ./backend
+        run: |
+          # Get S3 bucket name
+          S3_BUCKET=$(aws s3 ls | grep takeseat-web-prod | awk '{print $3}')
+          
+          # Upload Lambda package to S3
+          aws s3 cp lambda-api.zip s3://${S3_BUCKET}/lambda/lambda-api.zip \
+            --region ${{ env.AWS_REGION }}
+
       - name: Deploy Backend API Lambda
         working-directory: ./backend
         run: |
+          # Get S3 bucket name
+          S3_BUCKET=$(aws s3 ls | grep takeseat-web-prod | awk '{print $3}')
+          
+          # Update Lambda function code from S3
           aws lambda update-function-code \
             --function-name takeseat-api-prod \
-            --zip-file fileb://lambda-api.zip \
+            --s3-bucket ${S3_BUCKET} \
+            --s3-key lambda/lambda-api.zip \
             --region ${{ env.AWS_REGION }}
           
           # Wait for update to complete
@@ -91,9 +106,14 @@ jobs:
       - name: Deploy Migrations Lambda
         working-directory: ./backend
         run: |
+          # Get S3 bucket name
+          S3_BUCKET=$(aws s3 ls | grep takeseat-web-prod | awk '{print $3}')
+          
+          # Update Lambda function code from S3 (same package)
           aws lambda update-function-code \
             --function-name takeseat-migrate-prod \
-            --zip-file fileb://lambda-migrate.zip \
+            --s3-bucket ${S3_BUCKET} \
+            --s3-key lambda/lambda-api.zip \
             --region ${{ env.AWS_REGION }}
           
           # Wait for update to complete
