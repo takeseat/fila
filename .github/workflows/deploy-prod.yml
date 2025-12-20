@@ -113,25 +113,26 @@ jobs:
             --function-name takeseat-migrate-prod \
             --region ${{ env.AWS_REGION }}
 
-      - name: Run Database Migrations
-        run: |
-          # Invoke migrations Lambda
-          aws lambda invoke \
-            --function-name takeseat-migrate-prod \
-            --region ${{ env.AWS_REGION }} \
-            --payload '{}' \
-            --cli-binary-format raw-in-base64-out \
-            response.json
-          
-          # Check response
-          cat response.json
-          
-          # Verify success (exit code 1 if statusCode is not 200)
-          if ! grep -q '"statusCode":200' response.json; then
-            echo "Migration failed!"
-            cat response.json
-            exit 1
-          fi
+      # Database migrations disabled - no database configured yet
+      # - name: Run Database Migrations
+      #   run: |
+      #     # Invoke migrations Lambda
+      #     aws lambda invoke \
+      #       --function-name takeseat-migrate-prod \
+      #       --region ${{ env.AWS_REGION }} \
+      #       --payload '{}' \
+      #       --cli-binary-format raw-in-base64-out \
+      #       response.json
+      #     
+      #     # Check response
+      #     cat response.json
+      #     
+      #     # Verify success (exit code 1 if statusCode is not 200)
+      #     if ! grep -q '"statusCode":200' response.json; then
+      #       echo "Migration failed!"
+      #       cat response.json
+      #       exit 1
+      #     fi
 
       - name: Deploy Frontend to S3
         working-directory: ./frontend
