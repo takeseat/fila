@@ -49,6 +49,8 @@ jobs:
       - name: Build Backend
         working-directory: ./backend
         run: |
+          # Clean to ensure Linux binaries
+          rm -rf node_modules
           npm ci
           npm run build
           npx prisma generate
