@@ -59,7 +59,8 @@ resource "aws_iam_role_policy" "github_actions" {
           "lambda:UpdateFunctionCode",
           "lambda:UpdateFunctionConfiguration",
           "lambda:InvokeFunction",
-          "lambda:GetFunction"
+          "lambda:GetFunction",
+          "lambda:GetFunctionConfiguration"
         ]
         Resource = [
           aws_lambda_function.api.arn,
