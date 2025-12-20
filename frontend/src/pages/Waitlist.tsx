@@ -448,7 +448,7 @@ export function Waitlist() {
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         {activeEntries.map((entry: any, index: number) => {
-                            const { elapsedString, progress, etaString, variant, isOverdue } = calculateWaitMetrics(entry);
+                            const { elapsedString, progress, etaString, variant } = calculateWaitMetrics(entry);
                             const alertStatus = getAlertStatus(entry);
 
                             // Define visual styles based on alert status

@@ -1,30 +1,3 @@
-output "vpc_id" {
-  description = "VPC ID"
-  value       = aws_vpc.main.id
-}
-
-output "private_subnet_ids" {
-  description = "Private subnet IDs"
-  value       = aws_subnet.private[*].id
-}
-
-output "rds_proxy_endpoint" {
-  description = "RDS Proxy endpoint"
-  value       = aws_db_proxy.main.endpoint
-  sensitive   = true
-}
-
-output "aurora_cluster_endpoint" {
-  description = "Aurora cluster writer endpoint"
-  value       = aws_rds_cluster.main.endpoint
-  sensitive   = true
-}
-
-output "db_secret_arn" {
-  description = "Database credentials secret ARN"
-  value       = aws_secretsmanager_secret.db_credentials.arn
-}
-
 output "lambda_api_function_name" {
   description = "Lambda API function name"
   value       = aws_lambda_function.api.function_name

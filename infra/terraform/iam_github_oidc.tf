@@ -88,14 +88,6 @@ resource "aws_iam_role_policy" "github_actions" {
           "cloudfront:GetInvalidation"
         ]
         Resource = aws_cloudfront_distribution.web.arn
-      },
-      # Secrets Manager (optional, if needed in CI/CD)
-      {
-        Effect = "Allow"
-        Action = [
-          "secretsmanager:GetSecretValue"
-        ]
-        Resource = aws_secretsmanager_secret.db_credentials.arn
       }
     ]
   })
