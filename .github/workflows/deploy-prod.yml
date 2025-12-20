@@ -9,6 +9,7 @@ on:
 env:
   AWS_REGION: us-east-1
   NODE_VERSION: '20'
+  S3_BUCKET: takeseat-web-prod-20251220142021589500000003
 
 permissions:
   id-token: write
@@ -78,23 +79,17 @@ jobs:
       - name: Upload Lambda Package to S3
         working-directory: ./backend
         run: |
-          # Get S3 bucket name
-          S3_BUCKET=$(aws s3 ls | grep takeseat-web-prod | awk '{print $3}')
-          
           # Upload Lambda package to S3
-          aws s3 cp lambda-api.zip s3://${S3_BUCKET}/lambda/lambda-api.zip \
+          aws s3 cp lambda-api.zip s3://${{ env.S3_BUCKET }}/lambda/lambda-api.zip \
             --region ${{ env.AWS_REGION }}
 
       - name: Deploy Backend API Lambda
         working-directory: ./backend
         run: |
-          # Get S3 bucket name
-          S3_BUCKET=$(aws s3 ls | grep takeseat-web-prod | awk '{print $3}')
-          
           # Update Lambda function code from S3
           aws lambda update-function-code \
             --function-name takeseat-api-prod \
-            --s3-bucket ${S3_BUCKET} \
+            --s3-bucket ${{ env.S3_BUCKET }} \
             --s3-key lambda/lambda-api.zip \
             --region ${{ env.AWS_REGION }}
           
@@ -106,13 +101,10 @@ jobs:
       - name: Deploy Migrations Lambda
         working-directory: ./backend
         run: |
-          # Get S3 bucket name
-          S3_BUCKET=$(aws s3 ls | grep takeseat-web-prod | awk '{print $3}')
-          
           # Update Lambda function code from S3 (same package)
           aws lambda update-function-code \
             --function-name takeseat-migrate-prod \
-            --s3-bucket ${S3_BUCKET} \
+            --s3-bucket ${{ env.S3_BUCKET }} \
             --s3-key lambda/lambda-api.zip \
             --region ${{ env.AWS_REGION }}
           
@@ -144,18 +136,15 @@ jobs:
       - name: Deploy Frontend to S3
         working-directory: ./frontend
         run: |
-          # Get S3 bucket name from Terraform outputs or use variable
-          S3_BUCKET=$(aws s3 ls | grep takeseat-web-prod | awk '{print $3}')
-          
           # Sync files to S3
-          aws s3 sync dist/ s3://${S3_BUCKET}/ \
+          aws s3 sync dist/ s3://${{ env.S3_BUCKET }}/ \
             --delete \
             --cache-control "public, max-age=31536000, immutable" \
             --exclude "index.html" \
             --region ${{ env.AWS_REGION }}
           
           # Upload index.html separately with no-cache
-          aws s3 cp dist/index.html s3://${S3_BUCKET}/index.html \
+          aws s3 cp dist/index.html s3://${{ env.S3_BUCKET }}/index.html \
             --cache-control "public, max-age=0, must-revalidate" \
             --region ${{ env.AWS_REGION }}
 
