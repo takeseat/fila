@@ -1,8 +1,8 @@
-# DB Subnet Group
+# DB Subnet Group - using public subnets for MVP
 resource "aws_db_subnet_group" "main" {
   name_prefix = "${var.project_name}-${var.environment}-"
   description = "Database subnet group for ${var.project_name}"
-  subnet_ids  = aws_subnet.private[*].id
+  subnet_ids  = aws_subnet.public[*].id
 
   tags = {
     Name = "${var.project_name}-${var.environment}"
@@ -106,6 +106,7 @@ resource "aws_rds_cluster_instance" "primary" {
   engine                  = aws_rds_cluster.main.engine
   engine_version          = "8.0.mysql_aurora.3.11.1"
   db_parameter_group_name = aws_db_parameter_group.main.name
+  publicly_accessible     = true
 
   performance_insights_enabled = true
 
