@@ -4,7 +4,6 @@ import { createServer } from 'http';
 import { env } from './config/env';
 import { errorHandler } from './middleware/errorHandler';
 import { setupSwagger } from './swagger';
-import { initializeWebSocket } from './websocket';
 
 // Routes
 import authRoutes from './routes/auth.routes';
@@ -18,11 +17,6 @@ import usersRoutes from './routes/users.routes';
 
 export const app = express();
 const httpServer = createServer(app);
-
-// Initialize WebSocket (only in non-Lambda environment)
-if (process.env.NODE_ENV !== 'production') {
-    initializeWebSocket(httpServer);
-}
 
 // Middleware
 app.use(cors({ origin: env.CORS_ORIGIN }));

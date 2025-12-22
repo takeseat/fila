@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import api from '../lib/api';
-import { initializeSocket, disconnectSocket } from '../lib/socket';
 
 interface User {
     id: string;
@@ -54,7 +53,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const userData = JSON.parse(storedUser);
             setUser(userData);
             setRestaurant(JSON.parse(storedRestaurant));
-            initializeSocket(token);
 
             // Note: Language is now handled by LanguageProvider
             // LanguageProvider observes user.language and applies it
@@ -73,7 +71,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         setUser(data.user);
         setRestaurant(data.restaurant);
-        initializeSocket(data.accessToken);
 
         // Note: Language is now handled by LanguageProvider
         // LanguageProvider will observe the user change and apply language
@@ -89,7 +86,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         setUser(data.user);
         setRestaurant(data.restaurant);
-        initializeSocket(data.accessToken);
 
         // Note: Language is now handled by LanguageProvider
         // LanguageProvider will observe the user change and apply language
@@ -103,7 +99,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         setUser(null);
         setRestaurant(null);
-        disconnectSocket();
     };
 
     const updateUser = (userData: Partial<User>) => {

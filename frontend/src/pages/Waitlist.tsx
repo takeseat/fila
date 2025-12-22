@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
-import { getSocket } from '../lib/socket';
 import { Button, Modal, Input, Badge, EmptyState, Progress, Spinner } from '../components/ui';
 import { CountrySelect } from '../components/ui/CountrySelect';
 import { format } from 'date-fns';
@@ -40,26 +39,7 @@ export function Waitlist() {
         },
     });
 
-    // WebSocket real-time updates
-    useEffect(() => {
-        const socket = getSocket();
-        if (!socket) return;
 
-        socket.on('waitlist:created', () => {
-            queryClient.invalidateQueries({ queryKey: ['waitlist'] });
-            queryClient.invalidateQueries({ queryKey: ['metrics'] });
-        });
-
-        socket.on('waitlist:updated', () => {
-            queryClient.invalidateQueries({ queryKey: ['waitlist'] });
-            queryClient.invalidateQueries({ queryKey: ['metrics'] });
-        });
-
-        return () => {
-            socket.off('waitlist:created');
-            socket.off('waitlist:updated');
-        };
-    }, [queryClient]);
 
     // Handle phone input change with masking
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
