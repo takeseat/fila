@@ -8,6 +8,7 @@ interface User {
     email: string;
     role: string;
     restaurantId: string;
+    language: string;
 }
 
 interface Restaurant {
@@ -25,6 +26,7 @@ interface AuthContextType {
     login: (email: string, password: string) => Promise<void>;
     register: (data: any) => Promise<void>;
     logout: () => void;
+    updateUser: (userData: Partial<User>) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -34,6 +36,7 @@ export const AuthContext = createContext<AuthContextType>({
     login: async () => { },
     register: async () => { },
     logout: () => { },
+    updateUser: () => { },
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -48,9 +51,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const token = localStorage.getItem('accessToken');
 
         if (storedUser && storedRestaurant && token) {
-            setUser(JSON.parse(storedUser));
+            const userData = JSON.parse(storedUser);
+            setUser(userData);
             setRestaurant(JSON.parse(storedRestaurant));
             initializeSocket(token);
+
+            // Note: Language is now handled by LanguageProvider
+            // LanguageProvider observes user.language and applies it
         }
 
         setLoading(false);
@@ -67,6 +74,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user);
         setRestaurant(data.restaurant);
         initializeSocket(data.accessToken);
+
+        // Note: Language is now handled by LanguageProvider
+        // LanguageProvider will observe the user change and apply language
     };
 
     const register = async (registerData: any) => {
@@ -80,6 +90,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data.user);
         setRestaurant(data.restaurant);
         initializeSocket(data.accessToken);
+
+        // Note: Language is now handled by LanguageProvider
+        // LanguageProvider will observe the user change and apply language
     };
 
     const logout = () => {
@@ -93,8 +106,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         disconnectSocket();
     };
 
+    const updateUser = (userData: Partial<User>) => {
+        if (!user) return;
+
+        const updatedUser = { ...user, ...userData };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+
+        // Note: Language is now handled by LanguageProvider
+        // LanguageProvider observes user.language changes and applies them
+    };
+
     return (
-        <AuthContext.Provider value={{ user, restaurant, loading, login, register, logout }}>
+        <AuthContext.Provider value={{ user, restaurant, loading, login, register, logout, updateUser }}>
             {children}
         </AuthContext.Provider>
     );
