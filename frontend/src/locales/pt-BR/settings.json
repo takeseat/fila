@@ -1,38 +1,106 @@
 {
-    "title": "Configurações do Restaurante",
-    "subtitle": "Gerencie as preferências e alertas da sua operação.",
+    "title": "Configurações",
+    "subtitle": "Gerencie seus dados comerciais e parâmetros operacionais",
+    "tabs": {
+        "business": "Dados do Negócio",
+        "parameters": "Parâmetros"
+    },
+    "business": {
+        "title": "Informações do Negócio",
+        "subtitle": "Gerencie os detalhes e endereço do seu negócio",
+        "fields": {
+            "name": {
+                "label": "Nome do Negócio",
+                "placeholder": "Digite o nome do negócio"
+            },
+            "tradeName": {
+                "label": "Nome Fantasia",
+                "placeholder": "Digite o nome fantasia (opcional)",
+                "help": "Nome comercial ou marca"
+            },
+            "email": {
+                "label": "E-mail",
+                "readOnly": "Este campo não pode ser alterado"
+            },
+            "taxId": {
+                "label": "CNPJ",
+                "readOnly": "Este campo não pode ser alterado"
+            },
+            "phone": {
+                "label": "Telefone",
+                "placeholder": "Digite o telefone"
+            },
+            "country": {
+                "label": "País",
+                "placeholder": "Selecione o país"
+            },
+            "state": {
+                "label": "Estado",
+                "placeholder": "Selecione o estado"
+            },
+            "city": {
+                "label": "Cidade",
+                "placeholder": "Digite a cidade"
+            },
+            "addressLine": {
+                "label": "Endereço",
+                "placeholder": "Nome da rua"
+            },
+            "addressNumber": {
+                "label": "Número",
+                "placeholder": "Número do imóvel"
+            },
+            "addressComplement": {
+                "label": "Complemento",
+                "placeholder": "Apto, sala, etc. (opcional)"
+            },
+            "postalCode": {
+                "label": "CEP",
+                "placeholder": "Digite o CEP"
+            }
+        },
+        "actions": {
+            "save": "Salvar Alterações",
+            "saving": "Salvando..."
+        },
+        "messages": {
+            "saveSuccess": "Dados do negócio atualizados com sucesso",
+            "saveError": "Falha ao atualizar dados do negócio"
+        }
+    },
     "sections": {
         "queueAlerts": {
             "title": "Alertas de Tempo da Fila",
             "waitingAlert": {
                 "label": "Alerta para Cliente Aguardando (minutos)",
-                "help": "Define após quanto tempo de espera o cliente será marcado com um alerta visual.",
-                "helpExtra": "Deixe em branco para desativar.",
-                "placeholder": "Ex: 15"
+                "help": "Define após quanto tempo aguardando o cliente será marcado com alerta visual.",
+                "helpExtra": "Deixe em branco para desabilitar.",
+                "placeholder": "Ex.: 15"
             },
             "calledAlert": {
                 "label": "Alerta para Cliente Chamado (minutos)",
-                "help": "Define após quanto tempo de ser chamado (sem sentar) o cliente será marcado com alerta.",
-                "helpExtra": "Deixe em branco para desativar.",
-                "placeholder": "Ex: 5"
+                "help": "Define após quanto tempo sendo chamado (sem sentar) o cliente será marcado com alerta.",
+                "helpExtra": "Deixe em branco para desabilitar.",
+                "placeholder": "Ex.: 5"
             }
         },
         "avgWaitCalculation": {
             "title": "Cálculo do Tempo Médio da Fila",
             "window": {
                 "label": "Janela de cálculo (minutos)",
-                "help": "Considerar apenas clientes que entraram na fila nos últimos X minutos para calcular o tempo médio.",
+                "help": "Considerar apenas clientes que entraram na fila nos últimos X minutos para calcular tempo médio.",
                 "placeholder": "90"
             },
             "fallback": {
-                "label": "Fallback do tempo médio (minutos)",
-                "help": "Valor exibido quando não houver dados suficientes na janela configurada.",
+                "label": "Tempo médio fallback (minutos)",
+                "help": "Valor exibido quando não há dados suficientes na janela configurada.",
                 "placeholder": "15"
             }
         }
     },
     "validation": {
-        "mustBePositive": "Valor deve ser maior que 0"
+        "mustBePositive": "O valor deve ser maior que 0",
+        "required": "Este campo é obrigatório"
     },
     "actions": {
         "save": "Salvar Alterações",

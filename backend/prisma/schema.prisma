@@ -14,10 +14,20 @@ datasource db {
 model Restaurant {
   id        String   @id @default(uuid())
   name      String
+  tradeName String?  // Optional trade/fantasy name
   cnpj      String?
   phone     String
   email     String
-  city      String
+  
+  // Internationalized Address
+  countryCode        String?  @default("BR") // ISO 3166-1 alpha-2
+  stateCode          String?  // State/Province/Region code
+  city               String
+  addressLine        String?  // Street address
+  addressNumber      String?  // Building number
+  addressComplement  String?  // Apartment, suite, etc.
+  postalCode         String?  // ZIP/CEP/Postal code
+  
   timezone  String   @default("America/Sao_Paulo")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

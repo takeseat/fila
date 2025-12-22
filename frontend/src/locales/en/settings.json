@@ -1,6 +1,73 @@
 {
-    "title": "Restaurant Settings",
-    "subtitle": "Manage your operation preferences and alerts.",
+    "title": "Settings",
+    "subtitle": "Manage your business and operational settings",
+    "tabs": {
+        "business": "Business Data",
+        "parameters": "Parameters"
+    },
+    "business": {
+        "title": "Business Information",
+        "subtitle": "Manage your business details and address",
+        "fields": {
+            "name": {
+                "label": "Business Name",
+                "placeholder": "Enter business name"
+            },
+            "tradeName": {
+                "label": "Trade Name",
+                "placeholder": "Enter trade name (optional)",
+                "help": "Fantasy name or brand name"
+            },
+            "email": {
+                "label": "Email",
+                "readOnly": "This field cannot be changed"
+            },
+            "taxId": {
+                "label": "Tax ID / CNPJ",
+                "readOnly": "This field cannot be changed"
+            },
+            "phone": {
+                "label": "Phone",
+                "placeholder": "Enter phone number"
+            },
+            "country": {
+                "label": "Country",
+                "placeholder": "Select country"
+            },
+            "state": {
+                "label": "State / Province",
+                "placeholder": "Select state"
+            },
+            "city": {
+                "label": "City",
+                "placeholder": "Enter city"
+            },
+            "addressLine": {
+                "label": "Address",
+                "placeholder": "Street name"
+            },
+            "addressNumber": {
+                "label": "Number",
+                "placeholder": "Building number"
+            },
+            "addressComplement": {
+                "label": "Complement",
+                "placeholder": "Apt, suite, etc. (optional)"
+            },
+            "postalCode": {
+                "label": "Postal Code / ZIP",
+                "placeholder": "Enter postal code"
+            }
+        },
+        "actions": {
+            "save": "Save Changes",
+            "saving": "Saving..."
+        },
+        "messages": {
+            "saveSuccess": "Business data updated successfully",
+            "saveError": "Failed to update business data"
+        }
+    },
     "sections": {
         "queueAlerts": {
             "title": "Queue Time Alerts",
@@ -32,7 +99,8 @@
         }
     },
     "validation": {
-        "mustBePositive": "Value must be greater than 0"
+        "mustBePositive": "Value must be greater than 0",
+        "required": "This field is required"
     },
     "actions": {
         "save": "Save Changes",
