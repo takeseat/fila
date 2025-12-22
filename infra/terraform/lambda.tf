@@ -13,18 +13,13 @@ resource "aws_lambda_function" "api" {
 
   environment {
     variables = {
-      NODE_ENV       = "production"
-      CORS_ORIGIN    = "https://${var.domain_name}"
-      DATABASE_URL   = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_db_proxy.main.endpoint}:3306/${var.db_name}"
-      DB_SECRET_ARN  = aws_secretsmanager_secret.db_credentials.arn
-      JWT_SECRET     = random_password.jwt_secret.result
+      NODE_ENV           = "production"
+      CORS_ORIGIN        = "https://${var.domain_name}"
+      DATABASE_URL       = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_rds_cluster.main.endpoint}:3306/${var.db_name}"
+      DB_SECRET_ARN      = aws_secretsmanager_secret.db_credentials.arn
+      JWT_SECRET         = random_password.jwt_secret.result
       JWT_REFRESH_SECRET = random_password.jwt_refresh_secret.result
     }
-  }
-
-  vpc_config {
-    subnet_ids         = aws_subnet.private[*].id
-    security_group_ids = [aws_security_group.lambda.id]
   }
 
   tags = {
@@ -32,9 +27,7 @@ resource "aws_lambda_function" "api" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.lambda_basic,
-    aws_iam_role_policy_attachment.lambda_vpc,
-    aws_db_proxy.main
+    aws_iam_role_policy_attachment.lambda_basic
   ]
 }
 
@@ -64,12 +57,6 @@ resource "aws_iam_role" "lambda" {
 resource "aws_iam_role_policy_attachment" "lambda_basic" {
   role       = aws_iam_role.lambda.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
-# Attach AWS managed policy for VPC execution
-resource "aws_iam_role_policy_attachment" "lambda_vpc" {
-  role       = aws_iam_role.lambda.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
 # IAM policy for Secrets Manager access
@@ -106,15 +93,10 @@ resource "aws_lambda_function" "migrate" {
 
   environment {
     variables = {
-      NODE_ENV       = "production"
-      DATABASE_URL   = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_db_proxy.main.endpoint}:3306/${var.db_name}"
-      DB_SECRET_ARN  = aws_secretsmanager_secret.db_credentials.arn
+      NODE_ENV      = "production"
+      DATABASE_URL  = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_rds_cluster.main.endpoint}:3306/${var.db_name}"
+      DB_SECRET_ARN = aws_secretsmanager_secret.db_credentials.arn
     }
-  }
-
-  vpc_config {
-    subnet_ids         = aws_subnet.private[*].id
-    security_group_ids = [aws_security_group.lambda.id]
   }
 
   tags = {
@@ -122,9 +104,7 @@ resource "aws_lambda_function" "migrate" {
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.lambda_basic,
-    aws_iam_role_policy_attachment.lambda_vpc,
-    aws_db_proxy.main
+    aws_iam_role_policy_attachment.lambda_basic
   ]
 }
 

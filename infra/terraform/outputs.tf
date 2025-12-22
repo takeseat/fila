@@ -63,11 +63,6 @@ output "aws_account_id" {
   value       = data.aws_caller_identity.current.account_id
 }
 
-output "rds_proxy_endpoint" {
-  description = "RDS Proxy endpoint"
-  value       = aws_db_proxy.main.endpoint
-}
-
 output "aurora_cluster_endpoint" {
   description = "Aurora cluster endpoint"
   value       = aws_rds_cluster.main.endpoint

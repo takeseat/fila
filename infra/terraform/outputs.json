@@ -14,6 +14,16 @@
     "type": "string",
     "value": "https://api.takeseat.me"
   },
+  "aurora_cluster_endpoint": {
+    "sensitive": false,
+    "type": "string",
+    "value": "takeseat-prod.cluster-ce700cko82tc.us-east-1.rds.amazonaws.com"
+  },
+  "aurora_cluster_reader_endpoint": {
+    "sensitive": false,
+    "type": "string",
+    "value": "takeseat-prod.cluster-ro-ce700cko82tc.us-east-1.rds.amazonaws.com"
+  },
   "aws_account_id": {
     "sensitive": false,
     "type": "string",
@@ -33,6 +43,11 @@
     "sensitive": false,
     "type": "string",
     "value": "d3adv47fcuxc3w.cloudfront.net"
+  },
+  "db_secret_arn": {
+    "sensitive": true,
+    "type": "string",
+    "value": "arn:aws:secretsmanager:us-east-1:151925247673:secret:takeseat-prod-db-20251220170245281900000001-LnQUex"
   },
   "github_actions_role_arn": {
     "sensitive": false,
@@ -58,6 +73,11 @@
     "sensitive": false,
     "type": "string",
     "value": "takeseat-web-prod-20251220142021589500000003"
+  },
+  "vpc_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "vpc-0c2574daa7d0e78d4"
   },
   "website_url": {
     "sensitive": false,

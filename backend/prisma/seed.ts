@@ -29,6 +29,7 @@ async function main() {
             email: 'admin@restaurantedemo.com.br',
             passwordHash: adminPassword,
             role: 'ADMIN',
+            language: 'en', // Default language
         },
     });
 

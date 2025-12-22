@@ -83,7 +83,7 @@ resource "aws_rds_cluster" "main" {
 
   # High availability
   enabled_cloudwatch_logs_exports = ["error", "general", "slowquery"]
-  
+
   # Parameter groups
   db_cluster_parameter_group_name = aws_rds_cluster_parameter_group.main.name
 
