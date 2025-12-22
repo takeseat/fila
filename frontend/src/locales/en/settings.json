@@ -1,0 +1,44 @@
+{
+    "title": "Restaurant Settings",
+    "subtitle": "Manage your operation preferences and alerts.",
+    "sections": {
+        "queueAlerts": {
+            "title": "Queue Time Alerts",
+            "waitingAlert": {
+                "label": "Alert for Waiting Customer (minutes)",
+                "help": "Defines after how long waiting the customer will be marked with a visual alert.",
+                "helpExtra": "Leave blank to disable.",
+                "placeholder": "E.g.: 15"
+            },
+            "calledAlert": {
+                "label": "Alert for Called Customer (minutes)",
+                "help": "Defines after how long being called (without seating) the customer will be marked with alert.",
+                "helpExtra": "Leave blank to disable.",
+                "placeholder": "E.g.: 5"
+            }
+        },
+        "avgWaitCalculation": {
+            "title": "Average Queue Time Calculation",
+            "window": {
+                "label": "Calculation window (minutes)",
+                "help": "Consider only customers who entered the queue in the last X minutes to calculate average time.",
+                "placeholder": "90"
+            },
+            "fallback": {
+                "label": "Average time fallback (minutes)",
+                "help": "Value displayed when there is not enough data in the configured window.",
+                "placeholder": "15"
+            }
+        }
+    },
+    "validation": {
+        "mustBePositive": "Value must be greater than 0"
+    },
+    "actions": {
+        "save": "Save Changes",
+        "saving": "Saving..."
+    },
+    "messages": {
+        "saveSuccess": "Settings saved successfully!"
+    }
+}

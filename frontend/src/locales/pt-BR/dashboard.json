@@ -1,0 +1,51 @@
+{
+    "title": "Dashboard",
+    "subtitle": "Acompanhe as métricas do seu restaurante em tempo real",
+    "metrics": {
+        "activeQueue": {
+            "title": "Na Fila Agora",
+            "vsYesterday": "vs ontem"
+        },
+        "avgWait": {
+            "title": "Tempo Médio",
+            "vsYesterday": "vs ontem",
+            "min": "min"
+        },
+        "seated": {
+            "title": "Clientes Atendidos",
+            "vsYesterday": "vs ontem"
+        }
+    },
+    "charts": {
+        "volumeByHour": {
+            "title": "Volume por Hora",
+            "subtitle": "Clientes ao longo do dia",
+            "viewDetails": "Ver detalhes"
+        },
+        "weeklyTrend": {
+            "title": "Tendência Semanal",
+            "subtitle": "Comparativo dos últimos 7 dias",
+            "viewDetails": "Ver detalhes"
+        },
+        "days": {
+            "mon": "Seg",
+            "tue": "Ter",
+            "wed": "Qua",
+            "thu": "Qui",
+            "fri": "Sex",
+            "sat": "Sáb",
+            "sun": "Dom"
+        }
+    },
+    "quickActions": {
+        "title": "Ações Rápidas",
+        "addToQueue": {
+            "title": "Adicionar à Fila",
+            "description": "Registre um novo cliente na fila de espera"
+        },
+        "viewReports": {
+            "title": "Ver Relatórios",
+            "description": "Analise métricas e desempenho"
+        }
+    }
+}

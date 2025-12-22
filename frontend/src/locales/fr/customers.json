@@ -1,0 +1,55 @@
+{
+    "title": "Clients",
+    "subtitle": "Gérez le registre des clients du restaurant",
+    "actions": {
+        "newCustomer": "Nouveau Client",
+        "editCustomer": "Modifier Client",
+        "deleteCustomer": "Supprimer Client",
+        "saveChanges": "Enregistrer Modifications",
+        "registerCustomer": "Enregistrer Client"
+    },
+    "filters": {
+        "name": "Nom",
+        "namePlaceholder": "Rechercher par nom...",
+        "phone": "Téléphone",
+        "phonePlaceholder": "(DDD) Numéro",
+        "lastVisitAfter": "Dernière visite après",
+        "clearFilters": "Effacer Filtres"
+    },
+    "table": {
+        "name": "Nom",
+        "phone": "Téléphone",
+        "email": "Email",
+        "lastVisit": "Dernière Visite",
+        "totalVisits": "Nº Visites",
+        "actions": "Actions",
+        "edit": "Modifier",
+        "remove": "Supprimer"
+    },
+    "form": {
+        "phone": "Téléphone",
+        "phonePlaceholder": "Numéro de téléphone",
+        "phonePlaceholderBR": "(DDD) Numéro",
+        "name": "Nom",
+        "email": "Email (optionnel)",
+        "notes": "Notes (optionnel)",
+        "notesPlaceholder": "Ex: Client VIP, préférences spéciales..."
+    },
+    "empty": {
+        "title": "Aucun client trouvé",
+        "description": "Enregistrez le premier client ou ajustez les filtres de recherche",
+        "action": "Enregistrer Client"
+    },
+    "delete": {
+        "title": "Confirmer Suppression",
+        "message": "Êtes-vous sûr de vouloir supprimer le client <strong>{{name}}</strong>?",
+        "warning": "Cette action ne peut pas être annulée. L'historique des visites sera conservé, mais le client ne pourra plus être associé à de nouvelles entrées."
+    },
+    "pagination": {
+        "showing": "Affichage de {{from}} à {{to}} sur {{total}} clients",
+        "previous": "Précédent",
+        "next": "Suivant"
+    },
+    "loading": "Chargement des clients...",
+    "never": "Jamais"
+}

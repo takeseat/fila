@@ -1,0 +1,51 @@
+{
+    "title": "Dashboard",
+    "subtitle": "Track your restaurant metrics in real-time",
+    "metrics": {
+        "activeQueue": {
+            "title": "In Queue Now",
+            "vsYesterday": "vs yesterday"
+        },
+        "avgWait": {
+            "title": "Average Time",
+            "vsYesterday": "vs yesterday",
+            "min": "min"
+        },
+        "seated": {
+            "title": "Customers Served",
+            "vsYesterday": "vs yesterday"
+        }
+    },
+    "charts": {
+        "volumeByHour": {
+            "title": "Volume by Hour",
+            "subtitle": "Customers throughout the day",
+            "viewDetails": "View details"
+        },
+        "weeklyTrend": {
+            "title": "Weekly Trend",
+            "subtitle": "Last 7 days comparison",
+            "viewDetails": "View details"
+        },
+        "days": {
+            "mon": "Mon",
+            "tue": "Tue",
+            "wed": "Wed",
+            "thu": "Thu",
+            "fri": "Fri",
+            "sat": "Sat",
+            "sun": "Sun"
+        }
+    },
+    "quickActions": {
+        "title": "Quick Actions",
+        "addToQueue": {
+            "title": "Add to Queue",
+            "description": "Register a new customer to the waitlist"
+        },
+        "viewReports": {
+            "title": "View Reports",
+            "description": "Analyze metrics and performance"
+        }
+    }
+}

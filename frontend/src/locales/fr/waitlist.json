@@ -1,0 +1,65 @@
+{
+    "title": "Liste d'Attente",
+    "subtitle": "Gérez les clients en attente de service",
+    "tabs": {
+        "active": "Active ({{count}})",
+        "completed": "Terminée ({{count}})"
+    },
+    "status": {
+        "WAITING": "En Attente",
+        "CALLED": "Appelé",
+        "SEATED": "Assis",
+        "CANCELLED": "Annulé",
+        "NO_SHOW": "Absent"
+    },
+    "stats": {
+        "inQueue": "En File",
+        "servedToday": "Servis Aujourd'hui",
+        "avgWaitTime": "Temps Moyen jusqu'à l'Appel",
+        "lastMinutes": "(derniers {{minutes}} min)",
+        "estimated": "Estimé"
+    },
+    "entry": {
+        "timeInQueue": "Temps en File",
+        "calledSince": "Appelé depuis",
+        "calledFor": "Appelé depuis",
+        "eta": "Estimation: {{time}}",
+        "callingAnytime": "Appel à tout moment",
+        "calculating": "Calcul...",
+        "partySize": "Personnes",
+        "customer": "Client",
+        "customerCalled": "Client a été appelé",
+        "at": "à",
+        "delay": "Retard",
+        "delaySeating": "Retard pour S'asseoir"
+    },
+    "actions": {
+        "call": "Appeler",
+        "seat": "Asseoir",
+        "cancel": "Annuler",
+        "noShow": "Absent",
+        "addToQueue": "Ajouter à la File",
+        "addCustomer": "Ajouter Client"
+    },
+    "form": {
+        "title": "Ajouter à la File",
+        "customerPhone": "Téléphone du Client",
+        "customerName": "Nom du Client",
+        "fullName": "Nom complet",
+        "partySize": "Personnes",
+        "notes": "Notes",
+        "notesPlaceholder": "Ex: Table près de la fenêtre, chaise bébé...",
+        "phonePlaceholder": "Numéro de téléphone",
+        "phonePlaceholderBR": "(11) 99999-9999",
+        "lookingUp": "Recherche client...",
+        "customerFound": "Client trouvé: {{name}}",
+        "newCustomer": "Nouveau client — sera enregistré"
+    },
+    "empty": {
+        "title": "Aucun client en file",
+        "description": "Ajoutez des clients à la liste d'attente pour commencer le service",
+        "action": "Ajouter Client"
+    },
+    "loading": "Chargement de la file...",
+    "activeQueue": "File Active"
+}

@@ -1,0 +1,51 @@
+{
+    "title": "Панель",
+    "subtitle": "Отслеживайте метрики вашего ресторана в реальном времени",
+    "metrics": {
+        "activeQueue": {
+            "title": "В Очереди Сейчас",
+            "vsYesterday": "vs вчера"
+        },
+        "avgWait": {
+            "title": "Среднее Время",
+            "vsYesterday": "vs вчера",
+            "min": "мин"
+        },
+        "seated": {
+            "title": "Обслужено Клиентов",
+            "vsYesterday": "vs вчера"
+        }
+    },
+    "charts": {
+        "volumeByHour": {
+            "title": "Объем по Часам",
+            "subtitle": "Клиенты в течение дня",
+            "viewDetails": "Подробнее"
+        },
+        "weeklyTrend": {
+            "title": "Недельная Тенденция",
+            "subtitle": "Сравнение за последние 7 дней",
+            "viewDetails": "Подробнее"
+        },
+        "days": {
+            "mon": "Пн",
+            "tue": "Вт",
+            "wed": "Ср",
+            "thu": "Чт",
+            "fri": "Пт",
+            "sat": "Сб",
+            "sun": "Вс"
+        }
+    },
+    "quickActions": {
+        "title": "Быстрые Действия",
+        "addToQueue": {
+            "title": "Добавить в Очередь",
+            "description": "Зарегистрировать нового клиента в списке ожидания"
+        },
+        "viewReports": {
+            "title": "Просмотр Отчетов",
+            "description": "Анализ метрик и производительности"
+        }
+    }
+}

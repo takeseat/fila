@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "ダッシュボード",
+        "waitlist": "待機リスト",
+        "customers": "顧客",
+        "reports": "レポート",
+        "settings": "設定"
+    },
+    "user": {
+        "profile": "プロフィール",
+        "logout": "ログアウト"
+    },
+    "breadcrumb": {
+        "home": "ホーム"
+    }
+}

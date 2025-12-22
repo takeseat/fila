@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "Tableau de Bord",
+        "waitlist": "Liste d'Attente",
+        "customers": "Clients",
+        "reports": "Rapports",
+        "settings": "Paramètres"
+    },
+    "user": {
+        "profile": "Profil",
+        "logout": "Déconnexion"
+    },
+    "breadcrumb": {
+        "home": "Accueil"
+    }
+}

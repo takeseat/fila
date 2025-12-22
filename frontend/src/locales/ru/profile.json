@@ -1,0 +1,32 @@
+{
+    "title": "Profile Settings",
+    "profileInfo": {
+        "title": "Profile Information",
+        "name": "Name",
+        "email": "Email",
+        "emailReadonly": "Email cannot be changed",
+        "save": "Save Changes",
+        "success": "Profile updated successfully",
+        "error": "Failed to update profile"
+    },
+    "language": {
+        "title": "Language",
+        "description": "This language will be used when you sign in to the system.",
+        "select": "Select Language",
+        "success": "Language updated successfully",
+        "error": "Failed to update language"
+    },
+    "password": {
+        "title": "Change Password",
+        "current": "Current Password",
+        "new": "New Password",
+        "confirm": "Confirm New Password",
+        "requirements": "Minimum 8 characters",
+        "save": "Change Password",
+        "success": "Password changed successfully",
+        "error": "Failed to change password",
+        "incorrectCurrent": "Current password is incorrect",
+        "minLength": "Password must be at least 8 characters",
+        "mismatch": "Passwords do not match"
+    }
+}

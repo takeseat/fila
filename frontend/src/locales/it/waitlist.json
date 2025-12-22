@@ -1,0 +1,65 @@
+{
+    "title": "Lista d'Attesa",
+    "subtitle": "Gestisci i clienti in attesa di servizio",
+    "tabs": {
+        "active": "Attiva ({{count}})",
+        "completed": "Completata ({{count}})"
+    },
+    "status": {
+        "WAITING": "In Attesa",
+        "CALLED": "Chiamato",
+        "SEATED": "Seduto",
+        "CANCELLED": "Cancellato",
+        "NO_SHOW": "Non Presentato"
+    },
+    "stats": {
+        "inQueue": "In Coda",
+        "servedToday": "Serviti Oggi",
+        "avgWaitTime": "Tempo Medio fino alla Chiamata",
+        "lastMinutes": "(ultimi {{minutes}} min)",
+        "estimated": "Stimato"
+    },
+    "entry": {
+        "timeInQueue": "Tempo in Coda",
+        "calledSince": "Chiamato da",
+        "calledFor": "Chiamato da",
+        "eta": "Stima: {{time}}",
+        "callingAnytime": "Chiamata in qualsiasi momento",
+        "calculating": "Calcolando...",
+        "partySize": "Persone",
+        "customer": "Cliente",
+        "customerCalled": "Cliente è stato chiamato",
+        "at": "alle",
+        "delay": "Ritardo",
+        "delaySeating": "Ritardo nel Sedersi"
+    },
+    "actions": {
+        "call": "Chiama",
+        "seat": "Siedi",
+        "cancel": "Annulla",
+        "noShow": "Non Presentato",
+        "addToQueue": "Aggiungi alla Coda",
+        "addCustomer": "Aggiungi Cliente"
+    },
+    "form": {
+        "title": "Aggiungi alla Coda",
+        "customerPhone": "Telefono del Cliente",
+        "customerName": "Nome del Cliente",
+        "fullName": "Nome completo",
+        "partySize": "Persone",
+        "notes": "Note",
+        "notesPlaceholder": "Es: Tavolo vicino alla finestra, seggiolone...",
+        "phonePlaceholder": "Numero di telefono",
+        "phonePlaceholderBR": "(11) 99999-9999",
+        "lookingUp": "Ricerca cliente...",
+        "customerFound": "Cliente trovato: {{name}}",
+        "newCustomer": "Nuovo cliente — sarà registrato"
+    },
+    "empty": {
+        "title": "Nessun cliente in coda",
+        "description": "Aggiungi clienti alla lista d'attesa per iniziare il servizio",
+        "action": "Aggiungi Cliente"
+    },
+    "loading": "Caricamento coda...",
+    "activeQueue": "Coda Attiva"
+}

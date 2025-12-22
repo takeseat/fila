@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "Dashboard",
+        "waitlist": "Waitlist",
+        "customers": "Customers",
+        "reports": "Reports",
+        "settings": "Settings"
+    },
+    "user": {
+        "profile": "Profile",
+        "logout": "Logout"
+    },
+    "breadcrumb": {
+        "home": "Home"
+    }
+}

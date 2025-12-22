@@ -1,0 +1,19 @@
+{
+  "title": "Tableau de Bord",
+  "subtitle": "Suivez les métriques de votre restaurant en temps réel",
+  "metrics": {
+    "activeQueue": {"title": "En File Maintenant", "vsYesterday": "vs hier"},
+    "avgWait": {"title": "Temps Moyen", "vsYesterday": "vs hier", "min": "min"},
+    "seated": {"title": "Clients Servis", "vsYesterday": "vs hier"}
+  },
+  "charts": {
+    "volumeByHour": {"title": "Volume par Heure", "subtitle": "Clients tout au long de la journée", "viewDetails": "Voir détails"},
+    "weeklyTrend": {"title": "Tendance Hebdomadaire", "subtitle": "Comparaison des 7 derniers jours", "viewDetails": "Voir détails"},
+    "days": {"mon": "Lun", "tue": "Mar", "wed": "Mer", "thu": "Jeu", "fri": "Ven", "sat": "Sam", "sun": "Dim"}
+  },
+  "quickActions": {
+    "title": "Actions Rapides",
+    "addToQueue": {"title": "Ajouter à la File", "description": "Enregistrer un nouveau client dans la liste d'attente"},
+    "viewReports": {"title": "Voir Rapports", "description": "Analyser métriques et performances"}
+  }
+}

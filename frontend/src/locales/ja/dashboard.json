@@ -1,0 +1,51 @@
+{
+    "title": "ダッシュボード",
+    "subtitle": "レストランの指標をリアルタイムで追跡",
+    "metrics": {
+        "activeQueue": {
+            "title": "現在の待機列",
+            "vsYesterday": "vs 昨日"
+        },
+        "avgWait": {
+            "title": "平均時間",
+            "vsYesterday": "vs 昨日",
+            "min": "分"
+        },
+        "seated": {
+            "title": "サービス済み顧客",
+            "vsYesterday": "vs 昨日"
+        }
+    },
+    "charts": {
+        "volumeByHour": {
+            "title": "時間別ボリューム",
+            "subtitle": "1日を通じた顧客",
+            "viewDetails": "詳細を見る"
+        },
+        "weeklyTrend": {
+            "title": "週間トレンド",
+            "subtitle": "過去7日間の比較",
+            "viewDetails": "詳細を見る"
+        },
+        "days": {
+            "mon": "月",
+            "tue": "火",
+            "wed": "水",
+            "thu": "木",
+            "fri": "金",
+            "sat": "土",
+            "sun": "日"
+        }
+    },
+    "quickActions": {
+        "title": "クイックアクション",
+        "addToQueue": {
+            "title": "キューに追加",
+            "description": "待機リストに新しい顧客を登録"
+        },
+        "viewReports": {
+            "title": "レポートを見る",
+            "description": "指標とパフォーマンスを分析"
+        }
+    }
+}

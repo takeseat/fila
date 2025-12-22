@@ -1,0 +1,44 @@
+{
+    "title": "Configurações do Restaurante",
+    "subtitle": "Gerencie as preferências e alertas da sua operação.",
+    "sections": {
+        "queueAlerts": {
+            "title": "Alertas de Tempo da Fila",
+            "waitingAlert": {
+                "label": "Alerta para Cliente Aguardando (minutos)",
+                "help": "Define após quanto tempo de espera o cliente será marcado com um alerta visual.",
+                "helpExtra": "Deixe em branco para desativar.",
+                "placeholder": "Ex: 15"
+            },
+            "calledAlert": {
+                "label": "Alerta para Cliente Chamado (minutos)",
+                "help": "Define após quanto tempo de ser chamado (sem sentar) o cliente será marcado com alerta.",
+                "helpExtra": "Deixe em branco para desativar.",
+                "placeholder": "Ex: 5"
+            }
+        },
+        "avgWaitCalculation": {
+            "title": "Cálculo do Tempo Médio da Fila",
+            "window": {
+                "label": "Janela de cálculo (minutos)",
+                "help": "Considerar apenas clientes que entraram na fila nos últimos X minutos para calcular o tempo médio.",
+                "placeholder": "90"
+            },
+            "fallback": {
+                "label": "Fallback do tempo médio (minutos)",
+                "help": "Valor exibido quando não houver dados suficientes na janela configurada.",
+                "placeholder": "15"
+            }
+        }
+    },
+    "validation": {
+        "mustBePositive": "Valor deve ser maior que 0"
+    },
+    "actions": {
+        "save": "Salvar Alterações",
+        "saving": "Salvando..."
+    },
+    "messages": {
+        "saveSuccess": "Configurações salvas com sucesso!"
+    }
+}

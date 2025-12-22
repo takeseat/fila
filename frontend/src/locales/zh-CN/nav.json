@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "仪表板",
+        "waitlist": "等候名单",
+        "customers": "客户",
+        "reports": "报告",
+        "settings": "设置"
+    },
+    "user": {
+        "profile": "个人资料",
+        "logout": "退出"
+    },
+    "breadcrumb": {
+        "home": "首页"
+    }
+}

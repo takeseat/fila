@@ -1,0 +1,51 @@
+{
+    "title": "仪表板",
+    "subtitle": "实时跟踪您的餐厅指标",
+    "metrics": {
+        "activeQueue": {
+            "title": "当前排队",
+            "vsYesterday": "vs 昨天"
+        },
+        "avgWait": {
+            "title": "平均时间",
+            "vsYesterday": "vs 昨天",
+            "min": "分钟"
+        },
+        "seated": {
+            "title": "已服务客户",
+            "vsYesterday": "vs 昨天"
+        }
+    },
+    "charts": {
+        "volumeByHour": {
+            "title": "每小时流量",
+            "subtitle": "全天客户",
+            "viewDetails": "查看详情"
+        },
+        "weeklyTrend": {
+            "title": "每周趋势",
+            "subtitle": "最近7天对比",
+            "viewDetails": "查看详情"
+        },
+        "days": {
+            "mon": "周一",
+            "tue": "周二",
+            "wed": "周三",
+            "thu": "周四",
+            "fri": "周五",
+            "sat": "周六",
+            "sun": "周日"
+        }
+    },
+    "quickActions": {
+        "title": "快速操作",
+        "addToQueue": {
+            "title": "添加到队列",
+            "description": "在等候名单中注册新客户"
+        },
+        "viewReports": {
+            "title": "查看报告",
+            "description": "分析指标和性能"
+        }
+    }
+}

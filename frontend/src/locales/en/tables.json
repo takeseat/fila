@@ -1,0 +1,22 @@
+{
+    "pagination": {
+        "showing": "Showing {{from}} to {{to}} of {{total}}",
+        "rowsPerPage": "Rows per page:",
+        "page": "Page {{current}} of {{total}}"
+    },
+    "sort": {
+        "ascending": "Sort ascending",
+        "descending": "Sort descending",
+        "clear": "Clear sort"
+    },
+    "filter": {
+        "apply": "Apply Filters",
+        "clear": "Clear Filters",
+        "active": "{{count}} active filters"
+    },
+    "selection": {
+        "selected": "{{count}} selected",
+        "selectAll": "Select all",
+        "deselectAll": "Deselect all"
+    }
+}

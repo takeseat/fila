@@ -1,0 +1,50 @@
+{
+    "actions": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "delete": "Delete",
+        "edit": "Edit",
+        "create": "Create",
+        "search": "Search",
+        "filter": "Filter",
+        "clear": "Clear",
+        "close": "Close",
+        "back": "Back",
+        "next": "Next",
+        "previous": "Previous",
+        "submit": "Submit",
+        "add": "Add",
+        "remove": "Remove",
+        "update": "Update",
+        "refresh": "Refresh",
+        "export": "Export",
+        "import": "Import"
+    },
+    "status": {
+        "loading": "Loading...",
+        "saving": "Saving...",
+        "success": "Success",
+        "error": "Error",
+        "warning": "Warning",
+        "info": "Info"
+    },
+    "time": {
+        "never": "Never",
+        "now": "Now",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "minutes": "{{count}} min",
+        "hours": "{{count}} h",
+        "days": "{{count}} d",
+        "seconds": "{{count}}s"
+    },
+    "labels": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "notes": "Notes",
+        "optional": "Optional",
+        "required": "Required"
+    }
+}

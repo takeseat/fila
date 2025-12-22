@@ -1,0 +1,50 @@
+{
+    "actions": {
+        "save": "Zapisz",
+        "cancel": "Anuluj",
+        "confirm": "Potwierdź",
+        "delete": "Usuń",
+        "edit": "Edytuj",
+        "create": "Utwórz",
+        "search": "Szukaj",
+        "filter": "Filtruj",
+        "clear": "Wyczyść",
+        "close": "Zamknij",
+        "back": "Wstecz",
+        "next": "Dalej",
+        "previous": "Poprzedni",
+        "submit": "Wyślij",
+        "add": "Dodaj",
+        "remove": "Usuń",
+        "update": "Aktualizuj",
+        "refresh": "Odśwież",
+        "export": "Eksportuj",
+        "import": "Importuj"
+    },
+    "status": {
+        "loading": "Ładowanie...",
+        "saving": "Zapisywanie...",
+        "success": "Sukces",
+        "error": "Błąd",
+        "warning": "Ostrzeżenie",
+        "info": "Info"
+    },
+    "time": {
+        "never": "Nigdy",
+        "now": "Teraz",
+        "today": "Dziś",
+        "yesterday": "Wczoraj",
+        "minutes": "{{count}} min",
+        "hours": "{{count}} godz",
+        "days": "{{count}} dni",
+        "seconds": "{{count}}s"
+    },
+    "labels": {
+        "name": "Nazwa",
+        "email": "Email",
+        "phone": "Telefon",
+        "notes": "Notatki",
+        "optional": "Opcjonalne",
+        "required": "Wymagane"
+    }
+}

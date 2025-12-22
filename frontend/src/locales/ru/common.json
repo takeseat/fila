@@ -1,0 +1,50 @@
+{
+    "actions": {
+        "save": "Сохранить",
+        "cancel": "Отмена",
+        "confirm": "Подтвердить",
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "create": "Создать",
+        "search": "Поиск",
+        "filter": "Фильтр",
+        "clear": "Очистить",
+        "close": "Закрыть",
+        "back": "Назад",
+        "next": "Далее",
+        "previous": "Предыдущий",
+        "submit": "Отправить",
+        "add": "Добавить",
+        "remove": "Удалить",
+        "update": "Обновить",
+        "refresh": "Обновить",
+        "export": "Экспорт",
+        "import": "Импорт"
+    },
+    "status": {
+        "loading": "Загрузка...",
+        "saving": "Сохранение...",
+        "success": "Успех",
+        "error": "Ошибка",
+        "warning": "Предупреждение",
+        "info": "Инфо"
+    },
+    "time": {
+        "never": "Никогда",
+        "now": "Сейчас",
+        "today": "Сегодня",
+        "yesterday": "Вчера",
+        "minutes": "{{count}} мин",
+        "hours": "{{count}} ч",
+        "days": "{{count}} д",
+        "seconds": "{{count}}с"
+    },
+    "labels": {
+        "name": "Имя",
+        "email": "Email",
+        "phone": "Телефон",
+        "notes": "Заметки",
+        "optional": "Необязательно",
+        "required": "Обязательно"
+    }
+}

@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
 import { Card, Skeleton } from '../components/ui';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 export function Dashboard() {
+    const { t } = useTranslation('dashboard');
     const navigate = useNavigate();
     const [stats, setStats] = useState({
         waitingNow: 0,
@@ -57,10 +59,10 @@ export function Dashboard() {
             {/* Welcome Section */}
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-dark-900 mb-2">
-                    Visão Geral
+                    {t('title')}
                 </h1>
                 <p className="text-dark-500">
-                    Acompanhe as métricas do seu restaurante em tempo real
+                    {t('subtitle')}
                 </p>
             </div>
 
@@ -90,9 +92,9 @@ export function Dashboard() {
                                     </span>
                                 </div>
                             </div>
-                            <p className="text-sm font-medium text-dark-600 mb-2">Na Fila Agora</p>
+                            <p className="text-sm font-medium text-dark-600 mb-2">{t('metrics.activeQueue.title')}</p>
                             <p className="text-4xl font-bold text-dark-900 mb-1">{stats.waitingNow}</p>
-                            <p className="text-xs text-dark-500">vs ontem</p>
+                            <p className="text-xs text-dark-500">{t('metrics.activeQueue.vsYesterday')}</p>
                         </div>
                     )}
                 </div>
@@ -121,12 +123,12 @@ export function Dashboard() {
                                     </span>
                                 </div>
                             </div>
-                            <p className="text-sm font-medium text-dark-600 mb-2">Tempo Médio</p>
+                            <p className="text-sm font-medium text-dark-600 mb-2">{t('metrics.avgWait.title')}</p>
                             <p className="text-4xl font-bold text-dark-900 mb-1">
                                 {stats.avgWaitTime}
-                                <span className="text-xl ml-1">min</span>
+                                <span className="text-xl ml-1">{t('metrics.avgWait.min')}</span>
                             </p>
-                            <p className="text-xs text-dark-500">vs ontem</p>
+                            <p className="text-xs text-dark-500">{t('metrics.avgWait.vsYesterday')}</p>
                         </div>
                     )}
                 </div>
@@ -155,9 +157,9 @@ export function Dashboard() {
                                     </span>
                                 </div>
                             </div>
-                            <p className="text-sm font-medium text-dark-600 mb-2">Clientes Atendidos</p>
+                            <p className="text-sm font-medium text-dark-600 mb-2">{t('metrics.seated.title')}</p>
                             <p className="text-4xl font-bold text-dark-900 mb-1">{stats.totalCustomersToday}</p>
-                            <p className="text-xs text-dark-500">vs ontem</p>
+                            <p className="text-xs text-dark-500">{t('metrics.seated.vsYesterday')}</p>
                         </div>
                     )}
                 </div>
@@ -168,11 +170,11 @@ export function Dashboard() {
                 {/* Volume Chart */}
                 <Card
                     variant="premium"
-                    title="Volume por Hora"
-                    subtitle="Clientes ao longo do dia"
+                    title={t('charts.volumeByHour.title')}
+                    subtitle={t('charts.volumeByHour.subtitle')}
                     headerAction={
                         <button className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 transition-colors">
-                            Ver detalhes
+                            {t('charts.volumeByHour.viewDetails')}
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
@@ -210,11 +212,11 @@ export function Dashboard() {
                 {/* Trend Chart */}
                 <Card
                     variant="premium"
-                    title="Tendência Semanal"
-                    subtitle="Comparativo dos últimos 7 dias"
+                    title={t('charts.weeklyTrend.title')}
+                    subtitle={t('charts.weeklyTrend.subtitle')}
                     headerAction={
                         <button className="text-sm text-primary-600 hover:text-primary-700 font-medium flex items-center gap-1 transition-colors">
-                            Ver detalhes
+                            {t('charts.weeklyTrend.viewDetails')}
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
@@ -223,13 +225,13 @@ export function Dashboard() {
                 >
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={[
-                            { dia: 'Seg', clientes: 45 },
-                            { dia: 'Ter', clientes: 52 },
-                            { dia: 'Qua', clientes: 48 },
-                            { dia: 'Qui', clientes: 61 },
-                            { dia: 'Sex', clientes: 78 },
-                            { dia: 'Sáb', clientes: 92 },
-                            { dia: 'Dom', clientes: 68 },
+                            { dia: t('charts.days.mon'), clientes: 45 },
+                            { dia: t('charts.days.tue'), clientes: 52 },
+                            { dia: t('charts.days.wed'), clientes: 48 },
+                            { dia: t('charts.days.thu'), clientes: 61 },
+                            { dia: t('charts.days.fri'), clientes: 78 },
+                            { dia: t('charts.days.sat'), clientes: 92 },
+                            { dia: t('charts.days.sun'), clientes: 68 },
                         ]}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#E8E8ED" vertical={false} />
                             <XAxis
@@ -266,7 +268,7 @@ export function Dashboard() {
             </div>
 
             {/* Quick Actions */}
-            <Card variant="premium" title="Ações Rápidas">
+            <Card variant="premium" title={t('quickActions.title')}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <button
                         onClick={() => navigate('/waitlist')}
@@ -278,9 +280,9 @@ export function Dashboard() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
                             </div>
-                            <span className="font-semibold text-dark-900 text-lg">Adicionar à Fila</span>
+                            <span className="font-semibold text-dark-900 text-lg">{t('quickActions.addToQueue.title')}</span>
                         </div>
-                        <p className="text-sm text-dark-500">Registre um novo cliente na fila de espera</p>
+                        <p className="text-sm text-dark-500">{t('quickActions.addToQueue.description')}</p>
                     </button>
 
                     <button
@@ -293,9 +295,9 @@ export function Dashboard() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                                 </svg>
                             </div>
-                            <span className="font-semibold text-dark-900 text-lg">Ver Relatórios</span>
+                            <span className="font-semibold text-dark-900 text-lg">{t('quickActions.viewReports.title')}</span>
                         </div>
-                        <p className="text-sm text-dark-500">Analise métricas e desempenho</p>
+                        <p className="text-sm text-dark-500">{t('quickActions.viewReports.description')}</p>
                     </button>
                 </div>
             </Card>

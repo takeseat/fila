@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
 import { getSocket } from '../lib/socket';
 import { Button, Modal, Input, Badge, EmptyState, Progress, Spinner } from '../components/ui';
@@ -9,6 +10,7 @@ import { DEFAULT_COUNTRY } from '../data/countries';
 import { removeMask, applyBrazilianMask, buildFullPhone } from '../utils/phoneUtils';
 
 export function Waitlist() {
+    const { t } = useTranslation('waitlist');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         country: DEFAULT_COUNTRY,
@@ -241,11 +243,11 @@ export function Waitlist() {
         };
 
         const labels: Record<string, string> = {
-            WAITING: 'Aguardando',
-            CALLED: 'Chamado',
-            SEATED: 'Sentado',
-            CANCELLED: 'Cancelado',
-            NO_SHOW: 'Não Compareceu',
+            WAITING: t('status.WAITING'),
+            CALLED: t('status.CALLED'),
+            SEATED: t('status.SEATED'),
+            CANCELLED: t('status.CANCELLED'),
+            NO_SHOW: t('status.NO_SHOW'),
         };
 
         // ... existing badge logic ...
@@ -311,7 +313,7 @@ export function Waitlist() {
 
             if (remainingSeconds === 0) {
                 isOverdue = true;
-                etaString = 'Chamando a qualquer momento';
+                etaString = t('entry.callingAnytime');
             } else {
                 const remMin = Math.floor(remainingSeconds / 60);
                 const remSec = Math.floor(remainingSeconds % 60);
@@ -319,7 +321,7 @@ export function Waitlist() {
             }
         } else {
             // No metrics available
-            etaString = 'Calculando...';
+            etaString = t('entry.calculating');
         }
 
         // Visual variants based on progress/overdue
@@ -343,7 +345,7 @@ export function Waitlist() {
             <div className="flex items-center justify-center py-20">
                 <div className="text-center">
                     <Spinner size="lg" className="mx-auto mb-4" />
-                    <p className="text-dark-500">Carregando fila...</p>
+                    <p className="text-dark-500">{t('loading')}</p>
                 </div>
             </div>
         );
@@ -354,14 +356,14 @@ export function Waitlist() {
             {/* Header with Stats */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-dark-900 mb-2">Fila de Espera</h1>
-                    <p className="text-dark-500">Gerencie os clientes aguardando atendimento</p>
+                    <h1 className="text-3xl font-bold text-dark-900 mb-2">{t('title')}</h1>
+                    <p className="text-dark-500">{t('subtitle')}</p>
                 </div>
                 <Button onClick={() => setIsModalOpen(true)} size="lg" className="gap-2">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
-                    Adicionar à Fila
+                    {t('actions.addToQueue')}
                 </Button>
             </div>
 
@@ -375,7 +377,7 @@ export function Waitlist() {
                             </svg>
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-dark-600">Na Fila</p>
+                            <p className="text-sm font-medium text-dark-600">{t('stats.inQueue')}</p>
                             <p className="text-3xl font-bold text-dark-900">{activeEntries.length}</p>
                         </div>
                     </div>
@@ -389,7 +391,7 @@ export function Waitlist() {
                             </svg>
                         </div>
                         <div>
-                            <p className="text-sm font-medium text-dark-600">Atendidos Hoje</p>
+                            <p className="text-sm font-medium text-dark-600">{t('stats.servedToday')}</p>
                             <p className="text-3xl font-bold text-dark-900">
                                 {completedEntries.filter((e: any) => e.status === 'SEATED').length}
                             </p>
@@ -406,17 +408,17 @@ export function Waitlist() {
                         </div>
                         <div>
                             <p className="text-sm font-medium text-dark-600">
-                                Tempo Médio até Chamar
-                                {metrics?.windowMinutes && <span className="text-xs text-dark-400 ml-1">(últimos {metrics.windowMinutes} min)</span>}
+                                {t('stats.avgWaitTime')}
+                                {metrics?.windowMinutes && <span className="text-xs text-dark-400 ml-1">{t('stats.lastMinutes', { minutes: metrics.windowMinutes })}</span>}
                             </p>
                             <div className="flex items-center gap-2">
                                 <p className="text-3xl font-bold text-dark-900">
                                     {metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}
-                                    <span className="text-lg ml-1">min</span>
+                                    <span className="text-lg ml-1">{t('common:time.minutes', { count: 0 }).split(' ')[1]}</span>
                                 </p>
                                 {metrics?.isFallbackUsed && (
                                     <span title="Sem dados suficientes na janela. Exibindo fallback." className="cursor-help text-xs bg-light-200 text-dark-500 px-2 py-1 rounded-full hover:bg-light-300 transition-colors">
-                                        Estimado
+                                        {t('stats.estimated')}
                                     </span>
                                 )}
                             </div>
@@ -427,7 +429,7 @@ export function Waitlist() {
 
             {/* Active Queue */}
             <div>
-                <h2 className="text-xl font-semibold text-dark-900 mb-4">Fila Ativa</h2>
+                <h2 className="text-xl font-semibold text-dark-900 mb-4">{t('activeQueue')}</h2>
                 {activeEntries.length === 0 ? (
                     <div className="card-premium">
                         <EmptyState
@@ -436,11 +438,11 @@ export function Waitlist() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                             }
-                            title="Nenhum cliente na fila"
-                            description="Adicione clientes à fila de espera para começar o atendimento"
+                            title={t('empty.title')}
+                            description={t('empty.description')}
                             action={
                                 <Button onClick={() => setIsModalOpen(true)}>
-                                    Adicionar Cliente
+                                    {t('empty.action')}
                                 </Button>
                             }
                         />
@@ -466,7 +468,7 @@ export function Waitlist() {
                                             <span className="relative inline-flex rounded-full h-3 w-3 bg-warning-500"></span>
                                         </span>
                                         <span className="bg-warning-100 text-warning-700 text-xs px-2 py-0.5 rounded-full font-medium border border-warning-200">
-                                            ⚠️ Atraso
+                                            ⚠️ {t('entry.delay')}
                                         </span>
                                     </div>
                                 );
@@ -480,7 +482,7 @@ export function Waitlist() {
                                             <span className="relative inline-flex rounded-full h-3 w-3 bg-danger-500"></span>
                                         </span>
                                         <span className="bg-danger-100 text-danger-700 text-xs px-2 py-0.5 rounded-full font-medium border border-danger-200">
-                                            📣 Atraso ao Sentar
+                                            📣 {t('entry.delaySeating')}
                                         </span>
                                     </div>
                                 );
@@ -521,7 +523,7 @@ export function Waitlist() {
                                     {/* Info Grid */}
                                     <div className="grid grid-cols-2 gap-3 mb-4">
                                         <div className="bg-light-50 rounded-lg p-3">
-                                            <p className="text-xs text-dark-500 mb-1">Pessoas</p>
+                                            <p className="text-xs text-dark-500 mb-1">{t('entry.partySize')}</p>
                                             <p className="text-lg font-semibold text-dark-900 flex items-center gap-1">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -531,7 +533,7 @@ export function Waitlist() {
                                         </div>
                                         <div className="bg-light-50 rounded-lg p-3">
                                             <p className="text-xs text-dark-500 mb-1">
-                                                {entry.status === 'CALLED' ? 'Chamado há' : 'Tempo na Fila'}
+                                                {entry.status === 'CALLED' ? t('entry.calledSince') : t('entry.timeInQueue')}
                                             </p>
                                             <p className={`text-lg font-semibold flex items-center gap-2 ${timerClass}`}>
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -547,7 +549,7 @@ export function Waitlist() {
                                         <div className="mb-4">
                                             <div className="flex justify-between items-center mb-2">
                                                 <span className="text-xs font-medium text-dark-600">
-                                                    Estimativa: {etaString}
+                                                    {t('entry.eta', { time: etaString })}
                                                 </span>
                                             </div>
                                             <Progress value={progress} variant={variant as any} size="md" />
@@ -558,9 +560,9 @@ export function Waitlist() {
                                     {entry.status === 'CALLED' && (
                                         <div className="mb-4">
                                             <div className="p-3 bg-primary-50 rounded-lg border border-primary-100 flex items-center justify-between">
-                                                <span className="text-sm text-primary-700 font-medium">Cliente foi chamado</span>
+                                                <span className="text-sm text-primary-700 font-medium">{t('entry.customerCalled')}</span>
                                                 <span className="text-xs text-primary-600">
-                                                    às {format(new Date(entry.calledAt || entry.updatedAt), 'HH:mm')}
+                                                    {t('entry.at')} {format(new Date(entry.calledAt || entry.updatedAt), 'HH:mm')}
                                                 </span>
                                             </div>
                                         </div>
@@ -580,7 +582,7 @@ export function Waitlist() {
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                                     </svg>
-                                                    Chamar
+                                                    {t('actions.call')}
                                                 </Button>
                                                 <Button
                                                     size="sm"
@@ -627,7 +629,7 @@ export function Waitlist() {
                                                     className="flex-1"
                                                     isLoading={noShowMutation.isPending}
                                                 >
-                                                    Não Compareceu
+                                                    {t('actions.noShow')}
                                                 </Button>
                                             </>
                                         )}
@@ -643,11 +645,11 @@ export function Waitlist() {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                title="Adicionar à Fila"
+                title={t('form.title')}
             >
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-dark-700">Celular do Cliente</label>
+                        <label className="text-sm font-medium text-dark-700">{t('form.customerPhone')}</label>
                         <div className="flex relative z-20 items-stretch h-11">
                             <div className="w-[72px] flex-shrink-0 z-10 h-full">
                                 <CountrySelect
@@ -659,7 +661,7 @@ export function Waitlist() {
                             </div>
                             <div className="flex-1 -ml-[1px] h-full">
                                 <Input
-                                    placeholder={formData.country.code === 'BR' ? '(11) 99999-9999' : 'Phone number'}
+                                    placeholder={formData.country.code === 'BR' ? t('form.phonePlaceholderBR') : t('form.phonePlaceholder')}
                                     value={phoneDisplay}
                                     onChange={handlePhoneChange}
                                     required
@@ -670,7 +672,7 @@ export function Waitlist() {
                         {isLookingUp && (
                             <p className="text-xs text-primary-600 flex items-center gap-1">
                                 <Spinner size="sm" />
-                                Buscando cliente...
+                                {t('form.lookingUp')}
                             </p>
                         )}
                         {!isLookingUp && customerFound && (
@@ -678,7 +680,7 @@ export function Waitlist() {
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
-                                Cliente encontrado: {customerFound.name}
+                                {t('form.customerFound', { name: customerFound.name })}
                             </p>
                         )}
                         {!isLookingUp && !customerFound && phoneDisplay.replace(/\D/g, '').length >= (formData.country.code === 'BR' ? 10 : 6) && (
@@ -686,17 +688,17 @@ export function Waitlist() {
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
-                                Novo cliente — será cadastrado
+                                {t('form.newCustomer')}
                             </p>
                         )}
                     </div>
 
                     <Input
-                        label="Nome do Cliente"
+                        label={t('form.customerName')}
                         value={formData.customerName}
                         onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                         required
-                        placeholder="Nome completo"
+                        placeholder={t('form.fullName')}
                         leftIcon={
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -706,7 +708,7 @@ export function Waitlist() {
 
                     <div className="grid grid-cols-2 gap-4">
                         <Input
-                            label="Pessoas"
+                            label={t('form.partySize')}
                             type="number"
                             min="1"
                             max="20"
@@ -722,10 +724,10 @@ export function Waitlist() {
                     </div>
 
                     <Input
-                        label="Observações"
+                        label={t('form.notes')}
                         value={formData.notes}
                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        placeholder="Ex: Mesa na janela, cadeira de bebê..."
+                        placeholder={t('form.notesPlaceholder')}
                         leftIcon={
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -740,14 +742,14 @@ export function Waitlist() {
                             className="flex-1"
                             onClick={() => setIsModalOpen(false)}
                         >
-                            Cancelar
+                            {t('common:actions.cancel')}
                         </Button>
                         <Button
                             type="submit"
                             className="flex-1"
                             isLoading={createMutation.isPending}
                         >
-                            Adicionar à Fila
+                            {t('actions.addToQueue')}
                         </Button>
                     </div>
                 </form>

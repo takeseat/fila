@@ -1,0 +1,50 @@
+{
+    "actions": {
+        "save": "حفظ",
+        "cancel": "إلغاء",
+        "confirm": "تأكيد",
+        "delete": "حذف",
+        "edit": "تعديل",
+        "create": "إنشاء",
+        "search": "بحث",
+        "filter": "تصفية",
+        "clear": "مسح",
+        "close": "إغلاق",
+        "back": "رجوع",
+        "next": "التالي",
+        "previous": "السابق",
+        "submit": "إرسال",
+        "add": "إضافة",
+        "remove": "إزالة",
+        "update": "تحديث",
+        "refresh": "تحديث",
+        "export": "تصدير",
+        "import": "استيراد"
+    },
+    "status": {
+        "loading": "جاري التحميل...",
+        "saving": "جاري الحفظ...",
+        "success": "نجح",
+        "error": "خطأ",
+        "warning": "تحذير",
+        "info": "معلومات"
+    },
+    "time": {
+        "never": "أبداً",
+        "now": "الآن",
+        "today": "اليوم",
+        "yesterday": "أمس",
+        "minutes": "{{count}} دقيقة",
+        "hours": "{{count}} ساعة",
+        "days": "{{count}} يوم",
+        "seconds": "{{count}}ث"
+    },
+    "labels": {
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "phone": "الهاتف",
+        "notes": "ملاحظات",
+        "optional": "اختياري",
+        "required": "مطلوب"
+    }
+}

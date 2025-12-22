@@ -1,0 +1,19 @@
+{
+  "title": "Dashboard",
+  "subtitle": "Monitora le metriche del tuo ristorante in tempo reale",
+  "metrics": {
+    "activeQueue": {"title": "In Coda Ora", "vsYesterday": "vs ieri"},
+    "avgWait": {"title": "Tempo Medio", "vsYesterday": "vs ieri", "min": "min"},
+    "seated": {"title": "Clienti Serviti", "vsYesterday": "vs ieri"}
+  },
+  "charts": {
+    "volumeByHour": {"title": "Volume per Ora", "subtitle": "Clienti durante il giorno", "viewDetails": "Vedi dettagli"},
+    "weeklyTrend": {"title": "Tendenza Settimanale", "subtitle": "Confronto ultimi 7 giorni", "viewDetails": "Vedi dettagli"},
+    "days": {"mon": "Lun", "tue": "Mar", "wed": "Mer", "thu": "Gio", "fri": "Ven", "sat": "Sab", "sun": "Dom"}
+  },
+  "quickActions": {
+    "title": "Azioni Rapide",
+    "addToQueue": {"title": "Aggiungi alla Coda", "description": "Registra un nuovo cliente nella lista d'attesa"},
+    "viewReports": {"title": "Vedi Report", "description": "Analizza metriche e prestazioni"}
+  }
+}

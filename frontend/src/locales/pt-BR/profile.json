@@ -1,0 +1,32 @@
+{
+    "title": "Configurações de Perfil",
+    "profileInfo": {
+        "title": "Informações do Perfil",
+        "name": "Nome",
+        "email": "E-mail",
+        "emailReadonly": "O e-mail não pode ser alterado",
+        "save": "Salvar Alterações",
+        "success": "Perfil atualizado com sucesso",
+        "error": "Falha ao atualizar perfil"
+    },
+    "language": {
+        "title": "Idioma",
+        "description": "Este idioma será usado quando você entrar no sistema.",
+        "select": "Selecionar Idioma",
+        "success": "Idioma atualizado com sucesso",
+        "error": "Falha ao atualizar idioma"
+    },
+    "password": {
+        "title": "Alterar Senha",
+        "current": "Senha Atual",
+        "new": "Nova Senha",
+        "confirm": "Confirmar Nova Senha",
+        "requirements": "Mínimo de 8 caracteres",
+        "save": "Alterar Senha",
+        "success": "Senha alterada com sucesso",
+        "error": "Falha ao alterar senha",
+        "incorrectCurrent": "Senha atual incorreta",
+        "minLength": "A senha deve ter pelo menos 8 caracteres",
+        "mismatch": "As senhas não coincidem"
+    }
+}

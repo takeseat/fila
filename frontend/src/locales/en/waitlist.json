@@ -1,0 +1,65 @@
+{
+    "title": "Waitlist",
+    "subtitle": "Manage customers waiting for service",
+    "tabs": {
+        "active": "Active ({{count}})",
+        "completed": "Completed ({{count}})"
+    },
+    "status": {
+        "WAITING": "Waiting",
+        "CALLED": "Called",
+        "SEATED": "Seated",
+        "CANCELLED": "Cancelled",
+        "NO_SHOW": "No Show"
+    },
+    "stats": {
+        "inQueue": "In Queue",
+        "servedToday": "Served Today",
+        "avgWaitTime": "Average Time to Call",
+        "lastMinutes": "(last {{minutes}} min)",
+        "estimated": "Estimated"
+    },
+    "entry": {
+        "timeInQueue": "Time in Queue",
+        "calledSince": "Called since",
+        "calledFor": "Called for",
+        "eta": "Estimate: {{time}}",
+        "callingAnytime": "Calling anytime now",
+        "calculating": "Calculating...",
+        "partySize": "People",
+        "customer": "Customer",
+        "customerCalled": "Customer was called",
+        "at": "at",
+        "delay": "Delay",
+        "delaySeating": "Seating Delay"
+    },
+    "actions": {
+        "call": "Call",
+        "seat": "Seat",
+        "cancel": "Cancel",
+        "noShow": "No Show",
+        "addToQueue": "Add to Queue",
+        "addCustomer": "Add Customer"
+    },
+    "form": {
+        "title": "Add to Queue",
+        "customerPhone": "Customer Phone",
+        "customerName": "Customer Name",
+        "fullName": "Full name",
+        "partySize": "People",
+        "notes": "Notes",
+        "notesPlaceholder": "E.g.: Window table, baby chair...",
+        "phonePlaceholder": "Phone number",
+        "phonePlaceholderBR": "(11) 99999-9999",
+        "lookingUp": "Looking up customer...",
+        "customerFound": "Customer found: {{name}}",
+        "newCustomer": "New customer — will be registered"
+    },
+    "empty": {
+        "title": "No customers in queue",
+        "description": "Add customers to the waitlist to start service",
+        "action": "Add Customer"
+    },
+    "loading": "Loading queue...",
+    "activeQueue": "Active Queue"
+}

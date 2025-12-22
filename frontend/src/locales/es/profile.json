@@ -1,0 +1,32 @@
+{
+    "title": "Configuración de Perfil",
+    "profileInfo": {
+        "title": "Información del Perfil",
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "emailReadonly": "El correo electrónico no se puede cambiar",
+        "save": "Guardar Cambios",
+        "success": "Perfil actualizado exitosamente",
+        "error": "Error al actualizar perfil"
+    },
+    "language": {
+        "title": "Idioma",
+        "description": "Este idioma se utilizará cuando inicies sesión en el sistema.",
+        "select": "Seleccionar Idioma",
+        "success": "Idioma actualizado exitosamente",
+        "error": "Error al actualizar idioma"
+    },
+    "password": {
+        "title": "Cambiar Contraseña",
+        "current": "Contraseña Actual",
+        "new": "Nueva Contraseña",
+        "confirm": "Confirmar Nueva Contraseña",
+        "requirements": "Mínimo 8 caracteres",
+        "save": "Cambiar Contraseña",
+        "success": "Contraseña cambiada exitosamente",
+        "error": "Error al cambiar contraseña",
+        "incorrectCurrent": "La contraseña actual es incorrecta",
+        "minLength": "La contraseña debe tener al menos 8 caracteres",
+        "mismatch": "Las contraseñas no coinciden"
+    }
+}

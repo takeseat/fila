@@ -1,0 +1,65 @@
+{
+    "title": "Fila de Espera",
+    "subtitle": "Gerencie os clientes aguardando atendimento",
+    "tabs": {
+        "active": "Ativa ({{count}})",
+        "completed": "Concluída ({{count}})"
+    },
+    "status": {
+        "WAITING": "Aguardando",
+        "CALLED": "Chamado",
+        "SEATED": "Sentado",
+        "CANCELLED": "Cancelado",
+        "NO_SHOW": "Não Compareceu"
+    },
+    "stats": {
+        "inQueue": "Na Fila",
+        "servedToday": "Atendidos Hoje",
+        "avgWaitTime": "Tempo Médio até Chamar",
+        "lastMinutes": "(últimos {{minutes}} min)",
+        "estimated": "Estimado"
+    },
+    "entry": {
+        "timeInQueue": "Tempo na Fila",
+        "calledSince": "Chamado há",
+        "calledFor": "Chamado há",
+        "eta": "Estimativa: {{time}}",
+        "callingAnytime": "Chamando a qualquer momento",
+        "calculating": "Calculando...",
+        "partySize": "Pessoas",
+        "customer": "Cliente",
+        "customerCalled": "Cliente foi chamado",
+        "at": "às",
+        "delay": "Atraso",
+        "delaySeating": "Atraso ao Sentar"
+    },
+    "actions": {
+        "call": "Chamar",
+        "seat": "Sentar",
+        "cancel": "Cancelar",
+        "noShow": "Não Compareceu",
+        "addToQueue": "Adicionar à Fila",
+        "addCustomer": "Adicionar Cliente"
+    },
+    "form": {
+        "title": "Adicionar à Fila",
+        "customerPhone": "Celular do Cliente",
+        "customerName": "Nome do Cliente",
+        "fullName": "Nome completo",
+        "partySize": "Pessoas",
+        "notes": "Observações",
+        "notesPlaceholder": "Ex: Mesa na janela, cadeira de bebê...",
+        "phonePlaceholder": "Phone number",
+        "phonePlaceholderBR": "(11) 99999-9999",
+        "lookingUp": "Buscando cliente...",
+        "customerFound": "Cliente encontrado: {{name}}",
+        "newCustomer": "Novo cliente — será cadastrado"
+    },
+    "empty": {
+        "title": "Nenhum cliente na fila",
+        "description": "Adicione clientes à fila de espera para começar o atendimento",
+        "action": "Adicionar Cliente"
+    },
+    "loading": "Carregando fila...",
+    "activeQueue": "Fila Ativa"
+}

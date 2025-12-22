@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "Dashboard",
+        "waitlist": "Lista d'Attesa",
+        "customers": "Clienti",
+        "reports": "Report",
+        "settings": "Impostazioni"
+    },
+    "user": {
+        "profile": "Profilo",
+        "logout": "Esci"
+    },
+    "breadcrumb": {
+        "home": "Home"
+    }
+}

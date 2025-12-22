@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "Dashboard",
+        "waitlist": "Fila de Espera",
+        "customers": "Clientes",
+        "reports": "Relatórios",
+        "settings": "Configurações"
+    },
+    "user": {
+        "profile": "Perfil",
+        "logout": "Sair"
+    },
+    "breadcrumb": {
+        "home": "Início"
+    }
+}

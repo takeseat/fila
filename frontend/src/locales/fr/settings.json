@@ -1,0 +1,44 @@
+{
+    "title": "Paramètres du Restaurant",
+    "subtitle": "Gérez les préférences et alertes de votre opération.",
+    "sections": {
+        "queueAlerts": {
+            "title": "Alertes de Temps de File",
+            "waitingAlert": {
+                "label": "Alerte pour Client en Attente (minutes)",
+                "help": "Définit après combien de temps d'attente le client sera marqué avec une alerte visuelle.",
+                "helpExtra": "Laisser vide pour désactiver.",
+                "placeholder": "Ex: 15"
+            },
+            "calledAlert": {
+                "label": "Alerte pour Client Appelé (minutes)",
+                "help": "Définit après combien de temps d'appel (sans s'asseoir) le client sera marqué avec alerte.",
+                "helpExtra": "Laisser vide pour désactiver.",
+                "placeholder": "Ex: 5"
+            }
+        },
+        "avgWaitCalculation": {
+            "title": "Calcul du Temps Moyen de File",
+            "window": {
+                "label": "Fenêtre de calcul (minutes)",
+                "help": "Considérer uniquement les clients entrés dans la file dans les derniers X minutes pour calculer le temps moyen.",
+                "placeholder": "90"
+            },
+            "fallback": {
+                "label": "Fallback du temps moyen (minutes)",
+                "help": "Valeur affichée lorsqu'il n'y a pas assez de données dans la fenêtre configurée.",
+                "placeholder": "15"
+            }
+        }
+    },
+    "validation": {
+        "mustBePositive": "La valeur doit être supérieure à 0"
+    },
+    "actions": {
+        "save": "Enregistrer Modifications",
+        "saving": "Enregistrement..."
+    },
+    "messages": {
+        "saveSuccess": "Paramètres enregistrés avec succès!"
+    }
+}

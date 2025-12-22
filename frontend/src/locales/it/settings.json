@@ -1,0 +1,44 @@
+{
+    "title": "Impostazioni del Ristorante",
+    "subtitle": "Gestisci le preferenze e gli avvisi della tua operazione.",
+    "sections": {
+        "queueAlerts": {
+            "title": "Avvisi di Tempo della Coda",
+            "waitingAlert": {
+                "label": "Avviso per Cliente in Attesa (minuti)",
+                "help": "Definisce dopo quanto tempo di attesa il cliente sarà contrassegnato con un avviso visivo.",
+                "helpExtra": "Lasciare vuoto per disattivare.",
+                "placeholder": "Es: 15"
+            },
+            "calledAlert": {
+                "label": "Avviso per Cliente Chiamato (minuti)",
+                "help": "Definisce dopo quanto tempo dalla chiamata (senza sedersi) il cliente sarà contrassegnato con avviso.",
+                "helpExtra": "Lasciare vuoto per disattivare.",
+                "placeholder": "Es: 5"
+            }
+        },
+        "avgWaitCalculation": {
+            "title": "Calcolo del Tempo Medio della Coda",
+            "window": {
+                "label": "Finestra di calcolo (minuti)",
+                "help": "Considerare solo i clienti che sono entrati in coda negli ultimi X minuti per calcolare il tempo medio.",
+                "placeholder": "90"
+            },
+            "fallback": {
+                "label": "Fallback del tempo medio (minuti)",
+                "help": "Valore mostrato quando non ci sono dati sufficienti nella finestra configurata.",
+                "placeholder": "15"
+            }
+        }
+    },
+    "validation": {
+        "mustBePositive": "Il valore deve essere maggiore di 0"
+    },
+    "actions": {
+        "save": "Salva Modifiche",
+        "saving": "Salvataggio..."
+    },
+    "messages": {
+        "saveSuccess": "Impostazioni salvate con successo!"
+    }
+}

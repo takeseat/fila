@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "Panel",
+        "waitlist": "Lista de Espera",
+        "customers": "Clientes",
+        "reports": "Informes",
+        "settings": "Configuración"
+    },
+    "user": {
+        "profile": "Perfil",
+        "logout": "Cerrar Sesión"
+    },
+    "breadcrumb": {
+        "home": "Inicio"
+    }
+}

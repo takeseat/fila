@@ -1,0 +1,51 @@
+{
+    "title": "لوحة التحكم",
+    "subtitle": "تتبع مقاييس مطعمك في الوقت الفعلي",
+    "metrics": {
+        "activeQueue": {
+            "title": "في الطابور الآن",
+            "vsYesterday": "مقابل الأمس"
+        },
+        "avgWait": {
+            "title": "متوسط الوقت",
+            "vsYesterday": "مقابل الأمس",
+            "min": "دقيقة"
+        },
+        "seated": {
+            "title": "العملاء المخدومون",
+            "vsYesterday": "مقابل الأمس"
+        }
+    },
+    "charts": {
+        "volumeByHour": {
+            "title": "الحجم حسب الساعة",
+            "subtitle": "العملاء على مدار اليوم",
+            "viewDetails": "عرض التفاصيل"
+        },
+        "weeklyTrend": {
+            "title": "الاتجاه الأسبوعي",
+            "subtitle": "مقارنة آخر 7 أيام",
+            "viewDetails": "عرض التفاصيل"
+        },
+        "days": {
+            "mon": "الإثنين",
+            "tue": "الثلاثاء",
+            "wed": "الأربعاء",
+            "thu": "الخميس",
+            "fri": "الجمعة",
+            "sat": "السبت",
+            "sun": "الأحد"
+        }
+    },
+    "quickActions": {
+        "title": "إجراءات سريعة",
+        "addToQueue": {
+            "title": "إضافة إلى الطابور",
+            "description": "تسجيل عميل جديد في قائمة الانتظار"
+        },
+        "viewReports": {
+            "title": "عرض التقارير",
+            "description": "تحليل المقاييس والأداء"
+        }
+    }
+}

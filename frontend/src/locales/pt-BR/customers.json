@@ -1,0 +1,55 @@
+{
+    "title": "Clientes",
+    "subtitle": "Gerencie o cadastro de clientes do restaurante",
+    "actions": {
+        "newCustomer": "Novo Cliente",
+        "editCustomer": "Editar Cliente",
+        "deleteCustomer": "Remover Cliente",
+        "saveChanges": "Salvar Alterações",
+        "registerCustomer": "Cadastrar Cliente"
+    },
+    "filters": {
+        "name": "Nome",
+        "namePlaceholder": "Buscar por nome...",
+        "phone": "Telefone",
+        "phonePlaceholder": "(DDD) Número",
+        "lastVisitAfter": "Última visita após",
+        "clearFilters": "Limpar Filtros"
+    },
+    "table": {
+        "name": "Nome",
+        "phone": "Telefone",
+        "email": "Email",
+        "lastVisit": "Última Visita",
+        "totalVisits": "Nº Visitas",
+        "actions": "Ações",
+        "edit": "Editar",
+        "remove": "Remover"
+    },
+    "form": {
+        "phone": "Telefone",
+        "phonePlaceholder": "Número de telefone",
+        "phonePlaceholderBR": "(DDD) Número",
+        "name": "Nome",
+        "email": "Email (opcional)",
+        "notes": "Observações (opcional)",
+        "notesPlaceholder": "Ex: Cliente VIP, preferências especiais..."
+    },
+    "empty": {
+        "title": "Nenhum cliente encontrado",
+        "description": "Cadastre o primeiro cliente ou ajuste os filtros de busca",
+        "action": "Cadastrar Cliente"
+    },
+    "delete": {
+        "title": "Confirmar Exclusão",
+        "message": "Tem certeza que deseja remover o cliente <strong>{{name}}</strong>?",
+        "warning": "Esta ação não pode ser desfeita. O histórico de visitas será mantido, mas o cliente não poderá mais ser associado a novas entradas."
+    },
+    "pagination": {
+        "showing": "Mostrando {{from}} a {{to}} de {{total}} clientes",
+        "previous": "Anterior",
+        "next": "Próxima"
+    },
+    "loading": "Carregando clientes...",
+    "never": "Nunca"
+}

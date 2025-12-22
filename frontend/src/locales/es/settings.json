@@ -1,0 +1,44 @@
+{
+    "title": "Configuración del Restaurante",
+    "subtitle": "Gestiona las preferencias y alertas de tu operación.",
+    "sections": {
+        "queueAlerts": {
+            "title": "Alertas de Tiempo de Cola",
+            "waitingAlert": {
+                "label": "Alerta para Cliente Esperando (minutos)",
+                "help": "Define después de cuánto tiempo de espera el cliente será marcado con una alerta visual.",
+                "helpExtra": "Dejar en blanco para desactivar.",
+                "placeholder": "Ej: 15"
+            },
+            "calledAlert": {
+                "label": "Alerta para Cliente Llamado (minutos)",
+                "help": "Define después de cuánto tiempo de ser llamado (sin sentarse) el cliente será marcado con alerta.",
+                "helpExtra": "Dejar en blanco para desactivar.",
+                "placeholder": "Ej: 5"
+            }
+        },
+        "avgWaitCalculation": {
+            "title": "Cálculo del Tiempo Promedio de Cola",
+            "window": {
+                "label": "Ventana de cálculo (minutos)",
+                "help": "Considerar solo clientes que entraron en la cola en los últimos X minutos para calcular el tiempo promedio.",
+                "placeholder": "90"
+            },
+            "fallback": {
+                "label": "Fallback del tiempo promedio (minutos)",
+                "help": "Valor mostrado cuando no hay datos suficientes en la ventana configurada.",
+                "placeholder": "15"
+            }
+        }
+    },
+    "validation": {
+        "mustBePositive": "El valor debe ser mayor que 0"
+    },
+    "actions": {
+        "save": "Guardar Cambios",
+        "saving": "Guardando..."
+    },
+    "messages": {
+        "saveSuccess": "¡Configuración guardada con éxito!"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "لوحة التحكم",
+        "waitlist": "قائمة الانتظار",
+        "customers": "العملاء",
+        "reports": "التقارير",
+        "settings": "الإعدادات"
+    },
+    "user": {
+        "profile": "الملف الشخصي",
+        "logout": "تسجيل الخروج"
+    },
+    "breadcrumb": {
+        "home": "الرئيسية"
+    }
+}

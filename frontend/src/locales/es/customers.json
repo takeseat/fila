@@ -1,0 +1,55 @@
+{
+    "title": "Clientes",
+    "subtitle": "Gestiona el registro de clientes del restaurante",
+    "actions": {
+        "newCustomer": "Nuevo Cliente",
+        "editCustomer": "Editar Cliente",
+        "deleteCustomer": "Eliminar Cliente",
+        "saveChanges": "Guardar Cambios",
+        "registerCustomer": "Registrar Cliente"
+    },
+    "filters": {
+        "name": "Nombre",
+        "namePlaceholder": "Buscar por nombre...",
+        "phone": "Teléfono",
+        "phonePlaceholder": "(DDD) Número",
+        "lastVisitAfter": "Última visita después de",
+        "clearFilters": "Limpiar Filtros"
+    },
+    "table": {
+        "name": "Nombre",
+        "phone": "Teléfono",
+        "email": "Email",
+        "lastVisit": "Última Visita",
+        "totalVisits": "Nº Visitas",
+        "actions": "Acciones",
+        "edit": "Editar",
+        "remove": "Eliminar"
+    },
+    "form": {
+        "phone": "Teléfono",
+        "phonePlaceholder": "Número de teléfono",
+        "phonePlaceholderBR": "(DDD) Número",
+        "name": "Nombre",
+        "email": "Email (opcional)",
+        "notes": "Observaciones (opcional)",
+        "notesPlaceholder": "Ej: Cliente VIP, preferencias especiales..."
+    },
+    "empty": {
+        "title": "Ningún cliente encontrado",
+        "description": "Registra el primer cliente o ajusta los filtros de búsqueda",
+        "action": "Registrar Cliente"
+    },
+    "delete": {
+        "title": "Confirmar Eliminación",
+        "message": "¿Está seguro de que desea eliminar el cliente <strong>{{name}}</strong>?",
+        "warning": "Esta acción no se puede deshacer. El historial de visitas se mantendrá, pero el cliente no podrá asociarse a nuevas entradas."
+    },
+    "pagination": {
+        "showing": "Mostrando {{from}} a {{to}} de {{total}} clientes",
+        "previous": "Anterior",
+        "next": "Siguiente"
+    },
+    "loading": "Cargando clientes...",
+    "never": "Nunca"
+}

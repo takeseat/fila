@@ -1,0 +1,6 @@
+{
+  "actions": {"save": "Salva", "cancel": "Annulla", "confirm": "Conferma", "delete": "Elimina", "edit": "Modifica", "create": "Crea", "search": "Cerca", "filter": "Filtra", "clear": "Pulisci", "close": "Chiudi", "back": "Indietro", "next": "Avanti", "previous": "Precedente", "submit": "Invia", "add": "Aggiungi", "remove": "Rimuovi", "update": "Aggiorna", "refresh": "Aggiorna", "export": "Esporta", "import": "Importa"},
+  "status": {"loading": "Caricamento...", "saving": "Salvataggio...", "success": "Successo", "error": "Errore", "warning": "Avviso", "info": "Info"},
+  "time": {"never": "Mai", "now": "Ora", "today": "Oggi", "yesterday": "Ieri", "minutes": "{{count}} min", "hours": "{{count}} h", "days": "{{count}} g", "seconds": "{{count}}s"},
+  "labels": {"name": "Nome", "email": "Email", "phone": "Telefono", "notes": "Note", "optional": "Opzionale", "required": "Obbligatorio"}
+}

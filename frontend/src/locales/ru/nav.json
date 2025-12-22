@@ -1,0 +1,16 @@
+{
+    "menu": {
+        "dashboard": "Панель",
+        "waitlist": "Список Ожидания",
+        "customers": "Клиенты",
+        "reports": "Отчеты",
+        "settings": "Настройки"
+    },
+    "user": {
+        "profile": "Профиль",
+        "logout": "Выход"
+    },
+    "breadcrumb": {
+        "home": "Главная"
+    }
+}

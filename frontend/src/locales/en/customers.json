@@ -1,0 +1,55 @@
+{
+    "title": "Customers",
+    "subtitle": "Manage restaurant customer registration",
+    "actions": {
+        "newCustomer": "New Customer",
+        "editCustomer": "Edit Customer",
+        "deleteCustomer": "Delete Customer",
+        "saveChanges": "Save Changes",
+        "registerCustomer": "Register Customer"
+    },
+    "filters": {
+        "name": "Name",
+        "namePlaceholder": "Search by name...",
+        "phone": "Phone",
+        "phonePlaceholder": "(DDD) Number",
+        "lastVisitAfter": "Last visit after",
+        "clearFilters": "Clear Filters"
+    },
+    "table": {
+        "name": "Name",
+        "phone": "Phone",
+        "email": "Email",
+        "lastVisit": "Last Visit",
+        "totalVisits": "# Visits",
+        "actions": "Actions",
+        "edit": "Edit",
+        "remove": "Remove"
+    },
+    "form": {
+        "phone": "Phone",
+        "phonePlaceholder": "Phone number",
+        "phonePlaceholderBR": "(DDD) Number",
+        "name": "Name",
+        "email": "Email (optional)",
+        "notes": "Notes (optional)",
+        "notesPlaceholder": "E.g.: VIP customer, special preferences..."
+    },
+    "empty": {
+        "title": "No customers found",
+        "description": "Register the first customer or adjust search filters",
+        "action": "Register Customer"
+    },
+    "delete": {
+        "title": "Confirm Deletion",
+        "message": "Are you sure you want to delete customer <strong>{{name}}</strong>?",
+        "warning": "This action cannot be undone. Visit history will be kept, but the customer will no longer be associated with new entries."
+    },
+    "pagination": {
+        "showing": "Showing {{from}} to {{to}} of {{total}} customers",
+        "previous": "Previous",
+        "next": "Next"
+    },
+    "loading": "Loading customers...",
+    "never": "Never"
+}

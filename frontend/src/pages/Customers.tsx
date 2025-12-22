@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useCustomers, useCreateCustomer, useUpdateCustomer, useDeleteCustomer } from '../hooks/useCustomers';
+import { useTranslation } from 'react-i18next';
 import { Button, Modal, Input, EmptyState, Spinner } from '../components/ui';
 import { CountrySelect } from '../components/ui/CountrySelect';
 import { Customer, CustomerFormData } from '../types/customer.types';
@@ -8,6 +9,7 @@ import { DEFAULT_COUNTRY } from '../data/countries';
 import { removeMask, applyBrazilianMask, buildFullPhone } from '../utils/phoneUtils';
 
 export function Customers() {
+    const { t } = useTranslation('customers');
     const [filters, setFilters] = useState({
         name: '',
         phone: '',
@@ -150,7 +152,7 @@ export function Customers() {
     };
 
     const formatDate = (dateString: string | null | undefined) => {
-        if (!dateString) return 'Nunca';
+        if (!dateString) return t('never');
         return format(new Date(dateString), 'dd/MM/yyyy HH:mm');
     };
 
@@ -177,7 +179,7 @@ export function Customers() {
             <div className="flex items-center justify-center py-20">
                 <div className="text-center">
                     <Spinner size="lg" className="mx-auto mb-4" />
-                    <p className="text-dark-500">Carregando clientes...</p>
+                    <p className="text-dark-500">{t('loading')}</p>
                 </div>
             </div>
         );
@@ -191,14 +193,14 @@ export function Customers() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-dark-900 mb-2">Clientes</h1>
-                    <p className="text-dark-500">Gerencie o cadastro de clientes do restaurante</p>
+                    <h1 className="text-3xl font-bold text-dark-900 mb-2">{t('title')}</h1>
+                    <p className="text-dark-500">{t('subtitle')}</p>
                 </div>
                 <Button onClick={handleOpenCreateModal} size="lg" className="gap-2">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
-                    Novo Cliente
+                    {t('actions.newCustomer')}
                 </Button>
             </div>
 
@@ -206,8 +208,8 @@ export function Customers() {
             <div className="card-premium p-6">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <Input
-                        label="Nome"
-                        placeholder="Buscar por nome..."
+                        label={t('filters.name')}
+                        placeholder={t('filters.namePlaceholder')}
                         value={filters.name}
                         onChange={(e) => setFilters({ ...filters, name: e.target.value, page: 1 })}
                         leftIcon={
@@ -218,8 +220,8 @@ export function Customers() {
                     />
 
                     <Input
-                        label="Telefone"
-                        placeholder="(DDD) Número"
+                        label={t('filters.phone')}
+                        placeholder={t('filters.phonePlaceholder')}
                         value={phoneFilterDisplay}
                         onChange={handlePhoneFilterChange}
                         leftIcon={
@@ -230,7 +232,7 @@ export function Customers() {
                     />
 
                     <Input
-                        label="Última visita após"
+                        label={t('filters.lastVisitAfter')}
                         type="date"
                         value={filters.lastVisitAfter}
                         onChange={(e) => setFilters({ ...filters, lastVisitAfter: e.target.value, page: 1 })}
@@ -247,7 +249,7 @@ export function Customers() {
                             onClick={clearFilters}
                             className="w-full"
                         >
-                            Limpar Filtros
+                            {t('filters.clearFilters')}
                         </Button>
                     </div>
                 </div>
@@ -262,11 +264,11 @@ export function Customers() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
                         }
-                        title="Nenhum cliente encontrado"
-                        description="Cadastre o primeiro cliente ou ajuste os filtros de busca"
+                        title={t('empty.title')}
+                        description={t('empty.description')}
                         action={
                             <Button onClick={handleOpenCreateModal}>
-                                Cadastrar Cliente
+                                {t('empty.action')}
                             </Button>
                         }
                     />
@@ -279,22 +281,22 @@ export function Customers() {
                                 <thead className="bg-light-50 border-b border-light-200">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
-                                            Nome
+                                            {t('table.name')}
                                         </th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
-                                            Telefone
+                                            {t('table.phone')}
                                         </th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
-                                            Email
+                                            {t('table.email')}
                                         </th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
-                                            Última Visita
+                                            {t('table.lastVisit')}
                                         </th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
-                                            Nº Visitas
+                                            {t('table.totalVisits')}
                                         </th>
                                         <th className="px-6 py-4 text-right text-xs font-semibold text-dark-600 uppercase tracking-wider">
-                                            Ações
+                                            {t('table.actions')}
                                         </th>
                                     </tr>
                                 </thead>
@@ -352,7 +354,7 @@ export function Customers() {
                     {meta && meta.totalPages > 1 && (
                         <div className="flex items-center justify-between">
                             <div className="text-sm text-dark-600">
-                                Mostrando {((meta.page - 1) * meta.pageSize) + 1} a {Math.min(meta.page * meta.pageSize, meta.total)} de {meta.total} clientes
+                                {t('pagination.showing', { from: ((meta.page - 1) * meta.pageSize) + 1, to: Math.min(meta.page * meta.pageSize, meta.total), total: meta.total })}
                             </div>
                             <div className="flex gap-2">
                                 <Button
@@ -361,7 +363,7 @@ export function Customers() {
                                     onClick={() => setFilters({ ...filters, page: filters.page - 1 })}
                                     disabled={filters.page === 1}
                                 >
-                                    Anterior
+                                    {t('pagination.previous')}
                                 </Button>
                                 <Button
                                     variant="secondary"
@@ -369,7 +371,7 @@ export function Customers() {
                                     onClick={() => setFilters({ ...filters, page: filters.page + 1 })}
                                     disabled={filters.page >= meta.totalPages}
                                 >
-                                    Próxima
+                                    {t('pagination.next')}
                                 </Button>
                             </div>
                         </div>
@@ -381,7 +383,7 @@ export function Customers() {
             <Modal
                 isOpen={isFormModalOpen}
                 onClose={() => setIsFormModalOpen(false)}
-                title={editingCustomer ? 'Editar Cliente' : 'Novo Cliente'}
+                title={editingCustomer ? t('actions.editCustomer') : t('actions.newCustomer')}
             >
                 <form onSubmit={handleSubmitForm} className="space-y-5">
                     <CountrySelect
@@ -394,11 +396,11 @@ export function Customers() {
                     />
 
                     <Input
-                        label="Telefone"
+                        label={t('form.phone')}
                         value={phoneDisplay}
                         onChange={handlePhoneChange}
                         required
-                        placeholder={formData.country.code === 'BR' ? '(DDD) Número' : 'Número de telefone'}
+                        placeholder={formData.country.code === 'BR' ? t('form.phonePlaceholderBR') : t('form.phonePlaceholder')}
                         leftIcon={
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -407,7 +409,7 @@ export function Customers() {
                     />
 
                     <Input
-                        label="Nome"
+                        label={t('form.name')}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         required
@@ -419,7 +421,7 @@ export function Customers() {
                     />
 
                     <Input
-                        label="Email (opcional)"
+                        label={t('form.email')}
                         type="email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -431,10 +433,10 @@ export function Customers() {
                     />
 
                     <Input
-                        label="Observações (opcional)"
+                        label={t('form.notes')}
                         value={formData.notes}
                         onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        placeholder="Ex: Cliente VIP, preferências especiais..."
+                        placeholder={t('form.notesPlaceholder')}
                         leftIcon={
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
@@ -454,7 +456,7 @@ export function Customers() {
                             type="submit"
                             isLoading={createMutation.isPending || updateMutation.isPending}
                         >
-                            {editingCustomer ? 'Salvar Alterações' : 'Cadastrar Cliente'}
+                            {editingCustomer ? t('actions.saveChanges') : t('actions.registerCustomer')}
                         </Button>
                     </div>
                 </form>
@@ -467,14 +469,12 @@ export function Customers() {
                     setIsDeleteModalOpen(false);
                     setDeletingCustomer(null);
                 }}
-                title="Confirmar Exclusão"
+                title={t('delete.title')}
             >
                 <div className="space-y-4">
-                    <p className="text-dark-700">
-                        Tem certeza que deseja remover o cliente <strong>{deletingCustomer?.name}</strong>?
-                    </p>
+                    <p className="text-dark-700" dangerouslySetInnerHTML={{ __html: t('delete.message', { name: deletingCustomer?.name }) }} />
                     <p className="text-sm text-dark-500">
-                        Esta ação não pode ser desfeita. O histórico de visitas será mantido, mas o cliente não poderá mais ser associado a novas entradas.
+                        {t('delete.warning')}
                     </p>
 
                     <div className="flex gap-3 justify-end pt-4">
@@ -492,7 +492,7 @@ export function Customers() {
                             onClick={handleDelete}
                             isLoading={deleteMutation.isPending}
                         >
-                            Remover Cliente
+                            {t('actions.deleteCustomer')}
                         </Button>
                     </div>
                 </div>

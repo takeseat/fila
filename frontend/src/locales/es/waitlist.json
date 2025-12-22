@@ -1,0 +1,65 @@
+{
+    "title": "Lista de Espera",
+    "subtitle": "Gestiona los clientes en espera de atención",
+    "tabs": {
+        "active": "Activa ({{count}})",
+        "completed": "Completada ({{count}})"
+    },
+    "status": {
+        "WAITING": "Esperando",
+        "CALLED": "Llamado",
+        "SEATED": "Sentado",
+        "CANCELLED": "Cancelado",
+        "NO_SHOW": "No Compareció"
+    },
+    "stats": {
+        "inQueue": "En Cola",
+        "servedToday": "Atendidos Hoy",
+        "avgWaitTime": "Tiempo Promedio hasta Llamar",
+        "lastMinutes": "(últimos {{minutes}} min)",
+        "estimated": "Estimado"
+    },
+    "entry": {
+        "timeInQueue": "Tiempo en Cola",
+        "calledSince": "Llamado hace",
+        "calledFor": "Llamado hace",
+        "eta": "Estimación: {{time}}",
+        "callingAnytime": "Llamando en cualquier momento",
+        "calculating": "Calculando...",
+        "partySize": "Personas",
+        "customer": "Cliente",
+        "customerCalled": "Cliente fue llamado",
+        "at": "a las",
+        "delay": "Retraso",
+        "delaySeating": "Retraso al Sentar"
+    },
+    "actions": {
+        "call": "Llamar",
+        "seat": "Sentar",
+        "cancel": "Cancelar",
+        "noShow": "No Compareció",
+        "addToQueue": "Agregar a la Cola",
+        "addCustomer": "Agregar Cliente"
+    },
+    "form": {
+        "title": "Agregar a la Cola",
+        "customerPhone": "Teléfono del Cliente",
+        "customerName": "Nombre del Cliente",
+        "fullName": "Nombre completo",
+        "partySize": "Personas",
+        "notes": "Observaciones",
+        "notesPlaceholder": "Ej: Mesa junto a la ventana, silla de bebé...",
+        "phonePlaceholder": "Número de teléfono",
+        "phonePlaceholderBR": "(11) 99999-9999",
+        "lookingUp": "Buscando cliente...",
+        "customerFound": "Cliente encontrado: {{name}}",
+        "newCustomer": "Nuevo cliente — será registrado"
+    },
+    "empty": {
+        "title": "Ningún cliente en la cola",
+        "description": "Agrega clientes a la lista de espera para comenzar la atención",
+        "action": "Agregar Cliente"
+    },
+    "loading": "Cargando cola...",
+    "activeQueue": "Cola Activa"
+}
