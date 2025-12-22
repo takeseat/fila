@@ -14,6 +14,7 @@ import {
 } from './routes/index';
 import customersRoutes from './routes/customers.routes';
 import restaurantRoutes from './routes/restaurants.routes';
+import usersRoutes from './routes/users.routes';
 
 export const app = express();
 const httpServer = createServer(app);
@@ -41,6 +42,7 @@ app.use('/auth', authRoutes);
 app.use('/waitlist', waitlistRoutes);
 app.use('/customers', customersRoutes);
 app.use('/restaurants', restaurantRoutes);
+app.use('/users', usersRoutes);
 app.use('/reports', reportsRouter);
 
 // Error handler (must be last)
