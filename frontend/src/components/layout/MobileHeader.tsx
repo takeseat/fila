@@ -11,7 +11,7 @@ interface MobileHeaderProps {
 
 export function MobileHeader({ title, showMenu = true }: MobileHeaderProps) {
     const { t } = useTranslation('nav');
-    const { user, logout } = useAuth();
+    const { user, restaurant, logout } = useAuth();
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -81,7 +81,7 @@ export function MobileHeader({ title, showMenu = true }: MobileHeaderProps) {
 
                             {/* User Info */}
                             <div className="p-4 border-b border-gray-200">
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-3 mb-3">
                                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-semibold text-lg">
                                         {user?.name.charAt(0).toUpperCase()}
                                     </div>
@@ -89,6 +89,13 @@ export function MobileHeader({ title, showMenu = true }: MobileHeaderProps) {
                                         <p className="text-sm font-semibold text-gray-900 truncate">{user?.name}</p>
                                         <p className="text-xs text-gray-500 truncate">{user?.email}</p>
                                     </div>
+                                </div>
+                                {/* Restaurant name */}
+                                <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg">
+                                    <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <p className="text-xs font-medium text-gray-600 truncate">{restaurant?.name}</p>
                                 </div>
                             </div>
 
