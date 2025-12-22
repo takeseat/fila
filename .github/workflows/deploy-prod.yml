@@ -52,8 +52,9 @@ jobs:
           # Clean to ensure Linux binaries
           rm -rf node_modules
           npm ci
-          npm run build
+          # Generate Prisma client BEFORE building TypeScript
           npx prisma generate
+          npm run build
 
       - name: Package Backend for Lambda
         working-directory: ./backend
