@@ -5,7 +5,7 @@ import api from '../lib/api';
 import { Button, Modal, Input, Badge, EmptyState, Progress, Spinner } from '../components/ui';
 import { CountrySelect } from '../components/ui/CountrySelect';
 import { format } from 'date-fns';
-import { DEFAULT_COUNTRY } from '../data/countries';
+import { DEFAULT_COUNTRY, getCountryByCode } from '../data/countries';
 import { removeMask, applyBrazilianMask, buildFullPhone } from '../utils/phoneUtils';
 
 export function Waitlist() {
@@ -35,6 +35,15 @@ export function Waitlist() {
         queryKey: ['metrics'],
         queryFn: async () => {
             const { data } = await api.get('/waitlist/metrics');
+            return data;
+        },
+    });
+
+    // Fetch business data to get default country
+    const { data: businessData } = useQuery({
+        queryKey: ['business-data'],
+        queryFn: async () => {
+            const { data } = await api.get('/restaurants/business');
             return data;
         },
     });
@@ -131,6 +140,18 @@ export function Waitlist() {
         };
     }, [formData.phone, formData.country, lookupCustomer]);
 
+    // Handle opening modal with business country pre-selected
+    const handleOpenModal = () => {
+        // Pre-select business country if available
+        if (businessData?.countryCode) {
+            const businessCountry = getCountryByCode(businessData.countryCode);
+            if (businessCountry) {
+                setFormData(prev => ({ ...prev, country: businessCountry }));
+            }
+        }
+        setIsModalOpen(true);
+    };
+
     const createMutation = useMutation({
         mutationFn: async (data: any) => {
             await api.post('/waitlist', data);
@@ -138,7 +159,11 @@ export function Waitlist() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
             setIsModalOpen(false);
-            setFormData({ country: DEFAULT_COUNTRY, phone: '', customerName: '', partySize: 2, notes: '' });
+            // Reset to business country or default
+            const resetCountry = businessData?.countryCode
+                ? getCountryByCode(businessData.countryCode) || DEFAULT_COUNTRY
+                : DEFAULT_COUNTRY;
+            setFormData({ country: resetCountry, phone: '', customerName: '', partySize: 2, notes: '' });
             setPhoneDisplay('');
             setCustomerFound(null);
         },
@@ -339,7 +364,7 @@ export function Waitlist() {
                     <h1 className="text-3xl font-bold text-dark-900 mb-2">{t('title')}</h1>
                     <p className="text-dark-500">{t('subtitle')}</p>
                 </div>
-                <Button onClick={() => setIsModalOpen(true)} size="lg" className="gap-2">
+                <Button onClick={handleOpenModal} size="lg" className="gap-2">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
@@ -421,7 +446,7 @@ export function Waitlist() {
                             title={t('empty.title')}
                             description={t('empty.description')}
                             action={
-                                <Button onClick={() => setIsModalOpen(true)}>
+                                <Button onClick={handleOpenModal}>
                                     {t('empty.action')}
                                 </Button>
                             }

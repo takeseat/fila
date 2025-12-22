@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
@@ -6,6 +6,8 @@ import { Button, Input } from '../components/ui';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { AuthLayout } from '../components/auth/AuthLayout';
 import { BrandingSection } from '../components/auth/BrandingSection';
+import { COUNTRIES, getStatesByCountryCode } from '../data/countriesExtended';
+import { detectCountryFromBrowser } from '../utils/localeUtils';
 
 export function Login() {
     const [email, setEmail] = useState('');
@@ -151,10 +153,17 @@ export function Login() {
 export function Register() {
     const [formData, setFormData] = useState({
         restaurantName: '',
+        tradeName: '',
         cnpj: '',
         phone: '',
         email: '',
+        countryCode: 'BR', // Will be set by locale detection
+        stateCode: '',
         city: '',
+        addressLine: '',
+        addressNumber: '',
+        addressComplement: '',
+        postalCode: '',
         userName: '',
         userEmail: '',
         password: '',
@@ -164,6 +173,12 @@ export function Register() {
     const { register } = useAuth();
     const navigate = useNavigate();
     const { t } = useTranslation('auth');
+
+    // Detect country from browser locale on mount
+    useEffect(() => {
+        const detectedCountry = detectCountryFromBrowser();
+        setFormData(prev => ({ ...prev, countryCode: detectedCountry }));
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -180,9 +195,17 @@ export function Register() {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+
+        // Reset state when country changes
+        if (name === 'countryCode') {
+            setFormData(prev => ({ ...prev, countryCode: value, stateCode: '' }));
+        }
     };
+
+    const states = getStatesByCountryCode(formData.countryCode);
 
     return (
         <AuthLayout branding={<BrandingSection />}>
@@ -245,6 +268,14 @@ export function Register() {
                             required
                         />
 
+                        <Input
+                            label={t('signup.tradeName')}
+                            name="tradeName"
+                            value={formData.tradeName}
+                            onChange={handleChange}
+                            placeholder="Optional"
+                        />
+
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Input
                                 label={t('signup.cnpj')}
@@ -263,23 +294,108 @@ export function Register() {
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <Input
-                                label={t('signup.email')}
-                                name="email"
-                                type="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
+                        <Input
+                            label={t('signup.email')}
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
 
-                            <Input
-                                label={t('signup.city')}
-                                name="city"
-                                value={formData.city}
-                                onChange={handleChange}
-                                required
-                            />
+                        {/* Address Section */}
+                        <div className="pt-4 border-t border-gray-200">
+                            <h4 className="text-sm font-semibold text-gray-700 mb-3">Address</h4>
+
+                            {/* Country */}
+                            <div className="mb-3">
+                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    Country
+                                </label>
+                                <select
+                                    name="countryCode"
+                                    value={formData.countryCode}
+                                    onChange={handleChange}
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                                    required
+                                >
+                                    {COUNTRIES.map(country => (
+                                        <option key={country.code} value={country.code}>
+                                            {country.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* State and City */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                                {states.length > 0 ? (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            State / Province
+                                        </label>
+                                        <select
+                                            name="stateCode"
+                                            value={formData.stateCode}
+                                            onChange={handleChange}
+                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                                        >
+                                            <option value="">Select state</option>
+                                            {states.map(state => (
+                                                <option key={state.code} value={state.code}>
+                                                    {state.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ) : null}
+
+                                <Input
+                                    label={t('signup.city')}
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            {/* Address Line and Number */}
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+                                <div className="sm:col-span-2">
+                                    <Input
+                                        label="Address"
+                                        name="addressLine"
+                                        value={formData.addressLine}
+                                        onChange={handleChange}
+                                        placeholder="Street name"
+                                    />
+                                </div>
+                                <Input
+                                    label="Number"
+                                    name="addressNumber"
+                                    value={formData.addressNumber}
+                                    onChange={handleChange}
+                                    placeholder="#"
+                                />
+                            </div>
+
+                            {/* Complement and Postal Code */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <Input
+                                    label="Complement"
+                                    name="addressComplement"
+                                    value={formData.addressComplement}
+                                    onChange={handleChange}
+                                    placeholder="Apt, suite, etc."
+                                />
+                                <Input
+                                    label="Postal Code / ZIP"
+                                    name="postalCode"
+                                    value={formData.postalCode}
+                                    onChange={handleChange}
+                                    placeholder="Enter postal code"
+                                />
+                            </div>
                         </div>
                     </div>
 

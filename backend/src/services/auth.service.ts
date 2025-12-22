@@ -21,10 +21,17 @@ export class AuthService {
             const restaurant = await tx.restaurant.create({
                 data: {
                     name: data.restaurantName,
+                    tradeName: data.tradeName,
                     cnpj: data.cnpj,
                     phone: data.phone,
                     email: data.email,
+                    countryCode: data.countryCode,
+                    stateCode: data.stateCode,
                     city: data.city,
+                    addressLine: data.addressLine,
+                    addressNumber: data.addressNumber,
+                    addressComplement: data.addressComplement,
+                    postalCode: data.postalCode,
                     timezone: data.timezone,
                 },
             });
