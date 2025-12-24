@@ -60,6 +60,17 @@
         "description": "Agrega clientes a la lista de espera para comenzar la atención",
         "action": "Agregar Cliente"
     },
+    "filters": {
+        "phoneSearch": "Buscar por teléfono",
+        "nameSearch": "Buscar por nombre",
+        "partySizeLabel": "Tamaño del grupo",
+        "all": "Todos",
+        "clearFilters": "Limpiar filtros",
+        "noResults": {
+            "title": "No se encontraron resultados",
+            "description": "Ninguna entrada coincide con los filtros aplicados. Intente ajustar los filtros."
+        }
+    },
     "loading": "Cargando cola...",
     "activeQueue": "Cola Activa"
 }

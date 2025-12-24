@@ -19,7 +19,14 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        // Only attempt token refresh if:
+        // 1. We got a 401
+        // 2. We haven't already tried to refresh
+        // 3. This is NOT a login or register request (those should fail normally)
+        const isAuthEndpoint = originalRequest.url?.includes('/auth/login') ||
+            originalRequest.url?.includes('/auth/register');
+
+        if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
             originalRequest._retry = true;
 
             try {
@@ -38,16 +45,20 @@ api.interceptors.response.use(
 
                 return api(originalRequest);
             } catch (refreshError) {
+                // Only redirect to login when refresh fails
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
                 localStorage.removeItem('user');
+                localStorage.removeItem('restaurant');
                 window.location.href = '/login';
                 return Promise.reject(refreshError);
             }
         }
 
+        // For all other errors (including login failures), just reject
         return Promise.reject(error);
     }
 );
+
 
 export default api;

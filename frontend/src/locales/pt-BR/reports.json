@@ -1,0 +1,128 @@
+{
+    "queueEntries": {
+        "title": "Relatório Analítico da Fila",
+        "subtitle": "Análise detalhada de cada atendimento, com horários, tempos e status",
+        "exportCsv": "Exportar CSV",
+        "exportPdf": "Exportar PDF",
+        "errorLoading": "Erro ao carregar relatório",
+        "tryAgainLater": "Tente novamente mais tarde",
+        "noRecordsFound": "Nenhum registro encontrado",
+        "adjustFilters": "Tente ajustar os filtros para ver mais resultados",
+        "showing": "Mostrando {{from}} a {{to}} de {{total}} registros",
+        "perPage": "por página",
+        "previous": "Anterior",
+        "next": "Próxima",
+        "pageOf": "Página {{current}} de {{total}}"
+    },
+    "performance": {
+        "title": "Relatório de Performance da Fila",
+        "subtitle": "Análise detalhada de métricas e tendências da fila de espera",
+        "kpis": {
+            "totalGroups": "Total de Grupos",
+            "groupsSeated": "Grupos Sentados",
+            "lostRate": "Taxa de Perda",
+            "peakConcurrent": "Pico Simultâneo",
+            "avgWaitTime": "Tempo Médio de Espera",
+            "medianP50": "Mediana (P50)",
+            "percentile75": "Percentil 75 (P75)",
+            "ofTotal": "do total",
+            "groupsLost": "grupos perdidos",
+            "maxInQueue": "Máximo de grupos na fila",
+            "waited50Less": "50% esperaram menos que isso",
+            "waited75Less": "75% esperaram menos que isso",
+            "period": "Período",
+            "until": "até",
+            "aggregation": "Agregação",
+            "perHour": "Por hora",
+            "perDay": "Por dia"
+        },
+        "charts": {
+            "waitTimeDistribution": "Distribuição do Tempo de Espera",
+            "hourlyTrends": "Tendências por Hora"
+        }
+    },
+    "executive": {
+        "title": "Resumo Executivo",
+        "subtitle": "Visão geral de 30 segundos para tomada de decisão",
+        "kpis": {
+            "waitP50": "Tempo Médio (P50)",
+            "groupsSeated": "Grupos Sentados",
+            "lostRate": "Taxa de Perda",
+            "peakHour": "Hora de Pico",
+            "peakWaitHour": "Pico de Espera",
+            "groupsLost": "Grupos Perdidos",
+            "mostEntries": "Mais entradas",
+            "highestAvgWait": "Maior tempo médio"
+        },
+        "charts": {
+            "hourlyEntries": "Entradas por Hora"
+        }
+    },
+    "flow": {
+        "title": "Análise de Fluxo da Fila",
+        "subtitle": "Identificação de gargalos e análise de conversão",
+        "kpis": {
+            "entryToCall": "Entrada → Chamada",
+            "callToSeat": "Chamada → Sentar",
+            "calledToSeatedRate": "Taxa Chamado→Sentado",
+            "calledToNoshowRate": "Taxa Chamado→No-show",
+            "avgIdleAfterCall": "Tempo Ocioso Médio",
+            "p50Idle": "Ocioso P50",
+            "p75Idle": "Ocioso P75",
+            "avgTime": "Tempo médio",
+            "afterCall": "Após chamada"
+        },
+        "charts": {
+            "stageTime": "Tempos por Etapa",
+            "minutes": "Minutos",
+            "entryToCallLine": "Entrada→Chamada",
+            "callToSeatLine": "Chamada→Sentar"
+        }
+    },
+    "filters": {
+        "title": "Filtros",
+        "dateStart": "Data Início",
+        "dateEnd": "Data Fim",
+        "dateInitial": "Data Inicial",
+        "dateFinal": "Data Final",
+        "partySize": "Tamanho do Grupo",
+        "all": "Todos",
+        "people": "pessoas",
+        "timeRange": "Horário",
+        "allDay": "Todo o dia",
+        "lunch": "Almoço (11:00-15:00)",
+        "dinner": "Jantar (18:00-23:00)",
+        "lunchAndDinner": "Almoço e Jantar",
+        "last7Days": "Últimos 7 dias",
+        "last30Days": "Últimos 30 dias",
+        "last90Days": "Últimos 90 dias",
+        "status": "Status",
+        "searchClient": "Buscar Cliente (Nome ou Telefone)",
+        "searchPlaceholder": "Digite o nome ou telefone...",
+        "minPeople": "Mínimo de Pessoas",
+        "maxPeople": "Máximo de Pessoas",
+        "applyFilters": "Aplicar Filtros",
+        "clear": "Limpar"
+    },
+    "common": {
+        "errorLoading": "Erro ao carregar",
+        "loading": "Carregando...",
+        "noData": "Sem dados para exibir",
+        "minutes": "Minutos",
+        "groups": "Grupos"
+    },
+    "charts": {
+        "waitTimeOverTime": "Tempo de Espera ao Longo do Tempo",
+        "queueVolume": "Volume da Fila",
+        "avgTime": "Tempo Médio",
+        "medianP50": "Mediana (P50)",
+        "entered": "Entraram",
+        "seated": "Sentaram",
+        "lost": "Perdidos",
+        "conversionFunnel": "Funil de Conversão",
+        "enteredQueue": "Entraram na Fila",
+        "wereCalled": "Foram Chamados",
+        "conversionRate": "Taxa de Conversão",
+        "lossRate": "Taxa de Perda"
+    }
+}

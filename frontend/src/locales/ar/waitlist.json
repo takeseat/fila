@@ -1,1 +1,76 @@
-{"title":"قائمة الانتظار","subtitle":"إدارة العملاء في انتظار الخدمة","tabs":{"active":"نشط ({{count}})","completed":"مكتمل ({{count}})"},"status":{"WAITING":"في الانتظار","CALLED":"تم الاتصال","SEATED":"جالس","CANCELLED":"ملغى","NO_SHOW":"لم يحضر"},"stats":{"inQueue":"في الطابور","servedToday":"تم خدمتهم اليوم","avgWaitTime":"متوسط الوقت حتى الاتصال","lastMinutes":"(آخر {{minutes}} دقيقة)","estimated":"تقديري"},"entry":{"timeInQueue":"الوقت في الطابور","calledSince":"تم الاتصال منذ","calledFor":"تم الاتصال منذ","eta":"التقدير: {{time}}","callingAnytime":"الاتصال في أي وقت","calculating":"جاري الحساب...","partySize":"الأشخاص","customer":"العميل","customerCalled":"تم الاتصال بالعميل","at":"في","delay":"تأخير","delaySeating":"تأخير الجلوس"},"actions":{"call":"اتصل","seat":"أجلس","cancel":"إلغاء","noShow":"لم يحضر","addToQueue":"إضافة إلى الطابور","addCustomer":"إضافة عميل"},"form":{"title":"إضافة إلى الطابور","customerPhone":"هاتف العميل","customerName":"اسم العميل","fullName":"الاسم الكامل","partySize":"الأشخاص","notes":"ملاحظات","notesPlaceholder":"مثال: طاولة بجانب النافذة، كرسي أطفال...","phonePlaceholder":"رقم الهاتف","phonePlaceholderBR":"(11) 99999-9999","lookingUp":"البحث عن العميل...","customerFound":"تم العثور على العميل: {{name}}","newCustomer":"عميل جديد — سيتم تسجيله"},"empty":{"title":"لا يوجد عملاء في الطابور","description":"أضف عملاء إلى قائمة الانتظار لبدء الخدمة","action":"إضافة عميل"},"loading":"جاري تحميل الطابور...","activeQueue":"الطابور النشط"}
+{
+    "title": "قائمة الانتظار",
+    "subtitle": "إدارة العملاء في انتظار الخدمة",
+    "tabs": {
+        "active": "نشط ({{count}})",
+        "completed": "مكتمل ({{count}})"
+    },
+    "status": {
+        "WAITING": "في الانتظار",
+        "CALLED": "تم الاتصال",
+        "SEATED": "جالس",
+        "CANCELLED": "ملغى",
+        "NO_SHOW": "لم يحضر"
+    },
+    "stats": {
+        "inQueue": "في الطابور",
+        "servedToday": "تم خدمتهم اليوم",
+        "avgWaitTime": "متوسط الوقت حتى الاتصال",
+        "lastMinutes": "(آخر {{minutes}} دقيقة)",
+        "estimated": "تقديري"
+    },
+    "entry": {
+        "timeInQueue": "الوقت في الطابور",
+        "calledSince": "تم الاتصال منذ",
+        "calledFor": "تم الاتصال منذ",
+        "eta": "التقدير: {{time}}",
+        "callingAnytime": "الاتصال في أي وقت",
+        "calculating": "جاري الحساب...",
+        "partySize": "الأشخاص",
+        "customer": "العميل",
+        "customerCalled": "تم الاتصال بالعميل",
+        "at": "في",
+        "delay": "تأخير",
+        "delaySeating": "تأخير الجلوس"
+    },
+    "actions": {
+        "call": "اتصل",
+        "seat": "أجلس",
+        "cancel": "إلغاء",
+        "noShow": "لم يحضر",
+        "addToQueue": "إضافة إلى الطابور",
+        "addCustomer": "إضافة عميل"
+    },
+    "form": {
+        "title": "إضافة إلى الطابور",
+        "customerPhone": "هاتف العميل",
+        "customerName": "اسم العميل",
+        "fullName": "الاسم الكامل",
+        "partySize": "الأشخاص",
+        "notes": "ملاحظات",
+        "notesPlaceholder": "مثال: طاولة بجانب النافذة، كرسي أطفال...",
+        "phonePlaceholder": "رقم الهاتف",
+        "phonePlaceholderBR": "(11) 99999-9999",
+        "lookingUp": "البحث عن العميل...",
+        "customerFound": "تم العثور على العميل: {{name}}",
+        "newCustomer": "عميل جديد — سيتم تسجيله"
+    },
+    "empty": {
+        "title": "لا يوجد عملاء في الطابور",
+        "description": "أضف عملاء إلى قائمة الانتظار لبدء الخدمة",
+        "action": "إضافة عميل"
+    },
+    "loading": "جاري تحميل الطابور...",
+    "activeQueue": "الطابور النشط",
+    "filters": {
+        "phoneSearch": "البحث بالهاتف",
+        "nameSearch": "البحث بالاسم",
+        "partySizeLabel": "حجم المجموعة",
+        "all": "الكل",
+        "clearFilters": "مسح الفلاتر",
+        "noResults": {
+            "title": "لم يتم العثور على نتائج",
+            "description": "لا توجد إدخالات تطابق الفلاتر المطبقة. حاول ضبط الفلاتر."
+        }
+    }
+}

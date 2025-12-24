@@ -10,6 +10,7 @@ import authRoutes from './routes/auth.routes';
 import waitlistRoutes from './routes/waitlist.routes';
 import {
     reportsRouter,
+    dashboardRouter,
 } from './routes/index';
 import customersRoutes from './routes/customers.routes';
 import restaurantRoutes from './routes/restaurants.routes';
@@ -37,6 +38,7 @@ app.use('/waitlist', waitlistRoutes);
 app.use('/customers', customersRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/users', usersRoutes);
+app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
 
 // Error handler (must be last)

@@ -46,5 +46,10 @@
         "notes": "Observações",
         "optional": "Opcional",
         "required": "Obrigatório"
+    },
+    "roles": {
+        "ADMIN": "Administrador",
+        "MANAGER": "Gerente",
+        "HOSTESS": "Recepcionista"
     }
 }

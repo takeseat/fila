@@ -60,6 +60,17 @@
         "description": "Add customers to the waitlist to start service",
         "action": "Add Customer"
     },
+    "filters": {
+        "phoneSearch": "Search by phone",
+        "nameSearch": "Search by name",
+        "partySizeLabel": "Party size",
+        "all": "All",
+        "clearFilters": "Clear filters",
+        "noResults": {
+            "title": "No results found",
+            "description": "No entries match the applied filters. Try adjusting the filters."
+        }
+    },
     "loading": "Loading queue...",
     "activeQueue": "Active Queue"
 }

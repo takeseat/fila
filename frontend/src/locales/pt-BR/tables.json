@@ -1,0 +1,22 @@
+{
+    "pagination": {
+        "showing": "Mostrando {{from}} a {{to}} de {{total}}",
+        "rowsPerPage": "Linhas por página:",
+        "page": "Página {{current}} de {{total}}"
+    },
+    "sort": {
+        "ascending": "Ordenar crescente",
+        "descending": "Ordenar decrescente",
+        "clear": "Limpar ordenação"
+    },
+    "filter": {
+        "apply": "Aplicar Filtros",
+        "clear": "Limpar Filtros",
+        "active": "{{count}} filtros ativos"
+    },
+    "selection": {
+        "selected": "{{count}} selecionados",
+        "selectAll": "Selecionar todos",
+        "deselectAll": "Desselecionar todos"
+    }
+}

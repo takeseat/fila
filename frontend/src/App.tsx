@@ -11,6 +11,10 @@ import { Waitlist } from './pages/Waitlist';
 import { Customers } from './pages/Customers';
 import { Settings } from './pages/Settings';
 import { ProfileSettings } from './pages/Settings/Profile';
+import { PerformanceReport } from './pages/reports/Performance';
+import { ExecutiveReport } from './pages/reports/Executive';
+import { FlowReport } from './pages/reports/Flow';
+import { QueueEntriesReport } from './pages/reports/QueueEntriesReport';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -103,15 +107,45 @@ function App() {
 
 
                                 <Route
-                                    path="/reports"
+                                    path="/reports/performance"
                                     element={
                                         <PrivateRoute>
-                                            <div className="text-center py-12">
-                                                <h2 className="text-2xl font-bold text-gray-800">Relatórios</h2>
-                                                <p className="text-gray-600 mt-2">Em desenvolvimento</p>
-                                            </div>
+                                            <PerformanceReport />
                                         </PrivateRoute>
                                     }
+                                />
+
+                                <Route
+                                    path="/reports/executive"
+                                    element={
+                                        <PrivateRoute>
+                                            <ExecutiveReport />
+                                        </PrivateRoute>
+                                    }
+                                />
+
+                                <Route
+                                    path="/reports/flow"
+                                    element={
+                                        <PrivateRoute>
+                                            <FlowReport />
+                                        </PrivateRoute>
+                                    }
+                                />
+
+                                <Route
+                                    path="/reports/queue-entries"
+                                    element={
+                                        <PrivateRoute>
+                                            <QueueEntriesReport />
+                                        </PrivateRoute>
+                                    }
+                                />
+
+                                {/* Redirect /reports to /reports/performance */}
+                                <Route
+                                    path="/reports"
+                                    element={<Navigate to="/reports/performance" replace />}
                                 />
 
                                 <Route

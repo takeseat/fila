@@ -4,7 +4,13 @@
         "waitlist": "Waitlist",
         "customers": "Customers",
         "reports": "Reports",
-        "settings": "Settings"
+        "settings": "Settings",
+        "reportsSubmenu": {
+            "performance": "Performance",
+            "executive": "Executive Summary",
+            "flow": "Queue Flow",
+            "queueEntries": "Analytical Report"
+        }
     },
     "user": {
         "profile": "Profile",

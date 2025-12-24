@@ -60,6 +60,17 @@
         "description": "Ajoutez des clients à la liste d'attente pour commencer le service",
         "action": "Ajouter Client"
     },
+    "filters": {
+        "phoneSearch": "Rechercher par téléphone",
+        "nameSearch": "Rechercher par nom",
+        "partySizeLabel": "Taille du groupe",
+        "all": "Tous",
+        "clearFilters": "Effacer les filtres",
+        "noResults": {
+            "title": "Aucun résultat trouvé",
+            "description": "Aucune entrée ne correspond aux filtres appliqués. Essayez d'ajuster les filtres."
+        }
+    },
     "loading": "Chargement de la file...",
     "activeQueue": "File Active"
 }

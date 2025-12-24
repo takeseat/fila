@@ -1,58 +1,44 @@
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import api from '../lib/api';
+import { useDashboardMetrics } from '../hooks/useDashboardMetrics';
 import { Card, Skeleton } from '../components/ui';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 export function Dashboard() {
     const { t } = useTranslation('dashboard');
     const navigate = useNavigate();
-    const [stats, setStats] = useState({
-        waitingNow: 0,
-        avgWaitTime: 0,
-        totalCustomersToday: 0,
-    });
+    const { data: metrics, isLoading, error } = useDashboardMetrics();
 
-    const { data: waitlist, isLoading } = useQuery({
-        queryKey: ['waitlist'],
-        queryFn: async () => {
-            const { data } = await api.get('/waitlist');
-            return data;
-        },
-    });
+    // Format hourly data for chart (fill missing hours with 0)
+    const hourlyData = metrics?.hourlyVolume
+        ? Array.from({ length: 24 }, (_, i) => {
+            const hourData = metrics.hourlyVolume.find(h => h.hour === i);
+            return {
+                hour: `${i}h`,
+                clientes: hourData?.count || 0,
+            };
+        }).filter((d, idx) => d.clientes > 0 || (idx >= 6 && idx <= 23)) // Show only relevant hours
+        : [];
 
-    useEffect(() => {
-        if (waitlist) {
-            const waiting = waitlist.filter((e: any) => e.status === 'WAITING' || e.status === 'CALLED');
-            const seated = waitlist.filter((e: any) => e.status === 'SEATED');
-            const avgWait = waiting.length > 0
-                ? Math.round(waiting.reduce((sum: number, e: any) => sum + (e.estimatedWaitMinutes || 0), 0) / waiting.length)
-                : 0;
+    // Format weekly data for chart
+    const weeklyData = metrics?.weeklyTrend.map(day => ({
+        dia: new Date(day.date).toLocaleDateString('pt-BR', { weekday: 'short' }),
+        clientes: day.count,
+    })) || [];
 
-            setStats({
-                waitingNow: waiting.length,
-                avgWaitTime: avgWait,
-                totalCustomersToday: seated.length,
-            });
-        }
-    }, [waitlist]);
+    // Format comparison badges
+    const formatComparison = (value: number, isPercentage: boolean = true) => {
+        if (value === 0) return { text: '0%', isPositive: false };
+        const sign = value > 0 ? '+' : '';
+        const text = isPercentage ? `${sign}${value}%` : `${sign}${value} min`;
+        return { text, isPositive: value > 0 };
+    };
 
-    // Mock hourly data
-    const hourlyData = [
-        { hour: '11h', clientes: 5 },
-        { hour: '12h', clientes: 12 },
-        { hour: '13h', clientes: 18 },
-        { hour: '14h', clientes: 8 },
-        { hour: '15h', clientes: 3 },
-        { hour: '18h', clientes: 6 },
-        { hour: '19h', clientes: 22 },
-        { hour: '20h', clientes: 28 },
-        { hour: '21h', clientes: 24 },
-        { hour: '22h', clientes: 14 },
-        { hour: '23h', clientes: 6 },
-    ];
+    const activeQueueComparison = metrics ? formatComparison(metrics.activeQueue.vsYesterday) : null;
+    const seatedComparison = metrics ? formatComparison(metrics.seatedToday.vsYesterday) : null;
+    const avgWaitComparison = metrics && metrics.avgWaitTime.vsYesterday !== null
+        ? formatComparison(metrics.avgWaitTime.vsYesterday, false)
+        : null;
 
     return (
         <div className="space-y-6 animate-fade-in">
@@ -66,6 +52,16 @@ export function Dashboard() {
                 </p>
             </div>
 
+            {/* Error State */}
+            {error && (
+                <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+                    <p className="text-red-800 font-medium">Erro ao carregar métricas do dashboard</p>
+                    <p className="text-red-600 text-sm mt-1">
+                        {(error as any).message || 'Tente novamente mais tarde'}
+                    </p>
+                </div>
+            )}
+
             {/* KPI Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Waiting Now */}
@@ -75,7 +71,7 @@ export function Dashboard() {
                             <Skeleton className="h-4 w-24" />
                             <Skeleton className="h-10 w-16" />
                         </div>
-                    ) : (
+                    ) : metrics ? (
                         <div>
                             <div className="flex items-center justify-between mb-4">
                                 <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
@@ -83,20 +79,26 @@ export function Dashboard() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </div>
-                                <div className="px-2 py-1 bg-success-100 rounded-lg">
-                                    <span className="text-xs font-semibold text-success-700 flex items-center gap-1">
-                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-                                        </svg>
-                                        +12%
-                                    </span>
-                                </div>
+                                {activeQueueComparison && (
+                                    <div className={`px-2 py-1 rounded-lg ${activeQueueComparison.isPositive ? 'bg-success-100' : 'bg-danger-100'}`}>
+                                        <span className={`text-xs font-semibold flex items-center gap-1 ${activeQueueComparison.isPositive ? 'text-success-700' : 'text-danger-700'}`}>
+                                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                {activeQueueComparison.isPositive ? (
+                                                    <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                                                ) : (
+                                                    <path fillRule="evenodd" d="M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z" clipRule="evenodd" />
+                                                )}
+                                            </svg>
+                                            {activeQueueComparison.text}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                             <p className="text-sm font-medium text-dark-600 mb-2">{t('metrics.activeQueue.title')}</p>
-                            <p className="text-4xl font-bold text-dark-900 mb-1">{stats.waitingNow}</p>
+                            <p className="text-4xl font-bold text-dark-900 mb-1">{metrics.activeQueue.count}</p>
                             <p className="text-xs text-dark-500">{t('metrics.activeQueue.vsYesterday')}</p>
                         </div>
-                    )}
+                    ) : null}
                 </div>
 
                 {/* Average Wait Time */}
@@ -106,7 +108,7 @@ export function Dashboard() {
                             <Skeleton className="h-4 w-24" />
                             <Skeleton className="h-10 w-16" />
                         </div>
-                    ) : (
+                    ) : metrics ? (
                         <div>
                             <div className="flex items-center justify-between mb-4">
                                 <div className="w-12 h-12 bg-gradient-to-br from-warning-500 to-warning-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
@@ -114,23 +116,31 @@ export function Dashboard() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                     </svg>
                                 </div>
-                                <div className="px-2 py-1 bg-danger-100 rounded-lg">
-                                    <span className="text-xs font-semibold text-danger-700 flex items-center gap-1">
-                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z" clipRule="evenodd" />
-                                        </svg>
-                                        +3 min
-                                    </span>
-                                </div>
+                                {avgWaitComparison && (
+                                    <div className={`px-2 py-1 rounded-lg ${avgWaitComparison.isPositive ? 'bg-danger-100' : 'bg-success-100'}`}>
+                                        <span className={`text-xs font-semibold flex items-center gap-1 ${avgWaitComparison.isPositive ? 'text-danger-700' : 'text-success-700'}`}>
+                                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                {avgWaitComparison.isPositive ? (
+                                                    <path fillRule="evenodd" d="M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z" clipRule="evenodd" />
+                                                ) : (
+                                                    <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                                                )}
+                                            </svg>
+                                            {avgWaitComparison.text}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                             <p className="text-sm font-medium text-dark-600 mb-2">{t('metrics.avgWait.title')}</p>
                             <p className="text-4xl font-bold text-dark-900 mb-1">
-                                {stats.avgWaitTime}
-                                <span className="text-xl ml-1">{t('metrics.avgWait.min')}</span>
+                                {metrics.avgWaitTime.minutes !== null ? metrics.avgWaitTime.minutes : '—'}
+                                {metrics.avgWaitTime.minutes !== null && (
+                                    <span className="text-xl ml-1">{t('metrics.avgWait.min')}</span>
+                                )}
                             </p>
                             <p className="text-xs text-dark-500">{t('metrics.avgWait.vsYesterday')}</p>
                         </div>
-                    )}
+                    ) : null}
                 </div>
 
                 {/* Total Customers Today */}
@@ -140,7 +150,7 @@ export function Dashboard() {
                             <Skeleton className="h-4 w-24" />
                             <Skeleton className="h-10 w-16" />
                         </div>
-                    ) : (
+                    ) : metrics ? (
                         <div>
                             <div className="flex items-center justify-between mb-4">
                                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
@@ -148,20 +158,26 @@ export function Dashboard() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
                                 </div>
-                                <div className="px-2 py-1 bg-success-100 rounded-lg">
-                                    <span className="text-xs font-semibold text-success-700 flex items-center gap-1">
-                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
-                                        </svg>
-                                        +15%
-                                    </span>
-                                </div>
+                                {seatedComparison && (
+                                    <div className={`px-2 py-1 rounded-lg ${seatedComparison.isPositive ? 'bg-success-100' : 'bg-danger-100'}`}>
+                                        <span className={`text-xs font-semibold flex items-center gap-1 ${seatedComparison.isPositive ? 'text-success-700' : 'text-danger-700'}`}>
+                                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                {seatedComparison.isPositive ? (
+                                                    <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                                                ) : (
+                                                    <path fillRule="evenodd" d="M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z" clipRule="evenodd" />
+                                                )}
+                                            </svg>
+                                            {seatedComparison.text}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                             <p className="text-sm font-medium text-dark-600 mb-2">{t('metrics.seated.title')}</p>
-                            <p className="text-4xl font-bold text-dark-900 mb-1">{stats.totalCustomersToday}</p>
+                            <p className="text-4xl font-bold text-dark-900 mb-1">{metrics.seatedToday.count}</p>
                             <p className="text-xs text-dark-500">{t('metrics.seated.vsYesterday')}</p>
                         </div>
-                    )}
+                    ) : null}
                 </div>
             </div>
 
@@ -181,32 +197,42 @@ export function Dashboard() {
                         </button>
                     }
                 >
-                    <ResponsiveContainer width="100%" height={300}>
-                        <BarChart data={hourlyData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#E8E8ED" vertical={false} />
-                            <XAxis
-                                dataKey="hour"
-                                tick={{ fill: '#52525B', fontSize: 12 }}
-                                axisLine={{ stroke: '#E8E8ED' }}
-                                tickLine={false}
-                            />
-                            <YAxis
-                                tick={{ fill: '#52525B', fontSize: 12 }}
-                                axisLine={{ stroke: '#E8E8ED' }}
-                                tickLine={false}
-                            />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#fff',
-                                    border: '1px solid #E8E8ED',
-                                    borderRadius: '12px',
-                                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                                }}
-                                cursor={{ fill: 'rgba(76, 111, 255, 0.05)' }}
-                            />
-                            <Bar dataKey="clientes" fill="#4C6FFF" radius={[8, 8, 0, 0]} />
-                        </BarChart>
-                    </ResponsiveContainer>
+                    {isLoading ? (
+                        <div className="h-[300px] flex items-center justify-center">
+                            <Skeleton className="h-full w-full" />
+                        </div>
+                    ) : hourlyData.length > 0 ? (
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart data={hourlyData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#E8E8ED" vertical={false} />
+                                <XAxis
+                                    dataKey="hour"
+                                    tick={{ fill: '#52525B', fontSize: 12 }}
+                                    axisLine={{ stroke: '#E8E8ED' }}
+                                    tickLine={false}
+                                />
+                                <YAxis
+                                    tick={{ fill: '#52525B', fontSize: 12 }}
+                                    axisLine={{ stroke: '#E8E8ED' }}
+                                    tickLine={false}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        backgroundColor: '#fff',
+                                        border: '1px solid #E8E8ED',
+                                        borderRadius: '12px',
+                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                                    }}
+                                    cursor={{ fill: 'rgba(76, 111, 255, 0.05)' }}
+                                />
+                                <Bar dataKey="clientes" fill="#4C6FFF" radius={[8, 8, 0, 0]} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <div className="h-[300px] flex items-center justify-center text-gray-500">
+                            Sem dados para hoje
+                        </div>
+                    )}
                 </Card>
 
                 {/* Trend Chart */}
@@ -223,47 +249,49 @@ export function Dashboard() {
                         </button>
                     }
                 >
-                    <ResponsiveContainer width="100%" height={300}>
-                        <LineChart data={[
-                            { dia: t('charts.days.mon'), clientes: 45 },
-                            { dia: t('charts.days.tue'), clientes: 52 },
-                            { dia: t('charts.days.wed'), clientes: 48 },
-                            { dia: t('charts.days.thu'), clientes: 61 },
-                            { dia: t('charts.days.fri'), clientes: 78 },
-                            { dia: t('charts.days.sat'), clientes: 92 },
-                            { dia: t('charts.days.sun'), clientes: 68 },
-                        ]}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#E8E8ED" vertical={false} />
-                            <XAxis
-                                dataKey="dia"
-                                tick={{ fill: '#52525B', fontSize: 12 }}
-                                axisLine={{ stroke: '#E8E8ED' }}
-                                tickLine={false}
-                            />
-                            <YAxis
-                                tick={{ fill: '#52525B', fontSize: 12 }}
-                                axisLine={{ stroke: '#E8E8ED' }}
-                                tickLine={false}
-                            />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#fff',
-                                    border: '1px solid #E8E8ED',
-                                    borderRadius: '12px',
-                                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                                }}
-                                cursor={{ stroke: '#4C6FFF', strokeWidth: 1, strokeDasharray: '5 5' }}
-                            />
-                            <Line
-                                type="monotone"
-                                dataKey="clientes"
-                                stroke="#4C6FFF"
-                                strokeWidth={3}
-                                dot={{ fill: '#4C6FFF', r: 5, strokeWidth: 2, stroke: '#fff' }}
-                                activeDot={{ r: 7, strokeWidth: 2 }}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
+                    {isLoading ? (
+                        <div className="h-[300px] flex items-center justify-center">
+                            <Skeleton className="h-full w-full" />
+                        </div>
+                    ) : weeklyData.length > 0 ? (
+                        <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={weeklyData}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#E8E8ED" vertical={false} />
+                                <XAxis
+                                    dataKey="dia"
+                                    tick={{ fill: '#52525B', fontSize: 12 }}
+                                    axisLine={{ stroke: '#E8E8ED' }}
+                                    tickLine={false}
+                                />
+                                <YAxis
+                                    tick={{ fill: '#52525B', fontSize: 12 }}
+                                    axisLine={{ stroke: '#E8E8ED' }}
+                                    tickLine={false}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        backgroundColor: '#fff',
+                                        border: '1px solid #E8E8ED',
+                                        borderRadius: '12px',
+                                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                                    }}
+                                    cursor={{ stroke: '#4C6FFF', strokeWidth: 1, strokeDasharray: '5 5' }}
+                                />
+                                <Line
+                                    type="monotone"
+                                    dataKey="clientes"
+                                    stroke="#4C6FFF"
+                                    strokeWidth={3}
+                                    dot={{ fill: '#4C6FFF', r: 5, strokeWidth: 2, stroke: '#fff' }}
+                                    activeDot={{ r: 7, strokeWidth: 2 }}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <div className="h-[300px] flex items-center justify-center text-gray-500">
+                            Sem dados para os últimos 7 dias
+                        </div>
+                    )}
                 </Card>
             </div>
 

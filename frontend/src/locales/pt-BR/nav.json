@@ -4,7 +4,13 @@
         "waitlist": "Fila de Espera",
         "customers": "Clientes",
         "reports": "Relatórios",
-        "settings": "Configurações"
+        "settings": "Configurações",
+        "reportsSubmenu": {
+            "performance": "Performance",
+            "executive": "Resumo Executivo",
+            "flow": "Fluxo da Fila",
+            "queueEntries": "Relatório Analítico"
+        }
     },
     "user": {
         "profile": "Perfil",

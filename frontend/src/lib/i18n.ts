@@ -12,6 +12,7 @@ import enCustomers from '../locales/en/customers.json';
 import enSettings from '../locales/en/settings.json';
 import enErrors from '../locales/en/errors.json';
 import enTables from '../locales/en/tables.json';
+import enReports from '../locales/en/reports.json';
 
 // Import Portuguese (Brazil) translations
 import ptBRAuth from '../locales/pt-BR/auth.json';
@@ -22,6 +23,9 @@ import ptBRDashboard from '../locales/pt-BR/dashboard.json';
 import ptBRWaitlist from '../locales/pt-BR/waitlist.json';
 import ptBRCustomers from '../locales/pt-BR/customers.json';
 import ptBRSettings from '../locales/pt-BR/settings.json';
+import ptBRErrors from '../locales/pt-BR/errors.json';
+import ptBRTables from '../locales/pt-BR/tables.json';
+import ptBRReports from '../locales/pt-BR/reports.json';
 
 // Import Spanish translations
 import esAuth from '../locales/es/auth.json';
@@ -32,6 +36,7 @@ import esDashboard from '../locales/es/dashboard.json';
 import esWaitlist from '../locales/es/waitlist.json';
 import esCustomers from '../locales/es/customers.json';
 import esSettings from '../locales/es/settings.json';
+import esReports from '../locales/es/reports.json';
 
 // Import Italian translations
 import itAuth from '../locales/it/auth.json';
@@ -118,6 +123,7 @@ i18n
                 settings: enSettings,
                 errors: enErrors,
                 tables: enTables,
+                reports: enReports,
             },
             'pt-BR': {
                 auth: ptBRAuth,
@@ -128,6 +134,9 @@ i18n
                 waitlist: ptBRWaitlist,
                 customers: ptBRCustomers,
                 settings: ptBRSettings,
+                errors: ptBRErrors,
+                tables: ptBRTables,
+                reports: ptBRReports,
             },
             es: {
                 auth: esAuth,
@@ -138,6 +147,7 @@ i18n
                 waitlist: esWaitlist,
                 customers: esCustomers,
                 settings: esSettings,
+                reports: esReports,
             },
             it: {
                 auth: itAuth,
@@ -206,7 +216,7 @@ i18n
         lng: 'en', // Default - LanguageProvider will override
         fallbackLng: 'en',
         defaultNS: 'common',
-        ns: ['common', 'auth', 'profile', 'nav', 'dashboard', 'waitlist', 'customers', 'settings', 'errors', 'tables'],
+        ns: ['common', 'auth', 'profile', 'nav', 'dashboard', 'waitlist', 'customers', 'settings', 'errors', 'tables', 'reports'],
         interpolation: {
             escapeValue: false, // React already escapes values
         },

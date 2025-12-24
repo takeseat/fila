@@ -16,8 +16,8 @@ model Restaurant {
   name      String
   tradeName String?  // Optional trade/fantasy name
   cnpj      String?
-  phone     String
-  email     String
+  phone     String?  // Optional - user phone is collected instead
+  email     String?  // Optional - user email is collected instead
   
   // Internationalized Address
   countryCode        String?  @default("BR") // ISO 3166-1 alpha-2
@@ -97,25 +97,30 @@ model Customer {
 
 model WaitlistEntry {
   id                   String              @id @default(uuid())
-  restaurantId         String
-  customerId           String?
-  customerName         String
-  customerPhone        String
-  customerCountryCode  String?
-  partySize            Int
+  restaurantId         String              @map("restaurant_id")
+  customerId           String?             @map("customer_id")
+  customerName         String              @map("customer_name")
+  customerPhone        String              @map("customer_phone")
+  customerCountryCode  String?             @map("customer_country_code")
+  partySize            Int                 @map("party_size")
   status               WaitlistEntryStatus @default(WAITING)
-  estimatedWaitMinutes Int?
-  createdAt            DateTime            @default(now())
-  calledAt             DateTime?
-  seatedAt             DateTime?
-  cancelledAt          DateTime?
-  noShowAt             DateTime?
+  estimatedWaitMinutes Int?                @map("estimated_wait_minutes")
+  createdAt            DateTime            @default(now()) @map("created_at")
+  calledAt             DateTime?           @map("called_at")
+  seatedAt             DateTime?           @map("seated_at")
+  cancelledAt          DateTime?           @map("cancelled_at")
+  noShowAt             DateTime?           @map("no_show_at")
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customer   Customer?  @relation(fields: [customerId], references: [id], onDelete: SetNull)
 
   @@index([restaurantId, status])
   @@index([customerId])
+  // Analytics indexes for efficient reporting
+  @@index([restaurantId, createdAt])
+  @@index([restaurantId, status, createdAt])
+  @@index([restaurantId, seatedAt])
+  @@index([restaurantId, calledAt])
   @@map("waitlist_entries")
 }
 

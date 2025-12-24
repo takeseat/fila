@@ -60,6 +60,17 @@
         "description": "Aggiungi clienti alla lista d'attesa per iniziare il servizio",
         "action": "Aggiungi Cliente"
     },
+    "filters": {
+        "phoneSearch": "Cerca per telefono",
+        "nameSearch": "Cerca per nome",
+        "partySizeLabel": "Dimensione del gruppo",
+        "all": "Tutti",
+        "clearFilters": "Cancella filtri",
+        "noResults": {
+            "title": "Nessun risultato trovato",
+            "description": "Nessuna voce corrisponde ai filtri applicati. Prova a regolare i filtri."
+        }
+    },
     "loading": "Caricamento coda...",
     "activeQueue": "Coda Attiva"
 }

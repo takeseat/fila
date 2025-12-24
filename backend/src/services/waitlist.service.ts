@@ -259,13 +259,28 @@ export class WaitlistService {
             },
         });
 
-        // 6. Return metrics
+        // 6. Get served today count (SEATED with seated_at today)
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0);
+
+        const servedToday = await prisma.waitlistEntry.count({
+            where: {
+                restaurantId,
+                status: 'SEATED',
+                seatedAt: {
+                    gte: startOfDay,
+                },
+            },
+        });
+
+        // 7. Return metrics
         return {
             averageWaitSeconds,
             sampleSize,
             windowMinutes,
             isFallbackUsed,
             activeCount,
+            servedToday,
         };
     }
 }

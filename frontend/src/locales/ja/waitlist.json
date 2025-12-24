@@ -1,1 +1,76 @@
-{"title":"待機リスト","subtitle":"サービス待ちの顧客を管理","tabs":{"active":"アクティブ ({{count}})","completed":"完了 ({{count}})"},"status":{"WAITING":"待機中","CALLED":"呼び出し済み","SEATED":"着席済み","CANCELLED":"キャンセル","NO_SHOW":"不在"},"stats":{"inQueue":"待機中","servedToday":"本日サービス済み","avgWaitTime":"平均待機時間","lastMinutes":"(最近 {{minutes}} 分)","estimated":"推定"},"entry":{"timeInQueue":"待機時間","calledSince":"呼び出し後","calledFor":"呼び出し後","eta":"推定: {{time}}","callingAnytime":"いつでも呼び出し","calculating":"計算中...","partySize":"人数","customer":"顧客","customerCalled":"顧客が呼び出されました","at":"で","delay":"遅延","delaySeating":"着席遅延"},"actions":{"call":"呼び出し","seat":"着席","cancel":"キャンセル","noShow":"不在","addToQueue":"キューに追加","addCustomer":"顧客を追加"},"form":{"title":"キューに追加","customerPhone":"顧客電話","customerName":"顧客名","fullName":"フルネーム","partySize":"人数","notes":"メモ","notesPlaceholder":"例: 窓際の席, ベビーチェア...","phonePlaceholder":"電話番号","phonePlaceholderBR":"(11) 99999-9999","lookingUp":"顧客を検索中...","customerFound":"顧客が見つかりました: {{name}}","newCustomer":"新規顧客 — 登録されます"},"empty":{"title":"キューに顧客がいません","description":"サービスを開始するために待機リストに顧客を追加してください","action":"顧客を追加"},"loading":"キューを読み込み中...","activeQueue":"アクティブキュー"}
+{
+    "title": "待機リスト",
+    "subtitle": "サービス待ちの顧客を管理",
+    "tabs": {
+        "active": "アクティブ ({{count}})",
+        "completed": "完了 ({{count}})"
+    },
+    "status": {
+        "WAITING": "待機中",
+        "CALLED": "呼び出し済み",
+        "SEATED": "着席済み",
+        "CANCELLED": "キャンセル",
+        "NO_SHOW": "不在"
+    },
+    "stats": {
+        "inQueue": "待機中",
+        "servedToday": "本日サービス済み",
+        "avgWaitTime": "平均待機時間",
+        "lastMinutes": "(最近 {{minutes}} 分)",
+        "estimated": "推定"
+    },
+    "entry": {
+        "timeInQueue": "待機時間",
+        "calledSince": "呼び出し後",
+        "calledFor": "呼び出し後",
+        "eta": "推定: {{time}}",
+        "callingAnytime": "いつでも呼び出し",
+        "calculating": "計算中...",
+        "partySize": "人数",
+        "customer": "顧客",
+        "customerCalled": "顧客が呼び出されました",
+        "at": "で",
+        "delay": "遅延",
+        "delaySeating": "着席遅延"
+    },
+    "actions": {
+        "call": "呼び出し",
+        "seat": "着席",
+        "cancel": "キャンセル",
+        "noShow": "不在",
+        "addToQueue": "キューに追加",
+        "addCustomer": "顧客を追加"
+    },
+    "form": {
+        "title": "キューに追加",
+        "customerPhone": "顧客電話",
+        "customerName": "顧客名",
+        "fullName": "フルネーム",
+        "partySize": "人数",
+        "notes": "メモ",
+        "notesPlaceholder": "例: 窓際の席, ベビーチェア...",
+        "phonePlaceholder": "電話番号",
+        "phonePlaceholderBR": "(11) 99999-9999",
+        "lookingUp": "顧客を検索中...",
+        "customerFound": "顧客が見つかりました: {{name}}",
+        "newCustomer": "新規顧客 — 登録されます"
+    },
+    "empty": {
+        "title": "キューに顧客がいません",
+        "description": "サービスを開始するために待機リストに顧客を追加してください",
+        "action": "顧客を追加"
+    },
+    "loading": "キューを読み込み中...",
+    "activeQueue": "アクティブキュー",
+    "filters": {
+        "phoneSearch": "電話番号で検索",
+        "nameSearch": "名前で検索",
+        "partySizeLabel": "グループサイズ",
+        "all": "すべて",
+        "clearFilters": "フィルタをクリア",
+        "noResults": {
+            "title": "結果が見つかりません",
+            "description": "適用されたフィルタに一致するエントリがありません。フィルタを調整してみてください。"
+        }
+    }
+}

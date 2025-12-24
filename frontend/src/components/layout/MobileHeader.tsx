@@ -116,7 +116,7 @@ export function MobileHeader({ title, showMenu = true }: MobileHeaderProps) {
 
                                 <button
                                     onClick={() => {
-                                        navigate('/reports');
+                                        navigate('/reports/performance');
                                         setIsMenuOpen(false);
                                     }}
                                     className="w-full flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"

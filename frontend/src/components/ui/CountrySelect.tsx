@@ -65,7 +65,7 @@ export function CountrySelect({
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full h-full flex items-center justify-between gap-2 px-3 bg-white border-2 border-dark-200 hover:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${compact ? 'justify-center rounded-l-xl rounded-r-none border-r-dark-200' : 'rounded-xl'}`}
+                className={`w-full flex items-center justify-between gap-2 px-4 py-3 bg-white border-2 border-dark-200 hover:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${compact ? 'justify-center rounded-l-xl rounded-r-none border-r-0' : 'rounded-xl'}`}
             >
                 {compact ? (
                     <div className="flex items-center gap-1">

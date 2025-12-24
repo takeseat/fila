@@ -22,9 +22,7 @@ export class AuthService {
                 data: {
                     name: data.restaurantName,
                     tradeName: data.tradeName,
-                    cnpj: data.cnpj,
-                    phone: data.phone,
-                    email: data.email,
+                    cnpj: data.businessId, // Using businessId for cnpj field
                     countryCode: data.countryCode,
                     stateCode: data.stateCode,
                     city: data.city,

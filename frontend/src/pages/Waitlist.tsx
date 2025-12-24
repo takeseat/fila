@@ -21,6 +21,11 @@ export function Waitlist() {
     const [phoneDisplay, setPhoneDisplay] = useState('');
     const [customerFound, setCustomerFound] = useState<any>(null);
     const [isLookingUp, setIsLookingUp] = useState(false);
+    const [filters, setFilters] = useState({
+        phone: '',
+        name: '',
+        partySize: null as number | null, // null = all sizes
+    });
     const queryClient = useQueryClient();
 
     const { data: waitlist = [], isLoading } = useQuery({
@@ -158,6 +163,7 @@ export function Waitlist() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
+            queryClient.invalidateQueries({ queryKey: ['metrics'] });
             setIsModalOpen(false);
             // Reset to business country or default
             const resetCountry = businessData?.countryCode
@@ -175,6 +181,7 @@ export function Waitlist() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
+            queryClient.invalidateQueries({ queryKey: ['metrics'] });
         },
     });
 
@@ -184,6 +191,7 @@ export function Waitlist() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
+            queryClient.invalidateQueries({ queryKey: ['metrics'] });
         },
     });
 
@@ -193,6 +201,7 @@ export function Waitlist() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
+            queryClient.invalidateQueries({ queryKey: ['metrics'] });
         },
     });
 
@@ -202,6 +211,7 @@ export function Waitlist() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
+            queryClient.invalidateQueries({ queryKey: ['metrics'] });
         },
     });
 
@@ -336,14 +346,45 @@ export function Waitlist() {
         return { elapsedString, progress, etaString, variant, isOverdue };
     };
 
+
     // Filter active entries (not seated, cancelled, or no-show)
     const activeEntries = waitlist.filter((e: any) =>
         e.status === 'WAITING' || e.status === 'CALLED'
     );
 
-    const completedEntries = waitlist.filter((e: any) =>
-        e.status === 'SEATED' || e.status === 'CANCELLED' || e.status === 'NO_SHOW'
-    );
+    // Apply user filters
+    const filteredActiveEntries = activeEntries.filter((entry: any) => {
+        // Phone filter (partial match)
+        if (filters.phone && !entry.customerPhone.includes(filters.phone)) {
+            return false;
+        }
+
+        // Name filter (case-insensitive partial match)
+        if (filters.name && !entry.customerName.toLowerCase().includes(filters.name.toLowerCase())) {
+            return false;
+        }
+
+        // Party size filter
+        if (filters.partySize !== null) {
+            if (filters.partySize === 5) {
+                // 5+ means 5 or more
+                if (entry.partySize < 5) {
+                    return false;
+                }
+            } else {
+                // Exact match for 1, 2, 3, 4
+                if (entry.partySize !== filters.partySize) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    });
+
+    // Check if any filter is active
+    const hasActiveFilters = filters.phone || filters.name || filters.partySize !== null;
+
 
     if (isLoading) {
         return (
@@ -398,7 +439,7 @@ export function Waitlist() {
                         <div>
                             <p className="text-sm font-medium text-dark-600">{t('stats.servedToday')}</p>
                             <p className="text-3xl font-bold text-dark-900">
-                                {completedEntries.filter((e: any) => e.status === 'SEATED').length}
+                                {metrics?.servedToday ?? 0}
                             </p>
                         </div>
                     </div>
@@ -432,6 +473,83 @@ export function Waitlist() {
                 </div>
             </div>
 
+            {/* Filters */}
+            <div className="card-premium p-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Phone filter */}
+                    <Input
+                        placeholder={t('filters.phoneSearch')}
+                        value={filters.phone}
+                        onChange={(e) => setFilters({ ...filters, phone: e.target.value })}
+                        leftIcon={
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        }
+                    />
+
+                    {/* Name filter */}
+                    <Input
+                        placeholder={t('filters.nameSearch')}
+                        value={filters.name}
+                        onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+                        leftIcon={
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        }
+                    />
+
+                    {/* Party size filter */}
+                    <div className="flex flex-col gap-2">
+                        <label className="text-xs font-medium text-dark-600">{t('filters.partySizeLabel')}</label>
+                        <div className="flex gap-2">
+                            <Button
+                                variant={filters.partySize === null ? 'primary' : 'outline'}
+                                size="sm"
+                                onClick={() => setFilters({ ...filters, partySize: null })}
+                            >
+                                {t('filters.all')}
+                            </Button>
+                            {[1, 2, 3, 4].map(size => (
+                                <Button
+                                    key={size}
+                                    variant={filters.partySize === size ? 'primary' : 'outline'}
+                                    size="sm"
+                                    onClick={() => setFilters({ ...filters, partySize: size })}
+                                >
+                                    {size}
+                                </Button>
+                            ))}
+                            <Button
+                                variant={filters.partySize === 5 ? 'primary' : 'outline'}
+                                size="sm"
+                                onClick={() => setFilters({ ...filters, partySize: 5 })}
+                            >
+                                5+
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Clear filters button */}
+                {hasActiveFilters && (
+                    <div className="mt-3 flex justify-end">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setFilters({ phone: '', name: '', partySize: null })}
+                            className="gap-2"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            {t('filters.clearFilters')}
+                        </Button>
+                    </div>
+                )}
+            </div>
+
             {/* Active Queue */}
             <div>
                 <h2 className="text-xl font-semibold text-dark-900 mb-4">{t('activeQueue')}</h2>
@@ -452,9 +570,26 @@ export function Waitlist() {
                             }
                         />
                     </div>
+                ) : filteredActiveEntries.length === 0 ? (
+                    <div className="card-premium">
+                        <EmptyState
+                            icon={
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            }
+                            title={t('filters.noResults.title')}
+                            description={t('filters.noResults.description')}
+                            action={
+                                <Button onClick={() => setFilters({ phone: '', name: '', partySize: null })} variant="outline">
+                                    {t('filters.clearFilters')}
+                                </Button>
+                            }
+                        />
+                    </div>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        {activeEntries.map((entry: any, index: number) => {
+                        {filteredActiveEntries.map((entry: any, index: number) => {
                             const { elapsedString, progress, etaString, variant } = calculateWaitMetrics(entry);
                             const alertStatus = getAlertStatus(entry);
 

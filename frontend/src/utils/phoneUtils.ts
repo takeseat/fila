@@ -1,6 +1,6 @@
 /**
  * Phone utility functions for frontend
- * Handles local phone numbers (without DDI) and Brazilian masking
+ * Handles local phone numbers (without DDI) and masking by country
  */
 
 /**
@@ -31,6 +31,107 @@ export function applyBrazilianMask(phone: string): string {
     }
     // 11 digits: (99) 99999-9999 (mobile)
     return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+}
+
+/**
+ * Apply US/Canada phone mask
+ * Format: (999) 999-9999
+ */
+export function applyUSMask(phone: string): string {
+    const digits = removeMask(phone);
+
+    if (digits.length === 0) return '';
+    if (digits.length <= 3) return `(${digits}`;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
+}
+
+/**
+ * Apply UK phone mask
+ * Format: 9999 999 9999
+ */
+export function applyUKMask(phone: string): string {
+    const digits = removeMask(phone);
+
+    if (digits.length === 0) return '';
+    if (digits.length <= 4) return digits;
+    if (digits.length <= 7) return `${digits.slice(0, 4)} ${digits.slice(4)}`;
+    return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7, 11)}`;
+}
+
+/**
+ * Apply Argentina phone mask
+ * Format: 9999-9999 or 99 9999-9999
+ */
+export function applyArgentinaMask(phone: string): string {
+    const digits = removeMask(phone);
+
+    if (digits.length === 0) return '';
+    if (digits.length <= 4) return digits;
+    if (digits.length <= 8) return `${digits.slice(0, 4)}-${digits.slice(4)}`;
+    return `${digits.slice(0, 2)} ${digits.slice(2, 6)}-${digits.slice(6, 10)}`;
+}
+
+/**
+ * Apply Mexico phone mask
+ * Format: 999 999 9999
+ */
+export function applyMexicoMask(phone: string): string {
+    const digits = removeMask(phone);
+
+    if (digits.length === 0) return '';
+    if (digits.length <= 3) return digits;
+    if (digits.length <= 6) return `${digits.slice(0, 3)} ${digits.slice(3)}`;
+    return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6, 10)}`;
+}
+
+/**
+ * Apply generic international mask
+ * Format: Groups of 3-4 digits separated by spaces
+ */
+export function applyGenericMask(phone: string): string {
+    const digits = removeMask(phone);
+
+    if (digits.length === 0) return '';
+
+    // Group digits: first 3, then groups of 3
+    const parts: string[] = [];
+    if (digits.length > 0) parts.push(digits.slice(0, 3));
+    if (digits.length > 3) parts.push(digits.slice(3, 6));
+    if (digits.length > 6) parts.push(digits.slice(6, 9));
+    if (digits.length > 9) parts.push(digits.slice(9, 12));
+    if (digits.length > 12) parts.push(digits.slice(12));
+
+    return parts.join(' ');
+}
+
+/**
+ * Apply phone mask based on country code
+ * @param phone - Phone number
+ * @param countryCode - ISO country code
+ * @returns Formatted phone number
+ */
+export function applyPhoneMask(phone: string, countryCode: string): string {
+    if (!phone) return '';
+
+    const digits = removeMask(phone);
+    if (digits.length === 0) return '';
+
+    switch (countryCode) {
+        case 'BR':
+            return applyBrazilianMask(phone);
+        case 'US':
+        case 'CA':
+            return applyUSMask(phone);
+        case 'GB':
+            return applyUKMask(phone);
+        case 'AR':
+            return applyArgentinaMask(phone);
+        case 'MX':
+            return applyMexicoMask(phone);
+        default:
+            return applyGenericMask(phone);
+    }
 }
 
 /**
@@ -81,13 +182,28 @@ export function validateLocalPhone(phone: string, minLength: number = 6): boolea
  * @returns Formatted phone for display
  */
 export function getPhoneDisplay(phone: string, countryCode: string): string {
-    if (!phone) return '';
+    return applyPhoneMask(phone, countryCode);
+}
 
-    if (countryCode === 'BR') {
-        return applyBrazilianMask(phone);
+/**
+ * Get placeholder for phone input based on country
+ * @param countryCode - Country code
+ * @returns Placeholder text
+ */
+export function getPhonePlaceholder(countryCode: string): string {
+    switch (countryCode) {
+        case 'BR':
+            return '(11) 99999-9999';
+        case 'US':
+        case 'CA':
+            return '(555) 123-4567';
+        case 'GB':
+            return '7700 900123';
+        case 'AR':
+            return '11 1234-5678';
+        case 'MX':
+            return '55 1234 5678';
+        default:
+            return '123 456 7890';
     }
-
-    // For other countries, just return digits with spaces every 3 chars
-    const digits = removeMask(phone);
-    return digits.match(/.{1,3}/g)?.join(' ') || digits;
 }

@@ -60,6 +60,17 @@
         "description": "Adicione clientes à fila de espera para começar o atendimento",
         "action": "Adicionar Cliente"
     },
+    "filters": {
+        "phoneSearch": "Buscar por telefone",
+        "nameSearch": "Buscar por nome",
+        "partySizeLabel": "Pessoas na mesa",
+        "all": "Todos",
+        "clearFilters": "Limpar filtros",
+        "noResults": {
+            "title": "Nenhum resultado encontrado",
+            "description": "Nenhuma entrada corresponde aos filtros aplicados. Tente ajustar os filtros."
+        }
+    },
     "loading": "Carregando fila...",
     "activeQueue": "Fila Ativa"
 }

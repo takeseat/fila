@@ -11,11 +11,12 @@ interface LayoutProps {
 }
 
 export function Layout({ children, pageTitle }: LayoutProps) {
-    const { t } = useTranslation('nav');
+    const { t } = useTranslation(['nav', 'common']);
     const location = useLocation();
     const navigate = useNavigate();
     const { user, restaurant, logout } = useAuth();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+    const [isReportsExpanded, setIsReportsExpanded] = useState(false);
 
     const menuItems = [
         {
@@ -52,7 +53,25 @@ export function Layout({ children, pageTitle }: LayoutProps) {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
-            )
+            ),
+            submenu: [
+                {
+                    path: '/reports/performance',
+                    label: t('menu.reportsSubmenu.performance'),
+                },
+                {
+                    path: '/reports/executive',
+                    label: t('menu.reportsSubmenu.executive'),
+                },
+                {
+                    path: '/reports/flow',
+                    label: t('menu.reportsSubmenu.flow'),
+                },
+                {
+                    path: '/reports/queue-entries',
+                    label: t('menu.reportsSubmenu.queueEntries'),
+                },
+            ]
         },
         {
             path: '/settings',
@@ -117,29 +136,92 @@ export function Layout({ children, pageTitle }: LayoutProps) {
                 <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
                     {menuItems.map((item) => {
                         const isActive = location.pathname === item.path;
+                        const isSubmenuActive = item.submenu?.some(sub => location.pathname === sub.path);
+                        const shouldExpand = isReportsExpanded || isSubmenuActive;
+
                         return (
-                            <Link
-                                key={item.path}
-                                to={item.path}
-                                className={`
-                                    flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
-                                    ${isActive
-                                        ? 'bg-primary-50 text-primary-700 font-semibold'
-                                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                                    }
-                                `}
-                                title={isSidebarCollapsed ? item.label : undefined}
-                            >
-                                {isActive && (
-                                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-600 rounded-r-full" />
+                            <div key={item.path}>
+                                {/* Main menu item */}
+                                {item.submenu ? (
+                                    <button
+                                        onClick={() => setIsReportsExpanded(!isReportsExpanded)}
+                                        className={`
+                                            w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
+                                            ${isSubmenuActive
+                                                ? 'bg-primary-50 text-primary-700 font-semibold'
+                                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                            }
+                                        `}
+                                    >
+                                        {isSubmenuActive && (
+                                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-600 rounded-r-full" />
+                                        )}
+                                        <span className={`transition-colors ${isSubmenuActive ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'}`}>
+                                            {item.icon}
+                                        </span>
+                                        {!isSidebarCollapsed && (
+                                            <>
+                                                <span className="text-sm flex-1 text-left">{item.label}</span>
+                                                <svg
+                                                    className={`w-4 h-4 transition-transform ${shouldExpand ? 'rotate-180' : ''}`}
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </>
+                                        )}
+                                    </button>
+                                ) : (
+                                    <Link
+                                        to={item.path}
+                                        className={`
+                                            flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
+                                            ${isActive
+                                                ? 'bg-primary-50 text-primary-700 font-semibold'
+                                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                            }
+                                        `}
+                                        title={isSidebarCollapsed ? item.label : undefined}
+                                    >
+                                        {isActive && (
+                                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-600 rounded-r-full" />
+                                        )}
+                                        <span className={`transition-colors ${isActive ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'}`}>
+                                            {item.icon}
+                                        </span>
+                                        {!isSidebarCollapsed && (
+                                            <span className="text-sm">{item.label}</span>
+                                        )}
+                                    </Link>
                                 )}
-                                <span className={`transition-colors ${isActive ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'}`}>
-                                    {item.icon}
-                                </span>
-                                {!isSidebarCollapsed && (
-                                    <span className="text-sm">{item.label}</span>
+
+                                {/* Submenu */}
+                                {item.submenu && !isSidebarCollapsed && shouldExpand && (
+                                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-4">
+                                        {item.submenu.map((subItem) => {
+                                            const isSubActive = location.pathname === subItem.path;
+                                            return (
+                                                <Link
+                                                    key={subItem.path}
+                                                    to={subItem.path}
+                                                    className={`
+                                                        flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors
+                                                        ${isSubActive
+                                                            ? 'bg-primary-100 text-primary-700 font-medium'
+                                                            : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                                        }
+                                                    `}
+                                                >
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                                                    {subItem.label}
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
                                 )}
-                            </Link>
+                            </div>
                         );
                     })}
                 </nav>
@@ -153,7 +235,7 @@ export function Layout({ children, pageTitle }: LayoutProps) {
                         {!isSidebarCollapsed && (
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
-                                <p className="text-xs text-gray-500 truncate">{user?.role}</p>
+                                <p className="text-xs text-gray-500 truncate">{t('common:roles.' + user?.role)}</p>
                             </div>
                         )}
                     </div>

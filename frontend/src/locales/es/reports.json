@@ -1,0 +1,101 @@
+{
+    "queueEntries": {
+        "title": "Informe Analítico de la Cola",
+        "subtitle": "Análisis detallado de cada servicio, con horarios, tiempos y estado",
+        "exportCsv": "Exportar CSV",
+        "exportPdf": "Exportar PDF",
+        "errorLoading": "Error al cargar informe",
+        "tryAgainLater": "Inténtalo de nuevo más tarde",
+        "noRecordsFound": "No se encontraron registros",
+        "adjustFilters": "Intenta ajustar los filtros para ver más resultados",
+        "showing": "Mostrando {{from}} a {{to}} de {{total}} registros",
+        "perPage": "por página",
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "pageOf": "Página {{current}} de {{total}}"
+    },
+    "performance": {
+        "title": "Informe de Rendimiento de la Cola",
+        "subtitle": "Análisis detallado de métricas y tendencias de la lista de espera",
+        "kpis": {
+            "waitP50": "Tiempo Promedio (P50)",
+            "waitP75": "Tiempo P75",
+            "waitP90": "Tiempo P90",
+            "groupsSeated": "Grupos Sentados",
+            "lostRate": "Tasa de Pérdida",
+            "peakHour": "Hora Pico",
+            "peakWaitHour": "Pico de Espera"
+        },
+        "charts": {
+            "waitTimeDistribution": "Distribución del Tiempo de Espera",
+            "hourlyTrends": "Tendencias por Hora"
+        }
+    },
+    "executive": {
+        "title": "Resumen Ejecutivo",
+        "subtitle": "Visión general de 30 segundos para la toma de decisiones",
+        "kpis": {
+            "waitP50": "Tiempo Promedio (P50)",
+            "groupsSeated": "Grupos Sentados",
+            "lostRate": "Tasa de Pérdida",
+            "peakHour": "Hora Pico",
+            "peakWaitHour": "Pico de Espera",
+            "groupsLost": "Grupos Perdidos",
+            "mostEntries": "Más entradas",
+            "highestAvgWait": "Mayor tiempo promedio"
+        },
+        "charts": {
+            "hourlyEntries": "Entradas por Hora"
+        }
+    },
+    "flow": {
+        "title": "Análisis de Flujo de la Cola",
+        "subtitle": "Identificación de cuellos de botella y análisis de conversión",
+        "kpis": {
+            "entryToCall": "Entrada → Llamada",
+            "callToSeat": "Llamada → Sentar",
+            "calledToSeatedRate": "Tasa Llamado→Sentado",
+            "calledToNoshowRate": "Tasa Llamado→No presentado",
+            "avgIdleAfterCall": "Tiempo Ocioso Promedio",
+            "p50Idle": "Ocioso P50",
+            "p75Idle": "Ocioso P75",
+            "avgTime": "Tiempo promedio",
+            "afterCall": "Después de la llamada"
+        },
+        "charts": {
+            "stageTime": "Tiempos por Etapa",
+            "minutes": "Minutos",
+            "entryToCallLine": "Entrada→Llamada",
+            "callToSeatLine": "Llamada→Sentar"
+        }
+    },
+    "filters": {
+        "title": "Filtros",
+        "dateStart": "Fecha Inicio",
+        "dateEnd": "Fecha Fin",
+        "dateInitial": "Fecha Inicial",
+        "dateFinal": "Fecha Final",
+        "partySize": "Tamaño del Grupo",
+        "all": "Todos",
+        "people": "personas",
+        "timeRange": "Horario",
+        "allDay": "Todo el día",
+        "lunch": "Almuerzo (11:00-15:00)",
+        "dinner": "Cena (18:00-23:00)",
+        "lunchAndDinner": "Almuerzo y Cena",
+        "last7Days": "Últimos 7 días",
+        "last30Days": "Últimos 30 días",
+        "last90Days": "Últimos 90 días",
+        "status": "Estado",
+        "searchClient": "Buscar Cliente (Nombre o Teléfono)",
+        "searchPlaceholder": "Escribe el nombre o teléfono...",
+        "minPeople": "Mínimo de Personas",
+        "maxPeople": "Máximo de Personas",
+        "applyFilters": "Aplicar Filtros",
+        "clear": "Limpiar"
+    },
+    "common": {
+        "errorLoading": "Error al cargar",
+        "loading": "Cargando..."
+    }
+}
