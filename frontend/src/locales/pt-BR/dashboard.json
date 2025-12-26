@@ -9,7 +9,8 @@
         "avgWait": {
             "title": "Tempo Médio",
             "vsYesterday": "vs ontem",
-            "min": "min"
+            "min": "min",
+            "vsLastWeek": "vs última semana"
         },
         "seated": {
             "title": "Clientes Atendidos",
@@ -23,8 +24,8 @@
             "viewDetails": "Ver detalhes"
         },
         "weeklyTrend": {
-            "title": "Tendência Semanal",
-            "subtitle": "Comparativo dos últimos 7 dias",
+            "title": "Volume da Semana",
+            "subtitle": "Clientes por dia da semana atual",
             "viewDetails": "Ver detalhes"
         },
         "days": {

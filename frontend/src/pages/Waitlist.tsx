@@ -734,7 +734,7 @@ export function Waitlist() {
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
-                                                    Sentar
+                                                    {t('actions.seat')}
                                                 </Button>
                                                 <Button
                                                     size="sm"
@@ -760,7 +760,7 @@ export function Waitlist() {
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg>
-                                                    Sentar
+                                                    {t('actions.seat')}
                                                 </Button>
                                                 <Button
                                                     size="sm"
@@ -790,22 +790,21 @@ export function Waitlist() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
                         <label className="text-sm font-medium text-dark-700">{t('form.customerPhone')}</label>
-                        <div className="flex relative z-20 items-stretch h-11">
-                            <div className="w-[72px] flex-shrink-0 z-10 h-full">
+                        <div className="flex gap-0">
+                            <div className="w-[72px] flex-shrink-0">
                                 <CountrySelect
                                     value={formData.country.code}
                                     onChange={(country) => setFormData({ ...formData, country, phone: '' })}
                                     compact={true}
-                                    className="h-full"
                                 />
                             </div>
-                            <div className="flex-1 -ml-[1px] h-full">
+                            <div className="flex-1 -ml-px">
                                 <Input
                                     placeholder={formData.country.code === 'BR' ? t('form.phonePlaceholderBR') : t('form.phonePlaceholder')}
                                     value={phoneDisplay}
                                     onChange={handlePhoneChange}
                                     required
-                                    className="rounded-l-none border-l-0 focus:z-20 relative h-full"
+                                    className="rounded-l-none border-l-0"
                                 />
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 import { DashboardRepository, HourlyVolume, DailyVolume } from '../repositories/dashboard.repository';
+import { WaitlistService } from './waitlist.service';
 
 export interface DashboardMetrics {
     activeQueue: {
@@ -11,7 +12,9 @@ export interface DashboardMetrics {
     };
     avgWaitTime: {
         minutes: number | null;
-        vsYesterday: number | null; // difference in minutes
+        vsYesterday: number | null; // difference in minutes compared to yesterday
+        windowMinutes?: number; // configuration window
+        isFallbackUsed?: boolean; // whether fallback was used
     };
     cancelledToday: {
         count: number;
@@ -22,25 +25,23 @@ export interface DashboardMetrics {
 
 export class DashboardService {
     private repository: DashboardRepository;
+    private waitlistService: WaitlistService;
 
     constructor() {
         this.repository = new DashboardRepository();
+        this.waitlistService = new WaitlistService();
     }
 
     async getMetrics(restaurantId: string): Promise<DashboardMetrics> {
         // Fetch all metrics in parallel
         const [
-            activeQueueCount,
-            seatedTodayCount,
-            avgWaitTimeToday,
+            queueMetrics,
             cancelledTodayCount,
             hourlyVolume,
             weeklyTrend,
             yesterdayMetrics,
         ] = await Promise.all([
-            this.repository.getActiveQueueCount(restaurantId),
-            this.repository.getSeatedTodayCount(restaurantId),
-            this.repository.getAverageWaitTimeToday(restaurantId),
+            this.waitlistService.getQueueMetrics(restaurantId), // Use waitlist metrics
             this.repository.getCancelledTodayCount(restaurantId),
             this.repository.getHourlyVolumeToday(restaurantId),
             this.repository.getDailyVolumeLast7Days(restaurantId),
@@ -49,31 +50,38 @@ export class DashboardService {
 
         // Calculate comparisons
         const activeQueueVsYesterday = this.calculatePercentageChange(
-            activeQueueCount,
+            queueMetrics.activeCount,
             yesterdayMetrics.activeQueueCount
         );
 
         const seatedVsYesterday = this.calculatePercentageChange(
-            seatedTodayCount,
+            queueMetrics.servedToday,
             yesterdayMetrics.seatedCount
         );
 
-        const avgWaitVsYesterday = avgWaitTimeToday !== null && yesterdayMetrics.avgWaitTimeMinutes !== null
-            ? avgWaitTimeToday - yesterdayMetrics.avgWaitTimeMinutes
+        // Convert average wait from seconds to minutes
+        const avgWaitMinutes = queueMetrics.averageWaitSeconds > 0
+            ? Math.round(queueMetrics.averageWaitSeconds / 60)
+            : null;
+
+        const avgWaitVsYesterday = avgWaitMinutes !== null && yesterdayMetrics.avgWaitTimeMinutes !== null
+            ? avgWaitMinutes - yesterdayMetrics.avgWaitTimeMinutes
             : null;
 
         return {
             activeQueue: {
-                count: activeQueueCount,
+                count: queueMetrics.activeCount,
                 vsYesterday: activeQueueVsYesterday,
             },
             seatedToday: {
-                count: seatedTodayCount,
+                count: queueMetrics.servedToday,
                 vsYesterday: seatedVsYesterday,
             },
             avgWaitTime: {
-                minutes: avgWaitTimeToday,
+                minutes: avgWaitMinutes,
                 vsYesterday: avgWaitVsYesterday,
+                windowMinutes: queueMetrics.windowMinutes,
+                isFallbackUsed: queueMetrics.isFallbackUsed,
             },
             cancelledToday: {
                 count: cancelledTodayCount,

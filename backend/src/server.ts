@@ -11,6 +11,7 @@ import waitlistRoutes from './routes/waitlist.routes';
 import {
     reportsRouter,
     dashboardRouter,
+    usersManagementRouter,
 } from './routes/index';
 import customersRoutes from './routes/customers.routes';
 import restaurantRoutes from './routes/restaurants.routes';
@@ -38,6 +39,7 @@ app.use('/waitlist', waitlistRoutes);
 app.use('/customers', customersRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/users', usersRoutes);
+app.use('/users-management', usersManagementRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
 

@@ -1,0 +1,62 @@
+{
+    "title": "Usuários",
+    "description": "Gerencie quem tem acesso ao restaurante",
+    "addUser": "Adicionar usuário",
+    "editUser": "Editar usuário",
+    "deleteUser": "Excluir usuário",
+    "confirmDelete": "Tem certeza que deseja excluir este usuário?",
+    "deleteWarning": "Esta ação não pode ser desfeita.",
+    "searchPlaceholder": "Buscar por nome ou email...",
+    "noUsers": "Nenhum usuário encontrado",
+    "createSuccess": "Usuário criado com sucesso",
+    "updateSuccess": "Usuário atualizado com sucesso",
+    "deleteSuccess": "Usuário excluído com sucesso",
+    "statusUpdateSuccess": "Status atualizado com sucesso",
+    "fields": {
+        "name": "Nome",
+        "email": "Email",
+        "role": "Função",
+        "status": "Status",
+        "language": "Idioma",
+        "password": "Senha",
+        "actions": "Ações"
+    },
+    "roles": {
+        "ADMIN": "Administrador",
+        "MANAGER": "Gerente",
+        "HOSTESS": "Recepcionista"
+    },
+    "status": {
+        "active": "Ativo",
+        "inactive": "Inativo",
+        "activate": "Ativar",
+        "deactivate": "Desativar"
+    },
+    "filters": {
+        "all": "Todos",
+        "active": "Ativos",
+        "inactive": "Inativos",
+        "byRole": "Por função"
+    },
+    "errors": {
+        "emailInUse": "Este e-mail já está em uso",
+        "lastAdmin": "O restaurante deve ter pelo menos um administrador ativo",
+        "loadFailed": "Falha ao carregar usuários",
+        "createFailed": "Falha ao criar usuário",
+        "updateFailed": "Falha ao atualizar usuário",
+        "deleteFailed": "Falha ao excluir usuário",
+        "required": "Campo obrigatório"
+    },
+    "placeholders": {
+        "name": "Digite o nome completo",
+        "email": "usuario@exemplo.com",
+        "password": "Mínimo 6 caracteres"
+    },
+    "actions": {
+        "edit": "Editar",
+        "delete": "Excluir",
+        "cancel": "Cancelar",
+        "save": "Salvar",
+        "create": "Criar"
+    }
+}

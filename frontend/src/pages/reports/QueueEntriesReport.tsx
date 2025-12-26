@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQueueEntriesReport, getExportURL, QueueEntriesFilters as Filters } from '../../hooks/useQueueEntriesReport';
+import { useQueueEntriesReport, QueueEntriesFilters as Filters } from '../../hooks/useQueueEntriesReport';
 import { QueueEntriesFilters } from '../../components/reports/QueueEntriesFilters';
 import { QueueEntriesTable } from '../../components/reports/QueueEntriesTable';
 import { Spinner } from '../../components/ui';
+import api from '../../lib/api';
 
 export function QueueEntriesReport() {
     const { t } = useTranslation();
@@ -40,34 +41,37 @@ export function QueueEntriesReport() {
         setFilters(prev => ({ ...prev, pageSize: newPageSize, page: 1 }));
     };
 
-    const handleExport = (type: 'csv' | 'pdf') => {
-        const url = getExportURL(type, filters);
-        const token = localStorage.getItem('token');
+    const handleExport = async (type: 'csv' | 'pdf') => {
+        try {
+            const params = new URLSearchParams();
+            params.append('from', filters.from);
+            params.append('to', filters.to);
 
-        // Create a temporary link with authentication
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', '');
+            if (filters.clientSearch) params.append('clientSearch', filters.clientSearch);
+            if (filters.statuses) params.append('statuses', filters.statuses);
+            if (filters.partySizeMin) params.append('partySizeMin', filters.partySizeMin.toString());
+            if (filters.partySizeMax) params.append('partySizeMax', filters.partySizeMax.toString());
+            if (filters.daysOfWeek) params.append('daysOfWeek', filters.daysOfWeek);
+            if (filters.timeRange) params.append('timeRange', filters.timeRange);
 
-        // Add authorization header via fetch and blob
-        fetch(url, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        })
-            .then(response => response.blob())
-            .then(blob => {
-                const blobUrl = window.URL.createObjectURL(blob);
-                link.href = blobUrl;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(blobUrl);
-            })
-            .catch(err => {
-                console.error('Export error:', err);
-                alert(t('reports:queueEntries.errorLoading'));
+            const response = await api.get(`/reports/queue-entries/export/${type}?${params.toString()}`, {
+                responseType: 'blob'
             });
+
+            const blob = new Blob([response.data], {
+                type: type === 'pdf' ? 'application/pdf' : 'text/csv'
+            });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `queue-entries-report-${new Date().toISOString().split('T')[0]}.${type}`);
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode?.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        } catch (err) {
+            console.error('Export error:', err);
+        }
     };
 
     return (
@@ -84,24 +88,27 @@ export function QueueEntriesReport() {
                 </div>
 
                 {/* Export Buttons */}
-                <div className="flex gap-3">
+                {/* Export Buttons */}
+                <div className="flex items-center gap-2">
                     <button
                         onClick={() => handleExport('csv')}
-                        className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+                        className="group flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
+                        title={t('reports:queueEntries.exportCsv')}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        {t('reports:queueEntries.exportCsv')}
+                        CSV
                     </button>
                     <button
                         onClick={() => handleExport('pdf')}
-                        className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+                        className="group flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
+                        title={t('reports:queueEntries.exportPdf')}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                         </svg>
-                        {t('reports:queueEntries.exportPdf')}
+                        PDF
                     </button>
                 </div>
             </div>

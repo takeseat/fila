@@ -1,0 +1,62 @@
+{
+    "title": "Users",
+    "description": "Manage who has access to the restaurant",
+    "addUser": "Add user",
+    "editUser": "Edit user",
+    "deleteUser": "Delete user",
+    "confirmDelete": "Are you sure you want to delete this user?",
+    "deleteWarning": "This action cannot be undone.",
+    "searchPlaceholder": "Search by name or email...",
+    "noUsers": "No users found",
+    "createSuccess": "User created successfully",
+    "updateSuccess": "User updated successfully",
+    "deleteSuccess": "User deleted successfully",
+    "statusUpdateSuccess": "Status updated successfully",
+    "fields": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "language": "Language",
+        "password": "Password",
+        "actions": "Actions"
+    },
+    "roles": {
+        "ADMIN": "Administrator",
+        "MANAGER": "Manager",
+        "HOSTESS": "Hostess"
+    },
+    "status": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "activate": "Activate",
+        "deactivate": "Deactivate"
+    },
+    "filters": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "byRole": "By role"
+    },
+    "errors": {
+        "emailInUse": "This email is already in use",
+        "lastAdmin": "The restaurant must have at least one active administrator",
+        "loadFailed": "Failed to load users",
+        "createFailed": "Failed to create user",
+        "updateFailed": "Failed to update user",
+        "deleteFailed": "Failed to delete user",
+        "required": "Required field"
+    },
+    "placeholders": {
+        "name": "Enter full name",
+        "email": "user@example.com",
+        "password": "Minimum 6 characters"
+    },
+    "actions": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "create": "Create"
+    }
+}

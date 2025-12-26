@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useCustomers, useCreateCustomer, useUpdateCustomer, useDeleteCustomer } from '../hooks/useCustomers';
 import { useTranslation } from 'react-i18next';
-import { Button, Modal, Input, EmptyState, Spinner } from '../components/ui';
+import { Button, Modal, Input, EmptyState, Spinner, Pagination } from '../components/ui';
 import { CountrySelect } from '../components/ui/CountrySelect';
 import { Customer, CustomerFormData } from '../types/customer.types';
 import { format } from 'date-fns';
@@ -351,29 +351,15 @@ export function Customers() {
                     </div>
 
                     {/* Pagination */}
-                    {meta && meta.totalPages > 1 && (
-                        <div className="flex items-center justify-between">
-                            <div className="text-sm text-dark-600">
-                                {t('pagination.showing', { from: ((meta.page - 1) * meta.pageSize) + 1, to: Math.min(meta.page * meta.pageSize, meta.total), total: meta.total })}
-                            </div>
-                            <div className="flex gap-2">
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    onClick={() => setFilters({ ...filters, page: filters.page - 1 })}
-                                    disabled={filters.page === 1}
-                                >
-                                    {t('pagination.previous')}
-                                </Button>
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    onClick={() => setFilters({ ...filters, page: filters.page + 1 })}
-                                    disabled={filters.page >= meta.totalPages}
-                                >
-                                    {t('pagination.next')}
-                                </Button>
-                            </div>
+                    {meta && meta.total > 0 && (
+                        <div className="mt-6 border-t border-light-200 pt-6">
+                            <Pagination
+                                currentPage={meta.page}
+                                totalPages={meta.totalPages}
+                                onPageChange={(page) => setFilters({ ...filters, page })}
+                                totalItems={meta.total}
+                                pageSize={meta.pageSize}
+                            />
                         </div>
                     )}
                 </>

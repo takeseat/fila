@@ -3,7 +3,8 @@
     "subtitle": "Gerencie seus dados comerciais e parâmetros operacionais",
     "tabs": {
         "business": "Dados do Negócio",
-        "parameters": "Parâmetros"
+        "parameters": "Parâmetros",
+        "team": "Equipe"
     },
     "business": {
         "title": "Informações do Negócio",

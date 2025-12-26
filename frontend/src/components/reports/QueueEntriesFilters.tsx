@@ -6,7 +6,7 @@ interface QueueEntriesFiltersProps {
 }
 
 export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProps) {
-    const { t } = useTranslation();
+    const { t } = useTranslation('reports');
     const [from, setFrom] = useState(getDefaultFrom());
     const [to, setTo] = useState(getDefaultTo());
     const [statuses, setStatuses] = useState<string[]>([]);
@@ -79,6 +79,34 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
+            </div>
+
+            {/* Date Presets */}
+            <div className="flex flex-wrap gap-2">
+                <button
+                    onClick={() => { setFrom(getDefaultTo()); setTo(getDefaultTo()); }}
+                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                >
+                    {t('reports:filters.today')}
+                </button>
+                <button
+                    onClick={() => { setFrom(getDefaultFrom(7)); setTo(getDefaultTo()); }}
+                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                >
+                    {t('reports:filters.last7Days')}
+                </button>
+                <button
+                    onClick={() => { setFrom(getDefaultFrom(30)); setTo(getDefaultTo()); }}
+                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                >
+                    {t('reports:filters.last30Days')}
+                </button>
+                <button
+                    onClick={() => { setFrom(getDefaultFrom(90)); setTo(getDefaultTo()); }}
+                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                >
+                    {t('reports:filters.last90Days')}
+                </button>
             </div>
 
             {/* Status Filter */}
@@ -165,9 +193,9 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
     );
 }
 
-function getDefaultFrom(): string {
+function getDefaultFrom(daysAgo: number = 30): string {
     const date = new Date();
-    date.setDate(date.getDate() - 30);
+    date.setDate(date.getDate() - daysAgo);
     return date.toISOString().split('T')[0];
 }
 

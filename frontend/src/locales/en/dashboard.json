@@ -9,7 +9,8 @@
         "avgWait": {
             "title": "Average Time",
             "vsYesterday": "vs yesterday",
-            "min": "min"
+            "min": "min",
+            "vsLastWeek": "vs last week"
         },
         "seated": {
             "title": "Customers Served",
@@ -23,8 +24,8 @@
             "viewDetails": "View details"
         },
         "weeklyTrend": {
-            "title": "Weekly Trend",
-            "subtitle": "Last 7 days comparison",
+            "title": "Weekly Volume",
+            "subtitle": "Customers by day of current week",
             "viewDetails": "View details"
         },
         "days": {

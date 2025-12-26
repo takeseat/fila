@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { TabNavigation } from '../components/settings/TabNavigation';
 import { BusinessDataTab } from '../components/settings/BusinessDataTab';
 import { ParametersTab } from '../components/settings/ParametersTab';
+import { TeamTab } from '../components/settings/TeamTab';
 
 export function Settings() {
     const { t } = useTranslation('settings');
-    const [activeTab, setActiveTab] = useState<'business' | 'parameters'>('business');
+    const [activeTab, setActiveTab] = useState<'business' | 'parameters' | 'team'>('business');
 
     const tabs = [
         {
@@ -28,6 +29,15 @@ export function Settings() {
                 </svg>
             ),
         },
+        {
+            id: 'team',
+            label: t('tabs.team'),
+            icon: (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            ),
+        },
     ];
 
     return (
@@ -42,7 +52,7 @@ export function Settings() {
                 {/* Tab Navigation */}
                 <TabNavigation
                     activeTab={activeTab}
-                    onTabChange={(tabId) => setActiveTab(tabId as 'business' | 'parameters')}
+                    onTabChange={(tabId) => setActiveTab(tabId as 'business' | 'parameters' | 'team')}
                     tabs={tabs}
                 />
 
@@ -50,6 +60,7 @@ export function Settings() {
                 <div className="p-6">
                     {activeTab === 'business' && <BusinessDataTab />}
                     {activeTab === 'parameters' && <ParametersTab />}
+                    {activeTab === 'team' && <TeamTab />}
                 </div>
             </div>
         </div>

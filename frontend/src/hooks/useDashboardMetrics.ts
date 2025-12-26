@@ -23,6 +23,8 @@ export interface DashboardMetrics {
     avgWaitTime: {
         minutes: number | null;
         vsYesterday: number | null;
+        windowMinutes?: number;
+        isFallbackUsed?: boolean;
     };
     cancelledToday: {
         count: number;

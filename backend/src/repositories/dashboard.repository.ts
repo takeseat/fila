@@ -47,23 +47,32 @@ export class DashboardRepository {
     }
 
     /**
-     * Get average wait time for customers seated today (in minutes)
+     * Get P90 (90th percentile) wait time for customers seated today (in minutes)
      */
     async getAverageWaitTimeToday(restaurantId: string): Promise<number | null> {
-        const result = await prisma.$queryRawUnsafe<Array<{ avg_wait: number | null }>>(
-            `SELECT AVG(TIMESTAMPDIFF(MINUTE, created_at, seated_at)) as avg_wait
-             FROM waitlist_entries
-             WHERE restaurant_id = ?
-               AND status = 'SEATED'
-               AND DATE(seated_at) = CURDATE()
-               AND seated_at IS NOT NULL
-               AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) > 0
-               AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) <= 240`,
+        const result = await prisma.$queryRawUnsafe<Array<{ p90_wait: number | null }>>(
+            `WITH wait_times AS (
+                SELECT 
+                    TIMESTAMPDIFF(MINUTE, created_at, seated_at) as wait_minutes,
+                    ROW_NUMBER() OVER (ORDER BY TIMESTAMPDIFF(MINUTE, created_at, seated_at)) as row_num,
+                    COUNT(*) OVER () as total_count
+                FROM waitlist_entries
+                WHERE restaurant_id = ?
+                  AND status = 'SEATED'
+                  AND DATE(seated_at) = CURDATE()
+                  AND seated_at IS NOT NULL
+                  AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) > 0
+                  AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) <= 240
+            )
+            SELECT wait_minutes as p90_wait
+            FROM wait_times
+            WHERE row_num = CEIL(0.9 * total_count)
+            LIMIT 1`,
             restaurantId
         );
 
-        const avgWait = result[0].avg_wait;
-        return avgWait !== null ? Math.round(avgWait) : null;
+        const p90Wait = result[0]?.p90_wait;
+        return p90Wait !== null && p90Wait !== undefined ? Math.round(Number(p90Wait)) : null;
     }
 
     /**
@@ -107,17 +116,19 @@ export class DashboardRepository {
     }
 
     /**
-     * Get daily volume for last 7 days
+     * Get daily volume for current week (Monday to Sunday)
      */
     async getDailyVolumeLast7Days(restaurantId: string): Promise<DailyVolume[]> {
-        const result = await prisma.$queryRawUnsafe<Array<{ date: Date; count: bigint }>>(
+        const result = await prisma.$queryRawUnsafe<Array<{ date: Date; count: bigint; weekday: number }>>(
             `SELECT 
                 DATE(created_at) as date,
+                DAYOFWEEK(created_at) as weekday,
                 COUNT(*) as count
              FROM waitlist_entries
              WHERE restaurant_id = ?
-               AND created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
-             GROUP BY DATE(created_at)
+               AND created_at >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+               AND created_at < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 7 DAY)
+             GROUP BY DATE(created_at), DAYOFWEEK(created_at)
              ORDER BY date`,
             restaurantId
         );
@@ -153,24 +164,33 @@ export class DashboardRepository {
             restaurantId
         );
 
-        // Average wait time yesterday
-        const avgWaitResult = await prisma.$queryRawUnsafe<Array<{ avg_wait: number | null }>>(
-            `SELECT AVG(TIMESTAMPDIFF(MINUTE, created_at, seated_at)) as avg_wait
-             FROM waitlist_entries
-             WHERE restaurant_id = ?
-               AND status = 'SEATED'
-               AND DATE(seated_at) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
-               AND seated_at IS NOT NULL
-               AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) > 0
-               AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) <= 240`,
+        // P90 wait time for yesterday
+        const p90Result = await prisma.$queryRawUnsafe<Array<{ p90_wait: number | null }>>(
+            `WITH wait_times AS (
+                SELECT 
+                    TIMESTAMPDIFF(MINUTE, created_at, seated_at) as wait_minutes,
+                    ROW_NUMBER() OVER (ORDER BY TIMESTAMPDIFF(MINUTE, created_at, seated_at)) as row_num,
+                    COUNT(*) OVER () as total_count
+                FROM waitlist_entries
+                WHERE restaurant_id = ?
+                  AND status = 'SEATED'
+                  AND DATE(seated_at) = DATE_SUB(CURDATE(), INTERVAL 1 DAY)
+                  AND seated_at IS NOT NULL
+                  AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) > 0
+                  AND TIMESTAMPDIFF(MINUTE, created_at, seated_at) <= 240
+            )
+            SELECT wait_minutes as p90_wait
+            FROM wait_times
+            WHERE row_num = CEIL(0.9 * total_count)
+            LIMIT 1`,
             restaurantId
         );
 
         return {
             activeQueueCount: Number(activeQueueResult[0].count),
             seatedCount: Number(seatedResult[0].count),
-            avgWaitTimeMinutes: avgWaitResult[0].avg_wait !== null
-                ? Math.round(avgWaitResult[0].avg_wait)
+            avgWaitTimeMinutes: p90Result[0]?.p90_wait !== null && p90Result[0]?.p90_wait !== undefined
+                ? Math.round(Number(p90Result[0].p90_wait))
                 : null,
         };
     }

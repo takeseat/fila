@@ -62,9 +62,32 @@ export function VolumeChart({ data }: VolumeChartProps) {
 }
 
 function formatTime(time: string): string {
-    if (time.includes(':')) {
-        return time.split(' ')[1].substring(0, 5);
+    // Check if it looks like a daily bucket (ends in 00:00:00 or similar 00:00:00.000Z)
+    // If it contains "T00:00:00.000Z" or " 00:00:00", it is likely a daily bucket.
+    const isDailyBucket = time.includes('00:00:00') || time.includes('T00:00:00');
+
+    // If it's a generic time string but NOT a daily bucket
+    if (time.includes(':') && !isDailyBucket) {
+        // Adjust for timezone if needed
+        const date = new Date(time.replace(' ', 'T') + (time.includes('Z') ? '' : 'Z'));
+        if (!isNaN(date.getTime())) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+        return time.split(' ')[1]?.substring(0, 5) || time.substring(0, 5);
     }
-    const [, month, day] = time.split('-');
-    return `${day}/${month}`;
+
+    // If it's a daily bucket, force date interpretation
+    const datePart = time.split(' ')[0].split('T')[0];
+    const [year, month, day] = datePart.split('-');
+
+    // Create date object at NOON to simulate "safe" local date avoids midnight shift issues
+    const date = new Date(Number(year), Number(month) - 1, Number(day), 12, 0, 0);
+
+    const dayStr = `${day}/${month}`;
+    const weekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const weekDay = weekDays[date.getDay()];
+
+    return `${dayStr} (${weekDay})`;
 }

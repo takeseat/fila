@@ -3,6 +3,7 @@ import { authenticate } from '../middleware/auth';
 import { ReportsController } from '../controllers/reports.controller';
 import { QueueEntriesController } from '../controllers/queue-entries.controller';
 import { DashboardController } from '../controllers/dashboard.controller';
+import usersManagementRoutes from './users-management.routes';
 
 // Reports Routes
 export const reportsRouter = Router();
@@ -12,6 +13,9 @@ const queueEntriesController = new QueueEntriesController();
 // Dashboard Routes
 export const dashboardRouter = Router();
 const dashboardController = new DashboardController();
+
+// Users Management Routes
+export const usersManagementRouter = usersManagementRoutes;
 
 // All routes require authentication
 reportsRouter.use(authenticate);

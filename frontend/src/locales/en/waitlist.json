@@ -63,7 +63,7 @@
     "filters": {
         "phoneSearch": "Search by phone",
         "nameSearch": "Search by name",
-        "partySizeLabel": "Party size",
+        "partySizeLabel": "People",
         "all": "All",
         "clearFilters": "Clear filters",
         "noResults": {

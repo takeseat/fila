@@ -522,3 +522,4 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
         </div>
     );
 }
+export { Pagination } from './Pagination';

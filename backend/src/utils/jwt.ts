@@ -5,6 +5,7 @@ export interface TokenPayload {
     userId: string;
     restaurantId: string;
     role: string;
+    language?: string;
 }
 
 export function generateAccessToken(payload: TokenPayload): string {

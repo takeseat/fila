@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import api from '../../lib/api';
 import { COUNTRIES, getStatesByCountryCode } from '../../data/countriesExtended';
+import { applyCnpjMask, applyCepMask } from '../../utils/maskUtils';
 
 type BusinessData = {
     name: string;
@@ -141,11 +142,11 @@ export function BusinessDataTab() {
 
                 <div>
                     <label className="block text-sm font-medium text-dark-700 mb-1">
-                        {t('business.fields.taxId.label')}
+                        {selectedCountry === 'BR' ? 'CNPJ' : 'TAX ID'}
                     </label>
                     <input
                         type="text"
-                        value={businessData?.cnpj || 'N/A'}
+                        value={selectedCountry === 'BR' ? applyCnpjMask(businessData?.cnpj || '') : (businessData?.cnpj || 'N/A')}
                         disabled
                         className="w-full px-4 py-2 rounded-lg border border-light-300 bg-light-100 text-dark-500 cursor-not-allowed"
                     />
@@ -283,7 +284,12 @@ export function BusinessDataTab() {
                         <input
                             type="text"
                             {...register('postalCode')}
-                            defaultValue={businessData?.postalCode || ''}
+                            onChange={(e) => {
+                                const value = selectedCountry === 'BR' ? applyCepMask(e.target.value) : e.target.value;
+                                e.target.value = value;
+                                register('postalCode').onChange(e);
+                            }}
+                            defaultValue={businessData?.postalCode ? (selectedCountry === 'BR' ? applyCepMask(businessData.postalCode) : businessData.postalCode) : ''}
                             className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('business.fields.postalCode.placeholder')}
                         />

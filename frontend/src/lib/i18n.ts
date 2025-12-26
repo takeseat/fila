@@ -13,6 +13,7 @@ import enSettings from '../locales/en/settings.json';
 import enErrors from '../locales/en/errors.json';
 import enTables from '../locales/en/tables.json';
 import enReports from '../locales/en/reports.json';
+import enUsers from '../locales/en/users.json';
 
 // Import Portuguese (Brazil) translations
 import ptBRAuth from '../locales/pt-BR/auth.json';
@@ -26,6 +27,7 @@ import ptBRSettings from '../locales/pt-BR/settings.json';
 import ptBRErrors from '../locales/pt-BR/errors.json';
 import ptBRTables from '../locales/pt-BR/tables.json';
 import ptBRReports from '../locales/pt-BR/reports.json';
+import ptBRUsers from '../locales/pt-BR/users.json';
 
 // Import Spanish translations
 import esAuth from '../locales/es/auth.json';
@@ -124,6 +126,7 @@ i18n
                 errors: enErrors,
                 tables: enTables,
                 reports: enReports,
+                users: enUsers,
             },
             'pt-BR': {
                 auth: ptBRAuth,
@@ -137,6 +140,7 @@ i18n
                 errors: ptBRErrors,
                 tables: ptBRTables,
                 reports: ptBRReports,
+                users: ptBRUsers,
             },
             es: {
                 auth: esAuth,

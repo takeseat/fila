@@ -3,7 +3,8 @@
     "subtitle": "Manage your business and operational settings",
     "tabs": {
         "business": "Business Data",
-        "parameters": "Parameters"
+        "parameters": "Parameters",
+        "team": "Team"
     },
     "business": {
         "title": "Business Information",

@@ -45,7 +45,7 @@ export function Login() {
     return (
         <AuthLayout branding={<BrandingSection />}>
             {/* Language Selector - top right */}
-            <div className="absolute top-6 right-6 z-10">
+            <div className="fixed top-6 right-6 z-50">
                 <LanguageSelector />
             </div>
 
@@ -263,7 +263,7 @@ export function Register() {
     return (
         <AuthLayout branding={<BrandingSection />}>
             {/* Language Selector - top right */}
-            <div className="absolute top-6 right-6 z-10">
+            <div className="fixed top-6 right-6 z-50">
                 <LanguageSelector />
             </div>
 

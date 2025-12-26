@@ -13,7 +13,25 @@ export function ExecutiveReport() {
         to: getDefaultTo(),
     });
 
-    const { data, isLoading, error } = useExecutiveReport(filters);
+    const { data: rawData, isLoading, error } = useExecutiveReport(filters);
+
+    // Transform data to adjust for user timezone
+    const data = rawData ? {
+        ...rawData,
+        kpis: {
+            ...rawData.kpis,
+            peak_hour: formatUtcHour(rawData.kpis.peak_hour),
+            peak_wait_hour: formatUtcHour(rawData.kpis.peak_wait_hour),
+        },
+        series: {
+            ...rawData.series,
+            hourly_entries: rawData.series.hourly_entries.map((entry: any) => ({
+                ...entry,
+                hour: formatUtcHour(entry.hour), // Transform chart X-axis labels to local time
+                originalCount: entry.count
+            }))
+        }
+    } : null;
 
     return (
         <div className="max-w-7xl mx-auto p-6 space-y-6">
@@ -54,6 +72,28 @@ export function ExecutiveReport() {
             )}
         </div>
     );
+}
+
+function formatUtcHour(hour: string | number | null): string {
+    if (!hour || hour === 'N/A') return 'N/A';
+
+    // If format is "HH:mm"
+    if (typeof hour === 'string' && hour.includes(':')) {
+        const [h, m] = hour.split(':').map(Number);
+        const date = new Date();
+        date.setUTCHours(h, m || 0, 0, 0);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // If format is a number (0-23)
+    if (typeof hour === 'number' || !isNaN(Number(hour))) {
+        const h = Number(hour);
+        const date = new Date();
+        date.setUTCHours(h, 0, 0, 0);
+        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    return String(hour);
 }
 
 function getDefaultFrom(): string {

@@ -7,7 +7,7 @@ interface ReportFiltersProps {
 }
 
 export function ReportFilters({ onFiltersChange }: ReportFiltersProps) {
-    const { t } = useTranslation();
+    const { t } = useTranslation('reports');
     const [filters, setFilters] = useState({
         from: getDefaultFrom(),
         to: getDefaultTo(),
@@ -90,6 +90,12 @@ export function ReportFilters({ onFiltersChange }: ReportFiltersProps) {
 
             {/* Quick Presets */}
             <div className="mt-4 flex gap-2">
+                <button
+                    onClick={() => setFilters({ ...filters, from: getDefaultTo(), to: getDefaultTo() })}
+                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                >
+                    {t('reports:filters.today')}
+                </button>
                 <button
                     onClick={() => setFilters({ ...filters, from: getDefaultFrom(7), to: getDefaultTo() })}
                     className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"

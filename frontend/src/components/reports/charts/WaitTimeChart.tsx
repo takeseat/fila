@@ -75,10 +75,35 @@ export function WaitTimeChart({ data }: WaitTimeChartProps) {
 }
 
 function formatTime(time: string): string {
-    // Format "2024-01-15 14:00:00" to "14:00" or "2024-01-15" to "15/01"
-    if (time.includes(':')) {
-        return time.split(' ')[1].substring(0, 5);
+    // Check if it looks like a daily bucket (ends in 00:00:00 or similar 00:00:00.000Z)
+    // Or if checking the filter context is hard, let's rely on the string format.
+    // If it contains "T00:00:00.000Z" or " 00:00:00", it is likely a daily bucket.
+    const isDailyBucket = time.includes('00:00:00') || time.includes('T00:00:00');
+
+    // If it's a generic time string but NOT a daily bucket (so it's hourly data)
+    if (time.includes(':') && !isDailyBucket) {
+        // Adjust for timezone if needed, assuming input is UTC-ish if coming from backend
+        const date = new Date(time.replace(' ', 'T') + (time.includes('Z') ? '' : 'Z'));
+        if (!isNaN(date.getTime())) {
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+        return time.split(' ')[1]?.substring(0, 5) || time.substring(0, 5);
     }
-    const [, month, day] = time.split('-');
-    return `${day}/${month}`;
+
+    // If it's daily bucket or just date string
+    // Parse date parts manually to avoid timezone shifting
+    // Expected format: YYYY-MM-DD...
+    const datePart = time.split(' ')[0].split('T')[0];
+    const [year, month, day] = datePart.split('-');
+
+    // Create date object at NOON to simulate "safe" local date avoids midnight shift issues
+    const date = new Date(Number(year), Number(month) - 1, Number(day), 12, 0, 0);
+
+    const dayStr = `${day}/${month}`;
+    const weekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const weekDay = weekDays[date.getDay()];
+
+    return `${dayStr} (${weekDay})`;
 }
