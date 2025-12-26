@@ -59,26 +59,12 @@ jobs:
       - name: Package Backend for Lambda
         working-directory: ./backend
         run: |
-          # Create deployment package
-          mkdir -p lambda-package
+          # Use optimized build script responsible for pruning dev deps and binaries
+          chmod +x scripts/build-lambda.sh
+          npm run package:lambda
           
-          # Copy dist files
-          cp -r dist lambda-package/
-          
-          # Copy node_modules (production only)
-          cp -r node_modules lambda-package/
-          
-          # Copy Prisma files and binaries
-          cp -r prisma lambda-package/
-          cp -r node_modules/.prisma lambda-package/node_modules/
-          cp -r node_modules/@prisma lambda-package/node_modules/
-          
-          # Create ZIP
-          cd lambda-package
-          zip -r ../lambda-api.zip . -x "*.git*" "*.DS_Store"
-          cd ..
-          
-          # Copy for migrations Lambda (same package)
+          # Rename/Copy artifacts as expected by next steps
+          mv lambda.zip lambda-api.zip
           cp lambda-api.zip lambda-migrate.zip
 
       - name: Upload Lambda Package to S3
