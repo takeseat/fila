@@ -112,7 +112,7 @@ export class QueueEntriesExportService {
 
         // Draw rows
         doc.font('Helvetica');
-        data.forEach((row, index) => {
+        data.forEach((row) => {
             // Check if we need a new page
             if (startY > 500) {
                 doc.addPage();
