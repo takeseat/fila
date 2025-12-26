@@ -7,7 +7,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "build:lambda": "npm run build && npm run prisma:generate",
-    "package:lambda": "npm run build:lambda && cd dist && zip -r ../lambda.zip . && cd .. && zip -r lambda.zip node_modules prisma",
+    "package:lambda": "./scripts/build-lambda.sh",
     "start": "node dist/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
