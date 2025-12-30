@@ -6,7 +6,7 @@ export class ZApiWebhookController {
     /**
      * Handle incoming webhooks from Z-API
      */
-    async handleWebhook(req: Request, res: Response): Promise<void> {
+    async handleWebhook(_req: Request, res: Response): Promise<void> {
         // Z-API sends different event types. We need to distinguish them.
         // Usually checked by URL or body content. For now we assume a unified endpoint or specific handlers below.
 
