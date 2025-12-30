@@ -11,6 +11,11 @@ echo "📂 Creating build directory..."
 mkdir -p lambda_dist
 cp package.json package-lock.json lambda_dist/
 cp -r prisma lambda_dist/
+# Copy .env if it exists (created by CI/CD from .env.prod)
+if [ -f .env ]; then
+  echo "📋 Copying .env file..."
+  cp .env lambda_dist/
+fi
 # Copy dist content to root of lambda package (matching previous structure)
 cp -r dist/* lambda_dist/
 
@@ -18,6 +23,28 @@ echo "📦 Installing production dependencies..."
 cd lambda_dist
 # Install only production deps
 npm ci --production --quiet
+
+echo "🔧 Fixing bcrypt for AWS Lambda (Linux)..."
+# Remove Mac bcrypt binaries
+rm -rf node_modules/bcrypt/lib/binding
+# Download and extract Linux bcrypt binaries
+BCRYPT_VERSION=$(node -p "require('./node_modules/bcrypt/package.json').version")
+echo "Downloading bcrypt ${BCRYPT_VERSION} for Linux..."
+curl -L "https://registry.npmjs.org/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.11.tgz" -o node-pre-gyp.tgz
+tar -xzf node-pre-gyp.tgz
+rm node-pre-gyp.tgz
+# Use node-pre-gyp to download the correct binary
+cd node_modules/bcrypt
+../../package/bin/node-pre-gyp install --target_platform=linux --target_arch=x64 --fallback-to-build=false || echo "Trying alternative method..."
+cd ../..
+# If that failed, try downloading directly
+if [ ! -f "node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node" ]; then
+  echo "Downloading pre-built Linux binary directly..."
+  mkdir -p node_modules/bcrypt/lib/binding/napi-v3
+  curl -L "https://github.com/kelektiv/node.bcrypt.js/releases/download/v${BCRYPT_VERSION}/bcrypt_lib-v${BCRYPT_VERSION}-napi-v3-linux-x64-glibc.tar.gz" -o bcrypt-linux.tar.gz
+  tar -xzf bcrypt-linux.tar.gz -C node_modules/bcrypt/lib/binding/napi-v3/
+  rm bcrypt-linux.tar.gz
+fi
 
 echo "✨ Generating Prisma Client..."
 npx prisma generate

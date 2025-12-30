@@ -94,7 +94,6 @@ resource "aws_lambda_function" "migrate" {
   environment {
     variables = {
       NODE_ENV      = "production"
-      DATABASE_URL  = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_rds_cluster.main.endpoint}:3306/${var.db_name}"
       DB_SECRET_ARN = aws_secretsmanager_secret.db_credentials.arn
     }
   }
