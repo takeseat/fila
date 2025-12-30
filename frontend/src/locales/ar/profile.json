@@ -1,32 +1,32 @@
 {
-    "title": "Profile Settings",
+    "title": "إعدادات الملف الشخصي",
     "profileInfo": {
-        "title": "Profile Information",
-        "name": "Name",
-        "email": "Email",
-        "emailReadonly": "Email cannot be changed",
-        "save": "Save Changes",
-        "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "title": "معلومات الملف الشخصي",
+        "name": "الاسم",
+        "email": "البريد الإلكتروني",
+        "emailReadonly": "لا يمكن تغيير البريد الإلكتروني",
+        "save": "حفظ التغييرات",
+        "success": "تم تحديث الملف الشخصي بنجاح",
+        "error": "فشل تحديث الملف الشخصي"
     },
     "language": {
-        "title": "Language",
-        "description": "This language will be used when you sign in to the system.",
-        "select": "Select Language",
-        "success": "Language updated successfully",
-        "error": "Failed to update language"
+        "title": "اللغة",
+        "description": "سيتم استخدام هذه اللغة عند تسجيل الدخول إلى النظام.",
+        "select": "اختر اللغة",
+        "success": "تم تحديث اللغة بنجاح",
+        "error": "فشل تحديث اللغة"
     },
     "password": {
-        "title": "Change Password",
-        "current": "Current Password",
-        "new": "New Password",
-        "confirm": "Confirm New Password",
-        "requirements": "Minimum 8 characters",
-        "save": "Change Password",
-        "success": "Password changed successfully",
-        "error": "Failed to change password",
-        "incorrectCurrent": "Current password is incorrect",
-        "minLength": "Password must be at least 8 characters",
-        "mismatch": "Passwords do not match"
+        "title": "تغيير كلمة المرور",
+        "current": "كلمة المرور الحالية",
+        "new": "كلمة المرور الجديدة",
+        "confirm": "تأكيد كلمة المرور الجديدة",
+        "requirements": "الحد الأدنى 8 أحرف",
+        "save": "تغيير كلمة المرور",
+        "success": "تم تغيير كلمة المرور بنجاح",
+        "error": "فشل تغيير كلمة المرور",
+        "incorrectCurrent": "كلمة المرور الحالية غير صحيحة",
+        "minLength": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+        "mismatch": "كلمات المرور غير متطابقة"
     }
 }

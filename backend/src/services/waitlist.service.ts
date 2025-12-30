@@ -1,5 +1,6 @@
 import prisma from '../config/database';
 import { CreateWaitlistEntryInput } from '../validators/waitlist.validator';
+import { WhatsAppService } from './whatsapp.service';
 
 export class WaitlistService {
     async getWaitlist(restaurantId: string) {
@@ -45,13 +46,20 @@ export class WaitlistService {
             if (existingCustomer) {
                 customerId = existingCustomer.id;
 
-                // Update customer name if provided and different
-                if (data.customerName && data.customerName !== existingCustomer.name) {
-                    await prisma.customer.update({
-                        where: { id: existingCustomer.id },
-                        data: { name: data.customerName },
-                    });
-                }
+                // Update customer name and opt-in if provided
+                await prisma.customer.update({
+                    where: { id: existingCustomer.id },
+                    data: {
+                        name: data.customerName,
+                        notes: data.notes || existingCustomer.notes,
+                        // Update opt-in if provided or changed
+                        ...(data.whatsappOptIn !== undefined && {
+                            whatsappOptIn: data.whatsappOptIn,
+                            whatsappOptInAt: new Date(),
+                            whatsappOptInSource: 'QUEUE_ENTRY'
+                        })
+                    },
+                });
             } else {
                 // Create new customer
                 const newCustomer = await customersService.createCustomer(restaurantId, {
@@ -61,12 +69,13 @@ export class WaitlistService {
                     phone: data.customerPhone,
                     fullPhone,
                     notes: data.notes,
-                });
+                    whatsappOptIn: data.whatsappOptIn,
+                } as any); // Type cast needed until we update CreateWaitlistEntryInput
                 customerId = newCustomer.id;
             }
         }
 
-        return prisma.waitlistEntry.create({
+        const entry = await prisma.waitlistEntry.create({
             data: {
                 restaurantId,
                 customerId,
@@ -76,11 +85,27 @@ export class WaitlistService {
                 partySize: data.partySize,
                 estimatedWaitMinutes,
                 status: 'WAITING',
+                whatsappOptIn: data.whatsappOptIn ?? false,
+                whatsappOptInAt: data.whatsappOptIn ? new Date() : null,
             },
             include: {
                 customer: true,
             },
         });
+
+        // WhatsApp Notification (Welcome)
+        if (data.whatsappOptIn) {
+            try {
+                // current position is waitingCount + 1
+                WhatsAppService.sendWelcome(restaurantId, entry, waitingCount + 1).catch(err => {
+                    console.error('Failed to send welcome message', err);
+                });
+            } catch (error) {
+                console.error('Error initiating welcome message', error);
+            }
+        }
+
+        return entry;
     }
 
     async callEntry(restaurantId: string, entryId: string) {
@@ -96,7 +121,7 @@ export class WaitlistService {
             throw new Error('Entry is not in waiting status');
         }
 
-        return prisma.waitlistEntry.update({
+        const updatedEntry = await prisma.waitlistEntry.update({
             where: { id: entryId },
             data: {
                 status: 'CALLED',
@@ -106,6 +131,16 @@ export class WaitlistService {
                 customer: true,
             },
         });
+
+        // WhatsApp Notification (Your Turn)
+        WhatsAppService.sendYourTurn(restaurantId, updatedEntry).catch(err => {
+            console.error('Failed to send turn message', err);
+        });
+
+        // Notify queue updates (someone left the waiting list)
+        this.notifyQueueUpdates(restaurantId);
+
+        return updatedEntry;
     }
 
     async seatEntry(restaurantId: string, entryId: string) {
@@ -146,6 +181,7 @@ export class WaitlistService {
             });
         }
 
+        this.notifyQueueUpdates(restaurantId);
         return updatedEntry;
     }
 
@@ -162,7 +198,7 @@ export class WaitlistService {
             throw new Error('Entry cannot be cancelled');
         }
 
-        return prisma.waitlistEntry.update({
+        const cancelledEntry = await prisma.waitlistEntry.update({
             where: { id: entryId },
             data: {
                 status: 'CANCELLED',
@@ -172,6 +208,9 @@ export class WaitlistService {
                 customer: true,
             },
         });
+
+        this.notifyQueueUpdates(restaurantId);
+        return cancelledEntry;
     }
 
     async markNoShow(restaurantId: string, entryId: string) {
@@ -282,5 +321,36 @@ export class WaitlistService {
             activeCount,
             servedToday,
         };
+    }
+    async notifyQueueUpdates(restaurantId: string) {
+        // Fire and forget - don't block
+        setTimeout(async () => {
+            try {
+                // Get all waiting entries ordered by creation
+                const waitingEntries = await prisma.waitlistEntry.findMany({
+                    where: {
+                        restaurantId,
+                        status: 'WAITING',
+                    },
+                    orderBy: {
+                        createdAt: 'asc',
+                    },
+                    include: {
+                        customer: true
+                    }
+                });
+
+                // Iterate and send updates
+                for (let i = 0; i < waitingEntries.length; i++) {
+                    const entry = waitingEntries[i];
+                    const position = i + 1;
+
+                    // Service handles opt-in checks and rate limits internally
+                    await WhatsAppService.sendPositionUpdate(restaurantId, entry, position);
+                }
+            } catch (error) {
+                console.error('Error notifying queue updates:', error);
+            }
+        }, 1000); // 1s delay to let DB settle
     }
 }

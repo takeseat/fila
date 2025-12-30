@@ -40,9 +40,11 @@ model Restaurant {
   avgWaitWindowMinutes   Int?     @default(90)
   avgWaitFallbackMinutes Int?     @default(15)
 
-  users           User[]
-  waitlistEntries WaitlistEntry[]
-  customers       Customer[]
+  users                User[]
+  waitlistEntries      WaitlistEntry[]
+  customers            Customer[]
+  whatsappSettings     RestaurantWhatsAppSettings?
+  whatsappMessageLogs  WhatsAppMessageLog[]
 
   @@map("restaurants")
 }
@@ -87,6 +89,11 @@ model Customer {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @default(now()) @updatedAt
 
+  // WhatsApp Persistence
+  whatsappOptIn       Boolean   @default(false)
+  whatsappOptInAt     DateTime?
+  whatsappOptInSource String?   // "QUEUE", "MANUAL", "IMPORT"
+
   restaurant       Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   waitlistEntries  WaitlistEntry[]
 
@@ -113,8 +120,15 @@ model WaitlistEntry {
   cancelledAt          DateTime?           @map("cancelled_at")
   noShowAt             DateTime?           @map("no_show_at")
 
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  customer   Customer?  @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  // WhatsApp Integration
+  whatsappOptIn        Boolean             @default(false) @map("whatsapp_opt_in")
+  whatsappOptInAt      DateTime?           @map("whatsapp_opt_in_at")
+  lastNotifiedPosition Int?                @map("last_notified_position")
+  lastNotifiedAt       DateTime?           @map("last_notified_at")
+
+  restaurant          Restaurant           @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  customer            Customer?            @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  whatsappMessageLogs WhatsAppMessageLog[]
 
   @@index([restaurantId, status])
   @@index([customerId])
@@ -134,3 +148,65 @@ enum WaitlistEntryStatus {
   NO_SHOW
 }
 
+model RestaurantWhatsAppSettings {
+  id                String   @id @default(uuid())
+  restaurantId      String   @unique
+  isEnabled         Boolean  @default(false)
+  
+  // Feature Toggles
+  sendWelcome       Boolean  @default(false)
+  sendPositionUpdates Boolean @default(false)
+  sendTurnMessage   Boolean  @default(false)
+  
+  // Custom Templates (optional overrides)
+  welcomeText       String?  @db.Text
+  positionUpdateText String? @db.Text
+  yourTurnText      String?  @db.Text
+  
+  // Rate Limiting Config
+  minSecondsBetweenUpdates Int @default(300) // 5 minutes default
+  minPositionsChangeToNotify Int @default(5) // Notify only if position changes by at least 5
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  restaurant        Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("restaurant_whatsapp_settings")
+}
+
+model WhatsAppMessageLog {
+  id                String   @id @default(uuid())
+  restaurantId      String
+  queueEntryId      String?
+  customerPhone     String
+  messageType       WhatsAppMessageType
+  payload           Json?
+  providerMessageId String?
+  status            WhatsAppMessageStatus @default(SENT)
+  errorCode         String?
+  errorMessage      String?  @db.Text
+  createdAt         DateTime @default(now())
+
+  restaurant        Restaurant    @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  queueEntry        WaitlistEntry? @relation(fields: [queueEntryId], references: [id], onDelete: SetNull)
+
+  @@index([restaurantId])
+  @@index([queueEntryId])
+  @@index([customerPhone])
+  @@index([createdAt])
+  @@map("whatsapp_message_logs")
+}
+
+enum WhatsAppMessageType {
+  WELCOME
+  POSITION_UPDATE
+  YOUR_TURN
+}
+
+enum WhatsAppMessageStatus {
+  SENT
+  DELIVERED
+  READ
+  FAILED
+}

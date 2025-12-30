@@ -12,6 +12,7 @@ export interface Customer {
     totalVisits: number;
     createdAt: string;
     updatedAt: string;
+    whatsappOptIn?: boolean;
 }
 
 export interface CustomerFilters {
@@ -43,6 +44,7 @@ export interface CustomerFormData {
     name: string;
     email: string;
     notes: string;
+    whatsappOptIn: boolean;
 }
 
 export interface CustomerDetails {

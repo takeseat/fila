@@ -16,6 +16,11 @@ import {
 import customersRoutes from './routes/customers.routes';
 import restaurantRoutes from './routes/restaurants.routes';
 import usersRoutes from './routes/users.routes';
+import whatsappSettingsRouter from './routes/whatsapp-settings.routes';
+import { WhatsAppWebhookController } from './controllers/whatsapp-webhook.controller';
+import { ZApiWebhookController } from './controllers/zapi-webhook.controller';
+
+const whatsappWebhookController = new WhatsAppWebhookController();
 
 export const app = express();
 const httpServer = createServer(app);
@@ -42,6 +47,20 @@ app.use('/users', usersRoutes);
 app.use('/users-management', usersManagementRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
+app.use('/whatsapp-settings', whatsappSettingsRouter);
+
+// Webhook (Public)
+app.get('/whatsapp-webhook', whatsappWebhookController.verify.bind(whatsappWebhookController));
+app.post('/whatsapp-webhook', whatsappWebhookController.handleWebhook.bind(whatsappWebhookController));
+
+// Z-API Webhooks
+const zapiController = new ZApiWebhookController();
+app.post('/webhooks/zapi/on-message-status', zapiController.onMessageStatus.bind(zapiController));
+app.post('/webhooks/zapi/on-message-send', zapiController.onMessageSend.bind(zapiController));
+app.post('/webhooks/zapi/on-message-received', zapiController.onMessageReceived.bind(zapiController));
+app.post('/webhooks/zapi/on-disconnect', zapiController.onDisconnect.bind(zapiController));
+app.post('/webhooks/zapi/on-connect', zapiController.onConnect.bind(zapiController));
+app.post('/webhooks/zapi/on-presence', zapiController.onPresence.bind(zapiController));
 
 // Error handler (must be last)
 app.use(errorHandler);

@@ -1,32 +1,32 @@
 {
-    "title": "Profile Settings",
+    "title": "个人资料设置",
     "profileInfo": {
-        "title": "Profile Information",
-        "name": "Name",
-        "email": "Email",
-        "emailReadonly": "Email cannot be changed",
-        "save": "Save Changes",
-        "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "title": "个人资料信息",
+        "name": "姓名",
+        "email": "电子邮箱",
+        "emailReadonly": "电子邮箱无法更改",
+        "save": "保存更改",
+        "success": "个人资料更新成功",
+        "error": "个人资料更新失败"
     },
     "language": {
-        "title": "Language",
-        "description": "This language will be used when you sign in to the system.",
-        "select": "Select Language",
-        "success": "Language updated successfully",
-        "error": "Failed to update language"
+        "title": "语言",
+        "description": "此语言将在您登录系统时使用。",
+        "select": "选择语言",
+        "success": "语言更新成功",
+        "error": "语言更新失败"
     },
     "password": {
-        "title": "Change Password",
-        "current": "Current Password",
-        "new": "New Password",
-        "confirm": "Confirm New Password",
-        "requirements": "Minimum 8 characters",
-        "save": "Change Password",
-        "success": "Password changed successfully",
-        "error": "Failed to change password",
-        "incorrectCurrent": "Current password is incorrect",
-        "minLength": "Password must be at least 8 characters",
-        "mismatch": "Passwords do not match"
+        "title": "更改密码",
+        "current": "当前密码",
+        "new": "新密码",
+        "confirm": "确认新密码",
+        "requirements": "至少8个字符",
+        "save": "更改密码",
+        "success": "密码更改成功",
+        "error": "密码更改失败",
+        "incorrectCurrent": "当前密码不正确",
+        "minLength": "密码长度必须至少为8个字符",
+        "mismatch": "密码不匹配"
     }
 }

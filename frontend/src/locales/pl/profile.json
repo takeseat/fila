@@ -1,32 +1,32 @@
 {
-    "title": "Profile Settings",
+    "title": "Ustawienia Profilu",
     "profileInfo": {
-        "title": "Profile Information",
-        "name": "Name",
+        "title": "Informacje o Profilu",
+        "name": "Imię",
         "email": "Email",
-        "emailReadonly": "Email cannot be changed",
-        "save": "Save Changes",
-        "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "emailReadonly": "Adres email nie może zostać zmieniony",
+        "save": "Zapisz Zmiany",
+        "success": "Profil zaktualizowany pomyślnie",
+        "error": "Nie udało się zaktualizować profilu"
     },
     "language": {
-        "title": "Language",
-        "description": "This language will be used when you sign in to the system.",
-        "select": "Select Language",
-        "success": "Language updated successfully",
-        "error": "Failed to update language"
+        "title": "Język",
+        "description": "Ten język będzie używany podczas logowania do systemu.",
+        "select": "Wybierz Język",
+        "success": "Język zaktualizowany pomyślnie",
+        "error": "Nie udało się zaktualizować języka"
     },
     "password": {
-        "title": "Change Password",
-        "current": "Current Password",
-        "new": "New Password",
-        "confirm": "Confirm New Password",
-        "requirements": "Minimum 8 characters",
-        "save": "Change Password",
-        "success": "Password changed successfully",
-        "error": "Failed to change password",
-        "incorrectCurrent": "Current password is incorrect",
-        "minLength": "Password must be at least 8 characters",
-        "mismatch": "Passwords do not match"
+        "title": "Zmień Hasło",
+        "current": "Obecne Hasło",
+        "new": "Nowe Hasło",
+        "confirm": "Potwierdź Nowe Hasło",
+        "requirements": "Minimum 8 znaków",
+        "save": "Zmień Hasło",
+        "success": "Hasło zmienione pomyślnie",
+        "error": "Nie udało się zmienić hasła",
+        "incorrectCurrent": "Obecne hasło jest nieprawidłowe",
+        "minLength": "Hasło musi mieć co najmniej 8 znaków",
+        "mismatch": "Hasła nie są zgodne"
     }
 }

@@ -1,0 +1,22 @@
+{
+    "pagination": {
+        "showing": "Visualizzazione da {{from}} a {{to}} di {{total}}",
+        "rowsPerPage": "Righe per pagina:",
+        "page": "Pagina {{current}} di {{total}}"
+    },
+    "sort": {
+        "ascending": "Ordina in modo crescente",
+        "descending": "Ordina in modo decrescente",
+        "clear": "Rimuovi ordinamento"
+    },
+    "filter": {
+        "apply": "Applica Filtri",
+        "clear": "Pulisci Filtri",
+        "active": "{{count}} filtri attivi"
+    },
+    "selection": {
+        "selected": "{{count}} selezionati",
+        "selectAll": "Seleziona tutti",
+        "deselectAll": "Deseleziona tutti"
+    }
+}

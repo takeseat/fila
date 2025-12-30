@@ -1,38 +1,107 @@
 {
-    "title": "Impostazioni del Ristorante",
-    "subtitle": "Gestisci le preferenze e gli avvisi della tua operazione.",
+    "title": "Impostazioni",
+    "subtitle": "Gestisci la tua attività e le impostazioni operative",
+    "tabs": {
+        "business": "Dati Aziendali",
+        "parameters": "Parametri",
+        "team": "Team"
+    },
+    "business": {
+        "title": "Informazioni Aziendali",
+        "subtitle": "Gestisci i dettagli della tua attività e l'indirizzo",
+        "fields": {
+            "name": {
+                "label": "Nome Azienda",
+                "placeholder": "Inserisci il nome dell'azienda"
+            },
+            "tradeName": {
+                "label": "Nome Commerciale",
+                "placeholder": "Inserisci il nome commerciale (opzionale)",
+                "help": "Nome di fantasia o marchio"
+            },
+            "email": {
+                "label": "Email",
+                "readOnly": "Questo campo non può essere modificato"
+            },
+            "taxId": {
+                "label": "Partita IVA / Codice Fiscale",
+                "readOnly": "Questo campo non può essere modificato"
+            },
+            "phone": {
+                "label": "Telefono",
+                "placeholder": "Inserisci il numero di telefono"
+            },
+            "country": {
+                "label": "Paese",
+                "placeholder": "Seleziona paese"
+            },
+            "state": {
+                "label": "Stato / Provincia",
+                "placeholder": "Seleziona stato"
+            },
+            "city": {
+                "label": "Città",
+                "placeholder": "Inserisci città"
+            },
+            "addressLine": {
+                "label": "Indirizzo",
+                "placeholder": "Nome della via"
+            },
+            "addressNumber": {
+                "label": "Numero",
+                "placeholder": "Numero civico"
+            },
+            "addressComplement": {
+                "label": "Complemento",
+                "placeholder": "Appt, piano, ecc. (opzionale)"
+            },
+            "postalCode": {
+                "label": "Codice Postale / CAP",
+                "placeholder": "Inserisci codice postale"
+            }
+        },
+        "actions": {
+            "save": "Salva Modifiche",
+            "saving": "Salvataggio..."
+        },
+        "messages": {
+            "saveSuccess": "Dati aziendali aggiornati con successo",
+            "saveError": "Impossibile aggiornare i dati aziendali"
+        }
+    },
     "sections": {
         "queueAlerts": {
-            "title": "Avvisi di Tempo della Coda",
+            "title": "Avvisi Tempo Coda",
             "waitingAlert": {
                 "label": "Avviso per Cliente in Attesa (minuti)",
-                "help": "Definisce dopo quanto tempo di attesa il cliente sarà contrassegnato con un avviso visivo.",
-                "helpExtra": "Lasciare vuoto per disattivare.",
+                "help": "Definisce dopo quanto tempo di attesa il cliente verrà contrassegnato con un avviso visivo.",
+                "helpExtra": "Lascia vuoto per disabilitare.",
                 "placeholder": "Es: 15"
             },
             "calledAlert": {
                 "label": "Avviso per Cliente Chiamato (minuti)",
-                "help": "Definisce dopo quanto tempo dalla chiamata (senza sedersi) il cliente sarà contrassegnato con avviso.",
-                "helpExtra": "Lasciare vuoto per disattivare.",
+                "help": "Definisce dopo quanto tempo dalla chiamata (senza essere accomodato) il cliente verrà contrassegnato con un avviso.",
+                "helpExtra": "Lascia vuoto per disabilitare.",
                 "placeholder": "Es: 5"
             }
         },
         "avgWaitCalculation": {
-            "title": "Calcolo del Tempo Medio della Coda",
+            "title": "Calcolo Tempo Medio Coda",
             "window": {
                 "label": "Finestra di calcolo (minuti)",
-                "help": "Considerare solo i clienti che sono entrati in coda negli ultimi X minuti per calcolare il tempo medio.",
+                "help": "Considera solo i clienti entrati in coda negli ultimi X minuti per calcolare il tempo medio.",
                 "placeholder": "90"
             },
             "fallback": {
-                "label": "Fallback del tempo medio (minuti)",
-                "help": "Valore mostrato quando non ci sono dati sufficienti nella finestra configurata.",
+                "label": "Fallback tempo medio (minuti)",
+                "help": "Valore visualizzato quando non ci sono abbastanza dati nella finestra configurata.",
                 "placeholder": "15"
             }
         }
     },
     "validation": {
-        "mustBePositive": "Il valore deve essere maggiore di 0"
+        "mustBePositive": "Il valore deve essere maggiore di 0",
+        "required": "Questo campo è obbligatorio"
     },
     "actions": {
         "save": "Salva Modifiche",

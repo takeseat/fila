@@ -1,32 +1,32 @@
 {
-    "title": "Profile Settings",
+    "title": "Paramètres du profil",
     "profileInfo": {
-        "title": "Profile Information",
-        "name": "Name",
-        "email": "Email",
-        "emailReadonly": "Email cannot be changed",
-        "save": "Save Changes",
-        "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "title": "Informations sur le profil",
+        "name": "Nom",
+        "email": "E-mail",
+        "emailReadonly": "L'e-mail ne peut pas être modifié",
+        "save": "Enregistrer les modifications",
+        "success": "Profil mis à jour avec succès",
+        "error": "Échec de la mise à jour du profil"
     },
     "language": {
-        "title": "Language",
-        "description": "This language will be used when you sign in to the system.",
-        "select": "Select Language",
-        "success": "Language updated successfully",
-        "error": "Failed to update language"
+        "title": "Langue",
+        "description": "Cette langue sera utilisée lorsque vous vous connecterez au système.",
+        "select": "Sélectionner la langue",
+        "success": "Langue mise à jour avec succès",
+        "error": "Échec de la mise à jour de la langue"
     },
     "password": {
-        "title": "Change Password",
-        "current": "Current Password",
-        "new": "New Password",
-        "confirm": "Confirm New Password",
-        "requirements": "Minimum 8 characters",
-        "save": "Change Password",
-        "success": "Password changed successfully",
-        "error": "Failed to change password",
-        "incorrectCurrent": "Current password is incorrect",
-        "minLength": "Password must be at least 8 characters",
-        "mismatch": "Passwords do not match"
+        "title": "Changer le mot de passe",
+        "current": "Mot de passe actuel",
+        "new": "Nouveau mot de passe",
+        "confirm": "Confirmer le nouveau mot de passe",
+        "requirements": "Minimum 8 caractères",
+        "save": "Changer le mot de passe",
+        "success": "Mot de passe modifié avec succès",
+        "error": "Échec du changement de mot de passe",
+        "incorrectCurrent": "Le mot de passe actuel est incorrect",
+        "minLength": "Le mot de passe doit contenir au moins 8 caractères",
+        "mismatch": "Les mots de passe ne correspondent pas"
     }
 }

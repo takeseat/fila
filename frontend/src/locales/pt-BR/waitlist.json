@@ -53,7 +53,8 @@
         "phonePlaceholderBR": "(11) 99999-9999",
         "lookingUp": "Buscando cliente...",
         "customerFound": "Cliente encontrado: {{name}}",
-        "newCustomer": "Novo cliente — será cadastrado"
+        "newCustomer": "Novo cliente — será cadastrado",
+        "whatsappOptIn": "Autoriza o recebimento de mensagens pelo WhatsApp"
     },
     "empty": {
         "title": "Nenhum cliente na fila",

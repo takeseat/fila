@@ -33,7 +33,8 @@
         "name": "Name",
         "email": "Email (optional)",
         "notes": "Notes (optional)",
-        "notesPlaceholder": "E.g.: VIP customer, special preferences..."
+        "notesPlaceholder": "E.g.: VIP customer, special preferences...",
+        "whatsappOptIn": "Authorizes receiving messages via WhatsApp"
     },
     "empty": {
         "title": "No customers found",

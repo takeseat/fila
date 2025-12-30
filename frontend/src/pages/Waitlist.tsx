@@ -17,6 +17,7 @@ export function Waitlist() {
         customerName: '',
         partySize: 2,
         notes: '',
+        whatsappOptIn: false,
     });
     const [phoneDisplay, setPhoneDisplay] = useState('');
     const [customerFound, setCustomerFound] = useState<any>(null);
@@ -52,6 +53,20 @@ export function Waitlist() {
             return data;
         },
     });
+
+    // Fetch WhatsApp settings to determine if opt-in should be shown
+    const { data: whatsappSettings } = useQuery({
+        queryKey: ['whatsapp-settings'],
+        queryFn: async () => {
+            const { data } = await api.get('/whatsapp-settings');
+            return data;
+        },
+        retry: false,
+        // Remove staleTime to ensure we always get fresh config on mount/validations
+    });
+
+    // Valid if simply enabled. We want to capture consent even if no specific message is currently active.
+    const shouldShowWhatsappOptIn = !!whatsappSettings?.isEnabled;
 
 
 
@@ -93,14 +108,17 @@ export function Waitlist() {
                         ...prev,
                         customerName: data.data.name || '',
                         notes: data.data.notes || '',
+                        // Use existing preference if available, otherwise default to true if enabled
+                        whatsappOptIn: data.data.whatsappOptIn ?? !!whatsappSettings?.isEnabled,
                     }));
                 } else {
                     setCustomerFound(null);
-                    // Clear fields to avoid using previous customer's data
+                    // Clear fields and default opt-in
                     setFormData(prev => ({
                         ...prev,
                         customerName: '',
                         notes: '',
+                        whatsappOptIn: !!whatsappSettings?.isEnabled,
                     }));
                 }
             } catch (error: any) {
@@ -151,8 +169,10 @@ export function Waitlist() {
         if (businessData?.countryCode) {
             const businessCountry = getCountryByCode(businessData.countryCode);
             if (businessCountry) {
-                setFormData(prev => ({ ...prev, country: businessCountry }));
+                setFormData(prev => ({ ...prev, country: businessCountry, whatsappOptIn: false }));
             }
+        } else {
+            setFormData(prev => ({ ...prev, whatsappOptIn: false }));
         }
         setIsModalOpen(true);
     };
@@ -169,7 +189,7 @@ export function Waitlist() {
             const resetCountry = businessData?.countryCode
                 ? getCountryByCode(businessData.countryCode) || DEFAULT_COUNTRY
                 : DEFAULT_COUNTRY;
-            setFormData({ country: resetCountry, phone: '', customerName: '', partySize: 2, notes: '' });
+            setFormData({ country: resetCountry, phone: '', customerName: '', partySize: 2, notes: '', whatsappOptIn: false });
             setPhoneDisplay('');
             setCustomerFound(null);
         },
@@ -226,6 +246,7 @@ export function Waitlist() {
             customerPhone: formData.phone,
             partySize: formData.partySize,
             notes: formData.notes,
+            whatsappOptIn: formData.whatsappOptIn,
         };
 
         createMutation.mutate(payload);
@@ -831,6 +852,21 @@ export function Waitlist() {
                             </p>
                         )}
                     </div>
+
+                    {shouldShowWhatsappOptIn && (
+                        <div className="flex items-center gap-2 pl-1 mb-2 animate-fade-in">
+                            <input
+                                type="checkbox"
+                                id="whatsappOptIn"
+                                checked={formData.whatsappOptIn}
+                                onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
+                                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                            />
+                            <label htmlFor="whatsappOptIn" className="text-sm font-medium text-dark-700 cursor-pointer select-none">
+                                {t('form.whatsappOptIn')}
+                            </label>
+                        </div>
+                    )}
 
                     <Input
                         label={t('form.customerName')}

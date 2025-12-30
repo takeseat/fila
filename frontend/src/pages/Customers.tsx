@@ -30,6 +30,7 @@ export function Customers() {
         name: '',
         email: '',
         notes: '',
+        whatsappOptIn: false,
     });
     const [phoneDisplay, setPhoneDisplay] = useState('');
 
@@ -71,6 +72,7 @@ export function Customers() {
             name: '',
             email: '',
             notes: '',
+            whatsappOptIn: false,
         });
         setPhoneDisplay('');
         setIsFormModalOpen(true);
@@ -88,6 +90,7 @@ export function Customers() {
             name: customer.name,
             email: customer.email || '',
             notes: customer.notes || '',
+            whatsappOptIn: customer.whatsappOptIn || false,
         });
 
         // Set phone display
@@ -113,6 +116,7 @@ export function Customers() {
             fullPhone,
             email: formData.email || undefined,
             notes: formData.notes || undefined,
+            whatsappOptIn: formData.whatsappOptIn,
         };
 
         if (editingCustomer) {
@@ -429,6 +433,18 @@ export function Customers() {
                             </svg>
                         }
                     />
+                    <div className="flex items-center space-x-2 pt-2">
+                        <input
+                            type="checkbox"
+                            id="whatsappOptIn"
+                            checked={formData.whatsappOptIn}
+                            onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
+                            className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                        />
+                        <label htmlFor="whatsappOptIn" className="text-sm text-dark-700">
+                            {t('form.whatsappOptIn')}
+                        </label>
+                    </div>
 
                     <div className="flex gap-3 justify-end pt-4">
                         <Button
@@ -483,6 +499,6 @@ export function Customers() {
                     </div>
                 </div>
             </Modal>
-        </div>
+        </div >
     );
 }

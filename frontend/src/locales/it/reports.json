@@ -1,0 +1,129 @@
+{
+    "queueEntries": {
+        "title": "Report Analitico della Coda",
+        "subtitle": "Analisi dettagliata di ogni servizio, con tempi, durate e stato",
+        "exportCsv": "Esporta CSV",
+        "exportPdf": "Esporta PDF",
+        "errorLoading": "Errore nel caricamento del report",
+        "tryAgainLater": "Riprova più tardi",
+        "noRecordsFound": "Nessun record trovato",
+        "adjustFilters": "Prova a modificare i filtri per vedere più risultati",
+        "showing": "Visualizzazione da {{from}} a {{to}} di {{total}} record",
+        "perPage": "per pagina",
+        "previous": "Precedente",
+        "next": "Successivo",
+        "pageOf": "Pagina {{current}} di {{total}}"
+    },
+    "performance": {
+        "title": "Report Prestazioni Coda",
+        "subtitle": "Analisi dettagliata delle metriche e tendenze della lista d'attesa",
+        "kpis": {
+            "totalGroups": "Totale Gruppi",
+            "groupsSeated": "Gruppi Accomodati",
+            "lostRate": "Tasso di Perdita",
+            "peakConcurrent": "Picco Simultaneo",
+            "avgWaitTime": "Tempo Medio Attesa",
+            "medianP50": "Mediana (P50)",
+            "percentile75": "Percentile 75 (P75)",
+            "ofTotal": "del totale",
+            "groupsLost": "gruppi persi",
+            "maxInQueue": "Massimo gruppi in coda",
+            "waited50Less": "50% ha atteso meno di questo",
+            "waited75Less": "75% ha atteso meno di questo",
+            "period": "Periodo",
+            "until": "fino a",
+            "aggregation": "Aggregazione",
+            "perHour": "Per ora",
+            "perDay": "Per giorno"
+        },
+        "charts": {
+            "waitTimeDistribution": "Distribuzione Tempo di Attesa",
+            "hourlyTrends": "Tendenze Orarie"
+        }
+    },
+    "executive": {
+        "title": "Riepilogo Esecutivo",
+        "subtitle": "Panoramica di 30 secondi per il processo decisionale",
+        "kpis": {
+            "waitP50": "Tempo Medio (P50)",
+            "groupsSeated": "Gruppi Accomodati",
+            "lostRate": "Tasso di Perdita",
+            "peakHour": "Ora di Punta",
+            "peakWaitHour": "Picco Attesa",
+            "groupsLost": "Gruppi Persi",
+            "mostEntries": "Più ingressi",
+            "highestAvgWait": "Attesa media più alta"
+        },
+        "charts": {
+            "hourlyEntries": "Ingressi Orari"
+        }
+    },
+    "flow": {
+        "title": "Analisi Flusso Coda",
+        "subtitle": "Identificazione colli di bottiglia e analisi conversione",
+        "kpis": {
+            "entryToCall": "Ingresso → Chiamata",
+            "callToSeat": "Chiamata → Accomodato",
+            "calledToSeatedRate": "Tasso Chiamato→Accomodato",
+            "calledToNoshowRate": "Tasso Chiamato→No-show",
+            "avgIdleAfterCall": "Tempo Inattività Medio",
+            "p50Idle": "Inattività P50",
+            "p75Idle": "Inattività P75",
+            "avgTime": "Tempo medio",
+            "afterCall": "Dopo chiamata"
+        },
+        "charts": {
+            "stageTime": "Tempo per Fase",
+            "minutes": "Minuti",
+            "entryToCallLine": "Ingresso→Chiamata",
+            "callToSeatLine": "Chiamata→Accomodato"
+        }
+    },
+    "filters": {
+        "title": "Filtri",
+        "dateStart": "Data Inizio",
+        "dateEnd": "Data Fine",
+        "dateInitial": "Data Iniziale",
+        "dateFinal": "Data Finale",
+        "partySize": "Persone",
+        "all": "Tutti",
+        "people": "persone",
+        "timeRange": "Fascia Oraria",
+        "allDay": "Tutto il giorno",
+        "lunch": "Pranzo (11:00-15:00)",
+        "dinner": "Cena (18:00-23:00)",
+        "lunchAndDinner": "Pranzo e Cena",
+        "today": "Oggi",
+        "last7Days": "Ultimi 7 giorni",
+        "last30Days": "Ultimi 30 giorni",
+        "last90Days": "Ultimi 90 giorni",
+        "status": "Stato",
+        "searchClient": "Cerca Cliente (Nome o Telefono)",
+        "searchPlaceholder": "Scrivi nome o telefono...",
+        "minPeople": "Minimo Persone",
+        "maxPeople": "Massimo Persone",
+        "applyFilters": "Applica Filtri",
+        "clear": "Pulisci"
+    },
+    "common": {
+        "errorLoading": "Errore nel caricamento",
+        "loading": "Caricamento...",
+        "noData": "Nessun dato da visualizzare",
+        "minutes": "Minuti",
+        "groups": "Gruppi"
+    },
+    "charts": {
+        "waitTimeOverTime": "Tempo di Attesa nel Tempo",
+        "queueVolume": "Volume Coda",
+        "avgTime": "Tempo Medio",
+        "medianP50": "Mediana (P50)",
+        "entered": "Entrati",
+        "seated": "Accomodati",
+        "lost": "Persi",
+        "conversionFunnel": "Imbuto di Conversione",
+        "enteredQueue": "Entrati in Coda",
+        "wereCalled": "Sono stati Chiamati",
+        "conversionRate": "Tasso di Conversione",
+        "lossRate": "Tasso di Perdita"
+    }
+}

@@ -127,18 +127,7 @@ export function BusinessDataTab() {
 
             {/* Read-Only Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label className="block text-sm font-medium text-dark-700 mb-1">
-                        {t('business.fields.email.label')}
-                    </label>
-                    <input
-                        type="email"
-                        value={businessData?.email || ''}
-                        disabled
-                        className="w-full px-4 py-2 rounded-lg border border-light-300 bg-light-100 text-dark-500 cursor-not-allowed"
-                    />
-                    <p className="mt-1 text-xs text-dark-500 italic">{t('business.fields.email.readOnly')}</p>
-                </div>
+
 
                 <div>
                     <label className="block text-sm font-medium text-dark-700 mb-1">
@@ -155,21 +144,12 @@ export function BusinessDataTab() {
             </div>
 
             {/* Phone */}
-            <div>
-                <label className="block text-sm font-medium text-dark-700 mb-1">
-                    {t('business.fields.phone.label')}
-                </label>
-                <input
-                    type="tel"
-                    {...register('phone', { required: true })}
-                    defaultValue={businessData?.phone}
-                    className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
-                    placeholder={t('business.fields.phone.placeholder')}
-                />
-                {errors.phone && (
-                    <p className="mt-1 text-xs text-danger-500">{t('validation.required')}</p>
-                )}
-            </div>
+            {/* Phone (Hidden - Preserved for backend validation) */}
+            <input
+                type="hidden"
+                {...register('phone', { required: true })}
+                defaultValue={businessData?.phone}
+            />
 
             {/* Address Section */}
             <div className="pt-4 border-t border-light-200">

@@ -290,6 +290,7 @@ Após executar o seed, você pode fazer login com:
 
 - [Backend README](./backend/README.md) - Documentação completa da API
 - [Frontend README](./frontend/README.md) - Documentação do frontend
+- [WhatsApp Integration](./docs/whatsapp-integration.md) - Detalhes da integração WhatsApp
 
 ## 🎯 Funcionalidades Principais
 
@@ -307,6 +308,7 @@ Após executar o seed, você pode fazer login com:
 - [x] NPS (surveys e respostas)
 - [x] Campanhas (mock de envio)
 - [x] Relatórios operacionais
+- [x] Integração WhatsApp (Notificações de Fila)
 - [x] Documentação Swagger
 
 ### 🚧 Em Desenvolvimento (Frontend)

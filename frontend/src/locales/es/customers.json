@@ -32,8 +32,9 @@
         "phonePlaceholderBR": "(DDD) Número",
         "name": "Nombre",
         "email": "Email (opcional)",
-        "notes": "Observaciones (opcional)",
-        "notesPlaceholder": "Ej: Cliente VIP, preferencias especiales..."
+        "notes": "Notas (opcional)",
+        "notesPlaceholder": "Ej: Cliente VIP, preferencias especiales...",
+        "whatsappOptIn": "Autoriza recibir mensajes por WhatsApp"
     },
     "empty": {
         "title": "Ningún cliente encontrado",

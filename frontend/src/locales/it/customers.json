@@ -1,6 +1,6 @@
 {
     "title": "Clienti",
-    "subtitle": "Gestisci il registro clienti del ristorante",
+    "subtitle": "Gestisci la registrazione dei clienti del ristorante",
     "actions": {
         "newCustomer": "Nuovo Cliente",
         "editCustomer": "Modifica Cliente",
@@ -12,7 +12,7 @@
         "name": "Nome",
         "namePlaceholder": "Cerca per nome...",
         "phone": "Telefono",
-        "phonePlaceholder": "(DDD) Numero",
+        "phonePlaceholder": "(Prefisso) Numero",
         "lastVisitAfter": "Ultima visita dopo",
         "clearFilters": "Pulisci Filtri"
     },
@@ -21,32 +21,33 @@
         "phone": "Telefono",
         "email": "Email",
         "lastVisit": "Ultima Visita",
-        "totalVisits": "N° Visite",
+        "totalVisits": "# Visite",
         "actions": "Azioni",
         "edit": "Modifica",
-        "remove": "Elimina"
+        "remove": "Rimuovi"
     },
     "form": {
         "phone": "Telefono",
         "phonePlaceholder": "Numero di telefono",
-        "phonePlaceholderBR": "(DDD) Numero",
+        "phonePlaceholderBR": "(Prefisso) Numero",
         "name": "Nome",
         "email": "Email (opzionale)",
         "notes": "Note (opzionale)",
-        "notesPlaceholder": "Es: Cliente VIP, preferenze speciali..."
+        "notesPlaceholder": "Es: Cliente VIP, preferenze speciali...",
+        "whatsappOptIn": "Autorizza la ricezione di messaggi tramite WhatsApp"
     },
     "empty": {
         "title": "Nessun cliente trovato",
-        "description": "Registra il primo cliente o regola i filtri di ricerca",
+        "description": "Registra il primo cliente o modifica i filtri di ricerca",
         "action": "Registra Cliente"
     },
     "delete": {
         "title": "Conferma Eliminazione",
         "message": "Sei sicuro di voler eliminare il cliente <strong>{{name}}</strong>?",
-        "warning": "Questa azione non può essere annullata. La cronologia delle visite sarà mantenuta, ma il cliente non potrà più essere associato a nuove voci."
+        "warning": "Questa azione non può essere annullata. La cronologia delle visite verrà mantenuta, ma il cliente non sarà più associato a nuovi ingressi."
     },
     "pagination": {
-        "showing": "Mostrando {{from}} a {{to}} di {{total}} clienti",
+        "showing": "Visualizzazione da {{from}} a {{to}} di {{total}} clienti",
         "previous": "Precedente",
         "next": "Successivo"
     },

@@ -1,32 +1,32 @@
 {
-    "title": "Profile Settings",
+    "title": "Настройки профиля",
     "profileInfo": {
-        "title": "Profile Information",
-        "name": "Name",
+        "title": "Информация о профиле",
+        "name": "Имя",
         "email": "Email",
-        "emailReadonly": "Email cannot be changed",
-        "save": "Save Changes",
-        "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "emailReadonly": "Email нельзя изменить",
+        "save": "Сохранить изменения",
+        "success": "Профиль успешно обновлен",
+        "error": "Не удалось обновить профиль"
     },
     "language": {
-        "title": "Language",
-        "description": "This language will be used when you sign in to the system.",
-        "select": "Select Language",
-        "success": "Language updated successfully",
-        "error": "Failed to update language"
+        "title": "Язык",
+        "description": "Этот язык будет использоваться при входе в систему.",
+        "select": "Выберите язык",
+        "success": "Язык успешно обновлен",
+        "error": "Не удалось обновить язык"
     },
     "password": {
-        "title": "Change Password",
-        "current": "Current Password",
-        "new": "New Password",
-        "confirm": "Confirm New Password",
-        "requirements": "Minimum 8 characters",
-        "save": "Change Password",
-        "success": "Password changed successfully",
-        "error": "Failed to change password",
-        "incorrectCurrent": "Current password is incorrect",
-        "minLength": "Password must be at least 8 characters",
-        "mismatch": "Passwords do not match"
+        "title": "Изменить пароль",
+        "current": "Текущий пароль",
+        "new": "Новый пароль",
+        "confirm": "Подтвердите новый пароль",
+        "requirements": "Минимум 8 символов",
+        "save": "Изменить пароль",
+        "success": "Пароль успешно изменен",
+        "error": "Не удалось изменить пароль",
+        "incorrectCurrent": "Текущий пароль неверен",
+        "minLength": "Пароль должен содержать не менее 8 символов",
+        "mismatch": "Пароли не совпадают"
     }
 }

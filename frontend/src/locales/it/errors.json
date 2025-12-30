@@ -1,0 +1,24 @@
+{
+    "network": {
+        "offline": "Sei offline. Controlla la tua connessione internet.",
+        "timeout": "Richiesta scaduta. Riprova.",
+        "serverError": "Errore del server. Riprova più tardi.",
+        "notFound": "Risorsa non trovata.",
+        "unauthorized": "Non autorizzato. Effettua nuovamente l'accesso.",
+        "forbidden": "Non hai il permesso per eseguire questa azione."
+    },
+    "validation": {
+        "required": "Questo campo è obbligatorio",
+        "invalidEmail": "Indirizzo email non valido",
+        "invalidPhone": "Numero di telefono non valido",
+        "minLength": "Deve essere di almeno {{min}} caratteri",
+        "maxLength": "Deve essere di massimo {{max}} caratteri",
+        "minValue": "Deve essere almeno {{min}}",
+        "maxValue": "Deve essere massimo {{max}}"
+    },
+    "generic": {
+        "somethingWrong": "Qualcosa è andato storto",
+        "tryAgain": "Per favore riprova",
+        "contactSupport": "Se il problema persiste, contatta il supporto"
+    }
+}

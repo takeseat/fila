@@ -53,7 +53,8 @@
         "phonePlaceholderBR": "(11) 99999-9999",
         "lookingUp": "顧客を検索中...",
         "customerFound": "顧客が見つかりました: {{name}}",
-        "newCustomer": "新規顧客 — 登録されます"
+        "newCustomer": "新規顧客 — 登録されます",
+        "whatsappOptIn": "WhatsAppでのメッセージ受信を許可する"
     },
     "empty": {
         "title": "キューに顧客がいません",

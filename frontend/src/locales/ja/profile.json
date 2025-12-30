@@ -1,32 +1,32 @@
 {
-    "title": "Profile Settings",
+    "title": "プロフィール設定",
     "profileInfo": {
-        "title": "Profile Information",
-        "name": "Name",
-        "email": "Email",
-        "emailReadonly": "Email cannot be changed",
-        "save": "Save Changes",
-        "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "title": "プロフィール情報",
+        "name": "名前",
+        "email": "メールアドレス",
+        "emailReadonly": "メールアドレスは変更できません",
+        "save": "変更を保存",
+        "success": "プロフィールを更新しました",
+        "error": "プロフィールの更新に失敗しました"
     },
     "language": {
-        "title": "Language",
-        "description": "This language will be used when you sign in to the system.",
-        "select": "Select Language",
-        "success": "Language updated successfully",
-        "error": "Failed to update language"
+        "title": "言語",
+        "description": "この言語はシステムへのサインイン時に使用されます。",
+        "select": "言語を選択",
+        "success": "言語を更新しました",
+        "error": "言語の更新に失敗しました"
     },
     "password": {
-        "title": "Change Password",
-        "current": "Current Password",
-        "new": "New Password",
-        "confirm": "Confirm New Password",
-        "requirements": "Minimum 8 characters",
-        "save": "Change Password",
-        "success": "Password changed successfully",
-        "error": "Failed to change password",
-        "incorrectCurrent": "Current password is incorrect",
-        "minLength": "Password must be at least 8 characters",
-        "mismatch": "Passwords do not match"
+        "title": "パスワードの変更",
+        "current": "現在のパスワード",
+        "new": "新しいパスワード",
+        "confirm": "新しいパスワード（確認）",
+        "requirements": "8文字以上",
+        "save": "パスワードを変更",
+        "success": "パスワードを変更しました",
+        "error": "パスワードの変更に失敗しました",
+        "incorrectCurrent": "現在のパスワードが間違っています",
+        "minLength": "パスワードは8文字以上である必要があります",
+        "mismatch": "パスワードが一致しません"
     }
 }

@@ -4,7 +4,13 @@
         "waitlist": "Lista d'Attesa",
         "customers": "Clienti",
         "reports": "Report",
-        "settings": "Impostazioni"
+        "settings": "Impostazioni",
+        "reportsSubmenu": {
+            "performance": "Prestazioni",
+            "executive": "Riepilogo Esecutivo",
+            "flow": "Flusso della Coda",
+            "queueEntries": "Report Analitico"
+        }
     },
     "user": {
         "profile": "Profilo",

@@ -1,32 +1,32 @@
 {
-    "title": "Profile Settings",
+    "title": "Impostazioni Profilo",
     "profileInfo": {
-        "title": "Profile Information",
-        "name": "Name",
+        "title": "Informazioni Profilo",
+        "name": "Nome",
         "email": "Email",
-        "emailReadonly": "Email cannot be changed",
-        "save": "Save Changes",
-        "success": "Profile updated successfully",
-        "error": "Failed to update profile"
+        "emailReadonly": "L'email non può essere modificata",
+        "save": "Salva Modifiche",
+        "success": "Profilo aggiornato con successo",
+        "error": "Impossibile aggiornare il profilo"
     },
     "language": {
-        "title": "Language",
-        "description": "This language will be used when you sign in to the system.",
-        "select": "Select Language",
-        "success": "Language updated successfully",
-        "error": "Failed to update language"
+        "title": "Lingua",
+        "description": "Questa lingua verrà utilizzata quando accedi al sistema.",
+        "select": "Seleziona Lingua",
+        "success": "Lingua aggiornata con successo",
+        "error": "Impossibile aggiornare la lingua"
     },
     "password": {
-        "title": "Change Password",
-        "current": "Current Password",
-        "new": "New Password",
-        "confirm": "Confirm New Password",
-        "requirements": "Minimum 8 characters",
-        "save": "Change Password",
-        "success": "Password changed successfully",
-        "error": "Failed to change password",
-        "incorrectCurrent": "Current password is incorrect",
-        "minLength": "Password must be at least 8 characters",
-        "mismatch": "Passwords do not match"
+        "title": "Cambia Password",
+        "current": "Password Attuale",
+        "new": "Nuova Password",
+        "confirm": "Conferma Nuova Password",
+        "requirements": "Minimo 8 caratteri",
+        "save": "Cambia Password",
+        "success": "Password cambiata con successo",
+        "error": "Impossibile cambiare la password",
+        "incorrectCurrent": "La password attuale non è corretta",
+        "minLength": "La password deve essere di almeno 8 caratteri",
+        "mismatch": "Le password non corrispondono"
     }
 }

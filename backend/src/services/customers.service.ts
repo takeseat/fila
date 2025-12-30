@@ -96,6 +96,9 @@ export class CustomersService {
                 fullPhone: data.fullPhone,
                 email: data.email,
                 notes: data.notes,
+                whatsappOptIn: data.whatsappOptIn ?? false,
+                whatsappOptInAt: data.whatsappOptIn !== undefined ? new Date() : null,
+                whatsappOptInSource: data.whatsappOptIn !== undefined ? 'CRM' : null,
             },
         });
     }
@@ -117,6 +120,12 @@ export class CustomersService {
                     ddi: data.ddi || existing.ddi,
                     phone: data.phone || existing.phone,
                     fullPhone: data.fullPhone || existing.fullPhone,
+                    // If opt-in is provided, update it
+                    ...(data.whatsappOptIn !== undefined && {
+                        whatsappOptIn: data.whatsappOptIn,
+                        whatsappOptInAt: new Date(),
+                        whatsappOptInSource: 'CRM'
+                    }),
                 },
             });
         }
@@ -167,6 +176,11 @@ export class CustomersService {
                 ddi: data.ddi,
                 phone: data.phone,
                 fullPhone: data.fullPhone,
+                ...(data.whatsappOptIn !== undefined && {
+                    whatsappOptIn: data.whatsappOptIn,
+                    whatsappOptInAt: new Date(),
+                    whatsappOptInSource: 'CRM'
+                }),
             },
         });
     }

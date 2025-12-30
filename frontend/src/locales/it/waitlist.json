@@ -2,58 +2,59 @@
     "title": "Lista d'Attesa",
     "subtitle": "Gestisci i clienti in attesa di servizio",
     "tabs": {
-        "active": "Attiva ({{count}})",
-        "completed": "Completata ({{count}})"
+        "active": "Attivi ({{count}})",
+        "completed": "Completati ({{count}})"
     },
     "status": {
         "WAITING": "In Attesa",
         "CALLED": "Chiamato",
-        "SEATED": "Seduto",
+        "SEATED": "Accomodato",
         "CANCELLED": "Cancellato",
-        "NO_SHOW": "Non Presentato"
+        "NO_SHOW": "No Show"
     },
     "stats": {
         "inQueue": "In Coda",
         "servedToday": "Serviti Oggi",
-        "avgWaitTime": "Tempo Medio fino alla Chiamata",
+        "avgWaitTime": "Tempo Medio Chiamata",
         "lastMinutes": "(ultimi {{minutes}} min)",
         "estimated": "Stimato"
     },
     "entry": {
         "timeInQueue": "Tempo in Coda",
         "calledSince": "Chiamato da",
-        "calledFor": "Chiamato da",
+        "calledFor": "Chiamato per",
         "eta": "Stima: {{time}}",
         "callingAnytime": "Chiamata in qualsiasi momento",
-        "calculating": "Calcolando...",
+        "calculating": "Calcolo...",
         "partySize": "Persone",
         "customer": "Cliente",
-        "customerCalled": "Cliente è stato chiamato",
+        "customerCalled": "Cliente chiamato",
         "at": "alle",
         "delay": "Ritardo",
-        "delaySeating": "Ritardo nel Sedersi"
+        "delaySeating": "Ritardo Accomodamento"
     },
     "actions": {
         "call": "Chiama",
-        "seat": "Siedi",
-        "cancel": "Annulla",
-        "noShow": "Non Presentato",
+        "seat": "Accomoda",
+        "cancel": "Cancella",
+        "noShow": "No Show",
         "addToQueue": "Aggiungi alla Coda",
         "addCustomer": "Aggiungi Cliente"
     },
     "form": {
         "title": "Aggiungi alla Coda",
-        "customerPhone": "Telefono del Cliente",
-        "customerName": "Nome del Cliente",
+        "customerPhone": "Telefono Cliente",
+        "customerName": "Nome Cliente",
         "fullName": "Nome completo",
         "partySize": "Persone",
         "notes": "Note",
-        "notesPlaceholder": "Es: Tavolo vicino alla finestra, seggiolone...",
+        "notesPlaceholder": "Es: Tavolo finestra, seggiolone...",
         "phonePlaceholder": "Numero di telefono",
         "phonePlaceholderBR": "(11) 99999-9999",
         "lookingUp": "Ricerca cliente...",
         "customerFound": "Cliente trovato: {{name}}",
-        "newCustomer": "Nuovo cliente — sarà registrato"
+        "newCustomer": "Nuovo cliente — verrà registrato",
+        "whatsappOptIn": "Autorizza la ricezione di messaggi tramite WhatsApp"
     },
     "empty": {
         "title": "Nessun cliente in coda",
@@ -63,12 +64,12 @@
     "filters": {
         "phoneSearch": "Cerca per telefono",
         "nameSearch": "Cerca per nome",
-        "partySizeLabel": "Dimensione del gruppo",
+        "partySizeLabel": "Persone",
         "all": "Tutti",
-        "clearFilters": "Cancella filtri",
+        "clearFilters": "Pulisci filtri",
         "noResults": {
             "title": "Nessun risultato trovato",
-            "description": "Nessuna voce corrisponde ai filtri applicati. Prova a regolare i filtri."
+            "description": "Nessuna voce corrisponde ai filtri applicati. Prova a modificare i filtri."
         }
     },
     "loading": "Caricamento coda...",

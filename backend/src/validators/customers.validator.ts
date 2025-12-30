@@ -8,6 +8,7 @@ export const CreateCustomerInputSchema = z.object({
     fullPhone: z.string().min(8, 'Full phone number is required'),
     email: z.string().email('Invalid email').optional().or(z.literal('')),
     notes: z.string().optional(),
+    whatsappOptIn: z.boolean().optional(),
 });
 
 export const UpdateCustomerInputSchema = z.object({
@@ -18,6 +19,7 @@ export const UpdateCustomerInputSchema = z.object({
     fullPhone: z.string().min(8, 'Full phone number is required').optional(),
     email: z.string().email('Invalid email').optional().or(z.literal('')),
     notes: z.string().optional(),
+    whatsappOptIn: z.boolean().optional(),
 });
 
 export type CreateCustomerInput = z.infer<typeof CreateCustomerInputSchema>;

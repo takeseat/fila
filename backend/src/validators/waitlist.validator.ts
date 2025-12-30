@@ -9,6 +9,7 @@ export const CreateWaitlistEntryInputSchema = z.object({
     partySize: z.number().int().min(1, 'Party size must be at least 1'),
     estimatedWaitMinutes: z.number().int().optional(),
     notes: z.string().optional(),
+    whatsappOptIn: z.boolean().optional(),
 });
 
 export type CreateWaitlistEntryInput = z.infer<typeof CreateWaitlistEntryInputSchema>;

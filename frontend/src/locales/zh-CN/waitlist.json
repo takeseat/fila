@@ -53,7 +53,8 @@
         "phonePlaceholderBR": "(11) 99999-9999",
         "lookingUp": "查找客户...",
         "customerFound": "找到客户: {{name}}",
-        "newCustomer": "新客户 — 将被注册"
+        "newCustomer": "新客户 — 将被注册",
+        "whatsappOptIn": "授权接收 WhatsApp 消息"
     },
     "empty": {
         "title": "队列中没有客户",
