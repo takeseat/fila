@@ -15,7 +15,6 @@ resource "aws_lambda_function" "api" {
     variables = {
       NODE_ENV           = "production"
       CORS_ORIGIN        = "https://${var.domain_name}"
-      DATABASE_URL       = "mysql://${var.db_username}:${random_password.db_password.result}@${aws_rds_cluster.main.endpoint}:3306/${var.db_name}"
       DB_SECRET_ARN      = aws_secretsmanager_secret.db_credentials.arn
       JWT_SECRET         = random_password.jwt_secret.result
       JWT_REFRESH_SECRET = random_password.jwt_refresh_secret.result
