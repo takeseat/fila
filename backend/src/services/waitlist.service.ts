@@ -94,8 +94,10 @@ export class WaitlistService {
         });
 
         // WhatsApp Notification (Welcome)
+        console.log('[WhatsApp Debug] whatsappOptIn:', data.whatsappOptIn, 'entry.whatsappOptIn:', entry.whatsappOptIn);
         if (data.whatsappOptIn) {
             try {
+                console.log('[WhatsApp] Sending welcome message to', entry.customerPhone);
                 // current position is waitingCount + 1
                 WhatsAppService.sendWelcome(restaurantId, entry, waitingCount + 1).catch(err => {
                     console.error('Failed to send welcome message', err);
@@ -103,6 +105,8 @@ export class WaitlistService {
             } catch (error) {
                 console.error('Error initiating welcome message', error);
             }
+        } else {
+            console.log('[WhatsApp] Skipping welcome message - opt-in is false');
         }
 
         return entry;
