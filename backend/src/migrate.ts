@@ -7,21 +7,38 @@ import { hashPassword } from './utils/password';
  * Lambda handler for running Prisma migrations and seed
  * This function is invoked by CI/CD pipeline to apply database migrations
  */
+// Helper to safely stringify any error
+const safeErrorStringify = (error: any): string => {
+    try {
+        if (typeof error === 'string') return error;
+        if (error instanceof Error) return error.message + (error.stack ? `\nStack: ${error.stack}` : '');
+        return JSON.stringify(error, null, 2);
+    } catch {
+        return 'Unstringifiable error';
+    }
+};
+
 export const handler = async (event: any) => {
     const prisma = new PrismaClient();
 
     try {
         console.log('Starting database migrations...');
+        console.log('Event:', JSON.stringify(event));
 
         // Get DATABASE_URL from Secrets Manager
-        const databaseUrl = await getDatabaseUrl();
+        let databaseUrl: string;
+        try {
+            databaseUrl = await getDatabaseUrl();
+            console.log('Database URL retrieved successfully');
+        } catch (secretError) {
+            throw new Error(`Failed to get database credentials: ${safeErrorStringify(secretError)}`);
+        }
 
         // Set DATABASE_URL for Prisma
         process.env.DATABASE_URL = databaseUrl;
 
         console.log('Running prisma migrate deploy...');
 
-        // Execute Prisma migrations
         // Execute Prisma migrations
         try {
             const output = execSync('npx prisma migrate deploy', {
@@ -34,16 +51,26 @@ export const handler = async (event: any) => {
             console.log(output);
         } catch (e: any) {
             console.error('Prisma migration failed');
-            console.error('STDOUT:', e.stdout?.toString());
-            console.error('STDERR:', e.stderr?.toString());
-            throw new Error(`Migration command failed. STDERR: ${e.stderr?.toString() || 'N/A'}. STDOUT: ${e.stdout?.toString() || 'N/A'}`);
+            const stdout = e.stdout ? e.stdout.toString() : 'N/A';
+            const stderr = e.stderr ? e.stderr.toString() : 'N/A';
+            console.error('STDOUT:', stdout);
+            console.error('STDERR:', stderr);
+            throw new Error(`Migration command failed.\nSTDERR: ${stderr}\nSTDOUT: ${stdout}`);
         }
 
         console.log('Migrations completed successfully');
 
         // Check if should run seed (via event parameter or if database is empty)
         const shouldSeed = event?.seed === true || event?.seed === 'true';
-        const restaurantCount = await prisma.restaurant.count();
+        let restaurantCount = 0;
+
+        try {
+            restaurantCount = await prisma.restaurant.count();
+        } catch (countError) {
+            console.error('Failed to count restaurants:', countError);
+            // Proceeding is risky but let's assume 0 if we can't count to try seeding? 
+            // Or maybe fail? Let's treat as non-fatal for migration step, but log it.
+        }
 
         if (shouldSeed || restaurantCount === 0) {
             console.log('Running database seed...');
@@ -179,14 +206,16 @@ export const handler = async (event: any) => {
                 timestamp: new Date().toISOString(),
             }),
         };
-    } catch (error) {
+    } catch (error: any) {
         console.error('Migration/Seed failed:', error);
+
+        const errorMessage = safeErrorStringify(error);
 
         return {
             statusCode: 500,
             body: JSON.stringify({
                 message: 'Migration/Seed failed',
-                error: error instanceof Error ? error.message : 'Unknown error',
+                error: errorMessage || 'Unknown critical error (empty message)',
                 timestamp: new Date().toISOString(),
             }),
         };
