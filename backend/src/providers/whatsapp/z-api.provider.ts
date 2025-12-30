@@ -19,14 +19,21 @@ export class ZApiWhatsAppProvider implements IWhatsAppProvider {
     }
 
     async sendText(options: SendMessageOptions): Promise<SendMessageResult> {
+        console.log('[Z-API] sendText called - to:', options.to);
+
         if (!this.instanceId || !this.instanceToken) {
+            console.error('[Z-API] Missing credentials');
             throw new Error('Z-API credentials missing');
         }
 
         const phone = this.normalizePhone(options.to);
         const url = `${this.baseUrl}/instances/${this.instanceId}/token/${this.instanceToken}/send-text`;
 
+        console.log('[Z-API] Normalized phone:', phone);
+        console.log('[Z-API] URL:', url);
+
         try {
+            console.log('[Z-API] Making POST request...');
             const response = await axios.post(
                 url,
                 {
@@ -38,8 +45,11 @@ export class ZApiWhatsAppProvider implements IWhatsAppProvider {
                         'Client-Token': this.clientToken,
                         'Content-Type': 'application/json',
                     },
+                    timeout: 10000, // 10 seconds timeout
                 }
             );
+
+            console.log('[Z-API] Response received:', response.status, response.data);
 
             // Z-API success response usually contains messageId or id
             // Adjust based on exact Z-API response structure.
@@ -49,7 +59,11 @@ export class ZApiWhatsAppProvider implements IWhatsAppProvider {
             return { providerMessageId };
         } catch (error: any) {
             const msg = error.response?.data?.message || error.message;
-            console.error('Z-API Send Error:', msg);
+            console.error('[Z-API] Send Error:', msg, {
+                status: error.response?.status,
+                data: error.response?.data,
+                code: error.code
+            });
             throw new Error(`Z-API Failed: ${msg}`);
         }
     }
