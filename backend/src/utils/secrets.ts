@@ -20,6 +20,13 @@ export async function getDbCredentials(): Promise<DbCredentials> {
         return cachedSecret;
     }
 
+    // If DATABASE_URL is already set in environment (e.g. via .env), parse it to Mock Credentials or just rely on getDatabaseUrl bypass
+    // However, to support getDatabaseUrl returning it directly, we should modify getDatabaseUrl instead or handle it here.
+    // Let's modify getDatabaseUrl to check env var first. 
+
+    // For getDbCredentials, we still need it to return something if called directly.
+    // But mostly likely only getDatabaseUrl is called.
+
     const secretArn = process.env.DB_SECRET_ARN;
     if (!secretArn) {
         throw new Error('DB_SECRET_ARN environment variable is not set');
@@ -51,6 +58,11 @@ export async function getDbCredentials(): Promise<DbCredentials> {
  * Uses RDS Proxy endpoint for Lambda connections
  */
 export async function getDatabaseUrl(): Promise<string> {
+    if (process.env.DATABASE_URL) {
+        console.log('Using DATABASE_URL from environment variable');
+        return process.env.DATABASE_URL;
+    }
+
     const secret = await getDbCredentials();
 
     // Use proxy endpoint from environment or from secret

@@ -2,6 +2,9 @@ import { execSync } from 'child_process';
 import { getDatabaseUrl } from './utils/secrets';
 import { PrismaClient } from '@prisma/client';
 import { hashPassword } from './utils/password';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * Lambda handler for running Prisma migrations and seed

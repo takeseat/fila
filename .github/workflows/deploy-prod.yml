@@ -61,6 +61,8 @@ jobs:
         run: |
           # Use optimized build script responsible for pruning dev deps and binaries
           chmod +x scripts/build-lambda.sh
+          # IMPORTANT: Copy production env to .env so it gets packaged and loaded by migrate.ts
+          cp .env.prod .env
           npm run package:lambda
           
           # Rename/Copy artifacts as expected by next steps
