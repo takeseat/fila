@@ -3,3 +3,7 @@ dist
 .env
 *.log
 .DS_Store
+lambda_dist
+lambda.zip
+response*.json
+scripts/reproduce_issue.ts
