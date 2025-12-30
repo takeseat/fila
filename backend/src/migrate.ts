@@ -22,13 +22,22 @@ export const handler = async (event: any) => {
         console.log('Running prisma migrate deploy...');
 
         // Execute Prisma migrations
-        execSync('npx prisma migrate deploy', {
-            stdio: 'inherit',
-            env: {
-                ...process.env,
-                DATABASE_URL: databaseUrl,
-            },
-        });
+        // Execute Prisma migrations
+        try {
+            const output = execSync('npx prisma migrate deploy', {
+                env: {
+                    ...process.env,
+                    DATABASE_URL: databaseUrl,
+                },
+                encoding: 'utf-8' // Capture output as string
+            });
+            console.log(output);
+        } catch (e: any) {
+            console.error('Prisma migration failed');
+            console.error('STDOUT:', e.stdout?.toString());
+            console.error('STDERR:', e.stderr?.toString());
+            throw new Error(`Migration command failed. STDERR: ${e.stderr?.toString() || 'N/A'}. STDOUT: ${e.stdout?.toString() || 'N/A'}`);
+        }
 
         console.log('Migrations completed successfully');
 
