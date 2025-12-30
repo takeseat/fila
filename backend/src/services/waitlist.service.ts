@@ -99,9 +99,7 @@ export class WaitlistService {
             try {
                 console.log('[WhatsApp] Sending welcome message to', entry.customerPhone);
                 // current position is waitingCount + 1
-                WhatsAppService.sendWelcome(restaurantId, entry, waitingCount + 1).catch(err => {
-                    console.error('Failed to send welcome message', err);
-                });
+                await WhatsAppService.sendWelcome(restaurantId, entry, waitingCount + 1);
             } catch (error) {
                 console.error('Error initiating welcome message', error);
             }
@@ -137,9 +135,11 @@ export class WaitlistService {
         });
 
         // WhatsApp Notification (Your Turn)
-        WhatsAppService.sendYourTurn(restaurantId, updatedEntry).catch(err => {
-            console.error('Failed to send turn message', err);
-        });
+        try {
+            await WhatsAppService.sendYourTurn(restaurantId, updatedEntry);
+        } catch (error) {
+            console.error('Failed to send turn message', error);
+        }
 
         // Notify queue updates (someone left the waiting list)
         this.notifyQueueUpdates(restaurantId);
