@@ -24,7 +24,9 @@ npx prisma generate
 
 echo "⬇️ Downloading Prisma Schema Engine for RHEL..."
 # Get the engine hash from the installed prisma version
-PRISMA_ENGINE_HASH=$(npx prisma version --json | grep '"engine":' | awk -F'"' '{print $4}')
+# PRISMA_ENGINE_HASH=$(npx prisma version --json | grep '"engine":' | awk -F'"' '{print $4}')
+# Hardcode hash for Prisma 5.7.0 to avoid CI extraction issues
+PRISMA_ENGINE_HASH="79fb5193cf0a8fdbef536e4b4a159cad677ab1b9"
 echo "Prisma Engine Hash: $PRISMA_ENGINE_HASH"
 
 # Download the schema engine for AWS Lambda (rhel-openssl-3.0.x)
