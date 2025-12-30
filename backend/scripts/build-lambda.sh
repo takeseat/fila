@@ -22,6 +22,19 @@ npm ci --production --quiet
 echo "✨ Generating Prisma Client..."
 npx prisma generate
 
+echo "⬇️ Downloading Prisma Schema Engine for RHEL..."
+# Get the engine hash from the installed prisma version
+PRISMA_ENGINE_HASH=$(npx prisma version --json | grep '"engine":' | awk -F'"' '{print $4}')
+echo "Prisma Engine Hash: $PRISMA_ENGINE_HASH"
+
+# Download the schema engine for AWS Lambda (rhel-openssl-3.0.x)
+curl -L -o schema-engine.gz "https://binaries.prisma.sh/all_commits/${PRISMA_ENGINE_HASH}/rhel-openssl-3.0.x/schema-engine.gz"
+gunzip schema-engine.gz
+chmod +x schema-engine
+
+# Move it to where Prisma expects it
+mv schema-engine node_modules/@prisma/engines/schema-engine-rhel-openssl-3.0.x
+
 echo "🗑️ Removing unnecessary Prisma engines..."
 # Remove engines that are not for RHEL (Lambda)
 # Adjust pattern based on current OS (darwin for Mac dev env)
