@@ -44,7 +44,8 @@ export const handler = async (event: any) => {
 
         // Execute Prisma migrations
         try {
-            const output = execSync('npx prisma migrate deploy', {
+            // Use local binary to avoid npx network check
+            const output = execSync('./node_modules/.bin/prisma migrate deploy', {
                 env: {
                     ...process.env,
                     DATABASE_URL: databaseUrl,

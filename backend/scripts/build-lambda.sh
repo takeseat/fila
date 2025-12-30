@@ -31,9 +31,9 @@ find node_modules/.prisma/client -name "libquery_engine-debian*" -delete
 # Keep only rhel-openssl-3.0.x (for AWS Lambda Node 20)
 
 # Also remove prisma cache if present
-rm -rf node_modules/prisma
-rm -rf node_modules/@prisma/engines
-rm -rf node_modules/@prisma/engines-version
+# rm -rf node_modules/prisma
+# rm -rf node_modules/@prisma/engines
+# rm -rf node_modules/@prisma/engines-version
 
 echo "🔍 Pruning extra files..."
 # Remove map files if any
@@ -43,7 +43,7 @@ find node_modules -name "*.md" -delete
 find node_modules -name "*.txt" -delete
 find node_modules -name "LICENSE" -delete
 find node_modules -name "test" -type d -exec rm -rf {} +
-find node_modules -name ".bin" -type d -exec rm -rf {} +
+# find node_modules -name ".bin" -type d -exec rm -rf {} +
 
 echo "🤐 Zipping..."
 # -y stores symlinks as symlinks (important for prisma client) -> zip default on unix does this usually
