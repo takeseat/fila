@@ -29,18 +29,40 @@ export class WhatsAppService {
         entry: WaitlistEntry & { customer?: Customer | null },
         position: number
     ) {
-        if (!WaitlistEntryCheck(entry)) return;
+        console.log('[WhatsApp] sendWelcome called for entry:', entry.id, 'phone:', entry.customerPhone);
+
+        if (!WaitlistEntryCheck(entry)) {
+            console.log('[WhatsApp] Entry check failed - whatsappOptIn:', entry.whatsappOptIn);
+            return;
+        }
+        console.log('[WhatsApp] Entry check passed');
 
         const settings = await this.getSettings(restaurantId);
-        if (!settings || !settings.isEnabled || !settings.sendWelcome) return;
+        console.log('[WhatsApp] Settings:', settings ? {
+            isEnabled: settings.isEnabled,
+            sendWelcome: settings.sendWelcome,
+            welcomeText: settings.welcomeText?.substring(0, 50)
+        } : 'null');
+
+        if (!settings || !settings.isEnabled || !settings.sendWelcome) {
+            console.log('[WhatsApp] Settings check failed - returning early');
+            return;
+        }
+        console.log('[WhatsApp] Settings check passed');
 
         const restaurant = await prisma.restaurant.findUnique({ where: { id: restaurantId } });
-        if (!restaurant) return;
+        if (!restaurant) {
+            console.log('[WhatsApp] Restaurant not found');
+            return;
+        }
+        console.log('[WhatsApp] Restaurant found:', restaurant.name);
 
         const text = settings.welcomeText || WhatsAppTemplatesService.getDefaultWelcomeTemplate('pt-BR'); // TODO: Use restaurant lang
         const messageBody = WhatsAppTemplatesService.replacePlaceholders(text, entry, restaurant, position);
+        console.log('[WhatsApp] Message body prepared, calling sendMessage...');
 
         await this.sendMessage(restaurantId, entry, WhatsAppMessageType.WELCOME, messageBody);
+        console.log('[WhatsApp] sendMessage completed');
     }
 
     /**
@@ -111,6 +133,7 @@ export class WhatsAppService {
         notifyPosition?: number
     ) {
         const phone = entry.customerPhone || (entry as any).customer?.fullPhone;
+        console.log('[WhatsApp] sendMessage - phone:', phone, 'type:', type);
 
         if (!phone) {
             console.error('No phone number for entry:', entry.id);
@@ -118,13 +141,16 @@ export class WhatsAppService {
         }
 
         try {
+            console.log('[WhatsApp] Calling provider.sendText...');
             // Use Provider
             const result = await this.provider.sendText({
                 to: phone,
                 message: body
             });
+            console.log('[WhatsApp] Provider response:', result);
 
             await this.logMessage(restaurantId, entry, type, body, 'SENT', result.providerMessageId);
+            console.log('[WhatsApp] Message logged as SENT');
 
             // Update entry tracking for rate limits
             if (notifyPosition !== undefined) {
@@ -139,7 +165,7 @@ export class WhatsAppService {
 
         } catch (error: any) {
             const errorMsg = error.message || 'Unknown error';
-            console.error('WhatsApp Provider Error:', errorMsg);
+            console.error('[WhatsApp] Provider Error:', errorMsg, error);
             await this.logMessage(restaurantId, entry, type, body, 'FAILED', undefined, errorMsg);
         }
     }
