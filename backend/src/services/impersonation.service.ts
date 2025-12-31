@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -35,7 +35,7 @@ export class ImpersonationService {
         }
 
         // Create impersonation log
-        const correlationId = uuidv4();
+        const correlationId = randomUUID();
         const log = await prisma.impersonationLog.create({
             data: {
                 sysadminUserId,

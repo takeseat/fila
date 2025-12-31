@@ -33,12 +33,13 @@ export class ImpersonationController {
     /**
      * POST /admin/impersonation/end
      */
-    static async endSession(req: Request, res: Response) {
+    static async endSession(req: Request, res: Response): Promise<void> {
         try {
             const { logId } = req.body;
 
             if (!logId) {
-                return res.status(400).json({ error: 'logId is required' });
+                res.status(400).json({ error: 'logId is required' });
+                return;
             }
 
             const log = await ImpersonationService.endImpersonation(logId);

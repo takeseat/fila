@@ -49,13 +49,13 @@ export class AuthService {
 
         const accessToken = generateAccessToken({
             userId: result.user.id,
-            restaurantId: result.user.restaurantId,
+            restaurantId: result.user.restaurantId!,
             role: result.user.role,
         });
 
         const refreshToken = generateRefreshToken({
             userId: result.user.id,
-            restaurantId: result.user.restaurantId,
+            restaurantId: result.user.restaurantId!,
             role: result.user.role,
         });
 
@@ -92,13 +92,13 @@ export class AuthService {
 
         const accessToken = generateAccessToken({
             userId: user.id,
-            restaurantId: user.restaurantId,
+            restaurantId: user.restaurantId!,
             role: user.role,
         });
 
         const refreshToken = generateRefreshToken({
             userId: user.id,
-            restaurantId: user.restaurantId,
+            restaurantId: user.restaurantId!,
             role: user.role,
         });
 
@@ -131,7 +131,7 @@ export class AuthService {
 
             const accessToken = generateAccessToken({
                 userId: user.id,
-                restaurantId: user.restaurantId,
+                restaurantId: user.restaurantId!,
                 role: user.role,
             });
 

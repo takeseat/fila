@@ -76,13 +76,14 @@ export class AdminRestaurantsController {
     /**
      * PATCH /admin/restaurants/:id/status
      */
-    static async toggleStatus(req: Request, res: Response) {
+    static async toggleStatus(req: Request, res: Response): Promise<void> {
         try {
             const { id } = req.params;
             const { isActive } = req.body;
 
             if (typeof isActive !== 'boolean') {
-                return res.status(400).json({ error: 'isActive must be a boolean' });
+                res.status(400).json({ error: 'isActive must be a boolean' });
+                return;
             }
 
             const restaurant = await AdminRestaurantsService.toggleRestaurantStatus(id, isActive);
