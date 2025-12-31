@@ -12,46 +12,48 @@ datasource db {
 }
 
 model Restaurant {
-  id        String   @id @default(uuid())
+  id        String  @id @default(uuid())
   name      String
-  tradeName String?  // Optional trade/fantasy name
+  tradeName String? // Optional trade/fantasy name
   cnpj      String?
-  phone     String?  // Optional - user phone is collected instead
-  email     String?  // Optional - user email is collected instead
-  
+  phone     String? // Optional - user phone is collected instead
+  email     String? // Optional - user email is collected instead
+
   // Internationalized Address
-  countryCode        String?  @default("BR") // ISO 3166-1 alpha-2
-  stateCode          String?  // State/Province/Region code
-  city               String
-  addressLine        String?  // Street address
-  addressNumber      String?  // Building number
-  addressComplement  String?  // Apartment, suite, etc.
-  postalCode         String?  // ZIP/CEP/Postal code
-  
+  countryCode       String? @default("BR") // ISO 3166-1 alpha-2
+  stateCode         String? // State/Province/Region code
+  city              String
+  addressLine       String? // Street address
+  addressNumber     String? // Building number
+  addressComplement String? // Apartment, suite, etc.
+  postalCode        String? // ZIP/CEP/Postal code
+
   timezone  String   @default("America/Sao_Paulo")
+  isActive  Boolean  @default(true) // SYSADMIN can disable restaurants
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Alert Settings
   waitingAlertMinutes Int?
   calledAlertMinutes  Int?
-  
-  // Average Wait Time Settings
-  avgWaitWindowMinutes   Int?     @default(90)
-  avgWaitFallbackMinutes Int?     @default(15)
 
-  users                User[]
-  waitlistEntries      WaitlistEntry[]
-  customers            Customer[]
-  whatsappSettings     RestaurantWhatsAppSettings?
-  whatsappMessageLogs  WhatsAppMessageLog[]
+  // Average Wait Time Settings
+  avgWaitWindowMinutes   Int? @default(90)
+  avgWaitFallbackMinutes Int? @default(15)
+
+  users               User[]
+  waitlistEntries     WaitlistEntry[]
+  customers           Customer[]
+  whatsappSettings    RestaurantWhatsAppSettings?
+  whatsappMessageLogs WhatsAppMessageLog[]
+  impersonationLogs   ImpersonationLog[]
 
   @@map("restaurants")
 }
 
 model User {
   id           String   @id @default(uuid())
-  restaurantId String
+  restaurantId String? // Nullable for SYSADMIN users (global access)
   name         String
   email        String   @unique
   passwordHash String
@@ -61,7 +63,8 @@ model User {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurant        Restaurant?        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  impersonationLogs ImpersonationLog[]
 
   @@index([restaurantId])
   @@index([email])
@@ -69,19 +72,20 @@ model User {
 }
 
 enum UserRole {
-  ADMIN
-  MANAGER
-  HOSTESS
+  SYSADMIN // Platform administrator
+  ADMIN // Restaurant administrator
+  MANAGER // Restaurant manager
+  HOSTESS // Front desk staff
 }
 
 model Customer {
   id           String    @id @default(uuid())
   restaurantId String
   name         String
-  countryCode  String    // ISO 3166-1 alpha-2: "BR", "US", "PT"
-  ddi          String    // "+55", "+1", "+351"
-  phone        String    // Local phone without DDI: "11999999999"
-  fullPhone    String    // Complete international: "+5511999999999"
+  countryCode  String // ISO 3166-1 alpha-2: "BR", "US", "PT"
+  ddi          String // "+55", "+1", "+351"
+  phone        String // Local phone without DDI: "11999999999"
+  fullPhone    String // Complete international: "+5511999999999"
   email        String?
   notes        String?   @db.Text
   lastVisitAt  DateTime? // Last time customer was seated
@@ -92,10 +96,10 @@ model Customer {
   // WhatsApp Persistence
   whatsappOptIn       Boolean   @default(false)
   whatsappOptInAt     DateTime?
-  whatsappOptInSource String?   // "QUEUE", "MANUAL", "IMPORT"
+  whatsappOptInSource String? // "QUEUE", "MANUAL", "IMPORT"
 
-  restaurant       Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  waitlistEntries  WaitlistEntry[]
+  restaurant      Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  waitlistEntries WaitlistEntry[]
 
   @@unique([restaurantId, fullPhone])
   @@index([restaurantId])
@@ -121,10 +125,10 @@ model WaitlistEntry {
   noShowAt             DateTime?           @map("no_show_at")
 
   // WhatsApp Integration
-  whatsappOptIn        Boolean             @default(false) @map("whatsapp_opt_in")
-  whatsappOptInAt      DateTime?           @map("whatsapp_opt_in_at")
-  lastNotifiedPosition Int?                @map("last_notified_position")
-  lastNotifiedAt       DateTime?           @map("last_notified_at")
+  whatsappOptIn        Boolean   @default(false) @map("whatsapp_opt_in")
+  whatsappOptInAt      DateTime? @map("whatsapp_opt_in_at")
+  lastNotifiedPosition Int?      @map("last_notified_position")
+  lastNotifiedAt       DateTime? @map("last_notified_at")
 
   restaurant          Restaurant           @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   customer            Customer?            @relation(fields: [customerId], references: [id], onDelete: SetNull)
@@ -149,34 +153,34 @@ enum WaitlistEntryStatus {
 }
 
 model RestaurantWhatsAppSettings {
-  id                String   @id @default(uuid())
-  restaurantId      String   @unique
-  isEnabled         Boolean  @default(false)
-  
+  id           String  @id @default(uuid())
+  restaurantId String  @unique
+  isEnabled    Boolean @default(false)
+
   // Feature Toggles
-  sendWelcome       Boolean  @default(false)
+  sendWelcome         Boolean @default(false)
   sendPositionUpdates Boolean @default(false)
-  sendTurnMessage   Boolean  @default(false)
-  
+  sendTurnMessage     Boolean @default(false)
+
   // Custom Templates (optional overrides)
-  welcomeText       String?  @db.Text
+  welcomeText        String? @db.Text
   positionUpdateText String? @db.Text
-  yourTurnText      String?  @db.Text
-  
+  yourTurnText       String? @db.Text
+
   // Rate Limiting Config
-  minSecondsBetweenUpdates Int @default(300) // 5 minutes default
+  minSecondsBetweenUpdates   Int @default(300) // 5 minutes default
   minPositionsChangeToNotify Int @default(5) // Notify only if position changes by at least 5
 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  restaurant        Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
 
   @@map("restaurant_whatsapp_settings")
 }
 
 model WhatsAppMessageLog {
-  id                String   @id @default(uuid())
+  id                String                @id @default(uuid())
   restaurantId      String
   queueEntryId      String?
   customerPhone     String
@@ -185,11 +189,11 @@ model WhatsAppMessageLog {
   providerMessageId String?
   status            WhatsAppMessageStatus @default(SENT)
   errorCode         String?
-  errorMessage      String?  @db.Text
-  createdAt         DateTime @default(now())
+  errorMessage      String?               @db.Text
+  createdAt         DateTime              @default(now())
 
-  restaurant        Restaurant    @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  queueEntry        WaitlistEntry? @relation(fields: [queueEntryId], references: [id], onDelete: SetNull)
+  restaurant Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  queueEntry WaitlistEntry? @relation(fields: [queueEntryId], references: [id], onDelete: SetNull)
 
   @@index([restaurantId])
   @@index([queueEntryId])
@@ -209,4 +213,25 @@ enum WhatsAppMessageStatus {
   DELIVERED
   READ
   FAILED
+}
+
+// SYSADMIN Impersonation Audit Log
+model ImpersonationLog {
+  id                 String    @id @default(uuid())
+  sysadminUserId     String // SYSADMIN who initiated impersonation
+  targetRestaurantId String // Restaurant being impersonated
+  startedAt          DateTime  @default(now())
+  endedAt            DateTime? // Null if session still active
+  ipAddress          String?
+  userAgent          String?   @db.Text
+  reason             String?   @db.Text // Optional reason for impersonation
+  correlationId      String? // For tracking related actions
+
+  sysadmin         User       @relation(fields: [sysadminUserId], references: [id], onDelete: Cascade)
+  targetRestaurant Restaurant @relation(fields: [targetRestaurantId], references: [id], onDelete: Cascade)
+
+  @@index([sysadminUserId])
+  @@index([targetRestaurantId])
+  @@index([startedAt])
+  @@map("impersonation_logs")
 }
