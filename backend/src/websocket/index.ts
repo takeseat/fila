@@ -5,10 +5,15 @@ import { verifyAccessToken } from '../utils/jwt';
 let io: Server;
 
 export function initializeWebSocket(httpServer: HttpServer): Server {
+    const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+        .split(',')
+        .map(origin => origin.trim());
+
     io = new Server(httpServer, {
         cors: {
-            origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+            origin: allowedOrigins,
             methods: ['GET', 'POST'],
+            credentials: true,
         },
     });
 
