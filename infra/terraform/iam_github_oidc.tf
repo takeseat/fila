@@ -81,6 +81,20 @@ resource "aws_iam_role_policy" "github_actions" {
           "${aws_s3_bucket.web.arn}/*"
         ]
       },
+      # S3 permissions for admin portal
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject",
+          "s3:ListBucket"
+        ]
+        Resource = [
+          aws_s3_bucket.admin_web.arn,
+          "${aws_s3_bucket.admin_web.arn}/*"
+        ]
+      },
       # CloudFront invalidation
       {
         Effect = "Allow"
@@ -89,6 +103,15 @@ resource "aws_iam_role_policy" "github_actions" {
           "cloudfront:GetInvalidation"
         ]
         Resource = aws_cloudfront_distribution.web.arn
+      },
+      # CloudFront invalidation for admin portal
+      {
+        Effect = "Allow"
+        Action = [
+          "cloudfront:CreateInvalidation",
+          "cloudfront:GetInvalidation"
+        ]
+        Resource = aws_cloudfront_distribution.admin_web.arn
       }
     ]
   })
