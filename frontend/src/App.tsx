@@ -3,8 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from './contexts/AuthContext';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
+import { ImpersonationProvider } from './contexts/ImpersonationContext';
 import { useAuth } from './hooks/useAuth';
 import { Layout } from './components/layout/Layout';
+import { ImpersonationBanner } from './components/ImpersonationBanner';
 import { Login, Register } from './pages/Auth';
 import { Dashboard } from './pages/Dashboard';
 import { Waitlist } from './pages/Waitlist';
@@ -15,6 +17,7 @@ import { PerformanceReport } from './pages/reports/Performance';
 import { ExecutiveReport } from './pages/reports/Executive';
 import { FlowReport } from './pages/reports/Flow';
 import { QueueEntriesReport } from './pages/reports/QueueEntriesReport';
+import { ImpersonatePage } from './pages/ImpersonatePage';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -68,109 +71,113 @@ function App() {
     return (
         <QueryClientProvider client={queryClient}>
             <AuthProvider>
-                <LanguageProvider>
-                    <LanguageGuard>
-                        <BrowserRouter>
-                            <Routes>
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/register" element={<Register />} />
+                <ImpersonationProvider>
+                    <LanguageProvider>
+                        <LanguageGuard>
+                            <ImpersonationBanner />
+                            <BrowserRouter>
+                                <Routes>
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/register" element={<Register />} />
+                                    <Route path="/impersonate" element={<ImpersonatePage />} />
 
-                                <Route
-                                    path="/dashboard"
-                                    element={
-                                        <PrivateRoute>
-                                            <Dashboard />
-                                        </PrivateRoute>
-                                    }
-                                />
+                                    <Route
+                                        path="/dashboard"
+                                        element={
+                                            <PrivateRoute>
+                                                <Dashboard />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
-                                <Route
-                                    path="/waitlist"
-                                    element={
-                                        <PrivateRoute>
-                                            <Waitlist />
-                                        </PrivateRoute>
-                                    }
-                                />
-
-
-                                <Route
-                                    path="/customers"
-                                    element={
-                                        <PrivateRoute>
-                                            <Customers />
-                                        </PrivateRoute>
-                                    }
-                                />
+                                    <Route
+                                        path="/waitlist"
+                                        element={
+                                            <PrivateRoute>
+                                                <Waitlist />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
 
+                                    <Route
+                                        path="/customers"
+                                        element={
+                                            <PrivateRoute>
+                                                <Customers />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
 
-                                <Route
-                                    path="/reports/performance"
-                                    element={
-                                        <PrivateRoute>
-                                            <PerformanceReport />
-                                        </PrivateRoute>
-                                    }
-                                />
 
-                                <Route
-                                    path="/reports/executive"
-                                    element={
-                                        <PrivateRoute>
-                                            <ExecutiveReport />
-                                        </PrivateRoute>
-                                    }
-                                />
 
-                                <Route
-                                    path="/reports/flow"
-                                    element={
-                                        <PrivateRoute>
-                                            <FlowReport />
-                                        </PrivateRoute>
-                                    }
-                                />
+                                    <Route
+                                        path="/reports/performance"
+                                        element={
+                                            <PrivateRoute>
+                                                <PerformanceReport />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
-                                <Route
-                                    path="/reports/queue-entries"
-                                    element={
-                                        <PrivateRoute>
-                                            <QueueEntriesReport />
-                                        </PrivateRoute>
-                                    }
-                                />
+                                    <Route
+                                        path="/reports/executive"
+                                        element={
+                                            <PrivateRoute>
+                                                <ExecutiveReport />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
-                                {/* Redirect /reports to /reports/performance */}
-                                <Route
-                                    path="/reports"
-                                    element={<Navigate to="/reports/performance" replace />}
-                                />
+                                    <Route
+                                        path="/reports/flow"
+                                        element={
+                                            <PrivateRoute>
+                                                <FlowReport />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
-                                <Route
-                                    path="/settings/profile"
-                                    element={
-                                        <PrivateRoute>
-                                            <ProfileSettings />
-                                        </PrivateRoute>
-                                    }
-                                />
+                                    <Route
+                                        path="/reports/queue-entries"
+                                        element={
+                                            <PrivateRoute>
+                                                <QueueEntriesReport />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
-                                <Route
-                                    path="/settings"
-                                    element={
-                                        <PrivateRoute>
-                                            <Settings />
-                                        </PrivateRoute>
-                                    }
-                                />
+                                    {/* Redirect /reports to /reports/performance */}
+                                    <Route
+                                        path="/reports"
+                                        element={<Navigate to="/reports/performance" replace />}
+                                    />
 
-                                <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                            </Routes>
-                        </BrowserRouter>
-                    </LanguageGuard>
-                </LanguageProvider>
+                                    <Route
+                                        path="/settings/profile"
+                                        element={
+                                            <PrivateRoute>
+                                                <ProfileSettings />
+                                            </PrivateRoute>
+                                        }
+                                    />
+
+                                    <Route
+                                        path="/settings"
+                                        element={
+                                            <PrivateRoute>
+                                                <Settings />
+                                            </PrivateRoute>
+                                        }
+                                    />
+
+                                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                                </Routes>
+                            </BrowserRouter>
+                        </LanguageGuard>
+                    </LanguageProvider>
+                </ImpersonationProvider>
             </AuthProvider>
         </QueryClientProvider>
     );
