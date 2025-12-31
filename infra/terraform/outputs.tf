@@ -83,3 +83,25 @@ output "vpc_id" {
   description = "VPC ID"
   value       = aws_vpc.main.id
 }
+
+# Admin Portal outputs
+output "admin_cloudfront_distribution_id" {
+  description = "Admin Portal CloudFront distribution ID"
+  value       = aws_cloudfront_distribution.admin_web.id
+}
+
+output "admin_cloudfront_domain_name" {
+  description = "Admin Portal CloudFront distribution domain name"
+  value       = aws_cloudfront_distribution.admin_web.domain_name
+}
+
+output "admin_s3_bucket_name" {
+  description = "S3 bucket name for admin portal frontend"
+  value       = aws_s3_bucket.admin_web.id
+}
+
+output "admin_website_url" {
+  description = "Admin Portal URL"
+  value       = "https://admin.${var.domain_name}"
+}
+

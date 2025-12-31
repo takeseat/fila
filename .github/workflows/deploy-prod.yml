@@ -33,6 +33,7 @@ jobs:
           cache-dependency-path: |
             backend/package-lock.json
             frontend/package-lock.json
+            frontend-admin/package-lock.json
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -158,12 +159,62 @@ jobs:
             --paths "/*" \
             --region ${{ env.AWS_REGION }}
 
+      - name: Build Admin Portal
+        working-directory: ./frontend-admin
+        run: |
+          npm ci
+          npm run build
+        env:
+          VITE_API_URL: https://api.takeseat.me
+          VITE_APP_URL: https://takeseat.me
+
+      - name: Get Admin Portal S3 Bucket
+        id: admin_bucket
+        run: |
+          # Get admin S3 bucket name from Terraform outputs
+          ADMIN_BUCKET=$(aws s3api list-buckets --query "Buckets[?starts_with(Name, 'takeseat-admin-web-prod')].Name | [0]" --output text)
+          echo "bucket=$ADMIN_BUCKET" >> $GITHUB_OUTPUT
+          echo "Admin S3 Bucket: $ADMIN_BUCKET"
+
+      - name: Get Admin CloudFront Distribution
+        id: admin_cf
+        run: |
+          # Get admin CloudFront distribution ID
+          ADMIN_CF_ID=$(aws cloudfront list-distributions --query "DistributionList.Items[?contains(Aliases.Items, 'admin.takeseat.me')].Id | [0]" --output text)
+          echo "distribution_id=$ADMIN_CF_ID" >> $GITHUB_OUTPUT
+          echo "Admin CloudFront ID: $ADMIN_CF_ID"
+
+      - name: Deploy Admin Portal to S3
+        working-directory: ./frontend-admin
+        run: |
+          # Sync files to S3
+          aws s3 sync dist/ s3://${{ steps.admin_bucket.outputs.bucket }}/ \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable" \
+            --exclude "index.html" \
+            --region ${{ env.AWS_REGION }}
+          
+          # Upload index.html separately with no-cache
+          aws s3 cp dist/index.html s3://${{ steps.admin_bucket.outputs.bucket }}/index.html \
+            --cache-control "public, max-age=0, must-revalidate" \
+            --region ${{ env.AWS_REGION }}
+
+      - name: Invalidate Admin CloudFront Cache
+        run: |
+          # Create invalidation for admin portal
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.admin_cf.outputs.distribution_id }} \
+            --paths "/*" \
+            --region ${{ env.AWS_REGION }}
+
       - name: Deployment Summary
         run: |
           echo "✅ Deployment completed successfully!"
           echo ""
-          echo "🌐 Frontend: https://takeseat.me"
+          echo "🌐 Main Portal: https://takeseat.me"
+          echo "🔐 Admin Portal: https://admin.takeseat.me"
           echo "🔌 API: https://api.takeseat.me"
           echo ""
           echo "📦 Lambda API: takeseat-api-prod"
           echo "🔄 Lambda Migrations: takeseat-migrate-prod"
+
