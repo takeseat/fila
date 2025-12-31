@@ -5,10 +5,15 @@ resource "aws_apigatewayv2_api" "main" {
   description   = "API Gateway for ${var.project_name}"
 
   cors_configuration {
-    allow_origins = ["https://${var.domain_name}", "https://www.${var.domain_name}"]
+    allow_origins = [
+      "https://${var.domain_name}",
+      "https://www.${var.domain_name}",
+      "https://admin.${var.domain_name}"
+    ]
     allow_methods = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-    allow_headers = ["Content-Type", "Authorization", "X-Requested-With"]
+    allow_headers = ["Content-Type", "Authorization", "X-Requested-With", "X-Impersonation-Token"]
     max_age       = 300
+    allow_credentials = true
   }
 
   tags = {
