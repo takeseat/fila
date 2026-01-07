@@ -51,10 +51,8 @@ jobs:
         working-directory: ./frontend
         run: |
           npm ci
-          # Explicitly install React types to ensure they're available
-          npm install --save-dev @types/react @types/react-dom
-          # Use build:prod to skip TypeScript type checking (Vite handles it)
-          npm run build:prod
+          # Use local vite binary from node_modules
+          ./node_modules/.bin/vite build
 
       - name: Build Backend
         working-directory: ./backend
