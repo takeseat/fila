@@ -31,12 +31,15 @@ const httpServer = createServer(app);
 // Middleware
 // CORS - allow multiple origins (main portal and admin portal)
 const allowedOrigins = env.CORS_ORIGIN.split(',').map(origin => origin.trim());
-app.use(cors({
+const corsOptions = {
     origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Impersonation-Token', 'X-Requested-With'],
-}));
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Enable pre-flight for all request routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
