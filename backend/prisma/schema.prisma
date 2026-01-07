@@ -41,12 +41,18 @@ model Restaurant {
   avgWaitWindowMinutes   Int? @default(90)
   avgWaitFallbackMinutes Int? @default(15)
 
+  // Pickup Orders Feature
+  pickupOrdersEnabled         Boolean @default(false)
+  pickupOrdersWhatsappEnabled Boolean @default(true)
+  pickupOrdersConfig          Json? // Message templates and settings
+
   users               User[]
   waitlistEntries     WaitlistEntry[]
   customers           Customer[]
   whatsappSettings    RestaurantWhatsAppSettings?
   whatsappMessageLogs WhatsAppMessageLog[]
   impersonationLogs   ImpersonationLog[]
+  pickupOrders        PickupOrder[]
 
   @@map("restaurants")
 }
@@ -65,6 +71,7 @@ model User {
 
   restaurant        Restaurant?        @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   impersonationLogs ImpersonationLog[]
+  pickupOrders      PickupOrder[]
 
   @@index([restaurantId])
   @@index([email])
@@ -100,6 +107,7 @@ model Customer {
 
   restaurant      Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   waitlistEntries WaitlistEntry[]
+  pickupOrders    PickupOrder[]
 
   @@unique([restaurantId, fullPhone])
   @@index([restaurantId])
@@ -183,6 +191,7 @@ model WhatsAppMessageLog {
   id                String                @id @default(uuid())
   restaurantId      String
   queueEntryId      String?
+  pickupOrderId     String?
   customerPhone     String
   messageType       WhatsAppMessageType
   payload           Json?
@@ -192,11 +201,13 @@ model WhatsAppMessageLog {
   errorMessage      String?               @db.Text
   createdAt         DateTime              @default(now())
 
-  restaurant Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  queueEntry WaitlistEntry? @relation(fields: [queueEntryId], references: [id], onDelete: SetNull)
+  restaurant  Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  queueEntry  WaitlistEntry? @relation(fields: [queueEntryId], references: [id], onDelete: SetNull)
+  pickupOrder PickupOrder?   @relation(fields: [pickupOrderId], references: [id], onDelete: SetNull)
 
   @@index([restaurantId])
   @@index([queueEntryId])
+  @@index([pickupOrderId])
   @@index([customerPhone])
   @@index([createdAt])
   @@map("whatsapp_message_logs")
@@ -206,6 +217,9 @@ enum WhatsAppMessageType {
   WELCOME
   POSITION_UPDATE
   YOUR_TURN
+  ORDER_CREATED
+  ORDER_READY
+  ORDER_NOT_PICKED_UP
 }
 
 enum WhatsAppMessageStatus {
@@ -234,4 +248,65 @@ model ImpersonationLog {
   @@index([targetRestaurantId])
   @@index([startedAt])
   @@map("impersonation_logs")
+}
+
+// Pickup Orders Model
+model PickupOrder {
+  id           String     @id @default(uuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  // Order identification
+  orderCode String
+
+  // Customer info
+  customerId          String?
+  customer            Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  customerName        String?
+  customerPhoneE164   String
+  customerCountryCode String    @default("BR")
+
+  // Order details
+  partySize Int?
+  notes     String? @db.Text
+
+  // Status tracking
+  status PickupOrderStatus @default(CREATED)
+
+  // Timestamps
+  createdAt     DateTime  @default(now())
+  readyAt       DateTime?
+  pickedUpAt    DateTime?
+  notPickedUpAt DateTime?
+
+  // WhatsApp
+  whatsappOptIn          Boolean   @default(true)
+  lastWhatsAppNotifiedAt DateTime?
+
+  // Metadata
+  source          PickupOrderSource @default(MANUAL)
+  createdByUserId String?
+  createdByUser   User?             @relation(fields: [createdByUserId], references: [id], onDelete: SetNull)
+
+  // Relations
+  whatsappMessages WhatsAppMessageLog[]
+
+  @@index([restaurantId, status, createdAt])
+  @@index([restaurantId, orderCode, createdAt])
+  @@index([customerId])
+  @@index([createdByUserId])
+  @@map("pickup_orders")
+}
+
+enum PickupOrderStatus {
+  CREATED
+  READY_FOR_PICKUP
+  PICKED_UP
+  NOT_PICKED_UP
+}
+
+enum PickupOrderSource {
+  MANUAL
+  API
+  POS
 }

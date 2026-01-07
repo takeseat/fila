@@ -18,6 +18,7 @@ import restaurantRoutes from './routes/restaurants.routes';
 import usersRoutes from './routes/users.routes';
 import whatsappSettingsRouter from './routes/whatsapp-settings.routes';
 import adminRoutes from './routes/admin.routes';
+import pickupOrdersRoutes from './routes/pickup-orders.routes';
 import { impersonationMiddleware } from './middleware/impersonation.middleware';
 import { WhatsAppWebhookController } from './controllers/whatsapp-webhook.controller';
 import { ZApiWebhookController } from './controllers/zapi-webhook.controller';
@@ -60,6 +61,7 @@ app.use('/users-management', usersManagementRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
 app.use('/whatsapp-settings', whatsappSettingsRouter);
+app.use('/pickup-orders', pickupOrdersRoutes);
 
 // Admin routes (SYSADMIN only)
 app.use('/admin', adminRoutes);
