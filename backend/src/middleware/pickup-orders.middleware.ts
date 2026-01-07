@@ -1,20 +1,26 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { AuthRequest } from './auth';
 import prisma from '../config/database';
 
 /**
  * Middleware to check if pickup orders feature is enabled for the restaurant
  */
 export const requirePickupOrdersEnabled = async (
-    req: Request,
+    req: AuthRequest,
     res: Response,
     next: NextFunction
 ): Promise<void> => {
     try {
-        // @ts-ignore
         const restaurantId = req.user?.restaurantId;
 
         if (!restaurantId) {
-            res.status(401).json({ error: 'Authentication required' });
+            res.status(401).json({
+                error: 'Authentication required',
+                debug: {
+                    hasUser: !!req.user,
+                    payload: req.user
+                }
+            });
             return;
         }
 
