@@ -160,6 +160,8 @@ jobs:
 
       - name: Build Admin Portal
         working-directory: ./frontend-admin
+        env:
+          NODE_ENV: development
         run: |
           npm ci
           npm run build
