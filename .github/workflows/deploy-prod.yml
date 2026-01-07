@@ -51,8 +51,7 @@ jobs:
         working-directory: ./frontend
         run: |
           npm ci
-          # Use local vite binary from node_modules
-          ./node_modules/.bin/vite build
+          npm run build:prod
 
       - name: Build Backend
         working-directory: ./backend
