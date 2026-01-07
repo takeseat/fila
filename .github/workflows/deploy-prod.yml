@@ -34,12 +34,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          # Disable cache to ensure clean install
-          # cache: 'npm'
-          # cache-dependency-path: |
-          #   backend/package-lock.json
-          #   frontend/package-lock.json
-          #   frontend-admin/package-lock.json
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+            frontend-admin/package-lock.json
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -50,10 +49,10 @@ jobs:
       - name: Build Frontend
         working-directory: ./frontend
         run: |
-          # Force clean install - npm ci is not working correctly
-          rm -f package-lock.json
+          # Clean install to avoid cache issues
+          rm -rf node_modules package-lock.json
           npm install
-          npm run build:prod
+          npm run build
 
       - name: Build Backend
         working-directory: ./backend
