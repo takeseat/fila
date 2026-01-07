@@ -50,7 +50,9 @@ jobs:
       - name: Build Frontend
         working-directory: ./frontend
         run: |
-          npm ci
+          # Force clean install - npm ci is not working correctly
+          rm -f package-lock.json
+          npm install
           npm run build:prod
 
       - name: Build Backend
