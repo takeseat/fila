@@ -51,6 +51,8 @@ jobs:
         working-directory: ./frontend
         run: |
           npm ci
+          # Explicitly install React types to ensure they're available
+          npm install --save-dev @types/react @types/react-dom
           npm run build
 
       - name: Build Backend
