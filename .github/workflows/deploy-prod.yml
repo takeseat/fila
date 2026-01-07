@@ -52,10 +52,10 @@ jobs:
 
       - name: Build Frontend
         working-directory: ./frontend
+        env:
+          NODE_ENV: development
         run: |
-          npm cache clean --force
-          rm -rf node_modules
-          npm install
+          npm ci
           npm run build:ci
 
       - name: Build Backend
