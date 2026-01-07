@@ -49,9 +49,7 @@ jobs:
       - name: Build Frontend
         working-directory: ./frontend
         run: |
-          # Clean install to avoid cache issues
-          rm -rf node_modules package-lock.json
-          npm install
+          npm ci
           npm run build
 
       - name: Build Backend
