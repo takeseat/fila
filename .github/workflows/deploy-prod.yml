@@ -34,11 +34,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: |
-            backend/package-lock.json
-            frontend/package-lock.json
-            frontend-admin/package-lock.json
+          # Disable cache - it's causing issues with lockfileVersion 3
+          # cache: 'npm'
+          # cache-dependency-path: |
+          #   backend/package-lock.json
+          #   frontend/package-lock.json
+          #   frontend-admin/package-lock.json
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -52,6 +53,7 @@ jobs:
       - name: Build Frontend
         working-directory: ./frontend
         run: |
+          npm cache clean --force
           npm ci
           npm run build:ci
 
