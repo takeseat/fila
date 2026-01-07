@@ -3,6 +3,7 @@
         "dashboard": "Dashboard",
         "waitlist": "Waitlist",
         "customers": "Customers",
+        "pickupOrders": "Pickup Orders",
         "reports": "Reports",
         "settings": "Settings",
         "reportsSubmenu": {

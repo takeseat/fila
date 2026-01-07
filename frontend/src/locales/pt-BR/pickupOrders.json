@@ -1,0 +1,82 @@
+{
+    "title": "Pedidos (Retirada)",
+    "subtitle": "Gerencie pedidos para retirada e notifique clientes",
+    "settings": {
+        "title": "Configurações de Pedidos",
+        "enableModule": "Ativar módulo de pedidos",
+        "enableWhatsApp": "Enviar mensagens por WhatsApp",
+        "pickupInstructions": "Instruções de retirada",
+        "pickupInstructionsPlaceholder": "Ex: Dirija-se ao balcão principal",
+        "autoTimeout": "Tempo para marcar como não retirado",
+        "autoTimeoutHelp": "Após este tempo, pedidos prontos serão automaticamente marcados como não retirados",
+        "minutes": "minutos",
+        "messages": {
+            "title": "Mensagens WhatsApp",
+            "created": "Pedido criado",
+            "ready": "Pedido pronto",
+            "notPickedUp": "Não retirado",
+            "variables": "Variáveis disponíveis",
+            "restoreDefaults": "Restaurar mensagens padrão"
+        },
+        "save": "Salvar Configurações",
+        "saving": "Salvando..."
+    },
+    "list": {
+        "title": "Pedidos (Retirada)",
+        "subtitle": "Gerencie pedidos para retirada",
+        "search": "Buscar por código ou nome...",
+        "filterAll": "Todos os status",
+        "newOrder": "Novo Pedido",
+        "noOrders": "Nenhum pedido encontrado",
+        "showing": "Mostrando",
+        "of": "de",
+        "orders": "pedidos",
+        "page": "Página"
+    },
+    "table": {
+        "code": "Código",
+        "customer": "Cliente",
+        "phone": "Telefone",
+        "status": "Status",
+        "created": "Criado",
+        "actions": "Ações",
+        "noName": "Sem nome"
+    },
+    "status": {
+        "CREATED": "Criado",
+        "READY_FOR_PICKUP": "Pronto",
+        "PICKED_UP": "Retirado",
+        "NOT_PICKED_UP": "Não Retirado"
+    },
+    "actions": {
+        "markReady": "Marcar como Pronto",
+        "markPickedUp": "Marcar como Retirado",
+        "markNotPickedUp": "Não Retirado",
+        "resendWhatsApp": "Reenviar WhatsApp"
+    },
+    "modal": {
+        "create": {
+            "title": "Novo Pedido",
+            "orderCode": "Código do Pedido",
+            "orderCodePlaceholder": "Ex: #001",
+            "customerName": "Nome do Cliente",
+            "customerNamePlaceholder": "Opcional",
+            "phone": "Telefone",
+            "phonePlaceholder": "(11) 99999-9999",
+            "notes": "Observações",
+            "notesPlaceholder": "Observações sobre o pedido...",
+            "whatsappOptIn": "Enviar notificações por WhatsApp",
+            "cancel": "Cancelar",
+            "create": "Criar Pedido",
+            "creating": "Criando..."
+        }
+    },
+    "notifications": {
+        "created": "Pedido criado com sucesso!",
+        "updated": "Pedido atualizado!",
+        "statusChanged": "Status atualizado!",
+        "whatsappSent": "Mensagem reenviada!",
+        "configSaved": "Configurações salvas!",
+        "error": "Erro ao processar pedido"
+    }
+}

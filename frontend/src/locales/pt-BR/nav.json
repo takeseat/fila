@@ -3,6 +3,7 @@
         "dashboard": "Dashboard",
         "waitlist": "Fila de Espera",
         "customers": "Clientes",
+        "pickupOrders": "Pedidos (Retirada)",
         "reports": "Relatórios",
         "settings": "Configurações",
         "reportsSubmenu": {

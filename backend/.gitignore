@@ -1,9 +1,22 @@
 node_modules
 dist
-.env
 *.log
 .DS_Store
 lambda_dist
 lambda.zip
 response*.json
 scripts/reproduce_issue.ts
+
+# Environment files - NEVER commit these!
+.env
+.env.*
+!.env.example
+prisma/.env
+
+# IDE
+.vscode
+.idea
+
+# Testing
+coverage
+.nyc_output

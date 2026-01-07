@@ -18,6 +18,7 @@ import { ExecutiveReport } from './pages/reports/Executive';
 import { FlowReport } from './pages/reports/Flow';
 import { QueueEntriesReport } from './pages/reports/QueueEntriesReport';
 import { ImpersonatePage } from './pages/ImpersonatePage';
+import PickupOrders from './pages/PickupOrders';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -109,8 +110,14 @@ function App() {
                                         }
                                     />
 
-
-
+                                    <Route
+                                        path="/pickup-orders"
+                                        element={
+                                            <PrivateRoute>
+                                                <PickupOrders />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
                                     <Route
                                         path="/reports/performance"

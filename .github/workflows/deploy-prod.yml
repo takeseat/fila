@@ -11,6 +11,11 @@ env:
   NODE_VERSION: '20'
   S3_BUCKET: takeseat-web-prod-20251220142021589500000003
   CLOUDFRONT_DISTRIBUTION_ID: E25O4T36RJ44KE
+  # Production Safety Variables
+  NODE_ENV: production
+  DB_ENV: production
+  RUN_SEEDS: "false"
+  ALLOW_DESTRUCTIVE_DB: "false"
 
 permissions:
   id-token: write
@@ -92,49 +97,37 @@ jobs:
             --function-name takeseat-api-prod \
             --region ${{ env.AWS_REGION }}
 
-      - name: Deploy Migrations Lambda
+      - name: Run Production Guardrails
         working-directory: ./backend
         run: |
-          # Update Lambda function code from S3 (same package)
-          aws lambda update-function-code \
-            --function-name takeseat-migrate-prod \
-            --s3-bucket ${{ env.S3_BUCKET }} \
-            --s3-key lambda/lambda-api.zip \
-            --region ${{ env.AWS_REGION }}
-          
-          # Wait for update to complete
-          aws lambda wait function-updated \
-            --function-name takeseat-migrate-prod \
-            --region ${{ env.AWS_REGION }}
+          echo "🛡️  Running Production Guardrails..."
+          chmod +x scripts/guardrails-prod.sh
+          ./scripts/guardrails-prod.sh
+        env:
+          NODE_ENV: production
+          DB_ENV: production
+          RUN_SEEDS: "false"
+          ALLOW_DESTRUCTIVE_DB: "false"
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Configure Migrations Lambda Timeout
+      - name: Run Safe Database Migrations
+        working-directory: ./backend
         run: |
-          # Increase timeout to 5 minutes (300 seconds) to allow for cold starts/migrations
-          aws lambda update-function-configuration \
-            --function-name takeseat-migrate-prod \
-            --timeout 300 \
-            --region ${{ env.AWS_REGION }}
-
-      - name: Run Database Migrations
-        run: |
-          # Invoke migrations Lambda with increased read timeout
-          aws lambda invoke \
-            --function-name takeseat-migrate-prod \
-            --region ${{ env.AWS_REGION }} \
-            --payload '{}' \
-            --cli-binary-format raw-in-base64-out \
-            --cli-read-timeout 300 \
-            response.json
+          echo "🚀 Running Safe Prisma Migrations..."
+          echo "ONLY 'prisma migrate deploy' will be executed"
+          echo "❌ NO reset, push, or seed commands allowed"
           
-          # Check response
-          cat response.json
+          # Generate Prisma client
+          npx prisma generate
           
-          # Verify success (exit code 1 if statusCode is not 200)
-          if ! grep -q '"statusCode":200' response.json; then
-            echo "Migration failed!"
-            cat response.json
-            exit 1
-          fi
+          # Run ONLY migrate deploy (safe for production)
+          npx prisma migrate deploy
+          
+          echo "✅ Migrations completed successfully"
+        env:
+          NODE_ENV: production
+          DB_ENV: production
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Deploy Frontend to S3
         working-directory: ./frontend
