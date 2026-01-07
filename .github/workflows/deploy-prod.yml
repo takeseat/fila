@@ -60,6 +60,8 @@ jobs:
 
       - name: Build Backend
         working-directory: ./backend
+        env:
+          NODE_ENV: development
         run: |
           # Clean to ensure Linux binaries
           rm -rf node_modules
