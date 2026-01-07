@@ -11,6 +11,10 @@ export const requirePickupOrdersEnabled = async (
     next: NextFunction
 ): Promise<void> => {
     try {
+        if (req.method === 'OPTIONS') {
+            return next();
+        }
+
         const restaurantId = req.user?.restaurantId;
 
         if (!restaurantId) {
