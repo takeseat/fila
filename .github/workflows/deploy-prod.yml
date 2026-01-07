@@ -54,7 +54,8 @@ jobs:
         working-directory: ./frontend
         run: |
           npm cache clean --force
-          npm ci
+          rm -rf node_modules
+          npm install
           npm run build:ci
 
       - name: Build Backend
