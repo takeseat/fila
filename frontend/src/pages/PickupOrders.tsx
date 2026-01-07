@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { usePickupOrders, useChangePickupOrderStatus, useResendWhatsApp } from '../hooks/usePickupOrders';
 import { PickupOrder } from '../services/pickupOrdersApi';
 import { format } from 'date-fns';
@@ -23,7 +23,6 @@ export default function PickupOrders() {
     const [statusFilter, setStatusFilter] = useState<string>('');
     const [searchTerm, setSearchTerm] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [selectedOrder, setSelectedOrder] = useState<PickupOrder | null>(null);
 
     const { data, isLoading, refetch } = usePickupOrders({
         status: statusFilter || undefined,
