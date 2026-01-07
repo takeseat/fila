@@ -162,12 +162,11 @@ jobs:
         working-directory: ./frontend-admin
         env:
           NODE_ENV: development
+          VITE_API_URL: https://api.takeseat.me
+          VITE_APP_URL: https://takeseat.me
         run: |
           npm ci
           npm run build
-        env:
-          VITE_API_URL: https://api.takeseat.me
-          VITE_APP_URL: https://takeseat.me
 
       - name: Deploy Admin Portal to S3
         working-directory: ./frontend-admin
