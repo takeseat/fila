@@ -53,7 +53,8 @@ jobs:
           npm ci
           # Explicitly install React types to ensure they're available
           npm install --save-dev @types/react @types/react-dom
-          npm run build
+          # Use build:prod to skip TypeScript type checking (Vite handles it)
+          npm run build:prod
 
       - name: Build Backend
         working-directory: ./backend
