@@ -70,10 +70,12 @@ export class PickupOrdersController {
 
             // Send created message if enabled
             if (order.whatsappOptIn) {
-                // Send async (don't wait)
-                PickupOrdersWhatsAppService.sendOrderCreatedMessage(order.id).catch(
-                    (err) => console.error('[PickupOrders] Failed to send created message:', err)
-                );
+                // Await to ensure Lambda doesn't freeze before sending
+                try {
+                    await PickupOrdersWhatsAppService.sendOrderCreatedMessage(order.id);
+                } catch (err) {
+                    console.error('[PickupOrders] Failed to send created message:', err);
+                }
             }
 
             res.status(201).json(order);
@@ -125,14 +127,14 @@ export class PickupOrdersController {
 
             // Send WhatsApp notification based on new status
             if (order.whatsappOptIn) {
-                if (status === 'READY_FOR_PICKUP') {
-                    PickupOrdersWhatsAppService.sendOrderReadyMessage(id).catch((err) =>
-                        console.error('[PickupOrders] Failed to send ready message:', err)
-                    );
-                } else if (status === 'NOT_PICKED_UP') {
-                    PickupOrdersWhatsAppService.sendOrderNotPickedUpMessage(id).catch((err) =>
-                        console.error('[PickupOrders] Failed to send not picked up message:', err)
-                    );
+                try {
+                    if (status === 'READY_FOR_PICKUP') {
+                        await PickupOrdersWhatsAppService.sendOrderReadyMessage(id);
+                    } else if (status === 'NOT_PICKED_UP') {
+                        await PickupOrdersWhatsAppService.sendOrderNotPickedUpMessage(id);
+                    }
+                } catch (err) {
+                    console.error('[PickupOrders] Failed to send status message:', err);
                 }
             }
 
