@@ -3,10 +3,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
 import { Button, Modal, Input, Badge, EmptyState, Progress, Spinner } from '../components/ui';
-import { CountrySelect } from '../components/ui/CountrySelect';
+import { InternationalPhoneInput } from '../components/ui/InternationalPhoneInput';
 import { format } from 'date-fns';
 import { DEFAULT_COUNTRY, getCountryByCode } from '../data/countries';
-import { removeMask, applyBrazilianMask, buildFullPhone } from '../utils/phoneUtils';
+import { buildFullPhone } from '../utils/phoneUtils';
 
 export function Waitlist() {
     const { t } = useTranslation('waitlist');
@@ -19,7 +19,6 @@ export function Waitlist() {
         notes: '',
         whatsappOptIn: false,
     });
-    const [phoneDisplay, setPhoneDisplay] = useState('');
     const [customerFound, setCustomerFound] = useState<any>(null);
     const [isLookingUp, setIsLookingUp] = useState(false);
     const [filters, setFilters] = useState({
@@ -70,22 +69,7 @@ export function Waitlist() {
 
 
 
-    // Handle phone input change with masking
-    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const input = e.target.value;
 
-        if (formData.country.code === 'BR') {
-            // Apply Brazilian mask
-            const masked = applyBrazilianMask(input);
-            setPhoneDisplay(masked);
-            setFormData({ ...formData, phone: removeMask(input) });
-        } else {
-            // For other countries, just remove non-digits
-            const digits = removeMask(input);
-            setPhoneDisplay(digits);
-            setFormData({ ...formData, phone: digits });
-        }
-    };
 
     // Debounced customer lookup
     const lookupCustomer = useCallback(
@@ -190,7 +174,6 @@ export function Waitlist() {
                 ? getCountryByCode(businessData.countryCode) || DEFAULT_COUNTRY
                 : DEFAULT_COUNTRY;
             setFormData({ country: resetCountry, phone: '', customerName: '', partySize: 2, notes: '', whatsappOptIn: false });
-            setPhoneDisplay('');
             setCustomerFound(null);
         },
     });
@@ -810,25 +793,16 @@ export function Waitlist() {
             >
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium text-dark-700">{t('form.customerPhone')}</label>
-                        <div className="flex gap-0">
-                            <div className="w-[72px] flex-shrink-0">
-                                <CountrySelect
-                                    value={formData.country.code}
-                                    onChange={(country) => setFormData({ ...formData, country, phone: '' })}
-                                    compact={true}
-                                />
-                            </div>
-                            <div className="flex-1 -ml-px">
-                                <Input
-                                    placeholder={formData.country.code === 'BR' ? t('form.phonePlaceholderBR') : t('form.phonePlaceholder')}
-                                    value={phoneDisplay}
-                                    onChange={handlePhoneChange}
-                                    required
-                                    className="rounded-l-none border-l-0"
-                                />
-                            </div>
-                        </div>
+                        <InternationalPhoneInput
+                            label={t('form.customerPhone')}
+                            countryCode={formData.country.code}
+                            phoneNumber={formData.phone}
+                            onChange={(code, phone) => {
+                                const country = getCountryByCode(code) || DEFAULT_COUNTRY;
+                                setFormData(prev => ({ ...prev, country, phone }));
+                            }}
+                            required
+                        />
                         {isLookingUp && (
                             <p className="text-xs text-primary-600 flex items-center gap-1">
                                 <Spinner size="sm" />
@@ -843,7 +817,7 @@ export function Waitlist() {
                                 {t('form.customerFound', { name: customerFound.name })}
                             </p>
                         )}
-                        {!isLookingUp && !customerFound && phoneDisplay.replace(/\D/g, '').length >= (formData.country.code === 'BR' ? 10 : 6) && (
+                        {!isLookingUp && !customerFound && formData.phone.length >= (formData.country.code === 'BR' ? 10 : 6) && (
                             <p className="text-xs text-dark-500 flex items-center gap-1">
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

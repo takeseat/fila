@@ -62,6 +62,8 @@ frontend/
 │   ├── components/      # React components
 │   │   ├── layout/      # Layout components (Sidebar, Header)
 │   │   └── ui/          # Reusable UI components
+│   │       ├── InternationalPhoneInput.tsx # Phone input with country selector
+│   │       └── ...
 │   ├── contexts/        # React contexts
 │   │   └── AuthContext.tsx
 │   ├── hooks/           # Custom hooks
@@ -135,6 +137,12 @@ The frontend communicates with the backend API using Axios. The API client (`src
 - Automatic JWT token injection
 - Token refresh on 401 errors
 - Error handling
+
+### Reusable UI Components
+- **InternationalPhoneInput**: A combined country selector and phone input component that handles masking and validation for multiple countries.
+- **Card**: Premium styled container component.
+- **Modal**: Accessible modal dialog.
+- **Toast**: Notification system.
 
 ### Real-time Updates
 
