@@ -6,27 +6,21 @@ import { PickupOrdersConfigController } from '../controllers/pickup-orders-confi
 
 const router = Router();
 
-// All routes require authentication
-router.use(authenticate);
-
 // Config routes (don't require feature to be enabled - needed to enable it!)
-router.get('/config', PickupOrdersConfigController.getConfig);
-router.put('/config', PickupOrdersConfigController.updateConfig);
-router.get('/config/defaults', PickupOrdersConfigController.getDefaults);
-
-// Feature-gated routes
-router.use(requirePickupOrdersEnabled);
+router.get('/config', authenticate, PickupOrdersConfigController.getConfig);
+router.put('/config', authenticate, PickupOrdersConfigController.updateConfig);
+router.get('/config/defaults', authenticate, PickupOrdersConfigController.getDefaults);
 
 // CRUD routes
-router.get('/', PickupOrdersController.listOrders);
-router.get('/:id', PickupOrdersController.getOrder);
-router.post('/', PickupOrdersController.createOrder);
-router.put('/:id', PickupOrdersController.updateOrder);
+router.get('/', authenticate, requirePickupOrdersEnabled, PickupOrdersController.listOrders);
+router.get('/:id', authenticate, requirePickupOrdersEnabled, PickupOrdersController.getOrder);
+router.post('/', authenticate, requirePickupOrdersEnabled, PickupOrdersController.createOrder);
+router.put('/:id', authenticate, requirePickupOrdersEnabled, PickupOrdersController.updateOrder);
 
 // Status management
-router.patch('/:id/status', PickupOrdersController.changeStatus);
+router.patch('/:id/status', authenticate, requirePickupOrdersEnabled, PickupOrdersController.changeStatus);
 
 // WhatsApp
-router.post('/:id/resend-whatsapp', PickupOrdersController.resendWhatsApp);
+router.post('/:id/resend-whatsapp', authenticate, requirePickupOrdersEnabled, PickupOrdersController.resendWhatsApp);
 
 export default router;
