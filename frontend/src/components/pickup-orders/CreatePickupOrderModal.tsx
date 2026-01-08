@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useCreatePickupOrder } from '../../hooks/usePickupOrders';
+import { InternationalPhoneInput } from '../ui/InternationalPhoneInput';
+import { getCountryByCode, DEFAULT_COUNTRY } from '../../data/countries';
+import { buildFullPhone } from '../../utils/phoneUtils';
 
 interface CreatePickupOrderModalProps {
     onClose: () => void;
@@ -9,6 +12,7 @@ interface CreatePickupOrderModalProps {
 export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePickupOrderModalProps) {
     const [orderCode, setOrderCode] = useState('');
     const [customerName, setCustomerName] = useState('');
+    const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY.code);
     const [customerPhone, setCustomerPhone] = useState('');
     const [notes, setNotes] = useState('');
     const [whatsappOptIn, setWhatsappOptIn] = useState(true);
@@ -18,15 +22,15 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Simple phone validation and E.164 formatting
-        const cleanPhone = customerPhone.replace(/\D/g, '');
-        const phoneE164 = cleanPhone.startsWith('55') ? `+${cleanPhone}` : `+55${cleanPhone}`;
+        // Format to E.164 using the selected country DDI
+        const country = getCountryByCode(countryCode) || DEFAULT_COUNTRY;
+        const phoneE164 = buildFullPhone(country.ddi, customerPhone);
 
         await createOrder.mutateAsync({
             orderCode,
             customerName: customerName || undefined,
             customerPhoneE164: phoneE164,
-            customerCountryCode: 'BR',
+            customerCountryCode: countryCode,
             notes: notes || undefined,
             whatsappOptIn,
         });
@@ -75,16 +79,15 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
 
                     {/* Customer Phone */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Telefone *
-                        </label>
-                        <input
-                            type="tel"
+                        <InternationalPhoneInput
+                            label="Telefone *"
+                            countryCode={countryCode}
+                            phoneNumber={customerPhone}
+                            onChange={(code, phone) => {
+                                setCountryCode(code);
+                                setCustomerPhone(phone);
+                            }}
                             required
-                            value={customerPhone}
-                            onChange={(e) => setCustomerPhone(e.target.value)}
-                            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                            placeholder="(11) 99999-9999"
                         />
                     </div>
 
