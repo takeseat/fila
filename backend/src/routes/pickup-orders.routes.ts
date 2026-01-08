@@ -12,7 +12,7 @@ router.put('/config', authenticate, PickupOrdersConfigController.updateConfig);
 router.get('/config/defaults', authenticate, PickupOrdersConfigController.getDefaults);
 
 // CRUD routes
-router.get('/', authenticate, requirePickupOrdersEnabled, PickupOrdersController.listOrders);
+router.get('/', authenticate, /* requirePickupOrdersEnabled, */ PickupOrdersController.listOrders);
 router.get('/:id', authenticate, requirePickupOrdersEnabled, PickupOrdersController.getOrder);
 router.post('/', authenticate, requirePickupOrdersEnabled, PickupOrdersController.createOrder);
 router.put('/:id', authenticate, requirePickupOrdersEnabled, PickupOrdersController.updateOrder);
