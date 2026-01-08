@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import api from '../../lib/api';
+import { Spinner } from '../ui';
 import { useCreatePickupOrder } from '../../hooks/usePickupOrders';
 import { InternationalPhoneInput } from '../ui/InternationalPhoneInput';
 import { getCountryByCode, DEFAULT_COUNTRY } from '../../data/countries';
@@ -16,6 +18,68 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
     const [customerPhone, setCustomerPhone] = useState('');
     const [notes, setNotes] = useState('');
     const [whatsappOptIn, setWhatsappOptIn] = useState(true);
+
+    const [isLookingUp, setIsLookingUp] = useState(false);
+    const [customerFound, setCustomerFound] = useState<any>(null);
+
+    // Debounced customer lookup
+    const lookupCustomer = useCallback(
+        async (fullPhone: string, signal?: AbortSignal) => {
+            if (!fullPhone) {
+                setCustomerFound(null);
+                return;
+            }
+
+            setIsLookingUp(true);
+            try {
+                const { data } = await api.get(`/customers?fullPhone=${encodeURIComponent(fullPhone)}`, { signal });
+
+                if (data.success && data.data) {
+                    setCustomerFound(data.data);
+                    // Auto-fill form
+                    if (data.data.name) setCustomerName(data.data.name);
+                    if (data.data.notes) setNotes(data.data.notes);
+                    // Use customer preference or keep default true
+                    if (data.data.whatsappOptIn !== undefined) {
+                        setWhatsappOptIn(data.data.whatsappOptIn);
+                    }
+                } else {
+                    setCustomerFound(null);
+                    // Clear name if it was auto-filled? Better to keep what user typed if they started typing before lookup
+                }
+            } catch (error: any) {
+                if (error.name !== 'CanceledError') {
+                    setCustomerFound(null);
+                }
+            } finally {
+                setIsLookingUp(false);
+            }
+        },
+        []
+    );
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        const timer = setTimeout(() => {
+            const minLength = countryCode === 'BR' ? 10 : 6;
+            const digitsOnly = customerPhone.replace(/\D/g, '');
+
+            if (digitsOnly.length >= minLength) {
+                const country = getCountryByCode(countryCode) || DEFAULT_COUNTRY;
+                const fullPhone = buildFullPhone(country.ddi, customerPhone);
+                lookupCustomer(fullPhone, signal);
+            } else {
+                setCustomerFound(null);
+            }
+        }, 500);
+
+        return () => {
+            clearTimeout(timer);
+            controller.abort();
+        };
+    }, [customerPhone, countryCode, lookupCustomer]);
 
     const createOrder = useCreatePickupOrder();
 
@@ -75,6 +139,30 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
                             }}
                             required
                         />
+                        <div className="mt-1 h-5">
+                            {isLookingUp && (
+                                <p className="text-xs text-blue-600 flex items-center gap-1">
+                                    <Spinner size="sm" />
+                                    Buscando cliente...
+                                </p>
+                            )}
+                            {!isLookingUp && customerFound && (
+                                <p className="text-xs text-green-600 flex items-center gap-1">
+                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    Cliente encontrado
+                                </p>
+                            )}
+                            {!isLookingUp && !customerFound && customerPhone.length >= (countryCode === 'BR' ? 10 : 6) && (
+                                <p className="text-xs text-gray-500 flex items-center gap-1">
+                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Novo cliente
+                                </p>
+                            )}
+                        </div>
                     </div>
 
                     {/* Customer Name */}
