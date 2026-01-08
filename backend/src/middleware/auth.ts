@@ -19,6 +19,7 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            console.warn(`[Auth] No token provided for ${req.method} ${req.originalUrl}`);
             res.status(401).json({ error: 'No token provided' });
             return;
         }

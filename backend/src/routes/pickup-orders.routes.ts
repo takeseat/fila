@@ -12,15 +12,15 @@ router.put('/config', authenticate, PickupOrdersConfigController.updateConfig);
 router.get('/config/defaults', authenticate, PickupOrdersConfigController.getDefaults);
 
 // CRUD routes
-router.get('/', authenticate, /* requirePickupOrdersEnabled, */ PickupOrdersController.listOrders);
-router.get('/:id', authenticate, requirePickupOrdersEnabled, PickupOrdersController.getOrder);
-router.post('/', authenticate, requirePickupOrdersEnabled, PickupOrdersController.createOrder);
-router.put('/:id', authenticate, requirePickupOrdersEnabled, PickupOrdersController.updateOrder);
+router.get('/', authenticate, requirePickupOrdersEnabled, (req, res) => PickupOrdersController.listOrders(req, res));
+router.get('/:id', authenticate, requirePickupOrdersEnabled, (req, res) => PickupOrdersController.getOrder(req, res));
+router.post('/', authenticate, requirePickupOrdersEnabled, (req, res) => PickupOrdersController.createOrder(req, res));
+router.put('/:id', authenticate, requirePickupOrdersEnabled, (req, res) => PickupOrdersController.updateOrder(req, res));
 
 // Status management
-router.patch('/:id/status', authenticate, requirePickupOrdersEnabled, PickupOrdersController.changeStatus);
+router.patch('/:id/status', authenticate, requirePickupOrdersEnabled, (req, res) => PickupOrdersController.changeStatus(req, res));
 
 // WhatsApp
-router.post('/:id/resend-whatsapp', authenticate, requirePickupOrdersEnabled, PickupOrdersController.resendWhatsApp);
+router.post('/:id/resend-whatsapp', authenticate, requirePickupOrdersEnabled, (req, res) => PickupOrdersController.resendWhatsApp(req, res));
 
 export default router;
