@@ -6,8 +6,7 @@ import { Button, Input } from '../components/ui';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { AuthLayout } from '../components/auth/AuthLayout';
 import { BrandingSection } from '../components/auth/BrandingSection';
-import { AuthLayout } from '../components/auth/AuthLayout';
-import { BrandingSection } from '../components/auth/BrandingSection';
+
 
 export function Login() {
     const [email, setEmail] = useState('');
