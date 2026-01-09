@@ -1,7 +1,7 @@
 import prisma from '../config/database';
 import { hashPassword, comparePassword } from '../utils/password';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt';
-import { RegisterInput, LoginInput } from '../validators/auth.validator';
+import { LoginInput } from '../validators/auth.validator';
 import { emailService } from './email.service';
 import crypto from 'crypto';
 
