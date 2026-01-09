@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
-import { registerSchema, loginSchema, refreshTokenSchema } from '../validators/auth.validator';
+import { signupEmailSchema, completeSignupSchema, loginSchema, refreshTokenSchema } from '../validators/auth.validator';
 
 const authService = new AuthService();
 
@@ -12,11 +12,11 @@ export class AuthController {
 
     async signupEmail(req: Request, res: Response): Promise<void> {
         try {
-            const data = registerSchema.parse(req.body);
+            const data = signupEmailSchema.parse(req.body);
             // Extract locale from headers or body
             const locale = (req.headers['accept-language'] || 'en').split(',')[0];
-            const result = await authService.register(data, locale);
-            res.status(200).json(result); // 200 because we are not returning the resource created fully active? 201 is fine too.
+            const result = await authService.signupEmail(data.userEmail, locale);
+            res.status(200).json(result);
         } catch (error: any) {
             if (error.constructor.name === 'ZodError') {
                 const issues = error.issues.map((issue: any) => issue.message).join(', ');
@@ -34,10 +34,27 @@ export class AuthController {
                 res.status(400).json({ error: 'Token is required' });
                 return;
             }
-            const result = await authService.verifyEmail(token);
+            // Check if token is valid (exists and not expired)
+            // We use verifyTokenValues from service
+            const result = await authService.verifyTokenValues(token);
             res.json(result);
         } catch (error: any) {
             res.status(400).json({ error: error.message });
+        }
+    }
+
+    async completeSignup(req: Request, res: Response): Promise<void> {
+        try {
+            const data = completeSignupSchema.parse(req.body);
+            const result = await authService.completeSignup(data);
+            res.status(201).json(result);
+        } catch (error: any) {
+            if (error.constructor.name === 'ZodError') {
+                const issues = error.issues.map((issue: any) => issue.message).join(', ');
+                res.status(400).json({ error: issues });
+            } else {
+                res.status(400).json({ error: error.message });
+            }
         }
     }
 

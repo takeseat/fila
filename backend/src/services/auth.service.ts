@@ -6,100 +6,141 @@ import { emailService } from './email.service';
 import crypto from 'crypto';
 
 export class AuthService {
-    async register(data: RegisterInput, locale: string = 'en') {
+    async signupEmail(email: string, locale: string = 'en') {
+        const normalizedEmail = email.toLowerCase().trim();
+
         // Check if user already exists
         const existingUser = await prisma.user.findUnique({
-            where: { email: data.userEmail },
+            where: { email: normalizedEmail },
         });
 
         if (existingUser) {
+            // Security: Don't reveal if user exists? Or throw?
+            // User requested "User already exists" detailed error in previous turn, so we keep it.
             throw new Error('User already exists');
         }
 
         // Generate verification token
-        const verificationToken = crypto.randomBytes(32).toString('hex');
-        const verificationTokenExpiresAt = new Date(Date.now() + 60 * 60 * 1000); // 60 minutes
+        const token = crypto.randomBytes(32).toString('hex');
+        const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
-        // Create restaurant and user in a transaction
-        const passwordHash = await hashPassword(data.password);
-
-        await prisma.$transaction(async (tx) => {
-            // Create minimal restaurant placeholder
-            const restaurant = await tx.restaurant.create({
-                data: {
-                    name: `${data.userName}'s Restaurant`, // Placeholder
-                    countryCode: 'BR', // Default, will be updated in wizard
-                    city: 'Pending', // Placeholder
-                    onboardingPending: true,
-                },
-            });
-
-            await tx.user.create({
-                data: {
-                    restaurantId: restaurant.id,
-                    name: data.userName,
-                    email: data.userEmail,
-                    passwordHash,
-                    role: 'ADMIN',
-                    isActive: false, // Inactive until verified
-                    verificationToken,
-                    verificationTokenExpiresAt,
-                },
-            });
+        // Upsert PendingSignup
+        await prisma.pendingSignup.upsert({
+            where: { email: normalizedEmail },
+            update: { token, expiresAt },
+            create: { email: normalizedEmail, token, expiresAt },
         });
 
-        // Send verification email
+        // Send email
         const appBaseUrl = process.env.APP_BASE_URL || 'https://takeseat.me';
-        const verificationLink = `${appBaseUrl}/verify-email?token=${verificationToken}`;
+        // Link now points to frontend /verify-email which will ask for Name/Password + Token
+        const verificationLink = `${appBaseUrl}/verify-email?token=${token}`;
 
-        // Fire and forget (or await if critical) - awaiting to ensure SES accepts it
         try {
             await emailService.sendVerificationEmail({
-                to: data.userEmail,
+                to: normalizedEmail,
                 verificationLink,
                 locale,
             });
         } catch (error) {
             console.error('Failed to send verification email:', error);
-            // We still return success to the user to avoid enumeration/blocking, 
-            // but in a strict system we might rollback transaction.
-            // For now, assume SES works or we have logs.
+            throw new Error('Failed to send verification email');
         }
 
-        return {
-            message: 'Verification email sent',
-        };
+        return { message: 'Verification email sent' };
     }
 
-    async verifyEmail(token: string) {
-        const user = await prisma.user.findFirst({
-            where: {
-                verificationToken: token,
-                verificationTokenExpiresAt: {
-                    gt: new Date(),
-                },
-            },
+    async completeSignup(data: { token: string; userName: string; password: string }) {
+        // Find pending signup
+        const pending = await prisma.pendingSignup.findUnique({
+            where: { token: data.token },
         });
 
-        if (!user) {
+        if (!pending || pending.expiresAt < new Date()) {
             throw new Error('Invalid or expired verification token');
         }
 
-        // Verify user
-        await prisma.user.update({
-            where: { id: user.id },
-            data: {
-                isActive: true,
-                emailVerifiedAt: new Date(),
-                verificationToken: null,
-                verificationTokenExpiresAt: null,
-            },
+        // Create User & Restaurant
+        const passwordHash = await hashPassword(data.password);
+
+        const result = await prisma.$transaction(async (tx) => {
+            const restaurant = await tx.restaurant.create({
+                data: {
+                    name: `${data.userName}'s Restaurant`,
+                    countryCode: 'BR',
+                    city: 'Pending',
+                    onboardingPending: true,
+                },
+            });
+
+            const user = await tx.user.create({
+                data: {
+                    restaurantId: restaurant.id,
+                    name: data.userName,
+                    email: pending.email,
+                    passwordHash,
+                    role: 'ADMIN',
+                    isActive: true, // Active immediately after completing signup flow
+                    emailVerifiedAt: new Date(),
+                },
+            });
+
+            // Delete pending signup
+            await tx.pendingSignup.delete({ where: { id: pending.id } });
+
+            return { user, restaurant };
+        });
+
+        const accessToken = generateAccessToken({
+            userId: result.user.id,
+            restaurantId: result.user.restaurantId!,
+            role: result.user.role,
+        });
+
+        const refreshToken = generateRefreshToken({
+            userId: result.user.id,
+            restaurantId: result.user.restaurantId!,
+            role: result.user.role,
         });
 
         return {
-            message: 'Email verified successfully. You can now login.',
+            user: {
+                id: result.user.id,
+                name: result.user.name,
+                email: result.user.email,
+                role: result.user.role,
+                restaurantId: result.user.restaurantId,
+                language: result.user.language,
+            },
+            restaurant: {
+                ...result.restaurant,
+                onboardingPending: true,
+            },
+            accessToken,
+            refreshToken,
         };
     }
+
+    // Legacy method for backward compat or if needed
+    async register(data: any, locale: string = 'en') {
+        // Map old register to signupEmail?
+        // But old register had Name/Pass. If we call signupEmail, we ignore them.
+        // Given the strict requirement "Only Email", we should force signupEmail flow.
+        return this.signupEmail(data.userEmail, locale);
+    }
+
+    // Verify token validity (optional, for frontend check)
+    async verifyTokenValues(token: string) {
+        const pending = await prisma.pendingSignup.findUnique({
+            where: { token },
+        });
+
+        if (!pending || pending.expiresAt < new Date()) {
+            throw new Error('Invalid or expired verification token');
+        }
+        return { valid: true, email: pending.email };
+    }
+
 
     async login(data: LoginInput) {
         const user = await prisma.user.findUnique({

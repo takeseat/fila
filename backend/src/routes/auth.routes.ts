@@ -145,4 +145,33 @@ router.post('/signup-email', (req, res) => authController.signupEmail(req, res))
  */
 router.get('/verify-email', (req, res) => authController.verifyEmail(req, res));
 
+/**
+ * @swagger
+ * /auth/complete-signup:
+ *   post:
+ *     summary: Complete registration with token, name, and password
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *               - userName
+ *               - password
+ *             properties:
+ *               token:
+ *                 type: string
+ *               userName:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: User created and logged in
+ */
+router.post('/complete-signup', (req, res) => authController.completeSignup(req, res));
+
 export default router;

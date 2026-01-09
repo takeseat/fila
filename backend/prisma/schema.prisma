@@ -314,3 +314,13 @@ enum PickupOrderSource {
   API
   POS
 }
+
+model PendingSignup {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("pending_signups")
+}

@@ -1,16 +1,22 @@
 import { z } from 'zod';
 
-export const registerSchema = z.object({
+// Step 1: Email only
+export const signupEmailSchema = z.object({
+    userEmail: z.string()
+        .trim()
+        .toLowerCase()
+        .email('Invalid user email'),
+});
+
+// Step 2: Complete Signup
+export const completeSignupSchema = z.object({
+    token: z.string().min(1, 'Token is required'),
     userName: z.string()
         .trim()
         .min(1, 'User name is required')
         .min(2, 'User name must be at least 2 characters long')
         .max(80, 'User name must not exceed 80 characters')
         .refine((val) => val.trim().length > 0, 'User name cannot be just spaces'),
-    userEmail: z.string()
-        .trim()
-        .toLowerCase()
-        .email('Invalid user email'),
     password: z.string()
         .min(10, 'Password must be at least 10 characters long')
         .refine((val) => {
@@ -23,6 +29,13 @@ export const registerSchema = z.object({
         }, 'Password must contain at least 3 of the following: uppercase, lowercase, number, special character'),
 });
 
+// Kept for backward compatibility if needed, but implementation will change
+export const registerSchema = signupEmailSchema;
+
+export type SignupEmailInput = z.infer<typeof signupEmailSchema>;
+export type CompleteSignupInput = z.infer<typeof completeSignupSchema>;
+export type RegisterInput = SignupEmailInput; // Alias for now
+
 export const loginSchema = z.object({
     email: z.string().email('Invalid email'),
     password: z.string().min(1, 'Password is required'),
@@ -32,6 +45,5 @@ export const refreshTokenSchema = z.object({
     refreshToken: z.string().min(1, 'Refresh token is required'),
 });
 
-export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RefreshTokenInput = z.infer<typeof refreshTokenSchema>;
