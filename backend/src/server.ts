@@ -12,6 +12,7 @@ import {
     reportsRouter,
     dashboardRouter,
     usersManagementRouter,
+    onboardingRouter,
 } from './routes/index';
 import customersRoutes from './routes/customers.routes';
 import restaurantRoutes from './routes/restaurants.routes';
@@ -65,6 +66,7 @@ app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
 app.use('/whatsapp-settings', whatsappSettingsRouter);
 app.use('/pickup-orders', pickupOrdersRoutes);
+app.use('/onboarding', onboardingRouter);
 
 // Admin routes (SYSADMIN only)
 app.use('/admin', adminRoutes);

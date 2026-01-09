@@ -18,19 +18,13 @@ export class AuthService {
         const passwordHash = await hashPassword(data.password);
 
         const result = await prisma.$transaction(async (tx) => {
+            // Create minimal restaurant placeholder
             const restaurant = await tx.restaurant.create({
                 data: {
-                    name: data.restaurantName,
-                    tradeName: data.tradeName,
-                    cnpj: data.businessId, // Using businessId for cnpj field
-                    countryCode: data.countryCode,
-                    stateCode: data.stateCode,
-                    city: data.city,
-                    addressLine: data.addressLine,
-                    addressNumber: data.addressNumber,
-                    addressComplement: data.addressComplement,
-                    postalCode: data.postalCode,
-                    timezone: data.timezone,
+                    name: `${data.userName}'s Restaurant`, // Placeholder
+                    countryCode: 'BR', // Default, will be updated in wizard
+                    city: 'Pending', // Placeholder
+                    onboardingPending: true,
                 },
             });
 
@@ -68,7 +62,10 @@ export class AuthService {
                 restaurantId: result.user.restaurantId,
                 language: result.user.language,
             },
-            restaurant: result.restaurant,
+            restaurant: {
+                ...result.restaurant,
+                onboardingPending: true, // Explicitly return this for frontend check
+            },
             accessToken,
             refreshToken,
         };

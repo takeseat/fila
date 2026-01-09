@@ -18,6 +18,7 @@ import { ExecutiveReport } from './pages/reports/Executive';
 import { FlowReport } from './pages/reports/Flow';
 import { QueueEntriesReport } from './pages/reports/QueueEntriesReport';
 import { ImpersonatePage } from './pages/ImpersonatePage';
+import { OnboardingWizard } from './pages/OnboardingWizard';
 import PickupOrders from './pages/PickupOrders';
 
 const queryClient = new QueryClient({
@@ -29,8 +30,8 @@ const queryClient = new QueryClient({
     },
 });
 
-function PrivateRoute({ children }: { children: React.ReactNode }) {
-    const { user, loading } = useAuth();
+function PrivateRoute({ children, requireOnboarding = false }: { children: React.ReactNode, requireOnboarding?: boolean }) {
+    const { user, restaurant, loading } = useAuth();
 
     if (loading) {
         return (
@@ -45,6 +46,21 @@ function PrivateRoute({ children }: { children: React.ReactNode }) {
 
     if (!user) {
         return <Navigate to="/login" replace />;
+    }
+
+    // Onboarding Logic
+    if (requireOnboarding) {
+        // If we are on /onboarding, but onboarding is already done, go to dashboard
+        if (!restaurant?.onboardingPending) {
+            return <Navigate to="/dashboard" replace />;
+        }
+        // If pending, allow access to wizard
+        return <Layout simple>{children}</Layout>; // Use simple layout for wizard
+    } else {
+        // If strict protected route, check if onboarding is pending
+        if (restaurant?.onboardingPending) {
+            return <Navigate to="/onboarding" replace />;
+        }
     }
 
     return <Layout>{children}</Layout>;
@@ -80,6 +96,14 @@ function App() {
                                 <Routes>
                                     <Route path="/login" element={<Login />} />
                                     <Route path="/register" element={<Register />} />
+                                    <Route
+                                        path="/onboarding"
+                                        element={
+                                            <PrivateRoute requireOnboarding>
+                                                <OnboardingWizard />
+                                            </PrivateRoute>
+                                        }
+                                    />
                                     <Route path="/impersonate" element={<ImpersonatePage />} />
 
                                     <Route

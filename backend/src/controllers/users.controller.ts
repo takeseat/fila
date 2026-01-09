@@ -69,6 +69,13 @@ export class UsersController {
                     role: true,
                     language: true,
                     restaurantId: true,
+                    restaurant: {
+                        select: {
+                            id: true,
+                            name: true,
+                            onboardingPending: true,
+                        }
+                    }
                 },
             });
 

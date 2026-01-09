@@ -16,6 +16,8 @@ interface Restaurant {
     email: string;
     phone: string;
     city: string;
+    countryCode: string;
+    onboardingPending?: boolean;
 }
 
 interface AuthContextType {
@@ -26,6 +28,7 @@ interface AuthContextType {
     register: (data: any) => Promise<void>;
     logout: () => void;
     updateUser: (userData: Partial<User>) => void;
+    refreshProfile: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -36,6 +39,7 @@ export const AuthContext = createContext<AuthContextType>({
     register: async () => { },
     logout: () => { },
     updateUser: () => { },
+    refreshProfile: async () => { },
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -53,9 +57,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const userData = JSON.parse(storedUser);
             setUser(userData);
             setRestaurant(JSON.parse(storedRestaurant));
-
-            // Note: Language is now handled by LanguageProvider
-            // LanguageProvider observes user.language and applies it
         }
 
         setLoading(false);
@@ -71,9 +72,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         setUser(data.user);
         setRestaurant(data.restaurant);
-
-        // Note: Language is now handled by LanguageProvider
-        // LanguageProvider will observe the user change and apply language
     };
 
     const register = async (registerData: any) => {
@@ -86,9 +84,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         setUser(data.user);
         setRestaurant(data.restaurant);
-
-        // Note: Language is now handled by LanguageProvider
-        // LanguageProvider will observe the user change and apply language
     };
 
     const logout = () => {
@@ -107,13 +102,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const updatedUser = { ...user, ...userData };
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
+    };
 
-        // Note: Language is now handled by LanguageProvider
-        // LanguageProvider observes user.language changes and applies them
+    const refreshProfile = async () => {
+        try {
+            const { data } = await api.get('/users/profile');
+            if (data.user) {
+                // Update local state and storage
+                const updatedUser = {
+                    ...user, // Keep existing fields
+                    ...data.user, // Overwrite with new
+                    // Ensure we preserve restaurantId if not returned? It is returned in getProfile.
+                };
+
+                // If the profile endpoint returns nested restaurant detail including onboardingPending
+                // We need to make sure backend returns it. I added it to getting users list? No getProfile.
+                if (data.user.restaurant) {
+                    const updatedRestaurant = {
+                        ...restaurant,
+                        ...data.user.restaurant
+                    };
+                    setRestaurant(updatedRestaurant as Restaurant);
+                    localStorage.setItem('restaurant', JSON.stringify(updatedRestaurant));
+                }
+
+                setUser(updatedUser);
+                localStorage.setItem('user', JSON.stringify(updatedUser));
+            }
+        } catch (error) {
+            console.error('Failed to refresh profile', error);
+        }
     };
 
     return (
-        <AuthContext.Provider value={{ user, restaurant, loading, login, register, logout, updateUser }}>
+        <AuthContext.Provider value={{ user, restaurant, loading, login, register, logout, updateUser, refreshProfile }}>
             {children}
         </AuthContext.Provider>
     );

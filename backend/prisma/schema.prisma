@@ -29,8 +29,9 @@ model Restaurant {
   postalCode        String? // ZIP/CEP/Postal code
 
   timezone  String   @default("America/Sao_Paulo")
-  isActive  Boolean  @default(true) // SYSADMIN can disable restaurants
-  createdAt DateTime @default(now())
+  isActive          Boolean  @default(true) // SYSADMIN can disable restaurants
+  onboardingPending Boolean  @default(true) // True until wizard is completed
+  createdAt         DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Alert Settings
