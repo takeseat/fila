@@ -98,4 +98,51 @@ router.post('/login', (req, res) => authController.login(req, res));
  */
 router.post('/refresh', (req, res) => authController.refresh(req, res));
 
+/**
+ * @swagger
+ * /auth/signup-email:
+ *   post:
+ *     summary: Register a new user with email verification
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userName
+ *               - userEmail
+ *               - password
+ *             properties:
+ *               userName:
+ *                 type: string
+ *               userEmail:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Verification email sent
+ */
+router.post('/signup-email', (req, res) => authController.signupEmail(req, res));
+
+/**
+ * @swagger
+ * /auth/verify-email:
+ *   get:
+ *     summary: Verify user email
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: query
+ *         name: token
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Email verified
+ */
+router.get('/verify-email', (req, res) => authController.verifyEmail(req, res));
+
 export default router;

@@ -75,15 +75,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const register = async (registerData: any) => {
-        const { data } = await api.post('/auth/register', registerData);
-
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('restaurant', JSON.stringify(data.restaurant));
-
-        setUser(data.user);
-        setRestaurant(data.restaurant);
+        const { data } = await api.post('/auth/signup-email', registerData); // Use new endpoint or keep /register alias
+        // Do NOT set user/token. Return data for UI handling.
+        return data;
     };
 
     const logout = () => {

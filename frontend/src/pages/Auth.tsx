@@ -151,6 +151,7 @@ export function Register() {
     const [touched, setTouched] = useState({ userName: false, userEmail: false, password: false });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [emailSent, setEmailSent] = useState(false);
 
     const { register } = useAuth();
     const navigate = useNavigate();
@@ -195,7 +196,7 @@ export function Register() {
 
         // Validate password strength
         if (!passwordStrength.isStrong) {
-            setError(t('errors.weakPassword'));
+            setError(t('errors.weakPassword') || 'Please use a stronger password');
             return;
         }
 
@@ -209,7 +210,8 @@ export function Register() {
             };
 
             await register(payload);
-            navigate('/dashboard');
+            setEmailSent(true);
+            // navigate('/dashboard'); // Removed auto-login
         } catch (err: any) {
             setError(err.response?.data?.error || t('errors.registerFailed'));
         } finally {
@@ -219,6 +221,38 @@ export function Register() {
 
     const isNameInvalid = touched.userName && formData.userName.trim().length < 2;
     const isEmailInvalid = touched.userEmail && !formData.userEmail.includes('@');
+
+    if (emailSent) {
+        return (
+            <AuthLayout branding={<BrandingSection />}>
+                <div className="fixed top-6 right-6 z-50">
+                    <LanguageSelector />
+                </div>
+                <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10 text-center">
+                    <div className="mb-6">
+                        <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('signup.checkEmail')}</h2>
+                        <p className="text-gray-600">
+                            We've sent a verification link to <strong>{formData.userEmail}</strong>.
+                            <br />Please check your inbox to activate your account.
+                        </p>
+                    </div>
+                    <Button
+                        onClick={() => navigate('/login')}
+                        className="w-full"
+                        size="lg"
+                        variant="outline"
+                    >
+                        {t('signup.backToLogin')}
+                    </Button>
+                </div>
+            </AuthLayout>
+        );
+    }
 
     return (
         <AuthLayout branding={<BrandingSection />}>

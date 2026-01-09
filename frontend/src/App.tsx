@@ -8,6 +8,7 @@ import { useAuth } from './hooks/useAuth';
 import { Layout } from './components/layout/Layout';
 import { ImpersonationBanner } from './components/ImpersonationBanner';
 import { Login, Register } from './pages/Auth';
+import VerifyEmail from './pages/VerifyEmail';
 import { Dashboard } from './pages/Dashboard';
 import { Waitlist } from './pages/Waitlist';
 import { Customers } from './pages/Customers';
@@ -96,6 +97,7 @@ function App() {
                                 <Routes>
                                     <Route path="/login" element={<Login />} />
                                     <Route path="/register" element={<Register />} />
+                                    <Route path="/verify-email" element={<VerifyEmail />} />
                                     <Route
                                         path="/onboarding"
                                         element={
