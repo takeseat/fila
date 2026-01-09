@@ -93,6 +93,14 @@ jobs:
       - name: Deploy Backend API Lambda
         working-directory: ./backend
         run: |
+          # Debug: Verify File Exists
+          echo "🔍 verifying S3 object..."
+          aws s3 ls s3://${{ env.S3_BUCKET }}/lambda/lambda-api.zip
+          
+          # Wait for consistency
+          echo "⏳ Waiting 5s for S3 consistency..."
+          sleep 5
+
           # Update Lambda function code from S3
           aws lambda update-function-code \
             --function-name takeseat-api-prod \
