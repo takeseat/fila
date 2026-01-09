@@ -106,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const refreshProfile = async () => {
         try {
-            const { data } = await api.get('/users/profile');
+            const { data } = await api.get('/users/me');
             if (data.user) {
                 // Update local state and storage
                 const updatedUser = {
