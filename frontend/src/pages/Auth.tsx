@@ -6,7 +6,8 @@ import { Button, Input } from '../components/ui';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { AuthLayout } from '../components/auth/AuthLayout';
 import { BrandingSection } from '../components/auth/BrandingSection';
-import { validatePasswordStrength, getPasswordStrengthLabel, getPasswordStrengthColor, getPasswordStrengthTextColor } from '../utils/passwordUtils';
+import { AuthLayout } from '../components/auth/AuthLayout';
+import { BrandingSection } from '../components/auth/BrandingSection';
 
 export function Login() {
     const [email, setEmail] = useState('');
@@ -269,7 +270,7 @@ export function Register() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={isEmailInvalid ? t('validation.emailInvalid') : undefined}
-                            placeholder={t('signup.emailPlaceholder') || 'you@example.com'}
+                            placeholder={t('signup.emailPlaceholder')}
                             required
                         />
                     </div>
