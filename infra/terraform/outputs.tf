@@ -105,3 +105,24 @@ output "admin_website_url" {
   value       = "https://admin.${var.domain_name}"
 }
 
+# SES Outputs
+output "ses_identity_arn" {
+  description = "ARN of the SES email identity"
+  value       = aws_sesv2_email_identity.domain.arn
+}
+
+output "ses_dkim_tokens" {
+  description = "DKIM tokens for DNS configuration (auto-configured via Route53)"
+  value       = aws_sesv2_email_identity.domain.dkim_signing_attributes[0].tokens
+  sensitive   = false
+}
+
+output "ses_verification_status" {
+  description = "SES identity verification status"
+  value       = aws_sesv2_email_identity.domain.verified_for_sending_status
+}
+
+output "ses_configuration_set" {
+  description = "SES configuration set name"
+  value       = aws_sesv2_configuration_set.main.configuration_set_name
+}

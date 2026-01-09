@@ -1,4 +1,5 @@
-import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
+import { SESv2Client, SendEmailCommand, SESv2ServiceException } from "@aws-sdk/client-sesv2";
+import crypto from 'crypto';
 
 interface SendVerificationEmailParams {
     to: string;
@@ -6,17 +7,37 @@ interface SendVerificationEmailParams {
     locale?: string;
 }
 
+interface SESErrorMetadata {
+    correlationId: string;
+    region: string;
+    from: string;
+    errorName: string;
+    errorCode?: string | number;
+    requestId?: string;
+    httpStatusCode?: number;
+}
+
 export class EmailService {
     private client: SESv2Client;
     private fromEmail: string;
+    private region: string;
 
     constructor() {
-        const region = process.env.SES_REGION || "us-east-1";
-        this.client = new SESv2Client({ region });
+        this.region = process.env.SES_REGION || process.env.AWS_REGION || "us-east-1";
+        this.client = new SESv2Client({ region: this.region });
         this.fromEmail = process.env.SES_FROM_EMAIL || "contato@takeseat.me";
+
+        // Validate configuration on startup
+        if (!this.fromEmail) {
+            throw new Error('[EmailService] SES_FROM_EMAIL is required');
+        }
+
+        console.log(`[EmailService] Initialized with region=${this.region}, from=${this.fromEmail}`);
     }
 
     async sendVerificationEmail({ to, verificationLink, locale = 'en' }: SendVerificationEmailParams): Promise<void> {
+        const correlationId = crypto.randomUUID();
+
         const subject = locale === 'pt-BR'
             ? "Confirme seu e-mail para ativar o TakeSeat"
             : "Verify your email to activate TakeSeat";
@@ -76,12 +97,46 @@ export class EmailService {
         });
 
         try {
-            await this.client.send(command);
-            console.log(`[EmailService] Verification email sent to ${to}`);
+            const response = await this.client.send(command);
+            console.log(`[EmailService] ✓ Verification email sent successfully`, {
+                correlationId,
+                messageId: response.MessageId,
+                region: this.region,
+                from: this.fromEmail,
+            });
         } catch (error) {
-            console.error(`[EmailService] Failed to send email to ${to}:`, error);
-            // We log the error but don't throw to avoid crashing the request if email fails (or handled upstream)
-            // Ideally rethrow if we want the controller to know
+            const errorMetadata: SESErrorMetadata = {
+                correlationId,
+                region: this.region,
+                from: this.fromEmail,
+                errorName: (error as Error).name || 'UnknownError',
+                errorCode: (error as any).Code || (error as any).$metadata?.httpStatusCode,
+            };
+
+            if (error instanceof SESv2ServiceException) {
+                errorMetadata.requestId = error.$metadata?.requestId;
+                errorMetadata.httpStatusCode = error.$metadata?.httpStatusCode;
+
+                console.error(`[EmailService] ✗ SES API Error:`, {
+                    ...errorMetadata,
+                    message: error.message,
+                });
+
+                // Map SES errors to user-friendly messages
+                if (error.name === 'MessageRejected') {
+                    throw new Error('Email service is currently unavailable. Please try again later or contact support.');
+                } else if (error.name === 'MailFromDomainNotVerifiedException') {
+                    throw new Error('Email configuration error. Please contact support.');
+                } else if (error.name === 'AccountSendingPausedException') {
+                    throw new Error('Email service is temporarily unavailable. Please try again later.');
+                } else if (error.name === 'ConfigurationSetDoesNotExistException') {
+                    throw new Error('Email service configuration error. Please contact support.');
+                }
+            } else {
+                console.error(`[EmailService] ✗ Unexpected error:`, errorMetadata, error);
+            }
+
+            // Re-throw to let controller handle
             throw error;
         }
     }
