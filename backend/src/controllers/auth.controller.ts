@@ -11,7 +11,13 @@ export class AuthController {
             const result = await authService.register(data);
             res.status(201).json(result);
         } catch (error: any) {
-            res.status(400).json({ error: error.message });
+            if (error.constructor.name === 'ZodError') {
+                // Format Zod errors into a readable string or array
+                const issues = error.issues.map((issue: any) => issue.message).join(', ');
+                res.status(400).json({ error: issues });
+            } else {
+                res.status(400).json({ error: error.message });
+            }
         }
     }
 
