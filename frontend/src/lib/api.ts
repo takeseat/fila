@@ -17,6 +17,11 @@ api.interceptors.request.use((config) => {
             config.headers.Authorization = `Bearer ${token}`;
         }
     }
+
+    // Add locale header for backend i18n
+    const locale = localStorage.getItem('i18nextLng') || 'en';
+    config.headers['Accept-Language'] = locale;
+
     return config;
 });
 
