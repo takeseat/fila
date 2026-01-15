@@ -181,7 +181,19 @@ export function Register() {
             await register({ userEmail: formData.userEmail });
             setEmailSent(true);
         } catch (err: any) {
-            setError(err.response?.data?.error || t('errors.registerFailed'));
+            // Map backend error messages to i18n keys
+            const backendError = err.response?.data?.error || '';
+            let translatedError = '';
+
+            if (backendError === 'User already exists') {
+                translatedError = t('errors.userAlreadyExists');
+            } else if (backendError.includes('email')) {
+                translatedError = t('validation.emailInUse');
+            } else {
+                translatedError = backendError || t('errors.registerFailed');
+            }
+
+            setError(translatedError);
         } finally {
             setLoading(false);
         }
