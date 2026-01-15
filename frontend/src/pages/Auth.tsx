@@ -189,7 +189,7 @@ export function Register() {
             if (backendError === 'User already exists') {
                 translatedError = t('errors.userAlreadyExists');
             } else if (backendError === 'Failed to send verification email') {
-                translatedError = 'Falha ao enviar e-mail de verificação. Tente novamente.';
+                translatedError = t('errors.failedToSendEmail');
             } else if (backendError.includes('Invalid') || backendError.includes('expired')) {
                 translatedError = backendError;
             } else {
