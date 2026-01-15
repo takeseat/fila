@@ -95,7 +95,7 @@ resource "aws_iam_role_policy" "lambda_ses" {
           "ses:SendRawEmail",
           "sesv2:SendEmail"
         ]
-        Resource = aws_sesv2_email_identity.domain.arn
+        Resource = "*"
         Condition = {
           StringLike = {
             "ses:FromAddress" = "*@${var.domain_name}"
