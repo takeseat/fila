@@ -220,8 +220,8 @@ export function Register() {
                         </div>
                         <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('signup.checkEmail')}</h2>
                         <p className="text-gray-600">
-                            We've sent a verification link to <strong>{formData.userEmail}</strong>.
-                            <br />Please check your inbox to complete your registration.
+                            {t('signup.verificationSent', { email: formData.userEmail })}
+                            <br />{t('signup.spamCheck')}
                         </p>
                     </div>
                     <Button
