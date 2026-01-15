@@ -10,13 +10,13 @@ resource "aws_route53_record" "ses_dkim" {
 }
 
 # SPF Record for email authentication
-# Allows Amazon SES to send emails on behalf of the domain
+# Allows both Zoho Mail and Amazon SES to send emails on behalf of the domain
 resource "aws_route53_record" "ses_spf" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = var.domain_name
   type    = "TXT"
-  ttl     = 600
-  records = ["v=spf1 include:amazonses.com -all"]
+  ttl     = 300
+  records = ["v=spf1 include:zohomail.com include:amazonses.com ~all"]
 }
 
 # DMARC Record for email policy and reporting

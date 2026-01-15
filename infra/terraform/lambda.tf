@@ -14,7 +14,6 @@ resource "aws_lambda_function" "api" {
   environment {
     variables = {
       NODE_ENV           = "production"
-      AWS_REGION         = var.aws_region
       CORS_ORIGIN        = "https://${var.domain_name}"
       DB_SECRET_ARN      = aws_secretsmanager_secret.db_credentials.arn
       JWT_SECRET         = random_password.jwt_secret.result

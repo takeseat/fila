@@ -7,11 +7,6 @@ resource "aws_sesv2_email_identity" "domain" {
   dkim_signing_attributes {
     next_signing_key_length = "RSA_2048_BIT"
   }
-
-  tags = {
-    Name        = "${var.project_name}-${var.environment}-ses-identity"
-    Environment = var.environment
-  }
 }
 
 # SES Configuration Set for tracking and reputation management
@@ -24,11 +19,6 @@ resource "aws_sesv2_configuration_set" "main" {
 
   sending_options {
     sending_enabled = true
-  }
-
-  tags = {
-    Name        = "${var.project_name}-${var.environment}-ses-config"
-    Environment = var.environment
   }
 }
 
