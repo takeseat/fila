@@ -10,7 +10,7 @@ import { LanguageSelector } from '../components/LanguageSelector';
 export function OnboardingWizard() {
     const { user, restaurant, refreshProfile } = useAuth();
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation('auth'); // Using auth namespace for now
+    const { t, i18n } = useTranslation('auth');
 
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
@@ -19,8 +19,16 @@ export function OnboardingWizard() {
     const [formData, setFormData] = useState({
         restaurantName: restaurant?.name || '',
         countryCode: restaurant?.countryCode || 'BR',
-        language: user?.language || 'en',
+        language: user?.language || i18n.language || 'en', // Initialize with user language or current i18n language
     });
+
+    // Ensure we start with the correct language if user has one saved
+    React.useEffect(() => {
+        if (user?.language && user.language !== i18n.language) {
+            i18n.changeLanguage(user.language);
+            setFormData(prev => ({ ...prev, language: user.language }));
+        }
+    }, [user, i18n]);
 
     const handleNext = async () => {
         setError('');
@@ -49,7 +57,7 @@ export function OnboardingWizard() {
                 navigate('/dashboard');
             }
         } catch (err: any) {
-            setError(err.response?.data?.error || 'An error occurred');
+            setError(err.response?.data?.error || t('errors.generic', { defaultValue: 'An error occurred' }));
         } finally {
             setLoading(false);
         }
@@ -62,17 +70,17 @@ export function OnboardingWizard() {
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
                 <img
-                    className="mx-auto h-12 w-auto"
+                    className="mx-auto h-12 w-auto mb-6"
                     src="/assets/logo-icon.png"
                     alt="TakeSeat"
                 />
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                    Welcome to TakeSeat!
+                <h2 className="text-3xl font-extrabold text-gray-900 mb-2">
+                    {t('onboarding.welcomeTitle', { defaultValue: 'Welcome to TakeSeat!' })}
                 </h2>
-                <p className="mt-2 text-center text-sm text-gray-600">
-                    Let's set up your restaurant in just 2 steps.
+                <p className="text-gray-600">
+                    {t('onboarding.welcomeSubtitle', { defaultValue: "Let's set up your restaurant in just 2 steps." })}
                 </p>
             </div>
 
@@ -80,21 +88,25 @@ export function OnboardingWizard() {
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
                     {/* Progress Bar */}
                     <div className="mb-8">
-                        <div className="h-2 bg-gray-200 rounded-full">
+                        <div className="h-2 bg-gray-200 rounded-full mb-2">
                             <div
                                 className="h-2 bg-blue-600 rounded-full transition-all duration-300"
                                 style={{ width: step === 1 ? '50%' : '100%' }}
                             ></div>
                         </div>
-                        <div className="mt-2 flex justify-between text-xs text-gray-500 font-medium">
-                            <span className={step >= 1 ? 'text-blue-600' : ''}>Restaurant Details</span>
-                            <span className={step >= 2 ? 'text-blue-600' : ''}>Language</span>
+                        <div className="flex justify-between text-xs font-medium">
+                            <span className={step >= 1 ? 'text-blue-600' : 'text-gray-500'}>
+                                {t('onboarding.step1', { defaultValue: 'Restaurant Details' })}
+                            </span>
+                            <span className={step >= 2 ? 'text-blue-600' : 'text-gray-500'}>
+                                {t('onboarding.step2', { defaultValue: 'Language' })}
+                            </span>
                         </div>
                     </div>
 
                     {error && (
-                        <div className="mb-4 p-3 bg-red-50 text-red-600 text-sm rounded-md">
-                            {error}
+                        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <p className="text-sm text-red-600">{error}</p>
                         </div>
                     )}
 
@@ -102,28 +114,30 @@ export function OnboardingWizard() {
                         {step === 1 && (
                             <>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Restaurant Name
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                        {t('onboarding.restaurantName', { defaultValue: 'Restaurant Name' })}
                                     </label>
                                     <input
                                         type="text"
                                         value={formData.restaurantName}
                                         onChange={(e) => setFormData({ ...formData, restaurantName: e.target.value })}
-                                        className="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="My Great Restaurant"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-base placeholder-gray-400"
+                                        placeholder={t('onboarding.restaurantNamePlaceholder', { defaultValue: 'My Great Restaurant' })}
                                     />
-                                    <p className="mt-1 text-xs text-gray-500">
-                                        This is how your restaurant will appear to customers.
+                                    <p className="mt-1.5 text-xs text-gray-500">
+                                        {t('onboarding.restaurantNameHint', { defaultValue: 'This is how your restaurant will appear to customers.' })}
                                     </p>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Country location
+                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                        {t('onboarding.country', { defaultValue: 'Country location' })}
                                     </label>
                                     <CountrySelect
                                         value={formData.countryCode}
                                         onChange={(country) => setFormData({ ...formData, countryCode: country.code })}
+                                        showDdi={false}
+                                        className="w-full"
                                     />
                                 </div>
                             </>
@@ -132,7 +146,7 @@ export function OnboardingWizard() {
                         {step === 2 && (
                             <div className="space-y-4">
                                 <label className="block text-sm font-medium text-gray-700">
-                                    Select your preferred language
+                                    {t('onboarding.selectLanguage', { defaultValue: 'Select your preferred language' })}
                                 </label>
                                 <div className="grid grid-cols-2 gap-3">
                                     <button
@@ -165,10 +179,11 @@ export function OnboardingWizard() {
                             <Button
                                 onClick={handleNext}
                                 isLoading={loading}
-                                className="w-full flex justify-center"
+                                className="w-full flex justify-center py-3"
+                                size="lg"
                                 disabled={step === 1 && !formData.restaurantName}
                             >
-                                {step === 1 ? 'Next Step' : 'Finish Setup'}
+                                {step === 1 ? t('onboarding.nextStep', { defaultValue: 'Next Step' }) : t('onboarding.finishSetup', { defaultValue: 'Finish Setup' })}
                             </Button>
                         </div>
                     </div>

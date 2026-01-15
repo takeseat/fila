@@ -16,8 +16,9 @@ export function CountrySelect({
     label,
     required = false,
     className = '',
-    compact = false
-}: CountrySelectProps) {
+    compact = false,
+    showDdi = true
+}: CountrySelectProps & { showDdi?: boolean }) {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -87,9 +88,11 @@ export function CountrySelect({
                                 <div className="text-sm font-medium text-dark-900">
                                     {selectedCountry.name}
                                 </div>
-                                <div className="text-xs text-dark-500">
-                                    {selectedCountry.ddi}
-                                </div>
+                                {showDdi && (
+                                    <div className="text-xs text-dark-500">
+                                        {selectedCountry.ddi}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <svg
@@ -139,9 +142,11 @@ export function CountrySelect({
                                         <div className="text-sm font-medium text-dark-900">
                                             {country.name}
                                         </div>
-                                        <div className="text-xs text-dark-500">
-                                            {country.ddi}
-                                        </div>
+                                        {showDdi && (
+                                            <div className="text-xs text-dark-500">
+                                                {country.ddi}
+                                            </div>
+                                        )}
                                     </div>
                                     {country.code === selectedCountry.code && (
                                         <svg className="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
