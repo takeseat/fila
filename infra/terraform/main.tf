@@ -49,6 +49,12 @@ provider "aws" {
   }
 }
 
+# Provider without default tags for SES resources (to avoid ses:TagResource permission)
+provider "aws" {
+  alias  = "no_tags"
+  region = var.aws_region
+}
+
 # Data source for current AWS account
 data "aws_caller_identity" "current" {}
 

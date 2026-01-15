@@ -1,5 +1,7 @@
 # SES Email Identity for takeseat.me domain
 resource "aws_sesv2_email_identity" "domain" {
+  provider = aws.no_tags
+  
   email_identity = var.domain_name
 
   configuration_set_name = aws_sesv2_configuration_set.main.configuration_set_name
@@ -15,6 +17,8 @@ resource "aws_sesv2_email_identity" "domain" {
 
 # SES Configuration Set for tracking and reputation management
 resource "aws_sesv2_configuration_set" "main" {
+  provider = aws.no_tags
+  
   configuration_set_name = "${var.project_name}-${var.environment}"
 
   reputation_options {
