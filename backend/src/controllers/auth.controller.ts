@@ -13,8 +13,8 @@ export class AuthController {
     async signupEmail(req: Request, res: Response): Promise<void> {
         try {
             const data = signupEmailSchema.parse(req.body);
-            // Extract locale from headers or body
-            const locale = (req.headers['accept-language'] || 'en').split(',')[0];
+            // Extract locale from body (preferred) or headers
+            const locale = data.locale || (req.headers['accept-language'] || 'en').split(',')[0];
             const result = await authService.signupEmail(data.userEmail, locale);
             res.status(200).json(result);
         } catch (error: any) {

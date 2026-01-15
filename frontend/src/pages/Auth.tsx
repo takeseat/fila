@@ -151,7 +151,7 @@ export function Register() {
 
     const { register } = useAuth();
     const navigate = useNavigate();
-    const { t } = useTranslation('auth');
+    const { t, i18n } = useTranslation('auth');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -178,7 +178,7 @@ export function Register() {
 
         try {
             // Register now only takes userEmail
-            await register({ userEmail: formData.userEmail });
+            await register({ userEmail: formData.userEmail, locale: i18n.language });
             setEmailSent(true);
         } catch (err: any) {
             // Map backend error messages to i18n keys

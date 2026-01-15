@@ -6,6 +6,7 @@ export const signupEmailSchema = z.object({
         .trim()
         .toLowerCase()
         .email('Invalid user email'),
+    locale: z.string().optional(),
 });
 
 // Step 2: Complete Signup
