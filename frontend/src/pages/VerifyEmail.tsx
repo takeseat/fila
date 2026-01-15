@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
-import { useAuth } from '../hooks/useAuth';
 import { AuthLayout } from '../components/auth/AuthLayout';
 import { BrandingSection } from '../components/auth/BrandingSection';
 import { Button, Input } from '../components/ui';
@@ -11,8 +10,8 @@ import { validatePasswordStrength, getPasswordStrengthLabel, getPasswordStrength
 export default function VerifyEmail() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { t } = useTranslation('auth');
-    const { login } = useAuth(); // We might need a direct "setSession" or just reuse login logic if we had simpler auth hook, but here we can just handle the storage ourselves or add a method.
+    const { t } = useTranslation(['auth', 'common']);
+    // Removed unused login hook
     // Actually, AuthContext.login takes email/pass. We have the tokens returned from complete-signup.
     // We should probably redirect to login or manually set storage.
     // Let's manually set storage to auto-login.
@@ -37,7 +36,7 @@ export default function VerifyEmail() {
         const verify = async () => {
             if (!token) {
                 setStatus('error');
-                setMessage('No verification token provided.');
+                setMessage(t('verifyEmail.noToken', { ns: 'auth' }));
                 return;
             }
 
@@ -53,12 +52,12 @@ export default function VerifyEmail() {
                 }
             } catch (error: any) {
                 setStatus('error');
-                setMessage(error.response?.data?.error || 'Failed to verify email. Token may be invalid or expired.');
+                setMessage(error.response?.data?.error || t('verifyEmail.verifyError', { ns: 'auth' }));
             }
         };
 
         verify();
-    }, [token]);
+    }, [token, t]);
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -108,7 +107,7 @@ export default function VerifyEmail() {
             window.location.href = '/dashboard';
 
         } catch (error: any) {
-            setMessage(error.response?.data?.error || t('errors.registerFailed'));
+            setMessage(error.response?.data?.error || t('errors.registerFailed', { ns: 'auth' }));
         } finally {
             setLoading(false);
         }
@@ -126,16 +125,16 @@ export default function VerifyEmail() {
                 {status === 'verifying' && (
                     <div className="text-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-                        <h2 className="text-xl font-bold mb-2">Verifying Token...</h2>
+                        <h2 className="text-xl font-bold mb-2">{t('verifyEmail.verifying', { ns: 'auth' })}</h2>
                     </div>
                 )}
 
                 {status === 'form' && (
                     <div>
                         <div className="mb-6">
-                            <h1 className="text-2xl font-bold text-gray-900 mb-2">Complete your Profile</h1>
+                            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('verifyEmail.title', { ns: 'auth' })}</h1>
                             <p className="text-gray-600">
-                                Email verified: <strong>{email}</strong>
+                                {t('verifyEmail.emailVerified', { ns: 'auth' })} <strong>{email}</strong>
                             </p>
                         </div>
 
@@ -148,7 +147,7 @@ export default function VerifyEmail() {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <Input
-                                    label={t('signup.userName')} // Ensure key exists or fallback
+                                    label={t('signup.userName', { ns: 'auth' })} // Ensure key exists or fallback
                                     name="userName"
                                     value={formData.userName}
                                     onChange={handleChange}
@@ -157,13 +156,13 @@ export default function VerifyEmail() {
                                     className={isNameInvalid ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''}
                                 />
                                 {isNameInvalid && (
-                                    <p className="mt-1 text-xs text-red-600">Name is required</p>
+                                    <p className="mt-1 text-xs text-red-600">{t('validation.nameRequired', { ns: 'auth' })}</p>
                                 )}
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    {t('signup.password')} <span className="text-red-600">*</span>
+                                    {t('signup.password', { ns: 'auth' })} <span className="text-red-600">*</span>
                                 </label>
                                 <div className="relative">
                                     <input
@@ -181,7 +180,7 @@ export default function VerifyEmail() {
                                         onClick={() => setShowPassword(!showPassword)}
                                         className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-gray-600"
                                     >
-                                        <span className="text-xs">{showPassword ? 'Hide' : 'Show'}</span>
+                                        <span className="text-xs">{showPassword ? t('hide', { ns: 'common' }) : t('show', { ns: 'common' })}</span>
                                     </button>
                                 </div>
 
@@ -220,7 +219,7 @@ export default function VerifyEmail() {
                                 size="lg"
                                 isLoading={loading}
                             >
-                                Complete Registration
+                                {t('verifyEmail.completeButton', { ns: 'auth' })}
                             </Button>
                         </form>
                     </div>
@@ -233,7 +232,7 @@ export default function VerifyEmail() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">Verification Failed</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('verifyEmail.failedTitle', { ns: 'auth' })}</h2>
                         <p className="text-red-500 mb-6">{message}</p>
                         <Button
                             onClick={() => navigate('/login')}
@@ -241,7 +240,7 @@ export default function VerifyEmail() {
                             size="lg"
                             variant="outline"
                         >
-                            Back to Login
+                            {t('verifyEmail.backToLogin', { ns: 'auth' })}
                         </Button>
                     </div>
                 )}
