@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
 import { Button, Input } from '../components/ui';
@@ -108,9 +108,9 @@ export function Login() {
                             />
                             <span>{t('login.rememberMe')}</span>
                         </label>
-                        <a href="#" className="text-primary-600 hover:text-primary-700 font-medium transition-colors">
+                        <Link to="/forgot-password" className="text-primary-600 hover:text-primary-700 font-medium transition-colors">
                             {t('login.forgotPassword')}
-                        </a>
+                        </Link>
                     </div>
 
                     <Button
@@ -127,12 +127,12 @@ export function Login() {
                 <div className="mt-8 text-center">
                     <p className="text-sm text-gray-600">
                         {t('login.noAccount')}{' '}
-                        <a
-                            href="/register"
+                        <Link
+                            to="/register"
                             className="font-semibold text-primary-600 hover:text-primary-700 transition-colors"
                         >
                             {t('login.createOne')}
-                        </a>
+                        </Link>
                     </p>
                 </div>
             </div>
@@ -301,9 +301,9 @@ export function Register() {
 
                     <div className="mt-6 text-center text-sm text-gray-600">
                         {t('signup.hasAccount')}{' '}
-                        <a href="/login" className="font-medium text-primary-600 hover:text-primary-500">
+                        <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500">
                             {t('signup.signIn')}
-                        </a>
+                        </Link>
                     </div>
                 </form>
             </div>

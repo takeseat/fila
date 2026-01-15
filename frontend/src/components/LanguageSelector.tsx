@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../contexts/LanguageContext';
 import { AVAILABLE_LANGUAGES, isRTL } from '../lib/languages';
 
 interface LanguageSelectorProps {
@@ -7,14 +7,9 @@ interface LanguageSelectorProps {
 }
 
 export function LanguageSelector({ className = '' }: LanguageSelectorProps) {
-    const { i18n } = useTranslation();
-    const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+    const { currentLanguage, setLanguage } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        setCurrentLanguage(i18n.language);
-    }, [i18n.language]);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -31,13 +26,8 @@ export function LanguageSelector({ className = '' }: LanguageSelectorProps) {
     }, [isOpen]);
 
     const handleLanguageChange = (languageCode: string) => {
-        i18n.changeLanguage(languageCode);
-        setCurrentLanguage(languageCode);
+        setLanguage(languageCode as any);
         setIsOpen(false);
-
-        // Set RTL for Arabic
-        document.dir = isRTL(languageCode) ? 'rtl' : 'ltr';
-        document.documentElement.lang = languageCode;
     };
 
     const currentLang = AVAILABLE_LANGUAGES.find(l => l.code === currentLanguage) || AVAILABLE_LANGUAGES[0];
