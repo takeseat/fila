@@ -209,7 +209,7 @@ export default function VerifyEmail() {
                                                 />
                                             </div>
                                             <span className={`text-xs font-medium ${getPasswordStrengthTextColor(passwordStrength.score)}`}>
-                                                {getPasswordStrengthLabel(passwordStrength.score)}
+                                                {t(`passwordStrength.${getPasswordStrengthLabel(passwordStrength.score)}`, { ns: 'auth' })}
                                             </span>
                                         </div>
                                         {passwordStrength.feedback.length > 0 && (
@@ -218,7 +218,7 @@ export default function VerifyEmail() {
                                                     {passwordStrength.feedback.map((reqKey, idx) => (
                                                         <li key={idx} className="flex items-center gap-1">
                                                             <span className="text-red-500">✗</span>
-                                                            <span>{reqKey}</span>
+                                                            <span>{t(`passwordStrength.${reqKey}`, { ns: 'auth' })}</span>
                                                         </li>
                                                     ))}
                                                 </ul>
