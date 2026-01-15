@@ -93,7 +93,8 @@ resource "aws_iam_role_policy" "lambda_ses" {
         Effect = "Allow"
         Action = [
           "ses:SendEmail",
-          "ses:SendRawEmail"
+          "ses:SendRawEmail",
+          "sesv2:SendEmail"
         ]
         Resource = aws_sesv2_email_identity.domain.arn
         Condition = {
