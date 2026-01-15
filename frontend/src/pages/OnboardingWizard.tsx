@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
 import api from '../lib/api';
-import { Button, Input } from '../components/ui';
+import { Button } from '../components/ui';
 import { CountrySelect } from '../components/ui/CountrySelect';
-import { LanguageSelector } from '../components/LanguageSelector';
 
 export function OnboardingWizard() {
     const { user, restaurant, refreshProfile } = useAuth();
@@ -17,7 +16,7 @@ export function OnboardingWizard() {
     const [error, setError] = useState('');
 
     const [formData, setFormData] = useState({
-        restaurantName: restaurant?.name || '',
+        restaurantName: '',
         countryCode: restaurant?.countryCode || 'BR',
         language: user?.language || i18n.language || 'en', // Initialize with user language or current i18n language
     });
