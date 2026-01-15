@@ -18,6 +18,11 @@ export class AuthController {
             const result = await authService.signupEmail(data.userEmail, locale);
             res.status(200).json(result);
         } catch (error: any) {
+            console.error('SignupEmail error:', {
+                message: error.message,
+                stack: error.stack,
+                name: error.constructor.name,
+            });
             if (error.constructor.name === 'ZodError') {
                 const issues = error.issues.map((issue: any) => issue.message).join(', ');
                 res.status(400).json({ error: issues });

@@ -185,11 +185,15 @@ export function Register() {
             const backendError = err.response?.data?.error || '';
             let translatedError = '';
 
+            // Be specific with error matching to avoid false positives
             if (backendError === 'User already exists') {
                 translatedError = t('errors.userAlreadyExists');
-            } else if (backendError.includes('email')) {
-                translatedError = t('validation.emailInUse');
+            } else if (backendError === 'Failed to send verification email') {
+                translatedError = 'Falha ao enviar e-mail de verificação. Tente novamente.';
+            } else if (backendError.includes('Invalid') || backendError.includes('expired')) {
+                translatedError = backendError;
             } else {
+                // Default fallback
                 translatedError = backendError || t('errors.registerFailed');
             }
 
