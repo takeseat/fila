@@ -34,7 +34,7 @@ export class AuthService {
         // Send email
         const appBaseUrl = process.env.APP_BASE_URL || 'https://takeseat.me';
         // Link now points to frontend /verify-email which will ask for Name/Password + Token
-        const verificationLink = `${appBaseUrl}/verify-email?token=${token}`;
+        const verificationLink = `${appBaseUrl}/verify-email?token=${token}&locale=${locale}`;
 
         try {
             await emailService.sendVerificationEmail({
@@ -50,7 +50,7 @@ export class AuthService {
         return { message: 'Verification email sent' };
     }
 
-    async completeSignup(data: { token: string; userName: string; password: string }) {
+    async completeSignup(data: { token: string; userName: string; password: string; language?: string }) {
         // Find pending signup
         const pending = await prisma.pendingSignup.findUnique({
             where: { token: data.token },
@@ -82,6 +82,7 @@ export class AuthService {
                     role: 'ADMIN',
                     isActive: true, // Active immediately after completing signup flow
                     emailVerifiedAt: new Date(),
+                    language: data.language || 'en',
                 },
             });
 

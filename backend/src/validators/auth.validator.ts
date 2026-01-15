@@ -28,6 +28,7 @@ export const completeSignupSchema = z.object({
             if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val)) matches++;
             return matches >= 3;
         }, 'Password must contain at least 3 of the following: uppercase, lowercase, number, special character'),
+    language: z.string().optional(),
 });
 
 // Kept for backward compatibility if needed, but implementation will change

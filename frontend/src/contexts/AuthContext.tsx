@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
 
 interface User {
@@ -47,6 +48,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
     const [loading, setLoading] = useState(true);
 
+    const { i18n } = useTranslation();
+
     useEffect(() => {
         // Load user from localStorage on mount
         const storedUser = localStorage.getItem('user');
@@ -57,10 +60,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const userData = JSON.parse(storedUser);
             setUser(userData);
             setRestaurant(JSON.parse(storedRestaurant));
+
+            // Sync i18n
+            if (userData.language && userData.language !== i18n.language) {
+                i18n.changeLanguage(userData.language);
+            }
         }
 
         setLoading(false);
     }, []);
+
+    // Also sync when user state changes (e.g. after login/register)
+    useEffect(() => {
+        if (user?.language && user.language !== i18n.language) {
+            i18n.changeLanguage(user.language);
+        }
+    }, [user, i18n]);
 
     const login = async (email: string, password: string) => {
         const { data } = await api.post('/auth/login', { email, password });

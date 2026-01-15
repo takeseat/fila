@@ -11,7 +11,7 @@ import { validatePasswordStrength, getPasswordStrengthLabel, getPasswordStrength
 export default function VerifyEmail() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { t } = useTranslation(['auth', 'common']);
+    const { t, i18n } = useTranslation(['auth', 'common']);
     // Removed unused login hook
     // Actually, AuthContext.login takes email/pass. We have the tokens returned from complete-signup.
     // We should probably redirect to login or manually set storage.
@@ -32,6 +32,13 @@ export default function VerifyEmail() {
     const [touched, setTouched] = useState({ userName: false, password: false });
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState(''); // Store email from verification check
+    const locale = searchParams.get('locale');
+
+    useEffect(() => {
+        if (locale && i18n.language !== locale) {
+            i18n.changeLanguage(locale);
+        }
+    }, [locale, i18n]);
 
     useEffect(() => {
         const verify = async () => {
@@ -97,7 +104,8 @@ export default function VerifyEmail() {
             const { data } = await api.post('/auth/complete-signup', {
                 token,
                 userName: formData.userName,
-                password: formData.password
+                password: formData.password,
+                language: i18n.language // Pass current language to save in user profile
             });
 
             // Auto-login
