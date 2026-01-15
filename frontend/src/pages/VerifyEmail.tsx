@@ -52,7 +52,13 @@ export default function VerifyEmail() {
                 }
             } catch (error: any) {
                 setStatus('error');
-                setMessage(error.response?.data?.error || t('verifyEmail.verifyError', { ns: 'auth' }));
+                const backendError = error.response?.data?.error;
+                // Intercept specific backend error to show translated message
+                if (backendError === 'Invalid or expired verification token') {
+                    setMessage(t('verifyEmail.verifyError', { ns: 'auth' }));
+                } else {
+                    setMessage(backendError || t('verifyEmail.verifyError', { ns: 'auth' }));
+                }
             }
         };
 
