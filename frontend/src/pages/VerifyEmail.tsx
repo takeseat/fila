@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
 import { AuthLayout } from '../components/auth/AuthLayout';
 import { BrandingSection } from '../components/auth/BrandingSection';
+import { LanguageSelector } from '../components/LanguageSelector';
 import { Button, Input } from '../components/ui';
 import { validatePasswordStrength, getPasswordStrengthLabel, getPasswordStrengthColor, getPasswordStrengthTextColor, PasswordStrength } from '../utils/passwordUtils';
 
@@ -124,7 +125,7 @@ export default function VerifyEmail() {
     return (
         <AuthLayout branding={<BrandingSection />}>
             <div className="fixed top-6 right-6 z-50">
-                {/* LanguageSelector import missing in this file, skipping for brevity or add if strictly needed */}
+                <LanguageSelector />
             </div>
 
             <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10">
