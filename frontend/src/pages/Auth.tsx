@@ -47,18 +47,18 @@ export function Login() {
             {/* Mobile Logo */}
             <div className="lg:hidden text-center mb-8">
                 <img
-                    src="/assets/logo-dark.png"
+                    src="/assets/logo-light.png"
                     alt="TakeSeat"
                     className="h-8 w-auto mx-auto mb-2"
                     onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         const textLogo = document.createElement('div');
-                        textLogo.className = 'text-2xl font-bold text-gray-900';
+                        textLogo.className = 'text-2xl font-bold text-white';
                         textLogo.textContent = 'TakeSeat';
                         e.currentTarget.parentElement?.appendChild(textLogo);
                     }}
                 />
-                <p className="text-sm text-gray-600">{t('branding.headline')}</p>
+                <p className="text-sm text-gray-200">{t('branding.headline')}</p>
             </div>
 
             {/* Auth Card */}
@@ -245,18 +245,18 @@ export function Register() {
 
             <div className="lg:hidden text-center mb-8">
                 <img
-                    src="/assets/logo-dark.png"
+                    src="/assets/logo-light.png"
                     alt="TakeSeat"
                     className="h-8 w-auto mx-auto mb-2"
                     onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         const textLogo = document.createElement('div');
-                        textLogo.className = 'text-2xl font-bold text-gray-900';
+                        textLogo.className = 'text-2xl font-bold text-white';
                         textLogo.textContent = 'TakeSeat';
                         e.currentTarget.parentElement?.appendChild(textLogo);
                     }}
                 />
-                <p className="text-sm text-gray-600">{t('branding.headline')}</p>
+                <p className="text-sm text-gray-200">{t('branding.headline')}</p>
             </div>
 
             <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10">
