@@ -3,6 +3,7 @@ import { WaitlistEntry, Customer, RestaurantWhatsAppSettings, WhatsAppMessageTyp
 import { WhatsAppTemplatesService } from './whatsapp-templates.service';
 import { IWhatsAppProvider } from '../providers/whatsapp/whatsapp.provider.interface';
 import { ZApiWhatsAppProvider } from '../providers/whatsapp/z-api.provider';
+import { planService } from './plan.service';
 
 export class WhatsAppService {
     private static provider: IWhatsAppProvider = WhatsAppService.getProvider();
@@ -36,6 +37,14 @@ export class WhatsAppService {
             return;
         }
         console.log('[WhatsApp] Entry check passed');
+
+        // Check Plan Permission
+        try {
+            await planService.checkPermission(restaurantId, 'WHATSAPP');
+        } catch (error) {
+            console.log('[WhatsApp] Plan permission denied. Skipping message.');
+            return;
+        }
 
         const settings = await this.getSettings(restaurantId);
         console.log('[WhatsApp] Settings:', settings ? {
@@ -75,6 +84,12 @@ export class WhatsAppService {
     ) {
         if (!WaitlistEntryCheck(entry)) return;
 
+        try {
+            await planService.checkPermission(restaurantId, 'WHATSAPP');
+        } catch (error) {
+            return;
+        }
+
         const settings = await this.getSettings(restaurantId);
         if (!settings || !settings.isEnabled || !settings.sendPositionUpdates) return;
 
@@ -104,6 +119,12 @@ export class WhatsAppService {
         entry: WaitlistEntry & { customer?: Customer | null }
     ) {
         if (!WaitlistEntryCheck(entry)) return;
+
+        try {
+            await planService.checkPermission(restaurantId, 'WHATSAPP');
+        } catch (error) {
+            return;
+        }
 
         const settings = await this.getSettings(restaurantId);
         if (!settings || !settings.isEnabled || !settings.sendTurnMessage) return;

@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDashboardMetrics } from '../hooks/useDashboardMetrics';
+import { useAuth } from '../hooks/useAuth';
 import { Card, Skeleton } from '../components/ui';
+import { UpgradeBanner } from '../components/plans/UpgradeBanner';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 export function Dashboard() {
     const { t } = useTranslation('dashboard');
     const navigate = useNavigate();
+    const { restaurant } = useAuth();
     const { data: metrics, isLoading, error } = useDashboardMetrics();
 
     // Format hourly data for chart (fill missing hours with 0)
@@ -73,6 +76,9 @@ export function Dashboard() {
                     {t('subtitle')}
                 </p>
             </div>
+
+            {/* Upgrade Banner */}
+            {restaurant?.plan === 'BASIC' && <UpgradeBanner />}
 
             {/* Error State */}
             {error && (

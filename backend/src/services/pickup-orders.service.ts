@@ -1,5 +1,6 @@
 import { PrismaClient, PickupOrderStatus, PickupOrderSource } from '@prisma/client';
 import { subMinutes } from 'date-fns';
+import { planService } from './plan.service';
 
 const prisma = new PrismaClient();
 
@@ -143,6 +144,9 @@ export class PickupOrdersService {
      * Create new pickup order
      */
     static async createPickupOrder(input: CreatePickupOrderInput) {
+        // Check Plan Permission
+        await planService.checkPermission(input.restaurantId, 'PICKUP_ORDERS');
+
         // Check if customer exists by phone
         let customerId = input.customerId;
 

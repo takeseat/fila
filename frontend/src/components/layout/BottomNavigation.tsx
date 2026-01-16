@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../hooks/useAuth';
 
 export function BottomNavigation() {
     const { t } = useTranslation('nav');
+    const { restaurant } = useAuth();
     const location = useLocation();
 
     const navItems = [
@@ -24,7 +26,8 @@ export function BottomNavigation() {
                 </svg>
             )
         },
-        {
+        // Pickup Orders - PRO only
+        ...(restaurant?.plan === 'PRO' ? [{
             path: '/pickup-orders',
             label: t('menu.pickupOrders'),
             icon: (
@@ -32,7 +35,7 @@ export function BottomNavigation() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
             )
-        },
+        }] : []),
         {
             path: '/settings',
             label: t('menu.settings'),

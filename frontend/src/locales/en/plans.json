@@ -1,0 +1,33 @@
+{
+    "basic": {
+        "title": "Basic",
+        "description": "Perfect to get started",
+        "price": "Free",
+        "cta": "Continue with Basic"
+    },
+    "pro": {
+        "title": "Professional",
+        "description": "For growing restaurants",
+        "price": "$19",
+        "cta": "Activate Professional"
+    },
+    "features": {
+        "waitlist": "Unlimited Waitlist",
+        "whatsapp": "WhatsApp Notifications",
+        "pickupOrders": "Pickup Orders"
+    },
+    "upgrade": {
+        "modalTitle": "Unlock full potential",
+        "modalDescription": "The Professional plan includes exclusive features to automate your operation and boost sales.",
+        "cta": "Upgrade Now",
+        "maybeLater": "Maybe later",
+        "featureLocked": "Feature available on Professional plan.",
+        "ctaInline": "Upgrade to use."
+    },
+    "banner": {
+        "title": "Upgrade available",
+        "description": "Unlock WhatsApp and Orders with the Professional plan.",
+        "cta": "View Plans"
+    },
+    "currentPlan": "Your current plan"
+}

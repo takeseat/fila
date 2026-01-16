@@ -1,0 +1,33 @@
+{
+    "basic": {
+        "title": "Básico",
+        "description": "Perfeito para começar",
+        "price": "Grátis",
+        "cta": "Continuar com Básico"
+    },
+    "pro": {
+        "title": "Profissional",
+        "description": "Para restaurantes em crescimento",
+        "price": "R$ 99",
+        "cta": "Ativar Profissional"
+    },
+    "features": {
+        "waitlist": "Fila de Espera Ilimitada",
+        "whatsapp": "Notificações via WhatsApp",
+        "pickupOrders": "Pedidos para Retirada"
+    },
+    "upgrade": {
+        "modalTitle": "Desbloqueie todo o potencial",
+        "modalDescription": "O plano Profissional inclui recursos exclusivos para automatizar sua operação e aumentar suas vendas.",
+        "cta": "Fazer Upgrade Agora",
+        "maybeLater": "Talvez mais tarde",
+        "featureLocked": "Recurso disponível no plano Profissional.",
+        "ctaInline": "Faça upgrade para usar."
+    },
+    "banner": {
+        "title": "Upgrade disponível",
+        "description": "Desbloqueie WhatsApp e Pedidos com o plano Profissional.",
+        "cta": "Ver Planos"
+    },
+    "currentPlan": "Seu plano atual"
+}

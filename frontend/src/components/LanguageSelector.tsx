@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { AVAILABLE_LANGUAGES, isRTL } from '../lib/languages';
+import { AVAILABLE_LANGUAGES } from '../lib/languages';
 
 interface LanguageSelectorProps {
     className?: string;

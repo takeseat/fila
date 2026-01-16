@@ -19,6 +19,7 @@ interface Restaurant {
     city: string;
     countryCode: string;
     onboardingPending?: boolean;
+    plan?: 'BASIC' | 'PRO';
 }
 
 interface AuthContextType {

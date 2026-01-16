@@ -7,6 +7,7 @@ import { ImpersonationProvider } from './contexts/ImpersonationContext';
 import { useAuth } from './hooks/useAuth';
 import { Layout } from './components/layout/Layout';
 import { ImpersonationBanner } from './components/ImpersonationBanner';
+import { GlobalListeners } from './components/GlobalListeners';
 import { Login, Register } from './pages/Auth';
 import VerifyEmail from './pages/VerifyEmail';
 import { Dashboard } from './pages/Dashboard';
@@ -93,6 +94,7 @@ function App() {
                     <LanguageProvider>
                         <LanguageGuard>
                             <ImpersonationBanner />
+                            <GlobalListeners />
                             <BrowserRouter>
                                 <Routes>
                                     <Route path="/login" element={<Login />} />

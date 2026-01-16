@@ -55,7 +55,15 @@ model Restaurant {
   impersonationLogs   ImpersonationLog[]
   pickupOrders        PickupOrder[]
 
+  plan          Plan     @default(BASIC)
+  planUpdatedAt DateTime @default(now())
+
   @@map("restaurants")
+}
+
+enum Plan {
+  BASIC
+  PRO
 }
 
 model User {
