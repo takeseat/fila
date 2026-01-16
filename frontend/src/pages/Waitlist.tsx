@@ -507,7 +507,7 @@ export function Waitlist() {
                     {/* Party size filter */}
                     <div className="flex flex-col gap-2">
                         <label className="text-xs font-medium text-dark-600">{t('filters.partySizeLabel')}</label>
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap gap-2">
                             <Button
                                 variant={filters.partySize === null ? 'primary' : 'outline'}
                                 size="sm"

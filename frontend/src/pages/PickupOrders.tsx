@@ -112,12 +112,71 @@ export default function PickupOrders() {
 
             {/* Orders List */}
             <div className="bg-white rounded-lg shadow overflow-hidden">
-                {!data?.data.length ? (
-                    <div className="p-8 text-center text-gray-500">
-                        Nenhum pedido encontrado
+                <>
+                    {/* Mobile View: Cards */}
+                    <div className="md:hidden space-y-4 p-4 bg-gray-50">
+                        {data?.data?.map((order) => (
+                            <div key={order.id} className="bg-white p-4 rounded-lg shadow space-y-3 border border-gray-100">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <div className="font-bold text-gray-900 text-lg">#{order.orderCode}</div>
+                                        <div className="text-gray-500 text-xs">{format(new Date(order.createdAt), 'dd/MM HH:mm', { locale: ptBR })}</div>
+                                    </div>
+                                    <span
+                                        className={`px-2 py-1 text-xs font-medium rounded-full ${STATUS_COLORS[order.status]}`}
+                                    >
+                                        {STATUS_LABELS[order.status]}
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <div className="font-medium text-gray-900">{order.customerName || 'Sem nome'}</div>
+                                    <div className="text-gray-600 text-sm flex items-center gap-2">
+                                        {order.customerPhoneE164}
+                                        {order.whatsappOptIn && (
+                                            <span className="text-green-600" title="WhatsApp Ativo">
+                                                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.16C10.58 20.16 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.05 20.16Z" />
+                                                </svg>
+                                            </span>
+                                        )}
+                                    </div>
+                                    {order.notes && (
+                                        <div className="mt-2 text-sm text-gray-500 bg-gray-50 p-2 rounded">
+                                            {order.notes}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="pt-2 border-t border-gray-100 flex flex-wrap gap-2">
+                                    {getAvailableActions(order).map((action) => (
+                                        <button
+                                            key={action.status}
+                                            onClick={() => handleStatusChange(order.id, action.status)}
+                                            disabled={changeStatus.isPending}
+                                            className={`flex-1 min-w-[120px] px-3 py-2 text-xs font-medium rounded border border-${action.color}-200 bg-${action.color}-50 text-${action.color}-700 hover:bg-${action.color}-100 disabled:opacity-50 text-center transition-colors`}
+                                        >
+                                            {action.label}
+                                        </button>
+                                    ))}
+
+                                    {order.whatsappOptIn && order.status === 'READY_FOR_PICKUP' && (
+                                        <button
+                                            onClick={() => handleResendWhatsApp(order.id)}
+                                            disabled={resendWhatsApp.isPending}
+                                            className="px-3 py-2 text-xs font-medium rounded border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 disabled:opacity-50 transition-colors"
+                                            title="Reenviar WhatsApp"
+                                        >
+                                            📱 Reenviar
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ) : (
-                    <div className="overflow-x-auto">
+
+                    {/* Desktop View: Table */}
+                    <div className="hidden md:block overflow-x-auto">
                         <table className="w-full">
                             <thead className="bg-gray-50 border-b">
                                 <tr>
@@ -142,7 +201,7 @@ export default function PickupOrders() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {data.data.map((order) => (
+                                {data?.data?.map((order) => (
                                     <tr key={order.id} className="hover:bg-gray-50">
                                         <td className="px-6 py-4">
                                             <div className="font-medium text-gray-900">{order.orderCode}</div>
@@ -204,7 +263,7 @@ export default function PickupOrders() {
                             </tbody>
                         </table>
                     </div>
-                )}
+                </>
 
                 {/* Pagination */}
                 {data && data.pagination.totalPages > 1 && (

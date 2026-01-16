@@ -279,7 +279,60 @@ export function Customers() {
                 </div>
             ) : (
                 <>
-                    <div className="card-premium overflow-hidden">
+                    {/* Mobile View: Cards */}
+                    <div className="md:hidden space-y-4">
+                        {customers.map((customer) => (
+                            <div key={customer.id} className="card-premium p-4 space-y-3">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <div className="font-semibold text-dark-900 text-lg">{customer.name}</div>
+                                        <div className="text-dark-600 text-sm flex items-center gap-1 mt-1">
+                                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                            </svg>
+                                            {formatPhone(customer)}
+                                        </div>
+                                        {customer.email && (
+                                            <div className="text-dark-500 text-xs mt-0.5">{customer.email}</div>
+                                        )}
+                                    </div>
+                                    <div className="bg-primary-50 text-primary-700 px-2 py-1 rounded text-xs font-bold">
+                                        {customer.totalVisits} visits
+                                    </div>
+                                </div>
+
+                                <div className="border-t border-light-200 pt-2 flex justify-between items-center text-xs text-dark-500">
+                                    <span>{t('table.lastVisit')}</span>
+                                    <span className="font-medium">{formatDate(customer.lastVisitAt)}</span>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-3 pt-1">
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        onClick={() => handleOpenEditModal(customer)}
+                                        className="w-full justify-center"
+                                    >
+                                        {t('actions.edit')}
+                                    </Button>
+                                    <Button
+                                        size="sm"
+                                        variant="danger"
+                                        onClick={() => {
+                                            setDeletingCustomer(customer);
+                                            setIsDeleteModalOpen(true);
+                                        }}
+                                        className="w-full justify-center"
+                                    >
+                                        {t('actions.delete')}
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Desktop View: Table */}
+                    <div className="hidden md:block card-premium overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead className="bg-light-50 border-b border-light-200">
