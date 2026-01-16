@@ -11,7 +11,6 @@ export function OnboardingWizard() {
     const navigate = useNavigate();
     const { t, i18n } = useTranslation('auth');
 
-    const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -29,42 +28,34 @@ export function OnboardingWizard() {
         }
     }, [user, i18n]);
 
-    const handleNext = async () => {
+    const handleFinish = async () => {
         setError('');
         setLoading(true);
 
         try {
-            if (step === 1) {
-                // Save Step 1: Name and Country
-                await api.put('/onboarding/step1', {
-                    restaurantName: formData.restaurantName,
-                    countryCode: formData.countryCode,
-                });
-                setStep(2);
-            } else if (step === 2) {
-                // Save Step 2: Language
-                await api.put('/onboarding/step2', {
-                    language: formData.language,
-                });
+            // Save Step 1: Name and Country
+            await api.put('/onboarding/step1', {
+                restaurantName: formData.restaurantName,
+                countryCode: formData.countryCode,
+            });
 
-                // Complete Onboarding
-                await api.post('/onboarding/complete');
+            // Save Step 2: Language (using current form data/default)
+            await api.put('/onboarding/step2', {
+                language: formData.language,
+            });
 
-                // Refresh profile to update onboardingPending state locally
-                await refreshProfile();
+            // Complete Onboarding
+            await api.post('/onboarding/complete');
 
-                navigate('/dashboard');
-            }
+            // Refresh profile to update onboardingPending state locally
+            await refreshProfile();
+
+            navigate('/dashboard');
         } catch (err: any) {
             setError(err.response?.data?.error || t('errors.generic', { defaultValue: 'An error occurred' }));
         } finally {
             setLoading(false);
         }
-    };
-
-    const handleLanguageSelect = (lang: string) => {
-        setFormData({ ...formData, language: lang });
-        i18n.changeLanguage(lang); // Preview language immediately
     };
 
     return (
@@ -85,23 +76,6 @@ export function OnboardingWizard() {
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-                    {/* Progress Bar */}
-                    <div className="mb-8">
-                        <div className="h-2 bg-gray-200 rounded-full mb-2">
-                            <div
-                                className="h-2 bg-blue-600 rounded-full transition-all duration-300"
-                                style={{ width: step === 1 ? '50%' : '100%' }}
-                            ></div>
-                        </div>
-                        <div className="flex justify-between text-xs font-medium">
-                            <span className={step >= 1 ? 'text-blue-600' : 'text-gray-500'}>
-                                {t('onboarding.step1', { defaultValue: 'Restaurant Details' })}
-                            </span>
-                            <span className={step >= 2 ? 'text-blue-600' : 'text-gray-500'}>
-                                {t('onboarding.step2', { defaultValue: 'Language' })}
-                            </span>
-                        </div>
-                    </div>
 
                     {error && (
                         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -110,79 +84,43 @@ export function OnboardingWizard() {
                     )}
 
                     <div className="space-y-6">
-                        {step === 1 && (
-                            <>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                        {t('onboarding.restaurantName', { defaultValue: 'Restaurant Name' })}
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={formData.restaurantName}
-                                        onChange={(e) => setFormData({ ...formData, restaurantName: e.target.value })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-base placeholder-gray-400"
-                                        placeholder={t('onboarding.restaurantNamePlaceholder', { defaultValue: 'My Great Restaurant' })}
-                                    />
-                                    <p className="mt-1.5 text-xs text-gray-500">
-                                        {t('onboarding.restaurantNameHint', { defaultValue: 'This is how your restaurant will appear to customers.' })}
-                                    </p>
-                                </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                {t('onboarding.restaurantName', { defaultValue: 'Restaurant Name' })}
+                            </label>
+                            <input
+                                type="text"
+                                value={formData.restaurantName}
+                                onChange={(e) => setFormData({ ...formData, restaurantName: e.target.value })}
+                                className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-base placeholder-gray-400"
+                                placeholder={t('onboarding.restaurantNamePlaceholder', { defaultValue: 'My Great Restaurant' })}
+                            />
+                            <p className="mt-1.5 text-xs text-gray-500">
+                                {t('onboarding.restaurantNameHint', { defaultValue: 'This is how your restaurant will appear to customers.' })}
+                            </p>
+                        </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                        {t('onboarding.country', { defaultValue: 'Country location' })}
-                                    </label>
-                                    <CountrySelect
-                                        value={formData.countryCode}
-                                        onChange={(country) => setFormData({ ...formData, countryCode: country.code })}
-                                        showDdi={false}
-                                        className="w-full"
-                                    />
-                                </div>
-                            </>
-                        )}
-
-                        {step === 2 && (
-                            <div className="space-y-4">
-                                <label className="block text-sm font-medium text-gray-700">
-                                    {t('onboarding.selectLanguage', { defaultValue: 'Select your preferred language' })}
-                                </label>
-                                <div className="grid grid-cols-2 gap-3">
-                                    <button
-                                        type="button"
-                                        onClick={() => handleLanguageSelect('en')}
-                                        className={`p-4 border rounded-lg text-center transition-all ${formData.language === 'en'
-                                            ? 'border-blue-500 bg-blue-50 text-blue-700 ring-2 ring-blue-500 ring-opacity-50'
-                                            : 'border-gray-200 hover:border-gray-300'
-                                            }`}
-                                    >
-                                        <div className="text-2xl mb-1">🇺🇸</div>
-                                        <div className="font-medium">English</div>
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => handleLanguageSelect('pt')}
-                                        className={`p-4 border rounded-lg text-center transition-all ${formData.language === 'pt'
-                                            ? 'border-blue-500 bg-blue-50 text-blue-700 ring-2 ring-blue-500 ring-opacity-50'
-                                            : 'border-gray-200 hover:border-gray-300'
-                                            }`}
-                                    >
-                                        <div className="text-2xl mb-1">🇧🇷</div>
-                                        <div className="font-medium">Português</div>
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                                {t('onboarding.country', { defaultValue: 'Country location' })}
+                            </label>
+                            <CountrySelect
+                                value={formData.countryCode}
+                                onChange={(country) => setFormData({ ...formData, countryCode: country.code })}
+                                showDdi={false}
+                                className="w-full"
+                            />
+                        </div>
 
                         <div>
                             <Button
-                                onClick={handleNext}
+                                onClick={handleFinish}
                                 isLoading={loading}
                                 className="w-full flex justify-center py-3"
                                 size="lg"
-                                disabled={step === 1 && !formData.restaurantName}
+                                disabled={!formData.restaurantName}
                             >
-                                {step === 1 ? t('onboarding.nextStep', { defaultValue: 'Next Step' }) : t('onboarding.finishSetup', { defaultValue: 'Finish Setup' })}
+                                {t('onboarding.finishSetup', { defaultValue: 'Finish Setup' })}
                             </Button>
                         </div>
                     </div>
