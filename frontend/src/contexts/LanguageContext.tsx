@@ -14,6 +14,7 @@ import {
     getBrowserLanguage,
     getStoredLanguage,
     storeLanguage,
+    normalizeLanguage,
 } from '../lib/languageUtils';
 import { useAuth } from '../hooks/useAuth';
 
@@ -74,10 +75,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
      * When user logs in or user language changes, apply it immediately
      */
     useEffect(() => {
-        if (user?.language && user.language !== currentLanguage) {
-            applyLanguage(user.language as SupportedLanguage);
+        if (user?.language) {
+            const normalizedUserLang = normalizeLanguage(user.language);
+            if (normalizedUserLang !== currentLanguage) {
+                applyLanguage(normalizedUserLang);
+            }
         }
-    }, [user?.language]);
+    }, [user?.language, currentLanguage]);
 
     /**
      * Public method to change language
