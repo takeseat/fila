@@ -41,7 +41,7 @@ export function OnboardingWizard() {
 
             // Save Step 2: Language (using current form data/default)
             await api.put('/onboarding/step2', {
-                language: formData.language,
+                language: formData.language.slice(0, 2),
             });
 
             // Complete Onboarding
