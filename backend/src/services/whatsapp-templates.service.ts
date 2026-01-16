@@ -32,10 +32,10 @@ export class WhatsAppTemplatesService {
 
     static getDefaultWelcomeTemplate(language: string): string {
         if (language === 'pt-BR' || language === 'pt') {
-            return "Olá {{customer_name}}! Você entrou na fila de {{business_name}}.\nSua posição atual é: {{position}}.\nTe avisaremos quando sua vez chegar!";
+            return "Tudo certo, {{customer_name}}! 🎉 Você já está na fila do {{business_name}}.\nSua posição atual é: *{{position}}*.\nRelaxe que a gente te avisa por aqui assim que sua mesa estiver pronta! 🍽️";
         }
         // Default English
-        return "Hello {{customer_name}}! You have joined the waitlist at {{business_name}}.\nYour current position is: {{position}}.\nWe will notify you when it's your turn!";
+        return "You're all set, {{customer_name}}! 🎉 You've joined the waitlist at {{business_name}}.\nYour current position is: *{{position}}*.\nSit back and relax, we'll notify you here as soon as your table is ready! 🍽️";
     }
 
     static getDefaultPositionUpdateTemplate(language: string): string {
@@ -47,8 +47,8 @@ export class WhatsAppTemplatesService {
 
     static getDefaultYourTurnTemplate(language: string): string {
         if (language === 'pt-BR' || language === 'pt') {
-            return "Olá {{customer_name}}, sua mesa no {{business_name}} está pronta!\nPor favor, dirija-se à entrada.";
+            return "Chegou a sua vez, {{customer_name}}! 🥳\nSua mesa no {{business_name}} já está te esperando.\nPor favor, dirija-se à entrada. Bom apetite! 😋";
         }
-        return "Hello {{customer_name}}, your table at {{business_name}} is ready!\nPlease head to the entrance.";
+        return "It's your turn, {{customer_name}}! 🥳\nYour table at {{business_name}} is ready.\nPlease head to the entrance. Enjoy your meal! 😋";
     }
 }

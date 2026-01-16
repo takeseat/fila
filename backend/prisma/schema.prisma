@@ -178,9 +178,9 @@ model RestaurantWhatsAppSettings {
   isEnabled    Boolean @default(false)
 
   // Feature Toggles
-  sendWelcome         Boolean @default(false)
+  sendWelcome         Boolean @default(true)
   sendPositionUpdates Boolean @default(false)
-  sendTurnMessage     Boolean @default(false)
+  sendTurnMessage     Boolean @default(true)
 
   // Custom Templates (optional overrides)
   welcomeText        String? @db.Text
