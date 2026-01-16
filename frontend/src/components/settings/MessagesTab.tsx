@@ -117,7 +117,7 @@ export function MessagesTab() {
 
     return (
         <div className="space-y-8 animate-fade-in">
-            {/* WhatsApp Section */}
+            {/* Fila de Espera Section */}
             <Card className="overflow-hidden">
                 <div className="p-6 border-b border-gray-100 bg-green-50/50">
                     <div className="flex items-center gap-3">
@@ -127,7 +127,7 @@ export function MessagesTab() {
                             </svg>
                         </div>
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-900">WhatsApp</h2>
+                            <h2 className="text-xl font-semibold text-gray-900">Fila de Espera</h2>
                             <p className="text-sm text-gray-500">Configure as mensagens automáticas da fila.</p>
                         </div>
                     </div>
@@ -201,39 +201,17 @@ export function MessagesTab() {
                                 </div>
                             </div>
 
-                            {/* Placeholders Help & Rate Limits */}
+                            {/* Placeholders Help */}
                             <div className="space-y-6">
                                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
                                     <h4 className="font-medium text-blue-900 mb-2">Variáveis Disponíveis</h4>
-                                    <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
-                                        <li>Waitlist Entry: <code>{`{{customer_name}}`}</code>, <code>{`{{party_size}}`}</code></li>
-                                        <li>Queue: <code>{`{{position}}`}</code>, <code>{`{{business_name}}`}</code></li>
-                                        <li>Estimates: <code>{`{{eta_minutes}}`}</code></li>
+                                    <ul className="text-sm text-blue-800 space-y-2">
+                                        <li><code>{`{{customer_name}}`}</code>: Nome do cliente</li>
+                                        <li><code>{`{{party_size}}`}</code>: Tamanho do grupo (número de pessoas)</li>
+                                        <li><code>{`{{position}}`}</code>: Posição na fila (Ex: 1)</li>
+                                        <li><code>{`{{business_name}}`}</code>: Nome do restaurante</li>
+                                        <li><code>{`{{eta_minutes}}`}</code>: Tempo estimado de espera (minutos)</li>
                                     </ul>
-                                </div>
-
-                                <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Limites de Envio (Anti-Spam)</h3>
-                                <div className="grid grid-cols-1 gap-4">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                                            Intervalo mínimo entre atualizações (segundos)
-                                        </label>
-                                        <input
-                                            type="number"
-                                            {...register('minSecondsBetweenUpdates', { valueAsNumber: true })}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                                            Mudança mínima de posições para notificar
-                                        </label>
-                                        <input
-                                            type="number"
-                                            {...register('minPositionsChangeToNotify', { valueAsNumber: true })}
-                                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none"
-                                        />
-                                    </div>
                                 </div>
                             </div>
                         </div>
