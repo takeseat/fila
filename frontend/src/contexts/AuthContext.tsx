@@ -60,7 +60,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (storedUser && storedRestaurant && token) {
             const userData = JSON.parse(storedUser);
             setUser(userData);
-            setRestaurant(JSON.parse(storedRestaurant));
+            const restaurantData = JSON.parse(storedRestaurant);
+            // Default to 'BASIC' if plan is missing (legacy sessions)
+            if (!restaurantData.plan) {
+                console.log('[AuthContext] Plan missing in stored restaurant, defaulting to BASIC');
+                restaurantData.plan = 'BASIC';
+            }
+            setRestaurant(restaurantData);
 
             // Sync i18n
             if (userData.language && userData.language !== i18n.language) {
@@ -84,10 +90,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
         localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('restaurant', JSON.stringify(data.restaurant));
-
         setUser(data.user);
-        setRestaurant(data.restaurant);
+
+        // Ensure plan is set
+        const restaurantWithPlan = {
+            ...data.restaurant,
+            plan: data.restaurant.plan || 'BASIC'
+        };
+        setRestaurant(restaurantWithPlan);
+        localStorage.setItem('restaurant', JSON.stringify(restaurantWithPlan));
     };
 
     const register = async (registerData: any) => {
