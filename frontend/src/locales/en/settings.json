@@ -4,7 +4,8 @@
     "tabs": {
         "business": "Business Data",
         "parameters": "Parameters",
-        "team": "Team"
+        "team": "Team",
+        "messages": "Messages"
     },
     "business": {
         "title": "Business Information",

@@ -4,7 +4,8 @@
     "tabs": {
         "business": "Dados do Negócio",
         "parameters": "Parâmetros",
-        "team": "Equipe"
+        "team": "Equipe",
+        "messages": "Mensagens"
     },
     "business": {
         "title": "Informações do Negócio",

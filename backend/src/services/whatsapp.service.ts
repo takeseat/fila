@@ -53,7 +53,7 @@ export class WhatsAppService {
             welcomeText: settings.welcomeText?.substring(0, 50)
         } : 'null');
 
-        if (!settings || !settings.isEnabled || !settings.sendWelcome) {
+        if (!settings || !settings.sendWelcome) {
             console.log('[WhatsApp] Settings check failed - returning early');
             return;
         }
@@ -91,7 +91,7 @@ export class WhatsAppService {
         }
 
         const settings = await this.getSettings(restaurantId);
-        if (!settings || !settings.isEnabled || !settings.sendPositionUpdates) return;
+        if (!settings || !settings.sendPositionUpdates) return;
 
         // Rate Limit Check
         if (entry.lastNotifiedAt && entry.lastNotifiedPosition) {
@@ -127,7 +127,7 @@ export class WhatsAppService {
         }
 
         const settings = await this.getSettings(restaurantId);
-        if (!settings || !settings.isEnabled || !settings.sendTurnMessage) return;
+        if (!settings || !settings.sendTurnMessage) return;
 
         const restaurant = await prisma.restaurant.findUnique({ where: { id: restaurantId } });
         if (!restaurant) return;

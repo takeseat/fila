@@ -37,7 +37,7 @@
     "settings": {
         "title": "My Plan",
         "subtitle": "Manage your plan and subscription",
-        "currentPlan": "Current plan:",
-        "featuresTitle": "Included features:"
+        "currentPlan": "Current Plan:",
+        "featuresTitle": "Included Features:"
     }
 }
