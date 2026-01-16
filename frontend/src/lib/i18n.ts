@@ -14,6 +14,7 @@ import enErrors from '../locales/en/errors.json';
 import enTables from '../locales/en/tables.json';
 import enReports from '../locales/en/reports.json';
 import enUsers from '../locales/en/users.json';
+import enPlans from '../locales/en/plans.json';
 
 // Import Portuguese (Brazil) translations
 import ptBRAuth from '../locales/pt-BR/auth.json';
@@ -28,6 +29,7 @@ import ptBRErrors from '../locales/pt-BR/errors.json';
 import ptBRTables from '../locales/pt-BR/tables.json';
 import ptBRReports from '../locales/pt-BR/reports.json';
 import ptBRUsers from '../locales/pt-BR/users.json';
+import ptBRPlans from '../locales/pt-BR/plans.json';
 
 // Import Spanish translations
 import esAuth from '../locales/es/auth.json';
@@ -127,6 +129,7 @@ i18n
                 tables: enTables,
                 reports: enReports,
                 users: enUsers,
+                plans: enPlans,
             },
             'pt-BR': {
                 auth: ptBRAuth,
@@ -141,6 +144,7 @@ i18n
                 tables: ptBRTables,
                 reports: ptBRReports,
                 users: ptBRUsers,
+                plans: ptBRPlans,
             },
             es: {
                 auth: esAuth,
@@ -220,7 +224,7 @@ i18n
         lng: 'en', // Default - LanguageProvider will override
         fallbackLng: 'en',
         defaultNS: 'common',
-        ns: ['common', 'auth', 'profile', 'nav', 'dashboard', 'waitlist', 'customers', 'settings', 'errors', 'tables', 'reports'],
+        ns: ['common', 'auth', 'profile', 'nav', 'dashboard', 'waitlist', 'customers', 'settings', 'errors', 'tables', 'reports', 'plans'],
         interpolation: {
             escapeValue: false, // React already escapes values
         },
