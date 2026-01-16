@@ -66,6 +66,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 console.log('[AuthContext] Plan missing in stored restaurant, defaulting to BASIC');
                 restaurantData.plan = 'BASIC';
             }
+
+            // SIMULATION MODE: Check for local override
+            const simulatedPlan = localStorage.getItem('simulated_plan');
+            if (simulatedPlan) {
+                console.log('[AuthContext] Loading SIMULATED plan:', simulatedPlan);
+                restaurantData.plan = simulatedPlan;
+            }
+
             setRestaurant(restaurantData);
 
             // Sync i18n
@@ -97,6 +105,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             ...data.restaurant,
             plan: data.restaurant.plan || 'BASIC'
         };
+
+        // SIMULATION MODE
+        const simulatedPlan = localStorage.getItem('simulated_plan');
+        if (simulatedPlan) {
+            restaurantWithPlan.plan = simulatedPlan;
+        }
+
         setRestaurant(restaurantWithPlan);
         localStorage.setItem('restaurant', JSON.stringify(restaurantWithPlan));
     };

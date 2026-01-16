@@ -3,13 +3,17 @@
         "title": "Básico",
         "description": "Perfeito para começar",
         "price": "Grátis",
-        "cta": "Continuar com Básico"
+        "cta": "Continuar com Básico",
+        "current": "Seu plano atual"
     },
     "pro": {
         "title": "Profissional",
         "description": "Para restaurantes em crescimento",
         "price": "R$ 99",
-        "cta": "Ativar Profissional"
+        "period": "/mês",
+        "cta": "Ativar Profissional",
+        "active": "Plano Ativo",
+        "upgrade": "Fazer Upgrade"
     },
     "features": {
         "waitlist": "Fila de Espera Ilimitada",
@@ -22,12 +26,18 @@
         "cta": "Fazer Upgrade Agora",
         "maybeLater": "Talvez mais tarde",
         "featureLocked": "Recurso disponível no plano Profissional.",
-        "ctaInline": "Faça upgrade para usar."
+        "ctaInline": "Faça upgrade para usar.",
+        "whatsappHint": "Avise seus clientes automaticamente pelo WhatsApp."
     },
     "banner": {
         "title": "Upgrade disponível",
         "description": "Desbloqueie WhatsApp e Pedidos com o plano Profissional.",
         "cta": "Ver Planos"
     },
-    "currentPlan": "Seu plano atual"
+    "settings": {
+        "title": "Meu Plano",
+        "subtitle": "Gerencie seu plano e assinatura",
+        "currentPlan": "Plano atual:",
+        "featuresTitle": "Funcionalidades incluídas:"
+    }
 }

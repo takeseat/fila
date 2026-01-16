@@ -63,15 +63,29 @@ export function OnboardingWizard() {
             // If PRO was selected, we could trigger a payment flow or upgraded flag
 
             if (plan === 'PRO') {
-                // Simulate or log pro selection
-                console.log('User selected PRO plan during onboarding');
+                // Simulate PRO plan activation locally for this session
+                console.log('User selected PRO plan during onboarding - Activating Simulation Mode');
+                localStorage.setItem('simulated_plan', 'PRO');
+
+                // Update specific local storage restaurant object immediately so next refresh works
+                if (restaurant) {
+                    localStorage.setItem('restaurant', JSON.stringify({ ...restaurant, plan: 'PRO' }));
+                }
             }
 
             // Complete Onboarding
             await api.post('/onboarding/complete');
 
             // Refresh profile to update onboardingPending state locally
+            // Note: refreshProfile will fetch real data (BASIC), so we rely on AuthContext simulation check
             await refreshProfile();
+
+            // Re-apply simulation if refreshProfile wiped it (it shouldn't if AuthContext logic is robust, 
+            // but refreshProfile calls api.get('/auth/me') and then setRestaurant directly.
+            // We might need to update refreshProfile logic too if we want it to persist across refreshes of profile.
+            // But for now, the page reload or next app start will pick it up. 
+            // Better: update the context state immediately here if possible, but we can't.
+            // Navigating to dashboard should be fine.
 
             navigate('/dashboard');
         } catch (err: any) {

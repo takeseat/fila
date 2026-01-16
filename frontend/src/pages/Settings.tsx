@@ -6,10 +6,11 @@ import { ParametersTab } from '../components/settings/ParametersTab';
 import { TeamTab } from '../components/settings/TeamTab';
 import { WhatsAppTab } from '../components/settings/WhatsAppTab';
 import PickupOrdersSettings from './Settings/PickupOrdersSettings';
+import { PlanSettings } from '../components/settings/PlanSettings';
 
 export function Settings() {
     const { t } = useTranslation('settings');
-    const [activeTab, setActiveTab] = useState<'business' | 'parameters' | 'team' | 'whatsapp' | 'pickup'>('business');
+    const [activeTab, setActiveTab] = useState<'business' | 'plan' | 'parameters' | 'team' | 'whatsapp' | 'pickup'>('business');
 
     const tabs = [
         {
@@ -20,6 +21,15 @@ export function Settings() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                 </svg>
             ),
+        },
+        {
+            id: 'plan',
+            label: 'Plano', // Todo: move to i18n
+            icon: (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+            )
         },
         {
             id: 'parameters',
@@ -79,6 +89,7 @@ export function Settings() {
                 {/* Tab Content */}
                 <div className="p-6">
                     {activeTab === 'business' && <BusinessDataTab />}
+                    {activeTab === 'plan' && <PlanSettings />}
                     {activeTab === 'parameters' && <ParametersTab />}
                     {activeTab === 'team' && <TeamTab />}
                     {activeTab === 'whatsapp' && <WhatsAppTab />}

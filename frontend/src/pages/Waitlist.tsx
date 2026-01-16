@@ -10,7 +10,9 @@ import { DEFAULT_COUNTRY, getCountryByCode } from '../data/countries';
 import { buildFullPhone } from '../utils/phoneUtils';
 
 export function Waitlist() {
-    const { t } = useTranslation('waitlist');
+    const { t } = useTranslation(['waitlist', 'plans']);
+
+
     const { restaurant } = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
@@ -849,13 +851,13 @@ export function Waitlist() {
 
                                     {restaurant?.plan === 'BASIC' && (
                                         <p className="mt-1 text-xs">
-                                            <span className="text-gray-500">{t('upgrade.featureLocked')} </span>
+                                            <span className="text-gray-500">{t('plans:upgrade.whatsappHint')} </span>
                                             <button
                                                 type="button"
                                                 onClick={() => window.dispatchEvent(new CustomEvent('open-upgrade-modal'))}
                                                 className="text-primary-600 hover:text-primary-700 font-medium underline"
                                             >
-                                                {t('upgrade.ctaInline')}
+                                                {t('plans:upgrade.ctaInline')}
                                             </button>
                                         </p>
                                     )}

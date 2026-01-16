@@ -3,13 +3,17 @@
         "title": "Basic",
         "description": "Perfect to get started",
         "price": "Free",
-        "cta": "Continue with Basic"
+        "cta": "Continue with Basic",
+        "current": "Your current plan"
     },
     "pro": {
         "title": "Professional",
         "description": "For growing restaurants",
         "price": "$19",
-        "cta": "Activate Professional"
+        "period": "/month",
+        "cta": "Activate Professional",
+        "active": "Active Plan",
+        "upgrade": "Upgrade"
     },
     "features": {
         "waitlist": "Unlimited Waitlist",
@@ -22,12 +26,18 @@
         "cta": "Upgrade Now",
         "maybeLater": "Maybe later",
         "featureLocked": "Feature available on Professional plan.",
-        "ctaInline": "Upgrade to use."
+        "ctaInline": "Upgrade to use.",
+        "whatsappHint": "Notify your customers automatically via WhatsApp."
     },
     "banner": {
         "title": "Upgrade available",
         "description": "Unlock WhatsApp and Orders with the Professional plan.",
         "cta": "View Plans"
     },
-    "currentPlan": "Your current plan"
+    "settings": {
+        "title": "My Plan",
+        "subtitle": "Manage your plan and subscription",
+        "currentPlan": "Current plan:",
+        "featuresTitle": "Included features:"
+    }
 }
