@@ -33,14 +33,15 @@ export interface DashboardMetrics {
     weeklyTrend: DailyVolume[];
 }
 
-export function useDashboardMetrics() {
+export function useDashboardMetrics(options?: { staleTime?: number }) {
     return useQuery<DashboardMetrics>({
         queryKey: ['dashboard', 'metrics'],
         queryFn: async () => {
             const { data } = await api.get('/dashboard/metrics');
             return data;
         },
-        refetchInterval: 30000, // Refetch every 30 seconds
-        staleTime: 20000, // Consider data stale after 20 seconds
+        refetchInterval: 30000,
+        staleTime: 20000,
+        ...options,
     });
 }

@@ -14,11 +14,16 @@ export const Home: React.FC = () => {
     const { canUsePickupOrders } = usePlan();
 
     // Data Fetching
-    const { data: metrics, isLoading: loadingMetrics } = useDashboardMetrics();
-    const { data: pickupOrdersData, isLoading: loadingOrders } = usePickupOrders({
-        status: 'READY_FOR_PICKUP',
-        limit: 100 // Fetch enough to count
-    });
+    // We use staleTime: 0 so data is always fresh when mounting/focusing Home
+    const { data: metrics, isLoading: loadingMetrics } = useDashboardMetrics({ staleTime: 0 });
+    const { data: pickupOrdersData, isLoading: loadingOrders } = usePickupOrders(
+        {
+            status: 'READY_FOR_PICKUP',
+            limit: 100
+        },
+        { staleTime: 0 }
+    );
+
 
     // Derived State
     const queueCount = metrics?.activeQueue?.count || 0;

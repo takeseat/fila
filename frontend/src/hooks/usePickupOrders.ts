@@ -17,11 +17,12 @@ export const pickupOrdersKeys = {
 };
 
 // List pickup orders
-export function usePickupOrders(params?: ListPickupOrdersParams) {
+export function usePickupOrders(params?: ListPickupOrdersParams, options?: { staleTime?: number }) {
     return useQuery({
         queryKey: pickupOrdersKeys.list(params),
         queryFn: () => pickupOrdersApi.list(params),
         staleTime: 30000, // 30 seconds
+        ...options,
     });
 }
 
