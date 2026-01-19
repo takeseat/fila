@@ -47,7 +47,14 @@ export function MessagesTab() {
     const [successMessage, setSuccessMessage] = useState('');
 
     // WhatsApp Form
-    const { register, handleSubmit, reset, setValue } = useForm<WhatsAppSettings>();
+    const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<WhatsAppSettings>();
+
+    const sendWelcome = watch('sendWelcome');
+    const sendPositionUpdates = watch('sendPositionUpdates');
+    const sendTurnMessage = watch('sendTurnMessage');
+    const sendOrderCreated = watch('sendOrderCreated');
+    const sendOrderReady = watch('sendOrderReady');
+    const sendOrderNotPickedUp = watch('sendOrderNotPickedUp');
 
     const { data: waSettings, isLoading: isWaLoading } = useQuery<WhatsAppSettings>({
         queryKey: ['whatsapp-settings'],
@@ -166,14 +173,18 @@ export function MessagesTab() {
                                         {...register('sendWelcome')}
                                         className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                     />
-                                    <label htmlFor="sendWelcome" className="font-medium text-gray-800">Boas-vindas</label>
+                                    <label htmlFor="sendWelcome" className="font-medium text-gray-800">
+                                        Boas-vindas
+                                        {sendWelcome && <span className="text-red-500 ml-1">*</span>}
+                                    </label>
                                 </div>
                                 <textarea
-                                    {...register('welcomeText')}
+                                    {...register('welcomeText', { required: sendWelcome })}
                                     rows={3}
                                     placeholder={DEFAULTS.welcomeText}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                    className={`w-full px-3 py-2 border ${errors.welcomeText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
                                 />
+                                {errors.welcomeText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
                                 <div className="flex justify-between items-center">
                                     <p className="text-xs text-gray-400">Enviado quando o cliente entra na fila.</p>
                                     <button
@@ -195,14 +206,18 @@ export function MessagesTab() {
                                         {...register('sendPositionUpdates')}
                                         className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                     />
-                                    <label htmlFor="sendPositionUpdates" className="font-medium text-gray-800">Atualização de Posição</label>
+                                    <label htmlFor="sendPositionUpdates" className="font-medium text-gray-800">
+                                        Atualização de Posição
+                                        {sendPositionUpdates && <span className="text-red-500 ml-1">*</span>}
+                                    </label>
                                 </div>
                                 <textarea
-                                    {...register('positionUpdateText')}
+                                    {...register('positionUpdateText', { required: sendPositionUpdates })}
                                     rows={3}
                                     placeholder={DEFAULTS.positionUpdateText}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                    className={`w-full px-3 py-2 border ${errors.positionUpdateText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
                                 />
+                                {errors.positionUpdateText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
                                 <div className="flex justify-between items-center">
                                     <p className="text-xs text-gray-400">Enviado quando a fila anda.</p>
                                     <button
@@ -224,14 +239,18 @@ export function MessagesTab() {
                                         {...register('sendTurnMessage')}
                                         className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                     />
-                                    <label htmlFor="sendTurnMessage" className="font-medium text-gray-800">Sua Vez</label>
+                                    <label htmlFor="sendTurnMessage" className="font-medium text-gray-800">
+                                        Sua Vez
+                                        {sendTurnMessage && <span className="text-red-500 ml-1">*</span>}
+                                    </label>
                                 </div>
                                 <textarea
-                                    {...register('yourTurnText')}
+                                    {...register('yourTurnText', { required: sendTurnMessage })}
                                     rows={3}
                                     placeholder={DEFAULTS.yourTurnText}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                    className={`w-full px-3 py-2 border ${errors.yourTurnText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
                                 />
+                                {errors.yourTurnText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
                                 <div className="flex justify-between items-center">
                                     <p className="text-xs text-gray-400">Enviado quando você chama o cliente.</p>
                                     <button
@@ -292,14 +311,18 @@ export function MessagesTab() {
                                             {...register('sendOrderCreated')}
                                             className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                         />
-                                        <label htmlFor="sendOrderCreated" className="font-medium text-gray-800">{t('orderMessages.created.label')}</label>
+                                        <label htmlFor="sendOrderCreated" className="font-medium text-gray-800">
+                                            {t('orderMessages.created.label')}
+                                            {sendOrderCreated && <span className="text-red-500 ml-1">*</span>}
+                                        </label>
                                     </div>
                                     <textarea
-                                        {...register('orderCreatedText')}
+                                        {...register('orderCreatedText', { required: sendOrderCreated })}
                                         rows={3}
                                         placeholder={DEFAULTS.orderCreatedText}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                        className={`w-full px-3 py-2 border ${errors.orderCreatedText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
                                     />
+                                    {errors.orderCreatedText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
                                     <div className="flex justify-between items-center">
                                         <p className="text-xs text-gray-400">{t('orderMessages.created.help')}</p>
                                         <button
@@ -321,14 +344,18 @@ export function MessagesTab() {
                                             {...register('sendOrderReady')}
                                             className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                         />
-                                        <label htmlFor="sendOrderReady" className="font-medium text-gray-800">{t('orderMessages.ready.label')}</label>
+                                        <label htmlFor="sendOrderReady" className="font-medium text-gray-800">
+                                            {t('orderMessages.ready.label')}
+                                            {sendOrderReady && <span className="text-red-500 ml-1">*</span>}
+                                        </label>
                                     </div>
                                     <textarea
-                                        {...register('orderReadyText')}
+                                        {...register('orderReadyText', { required: sendOrderReady })}
                                         rows={3}
                                         placeholder={DEFAULTS.orderReadyText}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                        className={`w-full px-3 py-2 border ${errors.orderReadyText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
                                     />
+                                    {errors.orderReadyText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
                                     <div className="flex justify-between items-center">
                                         <p className="text-xs text-gray-400">{t('orderMessages.ready.help')}</p>
                                         <button
@@ -350,14 +377,18 @@ export function MessagesTab() {
                                             {...register('sendOrderNotPickedUp')}
                                             className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                                         />
-                                        <label htmlFor="sendOrderNotPickedUp" className="font-medium text-gray-800">{t('orderMessages.notPickedUp.label')}</label>
+                                        <label htmlFor="sendOrderNotPickedUp" className="font-medium text-gray-800">
+                                            {t('orderMessages.notPickedUp.label')}
+                                            {sendOrderNotPickedUp && <span className="text-red-500 ml-1">*</span>}
+                                        </label>
                                     </div>
                                     <textarea
-                                        {...register('orderNotPickedUpText')}
+                                        {...register('orderNotPickedUpText', { required: sendOrderNotPickedUp })}
                                         rows={3}
                                         placeholder={DEFAULTS.orderNotPickedUpText}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                        className={`w-full px-3 py-2 border ${errors.orderNotPickedUpText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
                                     />
+                                    {errors.orderNotPickedUpText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
                                     <div className="flex justify-between items-center">
                                         <p className="text-xs text-gray-400">{t('orderMessages.notPickedUp.help')}</p>
                                         <button
@@ -398,7 +429,7 @@ export function MessagesTab() {
                     disabled={mutation.isPending}
                     className="w-full md:w-auto"
                 >
-                    {mutation.isPending ? 'Salvando...' : 'Salvar Todas as Configurações'}
+                    {mutation.isPending ? 'Salvando...' : 'Salvar'}
                 </Button>
             </div>
         </form>
