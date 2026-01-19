@@ -100,6 +100,36 @@
             }
         }
     },
+    "pickupParameters": {
+        "title": "Parâmetros de Retirada",
+        "autoNotPickedUp": {
+            "label": "Tempo para Não Retirado (minutos)",
+            "help": "Se o cliente não buscar o pedido X minutos após ficar 'Pronto', ele será marcado como 'Não Retirado'.",
+            "placeholder": "30",
+            "validation": "Valor deve ser entre 10 e 120 minutos"
+        }
+    },
+    "orderMessages": {
+        "title": "Templates de Pedido",
+        "created": {
+            "label": "Pedido Criado",
+            "help": "Enviado ao criar um novo pedido."
+        },
+        "ready": {
+            "label": "Pedido Pronto",
+            "help": "Enviado quando o pedido fica pronto para retirada."
+        },
+        "notPickedUp": {
+            "label": "Não Retirado",
+            "help": "Enviado se o pedido não for retirado após o tempo limite."
+        },
+        "variables": {
+            "title": "Variáveis de Pedido",
+            "customerName": "Nome do cliente",
+            "orderCode": "Código do pedido",
+            "businessName": "Nome do restaurante"
+        }
+    },
     "validation": {
         "mustBePositive": "O valor deve ser maior que 0",
         "required": "Este campo é obrigatório"

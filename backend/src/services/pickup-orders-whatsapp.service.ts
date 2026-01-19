@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { format } from 'date-fns';
 import { ptBR, enUS } from 'date-fns/locale';
-import { PickupOrdersConfig } from '../config/pickup-orders-defaults';
 import { WhatsAppProvider } from '../providers/whatsapp/whatsapp.provider';
 
 const prisma = new PrismaClient();
@@ -38,7 +37,6 @@ export class PickupOrdersWhatsAppService {
     private static async getTemplateVariables(
         order: any,
         restaurant: any,
-        config: PickupOrdersConfig,
         language: string
     ): Promise<TemplateVariables> {
         const locale = language.startsWith('pt') ? ptBR : enUS;
@@ -47,7 +45,7 @@ export class PickupOrdersWhatsAppService {
             business_name: restaurant.name,
             order_code: order.orderCode,
             customer_name: order.customerName || '',
-            pickup_instructions: config.pickupInstructions,
+            pickup_instructions: '', // Instructions should be part of the template now
             support_phone: restaurant.phone || '',
             created_time: order.createdAt
                 ? format(order.createdAt, 'HH:mm', { locale })
@@ -62,7 +60,11 @@ export class PickupOrdersWhatsAppService {
     static async sendOrderCreatedMessage(orderId: string) {
         const order = await prisma.pickupOrder.findUnique({
             where: { id: orderId },
-            include: { restaurant: true },
+            include: {
+                restaurant: {
+                    include: { whatsappSettings: true }
+                }
+            },
         });
 
         if (!order || !order.whatsappOptIn) {
@@ -70,23 +72,27 @@ export class PickupOrdersWhatsAppService {
         }
 
         const restaurant = order.restaurant;
-        if (!restaurant.pickupOrdersWhatsappEnabled) {
+
+        // Plan Check
+        if (restaurant.plan !== 'PRO') {
+            console.log('[PickupOrdersWhatsApp] Skipping created message - Plan is not PRO');
             return null;
         }
 
-        const config = restaurant.pickupOrdersConfig as unknown as PickupOrdersConfig;
-        if (!config?.messages?.created?.enabled) {
+        const settings = restaurant.whatsappSettings;
+        if (!settings?.isEnabled || !settings.sendOrderCreated) {
             return null;
         }
+
+        const template = settings.orderCreatedText || 'Seu pedido {{order_code}} foi recebido!';
 
         const variables = await this.getTemplateVariables(
             order,
             restaurant,
-            config,
-            'pt-BR' // TODO: Get from restaurant or customer
+            'pt-BR'
         );
 
-        const message = this.renderTemplate(config.messages.created.template, variables);
+        const message = this.renderTemplate(template, variables);
 
         try {
             const result = await whatsappProvider.sendText({
@@ -146,7 +152,11 @@ export class PickupOrdersWhatsAppService {
     static async sendOrderReadyMessage(orderId: string) {
         const order = await prisma.pickupOrder.findUnique({
             where: { id: orderId },
-            include: { restaurant: true },
+            include: {
+                restaurant: {
+                    include: { whatsappSettings: true }
+                }
+            },
         });
 
         if (!order || !order.whatsappOptIn) {
@@ -154,23 +164,27 @@ export class PickupOrdersWhatsAppService {
         }
 
         const restaurant = order.restaurant;
-        if (!restaurant.pickupOrdersWhatsappEnabled) {
+
+        // Plan Check
+        if (restaurant.plan !== 'PRO') {
+            console.log('[PickupOrdersWhatsApp] Skipping ready message - Plan is not PRO');
             return null;
         }
 
-        const config = restaurant.pickupOrdersConfig as unknown as PickupOrdersConfig;
-        if (!config?.messages?.ready?.enabled) {
+        const settings = restaurant.whatsappSettings;
+        if (!settings?.isEnabled || !settings.sendOrderReady) {
             return null;
         }
+
+        const template = settings.orderReadyText || 'Seu pedido {{order_code}} está pronto!';
 
         const variables = await this.getTemplateVariables(
             order,
             restaurant,
-            config,
             'pt-BR'
         );
 
-        const message = this.renderTemplate(config.messages.ready.template, variables);
+        const message = this.renderTemplate(template, variables);
 
         try {
             const result = await whatsappProvider.sendText({
@@ -227,7 +241,11 @@ export class PickupOrdersWhatsAppService {
     static async sendOrderNotPickedUpMessage(orderId: string) {
         const order = await prisma.pickupOrder.findUnique({
             where: { id: orderId },
-            include: { restaurant: true },
+            include: {
+                restaurant: {
+                    include: { whatsappSettings: true }
+                }
+            },
         });
 
         if (!order || !order.whatsappOptIn) {
@@ -235,24 +253,28 @@ export class PickupOrdersWhatsAppService {
         }
 
         const restaurant = order.restaurant;
-        if (!restaurant.pickupOrdersWhatsappEnabled) {
+
+        // Plan Check
+        if (restaurant.plan !== 'PRO') {
+            console.log('[PickupOrdersWhatsApp] Skipping not picked up message - Plan is not PRO');
             return null;
         }
 
-        const config = restaurant.pickupOrdersConfig as unknown as PickupOrdersConfig;
-        if (!config?.messages?.notPickedUp?.enabled) {
+        const settings = restaurant.whatsappSettings;
+        if (!settings?.isEnabled || !settings.sendOrderNotPickedUp) {
             return null;
         }
+
+        const template = settings.orderNotPickedUpText || 'Seu pedido {{order_code}} ainda não foi retirado.';
 
         const variables = await this.getTemplateVariables(
             order,
             restaurant,
-            config,
             'pt-BR'
         );
 
         const message = this.renderTemplate(
-            config.messages.notPickedUp.template,
+            template,
             variables
         );
 

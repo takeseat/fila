@@ -8,6 +8,7 @@ const updateSettingsSchema = z.object({
     calledAlertMinutes: z.number().int().min(1).nullable().optional(),
     avgWaitWindowMinutes: z.number().int().min(1).nullable().optional(),
     avgWaitFallbackMinutes: z.number().int().min(1).nullable().optional(),
+    autoNotPickedUpMinutes: z.number().int().min(5).max(120).nullable().optional(),
 });
 
 const updateBusinessDataSchema = z.object({
@@ -129,7 +130,8 @@ export class RestaurantsController {
                     name: true,
                     email: true,
                     phone: true,
-                    timezone: true
+                    timezone: true,
+                    pickupOrdersConfig: true
                 }
             });
 
@@ -138,7 +140,14 @@ export class RestaurantsController {
                 return;
             }
 
-            res.json(restaurant);
+            const config = restaurant.pickupOrdersConfig as any;
+            const settings = {
+                ...restaurant,
+                autoNotPickedUpMinutes: config?.autoNotPickedUpMinutes ?? 30,
+                pickupOrdersConfig: undefined
+            };
+
+            res.json(settings);
         } catch (error: any) {
             console.error('Error fetching settings:', error);
             res.status(500).json({ error: 'Internal server error' });
@@ -153,6 +162,19 @@ export class RestaurantsController {
             const restaurantId = req.user!.restaurantId;
             const data = updateSettingsSchema.parse(req.body);
 
+            // Fetch current config to merge
+            const current = await prisma.restaurant.findUnique({
+                where: { id: restaurantId },
+                select: { pickupOrdersConfig: true }
+            });
+
+            const currentConfig = (current?.pickupOrdersConfig as any) || {};
+
+            // Update JSON
+            if (data.autoNotPickedUpMinutes !== undefined) {
+                currentConfig.autoNotPickedUpMinutes = data.autoNotPickedUpMinutes;
+            }
+
             const updatedRestaurant = await prisma.restaurant.update({
                 where: { id: restaurantId },
                 data: {
@@ -160,16 +182,25 @@ export class RestaurantsController {
                     calledAlertMinutes: data.calledAlertMinutes,
                     avgWaitWindowMinutes: data.avgWaitWindowMinutes,
                     avgWaitFallbackMinutes: data.avgWaitFallbackMinutes,
+                    pickupOrdersConfig: currentConfig
                 },
                 select: {
                     waitingAlertMinutes: true,
                     calledAlertMinutes: true,
                     avgWaitWindowMinutes: true,
                     avgWaitFallbackMinutes: true,
+                    pickupOrdersConfig: true
                 }
             });
 
-            res.json(updatedRestaurant);
+            const config = updatedRestaurant.pickupOrdersConfig as any;
+            const response = {
+                ...updatedRestaurant,
+                autoNotPickedUpMinutes: config?.autoNotPickedUpMinutes ?? 30,
+                pickupOrdersConfig: undefined
+            };
+
+            res.json(response);
         } catch (error: any) {
             if (error instanceof z.ZodError) {
                 res.status(400).json({ error: 'Validation error', details: error.errors });

@@ -11,8 +11,17 @@ const updateSettingsSchema = z.object({
     welcomeText: z.string().max(1000).nullable().optional(),
     positionUpdateText: z.string().max(1000).nullable().optional(),
     yourTurnText: z.string().max(1000).nullable().optional(),
-    // Rate limits (optional for now, using defaults if not provided or admin only?)
-    // Let's allow basic tuning
+    // Order Message Toggles
+    sendOrderCreated: z.boolean().optional(),
+    sendOrderReady: z.boolean().optional(),
+    sendOrderNotPickedUp: z.boolean().optional(),
+
+    // Order Message Templates
+    orderCreatedText: z.string().max(1000).nullable().optional(),
+    orderReadyText: z.string().max(1000).nullable().optional(),
+    orderNotPickedUpText: z.string().max(1000).nullable().optional(),
+
+    // Rate limits
     minSecondsBetweenUpdates: z.number().min(60).nullable().optional(),
     minPositionsChangeToNotify: z.number().min(1).nullable().optional(),
 });
@@ -64,6 +73,14 @@ export class WhatsAppSettingsController {
                     yourTurnText: data.yourTurnText ?? undefined,
                     ...(data.minSecondsBetweenUpdates && { minSecondsBetweenUpdates: data.minSecondsBetweenUpdates }),
                     ...(data.minPositionsChangeToNotify && { minPositionsChangeToNotify: data.minPositionsChangeToNotify }),
+
+                    // Order Messages
+                    sendOrderCreated: data.sendOrderCreated ?? undefined,
+                    sendOrderReady: data.sendOrderReady ?? undefined,
+                    sendOrderNotPickedUp: data.sendOrderNotPickedUp ?? undefined,
+                    orderCreatedText: data.orderCreatedText ?? undefined,
+                    orderReadyText: data.orderReadyText ?? undefined,
+                    orderNotPickedUpText: data.orderNotPickedUpText ?? undefined,
                 },
                 create: {
                     restaurantId,
@@ -76,6 +93,14 @@ export class WhatsAppSettingsController {
                     yourTurnText: data.yourTurnText,
                     ...(data.minSecondsBetweenUpdates && { minSecondsBetweenUpdates: data.minSecondsBetweenUpdates }),
                     ...(data.minPositionsChangeToNotify && { minPositionsChangeToNotify: data.minPositionsChangeToNotify }),
+
+                    // Order Messages
+                    sendOrderCreated: data.sendOrderCreated ?? true,
+                    sendOrderReady: data.sendOrderReady ?? true,
+                    sendOrderNotPickedUp: data.sendOrderNotPickedUp ?? false,
+                    orderCreatedText: data.orderCreatedText,
+                    orderReadyText: data.orderReadyText,
+                    orderNotPickedUpText: data.orderNotPickedUpText,
                 }
             });
 

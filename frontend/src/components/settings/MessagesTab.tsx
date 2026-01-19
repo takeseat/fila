@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePlan } from '../../hooks/usePlan';
 import { Card, Button } from '../ui';
 // import { WhatsAppTab } from './WhatsAppTab'; // Unused
-import PickupOrdersSettings from '../../pages/Settings/PickupOrdersSettings';
+
 
 // Temporary imports until valid refactor
 import { useForm } from 'react-hook-form';
@@ -20,10 +21,17 @@ type WhatsAppSettings = {
     yourTurnText: string;
     minSecondsBetweenUpdates: number;
     minPositionsChangeToNotify: number;
+    // Order Messages
+    sendOrderCreated: boolean;
+    sendOrderReady: boolean;
+    sendOrderNotPickedUp: boolean;
+    orderCreatedText: string;
+    orderReadyText: string;
+    orderNotPickedUpText: string;
 };
 
 export function MessagesTab() {
-    // const { t } = useTranslation('settings');
+    const { t } = useTranslation('settings');
     const { isPro } = usePlan();
     const queryClient = useQueryClient();
     const [successMessage, setSuccessMessage] = useState('');
@@ -55,6 +63,14 @@ export function MessagesTab() {
                 yourTurnText: waSettings.yourTurnText || '',
                 minSecondsBetweenUpdates: waSettings.minSecondsBetweenUpdates || 300,
                 minPositionsChangeToNotify: waSettings.minPositionsChangeToNotify || 5,
+
+                // Order Defaults
+                sendOrderCreated: waSettings.sendOrderCreated ?? true,
+                sendOrderReady: waSettings.sendOrderReady ?? true,
+                sendOrderNotPickedUp: waSettings.sendOrderNotPickedUp ?? false,
+                orderCreatedText: waSettings.orderCreatedText || '',
+                orderReadyText: waSettings.orderReadyText || '',
+                orderNotPickedUpText: waSettings.orderNotPickedUpText || '',
             });
         }
     }, [waSettings, reset]);
@@ -250,7 +266,84 @@ export function MessagesTab() {
                     </div>
                 </div>
                 <div className="p-6">
-                    <PickupOrdersSettings />
+                    <div className="space-y-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <div className="space-y-6">
+                                <h3 className="text-lg font-medium text-gray-900 border-b pb-2">{t('orderMessages.title')}</h3>
+
+                                {/* Order Created */}
+                                <div className="space-y-3">
+                                    <div className="flex items-center space-x-2">
+                                        <input
+                                            type="checkbox"
+                                            id="sendOrderCreated"
+                                            {...register('sendOrderCreated')}
+                                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                        />
+                                        <label htmlFor="sendOrderCreated" className="font-medium text-gray-800">{t('orderMessages.created.label')}</label>
+                                    </div>
+                                    <textarea
+                                        {...register('orderCreatedText')}
+                                        rows={3}
+                                        placeholder="Seu pedido {{order_code}} foi recebido!..."
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                    />
+                                    <p className="text-xs text-gray-400">{t('orderMessages.created.help')}</p>
+                                </div>
+
+                                {/* Order Ready */}
+                                <div className="space-y-3">
+                                    <div className="flex items-center space-x-2">
+                                        <input
+                                            type="checkbox"
+                                            id="sendOrderReady"
+                                            {...register('sendOrderReady')}
+                                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                        />
+                                        <label htmlFor="sendOrderReady" className="font-medium text-gray-800">{t('orderMessages.ready.label')}</label>
+                                    </div>
+                                    <textarea
+                                        {...register('orderReadyText')}
+                                        rows={3}
+                                        placeholder="Seu pedido {{order_code}} está pronto!..."
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                    />
+                                    <p className="text-xs text-gray-400">{t('orderMessages.ready.help')}</p>
+                                </div>
+
+                                {/* Not Picked Up */}
+                                <div className="space-y-3">
+                                    <div className="flex items-center space-x-2">
+                                        <input
+                                            type="checkbox"
+                                            id="sendOrderNotPickedUp"
+                                            {...register('sendOrderNotPickedUp')}
+                                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                        />
+                                        <label htmlFor="sendOrderNotPickedUp" className="font-medium text-gray-800">{t('orderMessages.notPickedUp.label')}</label>
+                                    </div>
+                                    <textarea
+                                        {...register('orderNotPickedUpText')}
+                                        rows={3}
+                                        placeholder="Seu pedido {{order_code}} ainda não foi retirado..."
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm"
+                                    />
+                                    <p className="text-xs text-gray-400">{t('orderMessages.notPickedUp.help')}</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                                    <h4 className="font-medium text-purple-900 mb-2">{t('orderMessages.variables.title')}</h4>
+                                    <ul className="text-sm text-purple-800 space-y-2">
+                                        <li><code>{`{{customer_name}}`}</code>: {t('orderMessages.variables.customerName')}</li>
+                                        <li><code>{`{{order_code}}`}</code>: {t('orderMessages.variables.orderCode')}</li>
+                                        <li><code>{`{{business_name}}`}</code>: {t('orderMessages.variables.businessName')}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </Card>
         </div>
