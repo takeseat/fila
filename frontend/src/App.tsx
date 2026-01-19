@@ -8,6 +8,7 @@ import { useAuth } from './hooks/useAuth';
 import { Layout } from './components/layout/Layout';
 import { ImpersonationBanner } from './components/ImpersonationBanner';
 import { GlobalListeners } from './components/GlobalListeners';
+import { Home } from './pages/Home';
 import { Login, Register } from './pages/Auth';
 import VerifyEmail from './pages/VerifyEmail';
 import { Dashboard } from './pages/Dashboard';
@@ -52,9 +53,9 @@ function PrivateRoute({ children, requireOnboarding = false }: { children: React
 
     // Onboarding Logic
     if (requireOnboarding) {
-        // If we are on /onboarding, but onboarding is already done, go to dashboard
+        // If we are on /onboarding, but onboarding is already done, go to Home
         if (!restaurant?.onboardingPending) {
-            return <Navigate to="/dashboard" replace />;
+            return <Navigate to="/" replace />;
         }
         // If pending, allow access to wizard
         return <Layout simple>{children}</Layout>; // Use simple layout for wizard
@@ -109,6 +110,16 @@ function App() {
                                         }
                                     />
                                     <Route path="/impersonate" element={<ImpersonatePage />} />
+
+                                    {/* Home Page (Always the starting point) */}
+                                    <Route
+                                        path="/"
+                                        element={
+                                            <PrivateRoute>
+                                                <Home />
+                                            </PrivateRoute>
+                                        }
+                                    />
 
                                     <Route
                                         path="/dashboard"
@@ -207,7 +218,8 @@ function App() {
                                         }
                                     />
 
-                                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                                    {/* Catch all others */}
+                                    <Route path="*" element={<Navigate to="/" replace />} />
                                 </Routes>
                             </BrowserRouter>
                         </LanguageGuard>

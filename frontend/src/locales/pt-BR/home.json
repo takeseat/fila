@@ -1,0 +1,27 @@
+{
+    "layers": {
+        "operational": {
+            "high_wait_time": "Fila com tempo de espera elevado ({{minutes}} min)",
+            "delayed_orders": "{{count}} pedidos prontos aguardando retirada há muito tempo"
+        },
+        "journey": {
+            "queue": {
+                "title": "Fila de Espera",
+                "status_normal": "{{count}} pessoas aguardando · Fluxo normal",
+                "status_empty": "Fila vazia · Fluxo tranquilo",
+                "cta": "Gerenciar Fila"
+            },
+            "orders": {
+                "title": "Pedidos para Retirada",
+                "status_ready": "{{count}} pedidos prontos",
+                "status_empty": "Nenhum pedido pronto",
+                "cta": "Gerenciar Pedidos"
+            }
+        },
+        "communication": {
+            "nps_question": "Como foi sua experiência hoje?",
+            "nps_action": "Avaliar"
+        }
+    },
+    "greeting": "Olá, {{name}}"
+}

@@ -30,6 +30,7 @@ import ptBRTables from '../locales/pt-BR/tables.json';
 import ptBRReports from '../locales/pt-BR/reports.json';
 import ptBRUsers from '../locales/pt-BR/users.json';
 import ptBRPlans from '../locales/pt-BR/plans.json';
+import ptBRHome from '../locales/pt-BR/home.json';
 
 // Import Spanish translations
 import esAuth from '../locales/es/auth.json';
@@ -145,6 +146,7 @@ i18n
                 reports: ptBRReports,
                 users: ptBRUsers,
                 plans: ptBRPlans,
+                home: ptBRHome,
             },
             es: {
                 auth: esAuth,
@@ -224,7 +226,7 @@ i18n
         lng: 'en', // Default - LanguageProvider will override
         fallbackLng: 'en',
         defaultNS: 'common',
-        ns: ['common', 'auth', 'profile', 'nav', 'dashboard', 'waitlist', 'customers', 'settings', 'errors', 'tables', 'reports', 'plans'],
+        ns: ['common', 'auth', 'profile', 'nav', 'dashboard', 'waitlist', 'customers', 'settings', 'errors', 'tables', 'reports', 'plans', 'home'],
         interpolation: {
             escapeValue: false, // React already escapes values
         },
