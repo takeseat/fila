@@ -1,6 +1,6 @@
 {
     "menu": {
-        "dashboard": "Dashboard",
+        "home": "Início",
         "waitlist": "Fila de Espera",
         "customers": "Clientes",
         "pickupOrders": "Pedidos",

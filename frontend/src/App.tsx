@@ -11,7 +11,6 @@ import { GlobalListeners } from './components/GlobalListeners';
 import { Home } from './pages/Home';
 import { Login, Register } from './pages/Auth';
 import VerifyEmail from './pages/VerifyEmail';
-import { Dashboard } from './pages/Dashboard';
 import { Waitlist } from './pages/Waitlist';
 import { Customers } from './pages/Customers';
 import { Settings } from './pages/Settings';
@@ -121,14 +120,6 @@ function App() {
                                         }
                                     />
 
-                                    <Route
-                                        path="/dashboard"
-                                        element={
-                                            <PrivateRoute>
-                                                <Dashboard />
-                                            </PrivateRoute>
-                                        }
-                                    />
 
                                     <Route
                                         path="/waitlist"
