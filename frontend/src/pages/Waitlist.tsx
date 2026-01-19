@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../hooks/useAuth';
 import api from '../lib/api';
+import { usePlan } from '../hooks/usePlan';
 import { Button, Modal, Input, Badge, EmptyState, Progress, Spinner } from '../components/ui';
 import { InternationalPhoneInput } from '../components/ui/InternationalPhoneInput';
 import { format } from 'date-fns';
@@ -11,9 +11,7 @@ import { buildFullPhone } from '../utils/phoneUtils';
 
 export function Waitlist() {
     const { t } = useTranslation(['waitlist', 'plans']);
-
-
-    const { restaurant } = useAuth();
+    const { canUseWhatsApp } = usePlan();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         country: DEFAULT_COUNTRY,
@@ -233,7 +231,7 @@ export function Waitlist() {
             customerPhone: formData.phone,
             partySize: formData.partySize,
             notes: formData.notes,
-            whatsappOptIn: formData.whatsappOptIn,
+            whatsappOptIn: canUseWhatsApp ? formData.whatsappOptIn : false,
         };
 
         createMutation.mutate(payload);
@@ -831,36 +829,22 @@ export function Waitlist() {
                         )}
                     </div>
 
-                    {shouldShowWhatsappOptIn && (
-                        <div className={`p-3 rounded-lg border ${restaurant?.plan === 'BASIC' ? 'bg-gray-50 border-gray-200' : 'bg-green-50/50 border-green-100'} animate-fade-in`}>
+                    {shouldShowWhatsappOptIn && canUseWhatsApp && (
+                        <div className="p-3 rounded-lg border bg-green-50/50 border-green-100 animate-fade-in">
                             <div className="flex items-start gap-3">
                                 <div className="flex items-center h-5 mt-0.5">
                                     <input
                                         type="checkbox"
                                         id="whatsappOptIn"
                                         checked={formData.whatsappOptIn}
-                                        disabled={restaurant?.plan === 'BASIC'}
                                         onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
-                                        className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 disabled:opacity-50"
+                                        className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
                                     />
                                 </div>
                                 <div className="flex-1">
-                                    <label htmlFor="whatsappOptIn" className={`text-sm font-medium block ${restaurant?.plan === 'BASIC' ? 'text-gray-500' : 'text-gray-900'} cursor-pointer select-none`}>
+                                    <label htmlFor="whatsappOptIn" className="text-sm font-medium block text-gray-900 cursor-pointer select-none">
                                         {t('form.whatsappOptIn')}
                                     </label>
-
-                                    {restaurant?.plan === 'BASIC' && (
-                                        <p className="mt-1 text-xs">
-                                            <span className="text-gray-500">{t('plans:upgrade.whatsappHint')} </span>
-                                            <button
-                                                type="button"
-                                                onClick={() => window.dispatchEvent(new CustomEvent('open-upgrade-modal'))}
-                                                className="text-primary-600 hover:text-primary-700 font-medium underline"
-                                            >
-                                                {t('plans:upgrade.ctaInline')}
-                                            </button>
-                                        </p>
-                                    )}
                                 </div>
                             </div>
                         </div>

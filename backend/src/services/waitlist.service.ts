@@ -75,6 +75,16 @@ export class WaitlistService {
             }
         }
 
+        // Fetch restaurant plan to enforce limits
+        const restaurant = await prisma.restaurant.findUnique({
+            where: { id: restaurantId },
+            select: { plan: true }
+        });
+        const isPro = restaurant?.plan === 'PRO';
+
+        // Force opt-in to false if not PRO
+        const effectiveWhatsappOptIn = isPro ? data.whatsappOptIn : false;
+
         const entry = await prisma.waitlistEntry.create({
             data: {
                 restaurantId,
@@ -85,8 +95,8 @@ export class WaitlistService {
                 partySize: data.partySize,
                 estimatedWaitMinutes,
                 status: 'WAITING',
-                whatsappOptIn: data.whatsappOptIn ?? false,
-                whatsappOptInAt: data.whatsappOptIn ? new Date() : null,
+                whatsappOptIn: effectiveWhatsappOptIn ?? false,
+                whatsappOptInAt: effectiveWhatsappOptIn ? new Date() : null,
             },
             include: {
                 customer: true,
@@ -94,8 +104,7 @@ export class WaitlistService {
         });
 
         // WhatsApp Notification (Welcome)
-        console.log('[WhatsApp Debug] whatsappOptIn:', data.whatsappOptIn, 'entry.whatsappOptIn:', entry.whatsappOptIn);
-        if (data.whatsappOptIn) {
+        if (effectiveWhatsappOptIn && isPro) {
             try {
                 console.log('[WhatsApp] Sending welcome message to', entry.customerPhone);
                 // current position is waitingCount + 1
@@ -104,7 +113,7 @@ export class WaitlistService {
                 console.error('Error initiating welcome message', error);
             }
         } else {
-            console.log('[WhatsApp] Skipping welcome message - opt-in is false');
+            console.log('[WhatsApp] Skipping welcome message - opt-in is false or plan is not PRO');
         }
 
         return entry;
@@ -136,7 +145,16 @@ export class WaitlistService {
 
         // WhatsApp Notification (Your Turn)
         try {
-            await WhatsAppService.sendYourTurn(restaurantId, updatedEntry);
+            const restaurant = await prisma.restaurant.findUnique({
+                where: { id: restaurantId },
+                select: { plan: true }
+            });
+
+            if (restaurant?.plan === 'PRO') {
+                await WhatsAppService.sendYourTurn(restaurantId, updatedEntry);
+            } else {
+                console.log('[WhatsApp] Skipping Your Turn message - Plan is not PRO');
+            }
         } catch (error) {
             console.error('Failed to send turn message', error);
         }
@@ -350,7 +368,19 @@ export class WaitlistService {
                     const position = i + 1;
 
                     // Service handles opt-in checks and rate limits internally
-                    await WhatsAppService.sendPositionUpdate(restaurantId, entry, position);
+                    // But we must enforce plan limit here
+                    const restaurant = await prisma.restaurant.findUnique({
+                        where: { id: restaurantId },
+                        select: { plan: true }
+                    });
+
+                    if (restaurant?.plan === 'PRO') {
+                        await WhatsAppService.sendPositionUpdate(restaurantId, entry, position);
+                    } else {
+                        // Optimization: If plan is not PRO, we can break the loop as no one should get updates
+                        // check just once outside loop would be better but this is fine given the structure
+                        break;
+                    }
                 }
             } catch (error) {
                 console.error('Error notifying queue updates:', error);
