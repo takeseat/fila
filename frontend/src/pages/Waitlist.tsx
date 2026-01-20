@@ -30,6 +30,7 @@ export function Waitlist() {
         name: '',
         partySize: null as number | null, // null = all sizes
     });
+    const [isFiltersOpen, setIsFiltersOpen] = useState(false);
     const queryClient = useQueryClient();
 
     const { data: waitlist = [], isLoading } = useQuery({
@@ -68,8 +69,7 @@ export function Waitlist() {
         // Remove staleTime to ensure we always get fresh config on mount/validations
     });
 
-    // Valid if simply enabled. We want to capture consent even if no specific message is currently active.
-    const shouldShowWhatsappOptIn = !!whatsappSettings?.isEnabled;
+
 
 
 
@@ -157,10 +157,11 @@ export function Waitlist() {
         if (businessData?.countryCode) {
             const businessCountry = getCountryByCode(businessData.countryCode);
             if (businessCountry) {
-                setFormData(prev => ({ ...prev, country: businessCountry, whatsappOptIn: false }));
+                // Force WhatsApp opt-in to true by default if enabled
+                setFormData(prev => ({ ...prev, country: businessCountry, whatsappOptIn: !!whatsappSettings?.isEnabled }));
             }
         } else {
-            setFormData(prev => ({ ...prev, whatsappOptIn: false }));
+            setFormData(prev => ({ ...prev, whatsappOptIn: !!whatsappSettings?.isEnabled }));
         }
         setIsModalOpen(true);
     };
@@ -233,7 +234,8 @@ export function Waitlist() {
             customerPhone: formData.phone,
             partySize: formData.partySize,
             notes: formData.notes,
-            whatsappOptIn: canUseWhatsApp ? formData.whatsappOptIn : false,
+            // Force opt-in if system is enabled for it
+            whatsappOptIn: canUseWhatsApp ? (whatsappSettings?.isEnabled ? true : false) : false,
         };
 
         createMutation.mutate(payload);
@@ -438,22 +440,23 @@ export function Waitlist() {
                     </div>
 
                     {/* Stats Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="card-premium p-5">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-warning-100 rounded-xl flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div className="card-premium p-3 md:p-5">
+                            <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-2 md:gap-3">
+                                <div className="w-8 h-8 md:w-12 md:h-12 bg-warning-100 rounded-lg md:rounded-xl flex items-center justify-center">
+                                    <svg className="w-4 h-4 md:w-6 md:h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-dark-600">{t('stats.inQueue')}</p>
-                                    <p className="text-3xl font-bold text-dark-900">{activeEntries.length}</p>
+                                    <p className="text-xs md:text-sm font-medium text-dark-600 truncate">{t('stats.inQueue')}</p>
+                                    <p className="text-xl md:text-3xl font-bold text-dark-900">{activeEntries.length}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="card-premium p-5">
+                        {/* Hidden on mobile to save space, or moved to bottom if critical */}
+                        <div className="hidden md:block card-premium p-5">
                             <div className="flex items-center gap-3">
                                 <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center">
                                     <svg className="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -469,27 +472,24 @@ export function Waitlist() {
                             </div>
                         </div>
 
-                        <div className="card-premium p-5">
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="card-premium p-3 md:p-5">
+                            <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-2 md:gap-3">
+                                <div className="w-8 h-8 md:w-12 md:h-12 bg-primary-100 rounded-lg md:rounded-xl flex items-center justify-center">
+                                    <svg className="w-4 h-4 md:w-6 md:h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                     </svg>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-dark-600">
+                                    <p className="text-xs md:text-sm font-medium text-dark-600 truncate">
                                         {t('stats.avgWaitTime')}
-                                        {metrics?.windowMinutes && <span className="text-xs text-dark-400 ml-1">{t('stats.lastMinutes', { minutes: metrics.windowMinutes })}</span>}
                                     </p>
-                                    <div className="flex items-center gap-2">
-                                        <p className="text-3xl font-bold text-dark-900">
+                                    <div className="flex items-center justify-center md:justify-start gap-1 md:gap-2">
+                                        <p className="text-xl md:text-3xl font-bold text-dark-900">
                                             {metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}
-                                            <span className="text-lg ml-1">{t('common:time.minutes', { count: 0 }).split(' ')[1]}</span>
+                                            <span className="text-sm md:text-lg ml-1 font-normal text-dark-500">min</span>
                                         </p>
                                         {metrics?.isFallbackUsed && (
-                                            <span title="Sem dados suficientes na janela. Exibindo fallback." className="cursor-help text-xs bg-light-200 text-dark-500 px-2 py-1 rounded-full hover:bg-light-300 transition-colors">
-                                                {t('stats.estimated')}
-                                            </span>
+                                            <span title="Estimado" className="cursor-help w-2 h-2 rounded-full bg-light-300"></span>
                                         )}
                                     </div>
                                 </div>
@@ -499,79 +499,102 @@ export function Waitlist() {
 
                     {/* Filters */}
                     <div className="card-premium p-4">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            {/* Phone filter */}
-                            <Input
-                                placeholder={t('filters.phoneSearch')}
-                                value={filters.phone}
-                                onChange={(e) => setFilters({ ...filters, phone: e.target.value })}
-                                leftIcon={
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        {/* Mobile Toggle */}
+                        <div className="md:hidden flex justify-between items-center mb-0">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setIsFiltersOpen(!isFiltersOpen)}
+                                className="w-full justify-between"
+                            >
+                                <span className="flex items-center gap-2">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                                     </svg>
-                                }
-                            />
-
-                            {/* Name filter */}
-                            <Input
-                                placeholder={t('filters.nameSearch')}
-                                value={filters.name}
-                                onChange={(e) => setFilters({ ...filters, name: e.target.value })}
-                                leftIcon={
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                }
-                            />
-
-                            {/* Party size filter */}
-                            <div className="flex flex-col gap-2">
-                                <label className="text-xs font-medium text-dark-600">{t('filters.partySizeLabel')}</label>
-                                <div className="flex flex-wrap gap-2">
-                                    <Button
-                                        variant={filters.partySize === null ? 'primary' : 'outline'}
-                                        size="sm"
-                                        onClick={() => setFilters({ ...filters, partySize: null })}
-                                    >
-                                        {t('filters.all')}
-                                    </Button>
-                                    {[1, 2, 3, 4].map(size => (
-                                        <Button
-                                            key={size}
-                                            variant={filters.partySize === size ? 'primary' : 'outline'}
-                                            size="sm"
-                                            onClick={() => setFilters({ ...filters, partySize: size })}
-                                        >
-                                            {size}
-                                        </Button>
-                                    ))}
-                                    <Button
-                                        variant={filters.partySize === 5 ? 'primary' : 'outline'}
-                                        size="sm"
-                                        onClick={() => setFilters({ ...filters, partySize: 5 })}
-                                    >
-                                        5+
-                                    </Button>
-                                </div>
-                            </div>
+                                    {t('filters.title', 'Filtros')}
+                                </span>
+                                <svg className={`w-5 h-5 transition-transform ${isFiltersOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </Button>
                         </div>
 
-                        {/* Clear filters button */}
-                        {hasActiveFilters && (
-                            <div className="mt-3 flex justify-end">
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setFilters({ phone: '', name: '', partySize: null })}
-                                    className="gap-2"
-                                >
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                    </svg>
-                                    {t('filters.clearFilters')}
-                                </Button>
+                        <div className={`${isFiltersOpen ? 'block mt-4' : 'hidden'} md:block`}>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {/* Phone filter */}
+                                <Input
+                                    placeholder={t('filters.phoneSearch')}
+                                    value={filters.phone}
+                                    onChange={(e) => setFilters({ ...filters, phone: e.target.value })}
+                                    inputMode="tel"
+                                    leftIcon={
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                        </svg>
+                                    }
+                                />
+
+                                {/* Name filter */}
+                                <Input
+                                    placeholder={t('filters.nameSearch')}
+                                    value={filters.name}
+                                    onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+                                    leftIcon={
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                    }
+                                />
+
+                                {/* Party size filter */}
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-xs font-medium text-dark-600">{t('filters.partySizeLabel')}</label>
+                                    <div className="flex flex-wrap gap-2">
+                                        <Button
+                                            variant={filters.partySize === null ? 'primary' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilters({ ...filters, partySize: null })}
+                                        >
+                                            {t('filters.all')}
+                                        </Button>
+                                        {[1, 2, 3, 4].map(size => (
+                                            <Button
+                                                key={size}
+                                                variant={filters.partySize === size ? 'primary' : 'outline'}
+                                                size="sm"
+                                                onClick={() => setFilters({ ...filters, partySize: size })}
+                                            >
+                                                {size}
+                                            </Button>
+                                        ))}
+                                        <Button
+                                            variant={filters.partySize === 5 ? 'primary' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilters({ ...filters, partySize: 5 })}
+                                        >
+                                            5+
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
-                        )}
+
+                            {/* Clear filters button */}
+                            {hasActiveFilters && (
+                                <div className="mt-3 flex justify-end">
+                                    <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setFilters({ phone: '', name: '', partySize: null })}
+                                        className="gap-2"
+                                    >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                        {t('filters.clearFilters')}
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Active Queue */}
@@ -847,27 +870,6 @@ export function Waitlist() {
                                 )}
                             </div>
 
-                            {shouldShowWhatsappOptIn && canUseWhatsApp && (
-                                <div className="p-3 rounded-lg border bg-green-50/50 border-green-100 animate-fade-in">
-                                    <div className="flex items-start gap-3">
-                                        <div className="flex items-center h-5 mt-0.5">
-                                            <input
-                                                type="checkbox"
-                                                id="whatsappOptIn"
-                                                checked={formData.whatsappOptIn}
-                                                onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
-                                                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-                                            />
-                                        </div>
-                                        <div className="flex-1">
-                                            <label htmlFor="whatsappOptIn" className="text-sm font-medium block text-gray-900 cursor-pointer select-none">
-                                                {t('form.whatsappOptIn')}
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-
                             <Input
                                 label={t('form.customerName')}
                                 value={formData.customerName}
@@ -885,6 +887,7 @@ export function Waitlist() {
                                 <Input
                                     label={t('form.partySize')}
                                     type="number"
+                                    inputMode="numeric"
                                     min="1"
                                     max="20"
                                     value={formData.partySize}
@@ -931,6 +934,6 @@ export function Waitlist() {
                     </Modal>
                 </div>
             </PageContent>
-        </PageShell>
+        </PageShell >
     );
 }
