@@ -22,7 +22,8 @@ const updateBusinessDataSchema = z.object({
     addressNumber: z.string().nullable().optional(),
     addressComplement: z.string().nullable().optional(),
     postalCode: z.string().nullable().optional(),
-    // email and cnpj are READ-ONLY, not accepted in updates
+    cnpj: z.string().nullable().optional(), // Allowed for trial onboarding
+    // email is READ-ONLY, not accepted in updates
 });
 
 export class RestaurantsController {
@@ -135,6 +136,7 @@ export class RestaurantsController {
                     ...(data.addressNumber !== undefined && { addressNumber: data.addressNumber }),
                     ...(data.addressComplement !== undefined && { addressComplement: data.addressComplement }),
                     ...(data.postalCode !== undefined && { postalCode: data.postalCode }),
+                    ...(data.cnpj !== undefined && { cnpj: data.cnpj }),
                 },
                 select: {
                     name: true,
