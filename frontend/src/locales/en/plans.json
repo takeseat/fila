@@ -47,6 +47,10 @@
         "active": "Trial Active",
         "expiresIn": "Expires in {{days}} days",
         "expired": "Trial Expired",
-        "description": "Try PRO features for 7 days."
+        "description": "Try PRO features for 7 days.",
+        "profileIncomplete": "Complete your profile to start trial",
+        "completeProfileTitle": "Almost there!",
+        "completeProfileDesc": "To start your free trial, we need a few details about your business.",
+        "completeAndStart": "Save & Start Trial"
     }
 }

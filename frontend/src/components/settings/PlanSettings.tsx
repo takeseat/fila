@@ -4,6 +4,7 @@ import { usePlan } from '../../hooks/usePlan';
 import { useAuth } from '../../hooks/useAuth';
 import { Card, Button, Badge } from '../ui';
 import { restaurantsApi } from '../../services/restaurantsApi';
+import { StartTrialModal } from '../plans/StartTrialModal';
 import toast from 'react-hot-toast';
 
 export function PlanSettings() {
@@ -11,6 +12,7 @@ export function PlanSettings() {
     const { isPro, isTrialActive, hasConsumedTrial, trialDaysRemaining, trialStatus } = usePlan();
     const { refreshProfile } = useAuth();
     const [loading, setLoading] = useState(false);
+    const [isStartTrialModalOpen, setIsStartTrialModalOpen] = useState(false);
 
     const handleUpgrade = () => {
         // Trigger the global upgrade modal
@@ -26,8 +28,8 @@ export function PlanSettings() {
         } catch (error: any) {
             console.error('Failed to start trial', error);
             if (error.response?.data?.error === 'INCOMPLETE_PROFILE') {
-                toast.error('Complete your profile to start trial'); // Should be localized ideally, or handled by global error handler?
-                // Simple fallback message if translation missing
+                // Open the profile completion modal instead of redirecting
+                setIsStartTrialModalOpen(true);
             } else {
                 toast.error('Failed to start trial');
             }
@@ -167,6 +169,12 @@ export function PlanSettings() {
                     </div>
                 </div>
             </Card>
+
+            <StartTrialModal
+                isOpen={isStartTrialModalOpen}
+                onClose={() => setIsStartTrialModalOpen(false)}
+                onSuccess={() => setIsStartTrialModalOpen(false)}
+            />
         </div>
     );
 }

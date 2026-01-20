@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { TabNavigation } from '../components/settings/TabNavigation';
 import { BusinessDataTab } from '../components/settings/BusinessDataTab';
 import { ParametersTab } from '../components/settings/ParametersTab';
@@ -9,7 +10,14 @@ import { MessagesTab } from '../components/settings/MessagesTab';
 
 export function Settings() {
     const { t } = useTranslation('settings');
+    const location = useLocation();
     const [activeTab, setActiveTab] = useState<'business' | 'plan' | 'parameters' | 'team' | 'messages'>('business');
+
+    useEffect(() => {
+        if (location.state?.activeTab) {
+            setActiveTab(location.state.activeTab);
+        }
+    }, [location.state]);
 
     const tabs = [
         {

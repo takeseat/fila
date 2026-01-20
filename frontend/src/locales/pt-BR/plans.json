@@ -47,6 +47,10 @@
         "active": "Teste Ativo",
         "expiresIn": "Expira em {{days}} dias",
         "expired": "Teste Expirado",
-        "description": "Experimente recursos PRO por 7 dias."
+        "description": "Experimente recursos PRO por 7 dias.",
+        "profileIncomplete": "Complete seu perfil para iniciar o teste",
+        "completeProfileTitle": "Quase lá!",
+        "completeProfileDesc": "Para iniciar seu teste grátis, precisamos de alguns detalhes sobre seu negócio.",
+        "completeAndStart": "Salvar e Iniciar Teste"
     }
 }
