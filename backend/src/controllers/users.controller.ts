@@ -74,6 +74,11 @@ export class UsersController {
                             id: true,
                             name: true,
                             onboardingPending: true,
+                            plan: true,
+                            trialStatus: true,
+                            trialStartAt: true,
+                            trialEndAt: true,
+                            trialConsumedAt: true,
                         }
                     }
                 },
