@@ -1,0 +1,27 @@
+{
+    "layers": {
+        "operational": {
+            "high_wait_time": "Queue with high wait time ({{minutes}} min)",
+            "delayed_orders": "{{count}} orders ready waiting for pickup for a long time"
+        },
+        "journey": {
+            "queue": {
+                "title": "Waitlist",
+                "status_normal": "{{count}} people waiting · Normal flow",
+                "status_empty": "Empty queue · Smooth flow",
+                "cta": "Manage Queue"
+            },
+            "orders": {
+                "title": "Pickup Orders",
+                "status_ready": "{{count}} ready orders",
+                "status_empty": "No ready orders",
+                "cta": "Manage Orders"
+            }
+        },
+        "communication": {
+            "nps_question": "How was your experience today?",
+            "nps_action": "Rate"
+        }
+    },
+    "greeting": "Hello, {{name}}"
+}

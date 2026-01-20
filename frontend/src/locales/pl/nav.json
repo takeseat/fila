@@ -4,7 +4,15 @@
         "waitlist": "Lista Oczekujących",
         "customers": "Klienci",
         "reports": "Raporty",
-        "settings": "Ustawienia"
+        "settings": "Ustawienia",
+        "home": "Home",
+        "pickupOrders": "Pickup Orders",
+        "reportsSubmenu": {
+            "performance": "Performance",
+            "executive": "Executive Summary",
+            "flow": "Queue Flow",
+            "queueEntries": "Analytical Report"
+        }
     },
     "user": {
         "profile": "Profil",

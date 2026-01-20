@@ -9,7 +9,8 @@
         "avgWait": {
             "title": "平均時間",
             "vsYesterday": "vs 昨日",
-            "min": "分"
+            "min": "分",
+            "vsLastWeek": "vs last week"
         },
         "seated": {
             "title": "サービス済み顧客",

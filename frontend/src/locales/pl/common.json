@@ -46,5 +46,10 @@
         "notes": "Notatki",
         "optional": "Opcjonalne",
         "required": "Wymagane"
+    },
+    "roles": {
+        "ADMIN": "Administrator",
+        "MANAGER": "Manager",
+        "HOSTESS": "Host/Hostess"
     }
 }

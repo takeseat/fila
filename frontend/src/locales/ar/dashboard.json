@@ -9,7 +9,8 @@
         "avgWait": {
             "title": "متوسط الوقت",
             "vsYesterday": "مقابل الأمس",
-            "min": "دقيقة"
+            "min": "دقيقة",
+            "vsLastWeek": "vs last week"
         },
         "seated": {
             "title": "العملاء المخدومون",

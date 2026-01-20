@@ -10,7 +10,9 @@
             "executive": "Riepilogo Esecutivo",
             "flow": "Flusso della Coda",
             "queueEntries": "Report Analitico"
-        }
+        },
+        "home": "Home",
+        "pickupOrders": "Pickup Orders"
     },
     "user": {
         "profile": "Profilo",

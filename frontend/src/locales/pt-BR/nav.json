@@ -1,6 +1,7 @@
 {
     "menu": {
         "home": "Início",
+        "dashboard": "Painel",
         "waitlist": "Fila de Espera",
         "customers": "Clientes",
         "pickupOrders": "Pedidos",

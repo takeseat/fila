@@ -9,7 +9,8 @@
         "avgWait": {
             "title": "Среднее Время",
             "vsYesterday": "vs вчера",
-            "min": "мин"
+            "min": "мин",
+            "vsLastWeek": "vs last week"
         },
         "seated": {
             "title": "Обслужено Клиентов",

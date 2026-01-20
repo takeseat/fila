@@ -46,5 +46,10 @@
         "notes": "ملاحظات",
         "optional": "اختياري",
         "required": "مطلوب"
+    },
+    "roles": {
+        "ADMIN": "Administrator",
+        "MANAGER": "Manager",
+        "HOSTESS": "Host/Hostess"
     }
 }

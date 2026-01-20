@@ -13,12 +13,14 @@
         "period": "/mês",
         "cta": "Ativar Profissional",
         "active": "Plano Ativo",
-        "upgrade": "Fazer Upgrade"
+        "upgrade": "Fazer Upgrade",
+        "badge": "PRO"
     },
     "features": {
         "waitlist": "Fila de Espera Ilimitada",
         "whatsapp": "Notificações via WhatsApp",
-        "pickupOrders": "Pedidos para Retirada"
+        "pickupOrders": "Pedidos para Retirada",
+        "activeState": "Ativo"
     },
     "upgrade": {
         "modalTitle": "Desbloqueie todo o potencial",

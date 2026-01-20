@@ -100,6 +100,36 @@
             }
         }
     },
+    "pickupParameters": {
+        "title": "Pickup Parameters",
+        "autoNotPickedUp": {
+            "label": "Time before marked Not Picked Up (minutes)",
+            "help": "If customer doesn't pick up X minutes after 'Ready', it receives 'Not Picked Up' status.",
+            "placeholder": "30",
+            "validation": "Value must be between 10 and 120 minutes"
+        }
+    },
+    "orderMessages": {
+        "title": "Order Templates",
+        "created": {
+            "label": "Order Created",
+            "help": "Sent when a new order is created."
+        },
+        "ready": {
+            "label": "Order Ready",
+            "help": "Sent when order is ready for pickup."
+        },
+        "notPickedUp": {
+            "label": "Not Picked Up",
+            "help": "Sent if order is not picked up after timeout."
+        },
+        "variables": {
+            "title": "Order Variables",
+            "customerName": "Customer name",
+            "orderCode": "Order code",
+            "businessName": "Business name"
+        }
+    },
     "validation": {
         "mustBePositive": "Value must be greater than 0",
         "required": "This field is required"

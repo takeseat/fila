@@ -46,5 +46,10 @@
         "notes": "备注",
         "optional": "可选",
         "required": "必填"
+    },
+    "roles": {
+        "ADMIN": "Administrator",
+        "MANAGER": "Manager",
+        "HOSTESS": "Host/Hostess"
     }
 }

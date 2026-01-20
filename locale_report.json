@@ -1,0 +1,1123 @@
+{
+  "ar": {
+    "auth.json": {
+      "missingKeys": [
+        "branding.headline",
+        "branding.subheadline",
+        "branding.benefit1",
+        "branding.benefit2",
+        "branding.benefit3",
+        "login.button",
+        "login.createOne",
+        "signup.title",
+        "signup.subtitle",
+        "signup.restaurantInfo",
+        "signup.restaurantName",
+        "signup.cnpj",
+        "signup.phone",
+        "signup.email",
+        "signup.city",
+        "signup.userInfo",
+        "signup.userName",
+        "signup.userEmail",
+        "signup.emailPlaceholder",
+        "signup.password",
+        "signup.passwordHint",
+        "signup.button",
+        "signup.loading",
+        "signup.hasAccount",
+        "signup.signIn",
+        "signup.tradeName",
+        "signup.companyId",
+        "signup.addressSection",
+        "signup.state",
+        "signup.streetPlaceholder",
+        "signup.complement",
+        "signup.complementPlaceholder",
+        "signup.postalCodePlaceholder",
+        "signup.phonePlaceholder",
+        "signup.addressLine",
+        "signup.addressNumber",
+        "signup.postalCode",
+        "signup.checkEmail",
+        "signup.verificationSent",
+        "signup.spamCheck",
+        "signup.backToLogin",
+        "errors.weakPassword"
+      ]
+    },
+    "common.json": {
+      "missingKeys": [
+        "roles.ADMIN",
+        "roles.MANAGER",
+        "roles.HOSTESS"
+      ]
+    },
+    "countries.json": {
+      "status": "MISSING_FILE"
+    },
+    "dashboard.json": {
+      "missingKeys": [
+        "metrics.avgWait.vsLastWeek"
+      ]
+    },
+    "errors.json": {
+      "status": "MISSING_FILE"
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders",
+        "menu.reportsSubmenu.performance",
+        "menu.reportsSubmenu.executive",
+        "menu.reportsSubmenu.flow",
+        "menu.reportsSubmenu.queueEntries"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "reports.json": {
+      "status": "MISSING_FILE"
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.business",
+        "tabs.parameters",
+        "tabs.team",
+        "tabs.messages",
+        "business.title",
+        "business.subtitle",
+        "business.fields.name.label",
+        "business.fields.name.placeholder",
+        "business.fields.tradeName.label",
+        "business.fields.tradeName.placeholder",
+        "business.fields.tradeName.help",
+        "business.fields.email.label",
+        "business.fields.email.readOnly",
+        "business.fields.taxId.label",
+        "business.fields.taxId.readOnly",
+        "business.fields.phone.label",
+        "business.fields.phone.placeholder",
+        "business.fields.country.label",
+        "business.fields.country.placeholder",
+        "business.fields.state.label",
+        "business.fields.state.placeholder",
+        "business.fields.city.label",
+        "business.fields.city.placeholder",
+        "business.fields.addressLine.label",
+        "business.fields.addressLine.placeholder",
+        "business.fields.addressNumber.label",
+        "business.fields.addressNumber.placeholder",
+        "business.fields.addressComplement.label",
+        "business.fields.addressComplement.placeholder",
+        "business.fields.postalCode.label",
+        "business.fields.postalCode.placeholder",
+        "business.actions.save",
+        "business.actions.saving",
+        "business.messages.saveSuccess",
+        "business.messages.saveError",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName",
+        "validation.required"
+      ]
+    },
+    "tables.json": {
+      "status": "MISSING_FILE"
+    },
+    "users.json": {
+      "status": "MISSING_FILE"
+    }
+  },
+  "es": {
+    "auth.json": {
+      "missingKeys": [
+        "branding.headline",
+        "branding.subheadline",
+        "branding.benefit1",
+        "branding.benefit2",
+        "branding.benefit3",
+        "login.button",
+        "login.createOne",
+        "signup.title",
+        "signup.subtitle",
+        "signup.restaurantInfo",
+        "signup.restaurantName",
+        "signup.cnpj",
+        "signup.phone",
+        "signup.email",
+        "signup.city",
+        "signup.userInfo",
+        "signup.userName",
+        "signup.userEmail",
+        "signup.emailPlaceholder",
+        "signup.password",
+        "signup.passwordHint",
+        "signup.button",
+        "signup.loading",
+        "signup.hasAccount",
+        "signup.signIn",
+        "signup.tradeName",
+        "signup.companyId",
+        "signup.addressSection",
+        "signup.state",
+        "signup.streetPlaceholder",
+        "signup.complement",
+        "signup.complementPlaceholder",
+        "signup.postalCodePlaceholder",
+        "signup.phonePlaceholder",
+        "signup.addressLine",
+        "signup.addressNumber",
+        "signup.postalCode",
+        "signup.checkEmail",
+        "signup.verificationSent",
+        "signup.spamCheck",
+        "signup.backToLogin",
+        "errors.weakPassword"
+      ]
+    },
+    "countries.json": {
+      "status": "MISSING_FILE"
+    },
+    "dashboard.json": {
+      "missingKeys": [
+        "metrics.avgWait.vsLastWeek"
+      ]
+    },
+    "errors.json": {
+      "status": "MISSING_FILE"
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders",
+        "menu.reportsSubmenu.performance",
+        "menu.reportsSubmenu.executive",
+        "menu.reportsSubmenu.flow",
+        "menu.reportsSubmenu.queueEntries"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "reports.json": {
+      "missingKeys": [
+        "performance.kpis.totalGroups",
+        "performance.kpis.peakConcurrent",
+        "performance.kpis.avgWaitTime",
+        "performance.kpis.medianP50",
+        "performance.kpis.percentile75",
+        "performance.kpis.ofTotal",
+        "performance.kpis.groupsLost",
+        "performance.kpis.maxInQueue",
+        "performance.kpis.waited50Less",
+        "performance.kpis.waited75Less",
+        "performance.kpis.period",
+        "performance.kpis.until",
+        "performance.kpis.aggregation",
+        "performance.kpis.perHour",
+        "performance.kpis.perDay",
+        "filters.today",
+        "common.noData",
+        "common.minutes",
+        "common.groups",
+        "charts.waitTimeOverTime",
+        "charts.queueVolume",
+        "charts.avgTime",
+        "charts.medianP50",
+        "charts.entered",
+        "charts.seated",
+        "charts.lost",
+        "charts.conversionFunnel",
+        "charts.enteredQueue",
+        "charts.wereCalled",
+        "charts.conversionRate",
+        "charts.lossRate"
+      ]
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.business",
+        "tabs.parameters",
+        "tabs.team",
+        "tabs.messages",
+        "business.title",
+        "business.subtitle",
+        "business.fields.name.label",
+        "business.fields.name.placeholder",
+        "business.fields.tradeName.label",
+        "business.fields.tradeName.placeholder",
+        "business.fields.tradeName.help",
+        "business.fields.email.label",
+        "business.fields.email.readOnly",
+        "business.fields.taxId.label",
+        "business.fields.taxId.readOnly",
+        "business.fields.phone.label",
+        "business.fields.phone.placeholder",
+        "business.fields.country.label",
+        "business.fields.country.placeholder",
+        "business.fields.state.label",
+        "business.fields.state.placeholder",
+        "business.fields.city.label",
+        "business.fields.city.placeholder",
+        "business.fields.addressLine.label",
+        "business.fields.addressLine.placeholder",
+        "business.fields.addressNumber.label",
+        "business.fields.addressNumber.placeholder",
+        "business.fields.addressComplement.label",
+        "business.fields.addressComplement.placeholder",
+        "business.fields.postalCode.label",
+        "business.fields.postalCode.placeholder",
+        "business.actions.save",
+        "business.actions.saving",
+        "business.messages.saveSuccess",
+        "business.messages.saveError",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName",
+        "validation.required"
+      ]
+    },
+    "tables.json": {
+      "status": "MISSING_FILE"
+    },
+    "users.json": {
+      "status": "MISSING_FILE"
+    }
+  },
+  "fr": {
+    "auth.json": {
+      "missingKeys": [
+        "branding.headline",
+        "branding.subheadline",
+        "branding.benefit1",
+        "branding.benefit2",
+        "branding.benefit3",
+        "login.button",
+        "login.createOne",
+        "signup.title",
+        "signup.subtitle",
+        "signup.restaurantInfo",
+        "signup.restaurantName",
+        "signup.cnpj",
+        "signup.phone",
+        "signup.email",
+        "signup.city",
+        "signup.userInfo",
+        "signup.userName",
+        "signup.userEmail",
+        "signup.emailPlaceholder",
+        "signup.password",
+        "signup.passwordHint",
+        "signup.button",
+        "signup.loading",
+        "signup.hasAccount",
+        "signup.signIn",
+        "signup.tradeName",
+        "signup.companyId",
+        "signup.addressSection",
+        "signup.state",
+        "signup.streetPlaceholder",
+        "signup.complement",
+        "signup.complementPlaceholder",
+        "signup.postalCodePlaceholder",
+        "signup.phonePlaceholder",
+        "signup.addressLine",
+        "signup.addressNumber",
+        "signup.postalCode",
+        "signup.checkEmail",
+        "signup.verificationSent",
+        "signup.spamCheck",
+        "signup.backToLogin",
+        "errors.weakPassword"
+      ]
+    },
+    "common.json": {
+      "missingKeys": [
+        "roles.ADMIN",
+        "roles.MANAGER",
+        "roles.HOSTESS"
+      ]
+    },
+    "countries.json": {
+      "status": "MISSING_FILE"
+    },
+    "dashboard.json": {
+      "missingKeys": [
+        "metrics.avgWait.vsLastWeek"
+      ]
+    },
+    "errors.json": {
+      "status": "MISSING_FILE"
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders",
+        "menu.reportsSubmenu.performance",
+        "menu.reportsSubmenu.executive",
+        "menu.reportsSubmenu.flow",
+        "menu.reportsSubmenu.queueEntries"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "reports.json": {
+      "status": "MISSING_FILE"
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.business",
+        "tabs.parameters",
+        "tabs.team",
+        "tabs.messages",
+        "business.title",
+        "business.subtitle",
+        "business.fields.name.label",
+        "business.fields.name.placeholder",
+        "business.fields.tradeName.label",
+        "business.fields.tradeName.placeholder",
+        "business.fields.tradeName.help",
+        "business.fields.email.label",
+        "business.fields.email.readOnly",
+        "business.fields.taxId.label",
+        "business.fields.taxId.readOnly",
+        "business.fields.phone.label",
+        "business.fields.phone.placeholder",
+        "business.fields.country.label",
+        "business.fields.country.placeholder",
+        "business.fields.state.label",
+        "business.fields.state.placeholder",
+        "business.fields.city.label",
+        "business.fields.city.placeholder",
+        "business.fields.addressLine.label",
+        "business.fields.addressLine.placeholder",
+        "business.fields.addressNumber.label",
+        "business.fields.addressNumber.placeholder",
+        "business.fields.addressComplement.label",
+        "business.fields.addressComplement.placeholder",
+        "business.fields.postalCode.label",
+        "business.fields.postalCode.placeholder",
+        "business.actions.save",
+        "business.actions.saving",
+        "business.messages.saveSuccess",
+        "business.messages.saveError",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName",
+        "validation.required"
+      ]
+    },
+    "tables.json": {
+      "status": "MISSING_FILE"
+    },
+    "users.json": {
+      "status": "MISSING_FILE"
+    }
+  },
+  "it": {
+    "auth.json": {
+      "missingKeys": [
+        "signup.emailPlaceholder",
+        "passwordStrength.common",
+        "passwordStrength.emailMatch",
+        "passwordStrength.complexity"
+      ]
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.messages",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName"
+      ]
+    }
+  },
+  "ja": {
+    "auth.json": {
+      "missingKeys": [
+        "branding.headline",
+        "branding.subheadline",
+        "branding.benefit1",
+        "branding.benefit2",
+        "branding.benefit3",
+        "login.button",
+        "login.createOne",
+        "signup.title",
+        "signup.subtitle",
+        "signup.restaurantInfo",
+        "signup.restaurantName",
+        "signup.cnpj",
+        "signup.phone",
+        "signup.email",
+        "signup.city",
+        "signup.userInfo",
+        "signup.userName",
+        "signup.userEmail",
+        "signup.emailPlaceholder",
+        "signup.password",
+        "signup.passwordHint",
+        "signup.button",
+        "signup.loading",
+        "signup.hasAccount",
+        "signup.signIn",
+        "signup.tradeName",
+        "signup.companyId",
+        "signup.addressSection",
+        "signup.state",
+        "signup.streetPlaceholder",
+        "signup.complement",
+        "signup.complementPlaceholder",
+        "signup.postalCodePlaceholder",
+        "signup.phonePlaceholder",
+        "signup.addressLine",
+        "signup.addressNumber",
+        "signup.postalCode",
+        "signup.checkEmail",
+        "signup.verificationSent",
+        "signup.spamCheck",
+        "signup.backToLogin",
+        "errors.weakPassword"
+      ]
+    },
+    "common.json": {
+      "missingKeys": [
+        "roles.ADMIN",
+        "roles.MANAGER",
+        "roles.HOSTESS"
+      ]
+    },
+    "countries.json": {
+      "status": "MISSING_FILE"
+    },
+    "dashboard.json": {
+      "missingKeys": [
+        "metrics.avgWait.vsLastWeek"
+      ]
+    },
+    "errors.json": {
+      "status": "MISSING_FILE"
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders",
+        "menu.reportsSubmenu.performance",
+        "menu.reportsSubmenu.executive",
+        "menu.reportsSubmenu.flow",
+        "menu.reportsSubmenu.queueEntries"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "reports.json": {
+      "status": "MISSING_FILE"
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.business",
+        "tabs.parameters",
+        "tabs.team",
+        "tabs.messages",
+        "business.title",
+        "business.subtitle",
+        "business.fields.name.label",
+        "business.fields.name.placeholder",
+        "business.fields.tradeName.label",
+        "business.fields.tradeName.placeholder",
+        "business.fields.tradeName.help",
+        "business.fields.email.label",
+        "business.fields.email.readOnly",
+        "business.fields.taxId.label",
+        "business.fields.taxId.readOnly",
+        "business.fields.phone.label",
+        "business.fields.phone.placeholder",
+        "business.fields.country.label",
+        "business.fields.country.placeholder",
+        "business.fields.state.label",
+        "business.fields.state.placeholder",
+        "business.fields.city.label",
+        "business.fields.city.placeholder",
+        "business.fields.addressLine.label",
+        "business.fields.addressLine.placeholder",
+        "business.fields.addressNumber.label",
+        "business.fields.addressNumber.placeholder",
+        "business.fields.addressComplement.label",
+        "business.fields.addressComplement.placeholder",
+        "business.fields.postalCode.label",
+        "business.fields.postalCode.placeholder",
+        "business.actions.save",
+        "business.actions.saving",
+        "business.messages.saveSuccess",
+        "business.messages.saveError",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName",
+        "validation.required"
+      ]
+    },
+    "tables.json": {
+      "status": "MISSING_FILE"
+    },
+    "users.json": {
+      "status": "MISSING_FILE"
+    }
+  },
+  "pl": {
+    "auth.json": {
+      "missingKeys": [
+        "branding.headline",
+        "branding.subheadline",
+        "branding.benefit1",
+        "branding.benefit2",
+        "branding.benefit3",
+        "login.button",
+        "login.createOne",
+        "signup.title",
+        "signup.subtitle",
+        "signup.restaurantInfo",
+        "signup.restaurantName",
+        "signup.cnpj",
+        "signup.phone",
+        "signup.email",
+        "signup.city",
+        "signup.userInfo",
+        "signup.userName",
+        "signup.userEmail",
+        "signup.emailPlaceholder",
+        "signup.password",
+        "signup.passwordHint",
+        "signup.button",
+        "signup.loading",
+        "signup.hasAccount",
+        "signup.signIn",
+        "signup.tradeName",
+        "signup.companyId",
+        "signup.addressSection",
+        "signup.state",
+        "signup.streetPlaceholder",
+        "signup.complement",
+        "signup.complementPlaceholder",
+        "signup.postalCodePlaceholder",
+        "signup.phonePlaceholder",
+        "signup.addressLine",
+        "signup.addressNumber",
+        "signup.postalCode",
+        "signup.checkEmail",
+        "signup.verificationSent",
+        "signup.spamCheck",
+        "signup.backToLogin",
+        "errors.weakPassword"
+      ]
+    },
+    "common.json": {
+      "missingKeys": [
+        "roles.ADMIN",
+        "roles.MANAGER",
+        "roles.HOSTESS"
+      ]
+    },
+    "countries.json": {
+      "status": "MISSING_FILE"
+    },
+    "dashboard.json": {
+      "missingKeys": [
+        "metrics.avgWait.vsLastWeek"
+      ]
+    },
+    "errors.json": {
+      "status": "MISSING_FILE"
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders",
+        "menu.reportsSubmenu.performance",
+        "menu.reportsSubmenu.executive",
+        "menu.reportsSubmenu.flow",
+        "menu.reportsSubmenu.queueEntries"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "reports.json": {
+      "status": "MISSING_FILE"
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.business",
+        "tabs.parameters",
+        "tabs.team",
+        "tabs.messages",
+        "business.title",
+        "business.subtitle",
+        "business.fields.name.label",
+        "business.fields.name.placeholder",
+        "business.fields.tradeName.label",
+        "business.fields.tradeName.placeholder",
+        "business.fields.tradeName.help",
+        "business.fields.email.label",
+        "business.fields.email.readOnly",
+        "business.fields.taxId.label",
+        "business.fields.taxId.readOnly",
+        "business.fields.phone.label",
+        "business.fields.phone.placeholder",
+        "business.fields.country.label",
+        "business.fields.country.placeholder",
+        "business.fields.state.label",
+        "business.fields.state.placeholder",
+        "business.fields.city.label",
+        "business.fields.city.placeholder",
+        "business.fields.addressLine.label",
+        "business.fields.addressLine.placeholder",
+        "business.fields.addressNumber.label",
+        "business.fields.addressNumber.placeholder",
+        "business.fields.addressComplement.label",
+        "business.fields.addressComplement.placeholder",
+        "business.fields.postalCode.label",
+        "business.fields.postalCode.placeholder",
+        "business.actions.save",
+        "business.actions.saving",
+        "business.messages.saveSuccess",
+        "business.messages.saveError",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName",
+        "validation.required"
+      ]
+    },
+    "tables.json": {
+      "status": "MISSING_FILE"
+    },
+    "users.json": {
+      "status": "MISSING_FILE"
+    }
+  },
+  "ru": {
+    "auth.json": {
+      "missingKeys": [
+        "branding.headline",
+        "branding.subheadline",
+        "branding.benefit1",
+        "branding.benefit2",
+        "branding.benefit3",
+        "login.button",
+        "login.createOne",
+        "signup.title",
+        "signup.subtitle",
+        "signup.restaurantInfo",
+        "signup.restaurantName",
+        "signup.cnpj",
+        "signup.phone",
+        "signup.email",
+        "signup.city",
+        "signup.userInfo",
+        "signup.userName",
+        "signup.userEmail",
+        "signup.emailPlaceholder",
+        "signup.password",
+        "signup.passwordHint",
+        "signup.button",
+        "signup.loading",
+        "signup.hasAccount",
+        "signup.signIn",
+        "signup.tradeName",
+        "signup.companyId",
+        "signup.addressSection",
+        "signup.state",
+        "signup.streetPlaceholder",
+        "signup.complement",
+        "signup.complementPlaceholder",
+        "signup.postalCodePlaceholder",
+        "signup.phonePlaceholder",
+        "signup.addressLine",
+        "signup.addressNumber",
+        "signup.postalCode",
+        "signup.checkEmail",
+        "signup.verificationSent",
+        "signup.spamCheck",
+        "signup.backToLogin",
+        "errors.weakPassword"
+      ]
+    },
+    "common.json": {
+      "missingKeys": [
+        "roles.ADMIN",
+        "roles.MANAGER",
+        "roles.HOSTESS"
+      ]
+    },
+    "countries.json": {
+      "status": "MISSING_FILE"
+    },
+    "dashboard.json": {
+      "missingKeys": [
+        "metrics.avgWait.vsLastWeek"
+      ]
+    },
+    "errors.json": {
+      "status": "MISSING_FILE"
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders",
+        "menu.reportsSubmenu.performance",
+        "menu.reportsSubmenu.executive",
+        "menu.reportsSubmenu.flow",
+        "menu.reportsSubmenu.queueEntries"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "reports.json": {
+      "status": "MISSING_FILE"
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.business",
+        "tabs.parameters",
+        "tabs.team",
+        "tabs.messages",
+        "business.title",
+        "business.subtitle",
+        "business.fields.name.label",
+        "business.fields.name.placeholder",
+        "business.fields.tradeName.label",
+        "business.fields.tradeName.placeholder",
+        "business.fields.tradeName.help",
+        "business.fields.email.label",
+        "business.fields.email.readOnly",
+        "business.fields.taxId.label",
+        "business.fields.taxId.readOnly",
+        "business.fields.phone.label",
+        "business.fields.phone.placeholder",
+        "business.fields.country.label",
+        "business.fields.country.placeholder",
+        "business.fields.state.label",
+        "business.fields.state.placeholder",
+        "business.fields.city.label",
+        "business.fields.city.placeholder",
+        "business.fields.addressLine.label",
+        "business.fields.addressLine.placeholder",
+        "business.fields.addressNumber.label",
+        "business.fields.addressNumber.placeholder",
+        "business.fields.addressComplement.label",
+        "business.fields.addressComplement.placeholder",
+        "business.fields.postalCode.label",
+        "business.fields.postalCode.placeholder",
+        "business.actions.save",
+        "business.actions.saving",
+        "business.messages.saveSuccess",
+        "business.messages.saveError",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName",
+        "validation.required"
+      ]
+    },
+    "tables.json": {
+      "status": "MISSING_FILE"
+    },
+    "users.json": {
+      "status": "MISSING_FILE"
+    }
+  },
+  "zh-CN": {
+    "auth.json": {
+      "missingKeys": [
+        "branding.headline",
+        "branding.subheadline",
+        "branding.benefit1",
+        "branding.benefit2",
+        "branding.benefit3",
+        "login.button",
+        "login.createOne",
+        "signup.title",
+        "signup.subtitle",
+        "signup.restaurantInfo",
+        "signup.restaurantName",
+        "signup.cnpj",
+        "signup.phone",
+        "signup.email",
+        "signup.city",
+        "signup.userInfo",
+        "signup.userName",
+        "signup.userEmail",
+        "signup.emailPlaceholder",
+        "signup.password",
+        "signup.passwordHint",
+        "signup.button",
+        "signup.loading",
+        "signup.hasAccount",
+        "signup.signIn",
+        "signup.tradeName",
+        "signup.companyId",
+        "signup.addressSection",
+        "signup.state",
+        "signup.streetPlaceholder",
+        "signup.complement",
+        "signup.complementPlaceholder",
+        "signup.postalCodePlaceholder",
+        "signup.phonePlaceholder",
+        "signup.addressLine",
+        "signup.addressNumber",
+        "signup.postalCode",
+        "signup.checkEmail",
+        "signup.verificationSent",
+        "signup.spamCheck",
+        "signup.backToLogin",
+        "errors.weakPassword"
+      ]
+    },
+    "common.json": {
+      "missingKeys": [
+        "roles.ADMIN",
+        "roles.MANAGER",
+        "roles.HOSTESS"
+      ]
+    },
+    "countries.json": {
+      "status": "MISSING_FILE"
+    },
+    "dashboard.json": {
+      "missingKeys": [
+        "metrics.avgWait.vsLastWeek"
+      ]
+    },
+    "errors.json": {
+      "status": "MISSING_FILE"
+    },
+    "home.json": {
+      "status": "MISSING_FILE"
+    },
+    "nav.json": {
+      "missingKeys": [
+        "menu.home",
+        "menu.pickupOrders",
+        "menu.reportsSubmenu.performance",
+        "menu.reportsSubmenu.executive",
+        "menu.reportsSubmenu.flow",
+        "menu.reportsSubmenu.queueEntries"
+      ]
+    },
+    "pickupOrders.json": {
+      "status": "MISSING_FILE"
+    },
+    "plans.json": {
+      "status": "MISSING_FILE"
+    },
+    "reports.json": {
+      "status": "MISSING_FILE"
+    },
+    "settings.json": {
+      "missingKeys": [
+        "tabs.business",
+        "tabs.parameters",
+        "tabs.team",
+        "tabs.messages",
+        "business.title",
+        "business.subtitle",
+        "business.fields.name.label",
+        "business.fields.name.placeholder",
+        "business.fields.tradeName.label",
+        "business.fields.tradeName.placeholder",
+        "business.fields.tradeName.help",
+        "business.fields.email.label",
+        "business.fields.email.readOnly",
+        "business.fields.taxId.label",
+        "business.fields.taxId.readOnly",
+        "business.fields.phone.label",
+        "business.fields.phone.placeholder",
+        "business.fields.country.label",
+        "business.fields.country.placeholder",
+        "business.fields.state.label",
+        "business.fields.state.placeholder",
+        "business.fields.city.label",
+        "business.fields.city.placeholder",
+        "business.fields.addressLine.label",
+        "business.fields.addressLine.placeholder",
+        "business.fields.addressNumber.label",
+        "business.fields.addressNumber.placeholder",
+        "business.fields.addressComplement.label",
+        "business.fields.addressComplement.placeholder",
+        "business.fields.postalCode.label",
+        "business.fields.postalCode.placeholder",
+        "business.actions.save",
+        "business.actions.saving",
+        "business.messages.saveSuccess",
+        "business.messages.saveError",
+        "pickupParameters.title",
+        "pickupParameters.autoNotPickedUp.label",
+        "pickupParameters.autoNotPickedUp.help",
+        "pickupParameters.autoNotPickedUp.placeholder",
+        "pickupParameters.autoNotPickedUp.validation",
+        "orderMessages.title",
+        "orderMessages.created.label",
+        "orderMessages.created.help",
+        "orderMessages.ready.label",
+        "orderMessages.ready.help",
+        "orderMessages.notPickedUp.label",
+        "orderMessages.notPickedUp.help",
+        "orderMessages.variables.title",
+        "orderMessages.variables.customerName",
+        "orderMessages.variables.orderCode",
+        "orderMessages.variables.businessName",
+        "validation.required"
+      ]
+    },
+    "tables.json": {
+      "status": "MISSING_FILE"
+    },
+    "users.json": {
+      "status": "MISSING_FILE"
+    }
+  }
+}

@@ -32,7 +32,8 @@
         }
     },
     "validation": {
-        "mustBePositive": "La valeur doit être supérieure à 0"
+        "mustBePositive": "La valeur doit être supérieure à 0",
+        "required": "This field is required"
     },
     "actions": {
         "save": "Enregistrer Modifications",
@@ -40,5 +41,104 @@
     },
     "messages": {
         "saveSuccess": "Paramètres enregistrés avec succès!"
+    },
+    "tabs": {
+        "business": "Business Data",
+        "parameters": "Parameters",
+        "team": "Team",
+        "messages": "Messages"
+    },
+    "business": {
+        "title": "Business Information",
+        "subtitle": "Manage your business details and address",
+        "fields": {
+            "name": {
+                "label": "Business Name",
+                "placeholder": "Enter business name"
+            },
+            "tradeName": {
+                "label": "Trade Name",
+                "placeholder": "Enter trade name (optional)",
+                "help": "Fantasy name or brand name"
+            },
+            "email": {
+                "label": "Email",
+                "readOnly": "This field cannot be changed"
+            },
+            "taxId": {
+                "label": "Tax ID / CNPJ",
+                "readOnly": "This field cannot be changed"
+            },
+            "phone": {
+                "label": "Phone",
+                "placeholder": "Enter phone number"
+            },
+            "country": {
+                "label": "Country",
+                "placeholder": "Select country"
+            },
+            "state": {
+                "label": "State / Province",
+                "placeholder": "Select state"
+            },
+            "city": {
+                "label": "City",
+                "placeholder": "Enter city"
+            },
+            "addressLine": {
+                "label": "Address",
+                "placeholder": "Street name"
+            },
+            "addressNumber": {
+                "label": "Number",
+                "placeholder": "Building number"
+            },
+            "addressComplement": {
+                "label": "Complement",
+                "placeholder": "Apt, suite, etc. (optional)"
+            },
+            "postalCode": {
+                "label": "Postal Code / ZIP",
+                "placeholder": "Enter postal code"
+            }
+        },
+        "actions": {
+            "save": "Save Changes",
+            "saving": "Saving..."
+        },
+        "messages": {
+            "saveSuccess": "Business data updated successfully",
+            "saveError": "Failed to update business data"
+        }
+    },
+    "pickupParameters": {
+        "title": "Pickup Parameters",
+        "autoNotPickedUp": {
+            "label": "Time before marked Not Picked Up (minutes)",
+            "help": "If customer doesn't pick up X minutes after 'Ready', it receives 'Not Picked Up' status.",
+            "placeholder": "30",
+            "validation": "Value must be between 10 and 120 minutes"
+        }
+    },
+    "orderMessages": {
+        "title": "Order Templates",
+        "created": {
+            "label": "Order Created",
+            "help": "Sent when a new order is created."
+        },
+        "ready": {
+            "label": "Order Ready",
+            "help": "Sent when order is ready for pickup."
+        },
+        "notPickedUp": {
+            "label": "Not Picked Up",
+            "help": "Sent if order is not picked up after timeout."
+        },
+        "variables": {
+            "title": "Order Variables",
+            "customerName": "Customer name",
+            "orderCode": "Order code",
+            "businessName": "Business name"
+        }
     }
 }

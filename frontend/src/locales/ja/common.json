@@ -46,5 +46,10 @@
         "notes": "メモ",
         "optional": "任意",
         "required": "必須"
+    },
+    "roles": {
+        "ADMIN": "Administrator",
+        "MANAGER": "Manager",
+        "HOSTESS": "Host/Hostess"
     }
 }

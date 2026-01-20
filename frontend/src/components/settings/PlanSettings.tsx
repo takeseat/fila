@@ -82,10 +82,10 @@ export function PlanSettings() {
                                 <div>
                                     <div className="flex items-center gap-2">
                                         <p className="font-semibold text-gray-900">{t('features.whatsapp')}</p>
-                                        {!isPro && <Badge size="sm" variant="default" className="text-xs">PRO</Badge>}
+                                        {!isPro && <Badge size="sm" variant="default" className="text-xs">{t('pro.badge')}</Badge>}
                                     </div>
                                     <p className="text-sm text-gray-500 mt-1">
-                                        {isPro ? 'Ativo' : t('upgrade.featureLocked')}
+                                        {isPro ? t('features.activeState') : t('upgrade.featureLocked')} 
                                     </p>
                                 </div>
                             </div>
@@ -100,10 +100,10 @@ export function PlanSettings() {
                                 <div>
                                     <div className="flex items-center gap-2">
                                         <p className="font-semibold text-gray-900">{t('features.pickupOrders')}</p>
-                                        {!isPro && <Badge size="sm" variant="default" className="text-xs">PRO</Badge>}
+                                        {!isPro && <Badge size="sm" variant="default" className="text-xs">{t('pro.badge')}</Badge>}
                                     </div>
                                     <p className="text-sm text-gray-500 mt-1">
-                                        {isPro ? 'Ativo' : t('upgrade.featureLocked')}
+                                        {isPro ? t('features.activeState') : t('upgrade.featureLocked')}
                                     </p>
                                 </div>
                             </div>
