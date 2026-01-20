@@ -1,45 +1,52 @@
 {
     "basic": {
-        "title": "Basic",
-        "description": "Perfect to get started",
-        "price": "Free",
-        "cta": "Continue with Basic",
-        "current": "Your current plan"
+        "title": "Básico",
+        "description": "Perfecto para empezar",
+        "price": "Gratis",
+        "cta": "Continuar con Básico",
+        "current": "Tu plan actual"
     },
     "pro": {
-        "title": "Professional",
-        "description": "For growing restaurants",
+        "title": "Profesional",
+        "description": "Para restaurantes en crecimiento",
         "price": "$19",
-        "period": "/month",
-        "cta": "Activate Professional",
-        "active": "Active Plan",
-        "upgrade": "Upgrade",
+        "period": "/mes",
+        "cta": "Activar Profesional",
+        "active": "Plan Activo",
+        "upgrade": "Mejorar Plan",
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "Unlimited Waitlist",
-        "whatsapp": "WhatsApp Notifications",
-        "pickupOrders": "Pickup Orders",
-        "activeState": "Active"
+        "waitlist": "Lista de Espera Ilimitada",
+        "whatsapp": "Notificaciones por WhatsApp",
+        "pickupOrders": "Pedidos para Retirar",
+        "activeState": "Activo"
     },
     "upgrade": {
-        "modalTitle": "Unlock full potential",
-        "modalDescription": "The Professional plan includes exclusive features to automate your operation and boost sales.",
-        "cta": "Upgrade Now",
-        "maybeLater": "Maybe later",
-        "featureLocked": "Feature available on Professional plan.",
-        "ctaInline": "Upgrade to use.",
-        "whatsappHint": "Notify your customers automatically via WhatsApp."
+        "modalTitle": "Desbloquea todo el potencial",
+        "modalDescription": "El plan Profesional incluye funciones exclusivas para automatizar tu operación y aumentar tus ventas.",
+        "cta": "Mejorar Ahora",
+        "maybeLater": "Quizás más tarde",
+        "featureLocked": "Función disponible en el plan Profesional.",
+        "ctaInline": "Mejorar para usar.",
+        "whatsappHint": "Notifica a tus clientes automáticamente por WhatsApp."
     },
     "banner": {
-        "title": "Upgrade available",
-        "description": "Unlock WhatsApp and Orders with the Professional plan.",
-        "cta": "View Plans"
+        "title": "Mejora disponible",
+        "description": "Desbloquea WhatsApp y Pedidos con el plan Profesional.",
+        "cta": "Ver Planes"
     },
     "settings": {
-        "title": "My Plan",
-        "subtitle": "Manage your plan and subscription",
-        "currentPlan": "Current Plan:",
-        "featuresTitle": "Included Features:"
+        "title": "Mi Plan",
+        "subtitle": "Gestiona tu plan y suscripción",
+        "currentPlan": "Plan actual:",
+        "featuresTitle": "Funciones incluidas:"
+    },
+    "trial": {
+        "start": "Iniciar prueba gratis de 7 días",
+        "active": "Prueba Activa",
+        "expiresIn": "Expira en {{days}} días",
+        "expired": "Prueba Expirada",
+        "description": "Prueba las funciones PRO por 7 días."
     }
 }

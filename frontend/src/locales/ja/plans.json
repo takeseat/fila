@@ -1,45 +1,52 @@
 {
     "basic": {
-        "title": "Basic",
-        "description": "Perfect to get started",
-        "price": "Free",
-        "cta": "Continue with Basic",
-        "current": "Your current plan"
+        "title": "ベーシック",
+        "description": "始めるのに最適",
+        "price": "無料",
+        "cta": "ベーシックで続ける",
+        "current": "現在のプラン"
     },
     "pro": {
-        "title": "Professional",
-        "description": "For growing restaurants",
+        "title": "プロ",
+        "description": "成長中のレストラン向け",
         "price": "$19",
-        "period": "/month",
-        "cta": "Activate Professional",
-        "active": "Active Plan",
-        "upgrade": "Upgrade",
+        "period": "/月",
+        "cta": "プロを有効にする",
+        "active": "アクティブなプラン",
+        "upgrade": "アップグレード",
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "Unlimited Waitlist",
-        "whatsapp": "WhatsApp Notifications",
-        "pickupOrders": "Pickup Orders",
-        "activeState": "Active"
+        "waitlist": "無制限の順番待ちリスト",
+        "whatsapp": "WhatsApp通知",
+        "pickupOrders": "テイクアウト注文",
+        "activeState": "有効"
     },
     "upgrade": {
-        "modalTitle": "Unlock full potential",
-        "modalDescription": "The Professional plan includes exclusive features to automate your operation and boost sales.",
-        "cta": "Upgrade Now",
-        "maybeLater": "Maybe later",
-        "featureLocked": "Feature available on Professional plan.",
-        "ctaInline": "Upgrade to use.",
-        "whatsappHint": "Notify your customers automatically via WhatsApp."
+        "modalTitle": "可能性を最大限に引き出す",
+        "modalDescription": "プロプランには、運営を自動化し、売上を向上させるための専用機能が含まれています。",
+        "cta": "今すぐアップグレード",
+        "maybeLater": "後で",
+        "featureLocked": "プロプランで利用可能な機能です。",
+        "ctaInline": "使用するにはアップグレードしてください。",
+        "whatsappHint": "WhatsAppで顧客に自動的に通知します。"
     },
     "banner": {
-        "title": "Upgrade available",
-        "description": "Unlock WhatsApp and Orders with the Professional plan.",
-        "cta": "View Plans"
+        "title": "アップグレード可能",
+        "description": "プロプランでWhatsAppと注文機能を解除しましょう。",
+        "cta": "プランを表示"
     },
     "settings": {
-        "title": "My Plan",
-        "subtitle": "Manage your plan and subscription",
-        "currentPlan": "Current Plan:",
-        "featuresTitle": "Included Features:"
+        "title": "マイプラン",
+        "subtitle": "プランとサブスクリプションの管理",
+        "currentPlan": "現在のプラン:",
+        "featuresTitle": "含まれる機能:"
+    },
+    "trial": {
+        "start": "7日間の無料トライアルを開始",
+        "active": "トライアル中",
+        "expiresIn": "{{days}}日で期限切れ",
+        "expired": "トライアル終了",
+        "description": "PRO機能を7日間お試しください。"
     }
 }

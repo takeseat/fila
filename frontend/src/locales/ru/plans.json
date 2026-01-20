@@ -1,45 +1,52 @@
 {
     "basic": {
-        "title": "Basic",
-        "description": "Perfect to get started",
-        "price": "Free",
-        "cta": "Continue with Basic",
-        "current": "Your current plan"
+        "title": "Базовый",
+        "description": "Идеально для старта",
+        "price": "Бесплатно",
+        "cta": "Продолжить с Базовым",
+        "current": "Ваш текущий план"
     },
     "pro": {
-        "title": "Professional",
-        "description": "For growing restaurants",
+        "title": "Профессиональный",
+        "description": "Для растущих ресторанов",
         "price": "$19",
-        "period": "/month",
-        "cta": "Activate Professional",
-        "active": "Active Plan",
-        "upgrade": "Upgrade",
+        "period": "/месяц",
+        "cta": "Активировать Про",
+        "active": "Активный план",
+        "upgrade": "Обновить",
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "Unlimited Waitlist",
-        "whatsapp": "WhatsApp Notifications",
-        "pickupOrders": "Pickup Orders",
-        "activeState": "Active"
+        "waitlist": "Неограниченная очередь",
+        "whatsapp": "Уведомления в WhatsApp",
+        "pickupOrders": "Заказы на самовывоз",
+        "activeState": "Активен"
     },
     "upgrade": {
-        "modalTitle": "Unlock full potential",
-        "modalDescription": "The Professional plan includes exclusive features to automate your operation and boost sales.",
-        "cta": "Upgrade Now",
-        "maybeLater": "Maybe later",
-        "featureLocked": "Feature available on Professional plan.",
-        "ctaInline": "Upgrade to use.",
-        "whatsappHint": "Notify your customers automatically via WhatsApp."
+        "modalTitle": "Раскройте полный потенциал",
+        "modalDescription": "План Профессиональный включает эксклюзивные функции для автоматизации вашей работы и увеличения продаж.",
+        "cta": "Обновить сейчас",
+        "maybeLater": "Может позже",
+        "featureLocked": "Функция доступна в плане Профессиональный.",
+        "ctaInline": "Обновите, чтобы использовать.",
+        "whatsappHint": "Автоматически уведомляйте клиентов через WhatsApp."
     },
     "banner": {
-        "title": "Upgrade available",
-        "description": "Unlock WhatsApp and Orders with the Professional plan.",
-        "cta": "View Plans"
+        "title": "Доступно обновление",
+        "description": "Разблокируйте WhatsApp и Заказы с планом Профессиональный.",
+        "cta": "Смотреть планы"
     },
     "settings": {
-        "title": "My Plan",
-        "subtitle": "Manage your plan and subscription",
-        "currentPlan": "Current Plan:",
-        "featuresTitle": "Included Features:"
+        "title": "Мой план",
+        "subtitle": "Управление тарифом и подпиской",
+        "currentPlan": "Текущий план:",
+        "featuresTitle": "Включенные функции:"
+    },
+    "trial": {
+        "start": "Начать 7-дневный пробный период",
+        "active": "Пробный период активен",
+        "expiresIn": "Истекает через {{days}} дн.",
+        "expired": "Пробный период истек",
+        "description": "Попробуйте функции PRO в течение 7 дней."
     }
 }

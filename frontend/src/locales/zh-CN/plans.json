@@ -1,45 +1,52 @@
 {
     "basic": {
-        "title": "Basic",
-        "description": "Perfect to get started",
-        "price": "Free",
-        "cta": "Continue with Basic",
-        "current": "Your current plan"
+        "title": "基础版",
+        "description": "适合入门",
+        "price": "免费",
+        "cta": "继续使用基础版",
+        "current": "当前方案"
     },
     "pro": {
-        "title": "Professional",
-        "description": "For growing restaurants",
+        "title": "专业版",
+        "description": "适合成长中的餐厅",
         "price": "$19",
-        "period": "/month",
-        "cta": "Activate Professional",
-        "active": "Active Plan",
-        "upgrade": "Upgrade",
+        "period": "/月",
+        "cta": "启用专业版",
+        "active": "生效中",
+        "upgrade": "升级",
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "Unlimited Waitlist",
-        "whatsapp": "WhatsApp Notifications",
-        "pickupOrders": "Pickup Orders",
-        "activeState": "Active"
+        "waitlist": "无限排队列表",
+        "whatsapp": "WhatsApp 通知",
+        "pickupOrders": "自提订单",
+        "activeState": "已激活"
     },
     "upgrade": {
-        "modalTitle": "Unlock full potential",
-        "modalDescription": "The Professional plan includes exclusive features to automate your operation and boost sales.",
-        "cta": "Upgrade Now",
-        "maybeLater": "Maybe later",
-        "featureLocked": "Feature available on Professional plan.",
-        "ctaInline": "Upgrade to use.",
-        "whatsappHint": "Notify your customers automatically via WhatsApp."
+        "modalTitle": "释放全部潜力",
+        "modalDescription": "专业版包含独家功能，可自动化您的运营并提升销售额。",
+        "cta": "立即升级",
+        "maybeLater": "以后再说",
+        "featureLocked": "专业版可用功能。",
+        "ctaInline": "升级即可使用。",
+        "whatsappHint": "通过 WhatsApp 自动通知您的客户。"
     },
     "banner": {
-        "title": "Upgrade available",
-        "description": "Unlock WhatsApp and Orders with the Professional plan.",
-        "cta": "View Plans"
+        "title": "可升级",
+        "description": "使用专业版解锁 WhatsApp 和订单功能。",
+        "cta": "查看方案"
     },
     "settings": {
-        "title": "My Plan",
-        "subtitle": "Manage your plan and subscription",
-        "currentPlan": "Current Plan:",
-        "featuresTitle": "Included Features:"
+        "title": "我的方案",
+        "subtitle": "管理您的方案和订阅",
+        "currentPlan": "当前方案：",
+        "featuresTitle": "包含功能："
+    },
+    "trial": {
+        "start": "开始7天免费试用",
+        "active": "试用期内",
+        "expiresIn": "{{days}} 天后过期",
+        "expired": "试用已过期",
+        "description": "免费试用 PRO 功能 7 天。"
     }
 }

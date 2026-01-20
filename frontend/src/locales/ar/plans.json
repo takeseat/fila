@@ -1,45 +1,52 @@
 {
     "basic": {
-        "title": "Basic",
-        "description": "Perfect to get started",
-        "price": "Free",
-        "cta": "Continue with Basic",
-        "current": "Your current plan"
+        "title": "أساسي",
+        "description": "مثالي للبدء",
+        "price": "مجاني",
+        "cta": "الاستمرار مع الأساسي",
+        "current": "خطتك الحالية"
     },
     "pro": {
-        "title": "Professional",
-        "description": "For growing restaurants",
+        "title": "احترافي",
+        "description": "للمطاعم النامية",
         "price": "$19",
-        "period": "/month",
-        "cta": "Activate Professional",
-        "active": "Active Plan",
-        "upgrade": "Upgrade",
+        "period": "/شهر",
+        "cta": "تفعيل الاحترافي",
+        "active": "خطة نشطة",
+        "upgrade": "ترقية",
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "Unlimited Waitlist",
-        "whatsapp": "WhatsApp Notifications",
-        "pickupOrders": "Pickup Orders",
-        "activeState": "Active"
+        "waitlist": "قائمة انتظار غير محدودة",
+        "whatsapp": "إشعارات واتساب",
+        "pickupOrders": "طلبات الاستلام",
+        "activeState": "نشط"
     },
     "upgrade": {
-        "modalTitle": "Unlock full potential",
-        "modalDescription": "The Professional plan includes exclusive features to automate your operation and boost sales.",
-        "cta": "Upgrade Now",
-        "maybeLater": "Maybe later",
-        "featureLocked": "Feature available on Professional plan.",
-        "ctaInline": "Upgrade to use.",
-        "whatsappHint": "Notify your customers automatically via WhatsApp."
+        "modalTitle": "أطلق العنان للإمكانات الكاملة",
+        "modalDescription": "تتضمن الخطة الاحترافية ميزات حصرية لأتمتة عملياتك وزيادة مبيعاتك.",
+        "cta": "ترقية الآن",
+        "maybeLater": "ربما لاحقاً",
+        "featureLocked": "ميزة متوفرة في الخطة الاحترافية.",
+        "ctaInline": "قم بالترقية للاستخدام.",
+        "whatsappHint": "أخبر عملاءك تلقائياً عبر واتساب."
     },
     "banner": {
-        "title": "Upgrade available",
-        "description": "Unlock WhatsApp and Orders with the Professional plan.",
-        "cta": "View Plans"
+        "title": "اترقية متوفرة",
+        "description": "افتح واتساب والطلبات مع الخطة الاحترافية.",
+        "cta": "عرض الخطط"
     },
     "settings": {
-        "title": "My Plan",
-        "subtitle": "Manage your plan and subscription",
-        "currentPlan": "Current Plan:",
-        "featuresTitle": "Included Features:"
+        "title": "خطتي",
+        "subtitle": "إدارة خطتك واشتراكك",
+        "currentPlan": "الخطة الحالية:",
+        "featuresTitle": "الميزات المضمنة:"
+    },
+    "trial": {
+        "start": "ابدأ إصدار تجريبي مجاني لمدة 7 أيام",
+        "active": "تجربة نشطة",
+        "expiresIn": "ينتهي في {{days}} أيام",
+        "expired": "انتهاء التجربة",
+        "description": "جرب ميزات PRO لمدة 7 أيام."
     }
 }
