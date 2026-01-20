@@ -3,11 +3,22 @@ import { useTranslation } from 'react-i18next';
 interface PlanComparisonProps {
     onSelectBasic?: () => void;
     onSelectPro?: () => void;
+    onStartTrial?: () => void;
     currentPlan?: 'BASIC' | 'PRO';
     isUpgrade?: boolean;
+    isTrialEligible?: boolean;
+    isTrialLoading?: boolean;
 }
 
-export function PlanComparison({ onSelectBasic, onSelectPro, currentPlan, isUpgrade = false }: PlanComparisonProps) {
+export function PlanComparison({
+    onSelectBasic,
+    onSelectPro,
+    onStartTrial,
+    currentPlan,
+    isUpgrade = false,
+    isTrialEligible = false,
+    isTrialLoading = false
+}: PlanComparisonProps) {
     const { t } = useTranslation('plans');
 
     return (
@@ -89,12 +100,25 @@ export function PlanComparison({ onSelectBasic, onSelectPro, currentPlan, isUpgr
                     </li>
                 </ul>
 
-                <button
-                    onClick={onSelectPro}
-                    className="w-full py-3 px-4 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg transform active:scale-[0.98]"
-                >
-                    {isUpgrade ? t('upgrade.cta') : t('pro.cta')}
-                </button>
+                {isTrialEligible && onStartTrial ? (
+                    <div className="space-y-3">
+                        <button
+                            onClick={onStartTrial}
+                            disabled={isTrialLoading}
+                            className="w-full py-3 px-4 rounded-xl bg-orange-600 text-white font-bold hover:bg-orange-700 transition-colors shadow-md hover:shadow-lg transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+                        >
+                            {isTrialLoading ? '...' : t('trial.start')}
+                        </button>
+                        <p className="text-xs text-center text-gray-500">{t('trial.description')}</p>
+                    </div>
+                ) : (
+                    <button
+                        onClick={onSelectPro}
+                        className="w-full py-3 px-4 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg transform active:scale-[0.98]"
+                    >
+                        {isUpgrade ? t('upgrade.cta') : t('pro.cta')}
+                    </button>
+                )}
             </div>
         </div>
     );

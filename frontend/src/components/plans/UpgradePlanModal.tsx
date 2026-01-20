@@ -1,7 +1,11 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTranslation } from 'react-i18next';
 import { PlanComparison } from './PlanComparison';
+import { usePlan } from '../../hooks/usePlan';
+import { useAuth } from '../../hooks/useAuth';
+import { restaurantsApi } from '../../services/restaurantsApi';
+import toast from 'react-hot-toast';
 
 interface UpgradePlanModalProps {
     isOpen: boolean;
@@ -11,6 +15,31 @@ interface UpgradePlanModalProps {
 
 export function UpgradePlanModal({ isOpen, onClose, onUpgrade }: UpgradePlanModalProps) {
     const { t } = useTranslation('plans');
+    const { isPro, hasConsumedTrial, isTrialActive } = usePlan();
+    const { refreshProfile } = useAuth();
+    const [loading, setLoading] = useState(false);
+
+    const isTrialEligible = !isPro && !hasConsumedTrial && !isTrialActive;
+
+    const handleStartTrial = async () => {
+        try {
+            setLoading(true);
+            await restaurantsApi.startTrial();
+            await refreshProfile();
+            toast.success(t('trial.active'));
+            onClose();
+        } catch (error: any) {
+            console.error('Failed to start trial', error);
+            if (error.response?.data?.error === 'INCOMPLETE_PROFILE') {
+                toast.error('Complete your profile to start trial');
+                // Could redirect to settings here if needed
+            } else {
+                toast.error('Failed to start trial');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
@@ -53,6 +82,9 @@ export function UpgradePlanModal({ isOpen, onClose, onUpgrade }: UpgradePlanModa
                                     currentPlan="BASIC"
                                     isUpgrade={true}
                                     onSelectPro={onUpgrade}
+                                    isTrialEligible={isTrialEligible}
+                                    onStartTrial={handleStartTrial}
+                                    isTrialLoading={loading}
                                 />
 
                                 <div className="mt-8 text-center">
