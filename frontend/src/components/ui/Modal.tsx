@@ -1,4 +1,5 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ModalProps {
     isOpen: boolean;
@@ -8,10 +9,17 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, children }: ModalProps) {
-    if (!isOpen) return null;
+    const [mounted, setMounted] = useState(false);
 
-    return (
-        <div className="fixed inset-0 z-50 overflow-y-auto">
+    useEffect(() => {
+        setMounted(true);
+        return () => setMounted(false);
+    }, []);
+
+    if (!isOpen || !mounted) return null;
+
+    return createPortal(
+        <div className="fixed inset-0 z-[100] overflow-y-auto">
             {/* Backdrop */}
             <div
                 className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
@@ -20,7 +28,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
 
             {/* Modal */}
             <div className="flex min-h-full items-center justify-center p-4">
-                <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
+                <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-scale-in">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
                         <h3 className="text-xl font-bold text-gray-900">{title}</h3>
@@ -38,6 +46,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
                     <div>{children}</div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }
