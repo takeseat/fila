@@ -7,6 +7,8 @@ import { ParametersTab } from '../components/settings/ParametersTab';
 import { TeamTab } from '../components/settings/TeamTab';
 import { PlanSettings } from '../components/settings/PlanSettings';
 import { MessagesTab } from '../components/settings/MessagesTab';
+import { PageShell, PageContent } from '../components/mobile/PageShell';
+import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
 
 export function Settings() {
     const { t } = useTranslation('settings');
@@ -69,30 +71,36 @@ export function Settings() {
     ];
 
     return (
-        <div className="max-w-5xl mx-auto">
-            <div className="bg-white rounded-xl shadow-sm border border-light-200 overflow-hidden">
-                {/* Header */}
-                <div className="p-6 border-b border-light-200">
-                    <h1 className="text-2xl font-bold text-dark-900">{t('title')}</h1>
-                    <p className="text-sm text-dark-500 mt-1">{t('subtitle')}</p>
-                </div>
+        <PageShell>
+            <MobilePageHeader title={t('title')} subtitle={t('subtitle')} />
 
-                {/* Tab Navigation */}
-                <TabNavigation
-                    activeTab={activeTab}
-                    onTabChange={(tabId) => setActiveTab(tabId as any)}
-                    tabs={tabs}
-                />
+            <PageContent>
+                <div className="max-w-5xl mx-auto p-4 md:p-0">
+                    <div className="bg-white rounded-xl shadow-sm border border-light-200 overflow-hidden">
+                        {/* Header (Desktop only) */}
+                        <div className="hidden md:block p-6 border-b border-light-200">
+                            <h1 className="text-2xl font-bold text-dark-900">{t('title')}</h1>
+                            <p className="text-sm text-dark-500 mt-1">{t('subtitle')}</p>
+                        </div>
 
-                {/* Tab Content */}
-                <div className="p-6">
-                    {activeTab === 'business' && <BusinessDataTab />}
-                    {activeTab === 'plan' && <PlanSettings />}
-                    {activeTab === 'parameters' && <ParametersTab />}
-                    {activeTab === 'team' && <TeamTab />}
-                    {activeTab === 'messages' && <MessagesTab />}
+                        {/* Tab Navigation */}
+                        <TabNavigation
+                            activeTab={activeTab}
+                            onTabChange={(tabId) => setActiveTab(tabId as any)}
+                            tabs={tabs}
+                        />
+
+                        {/* Tab Content */}
+                        <div className="p-4 md:p-6">
+                            {activeTab === 'business' && <BusinessDataTab />}
+                            {activeTab === 'plan' && <PlanSettings />}
+                            {activeTab === 'parameters' && <ParametersTab />}
+                            {activeTab === 'team' && <TeamTab />}
+                            {activeTab === 'messages' && <MessagesTab />}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </PageContent>
+        </PageShell>
     );
 }

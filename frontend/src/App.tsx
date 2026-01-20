@@ -32,7 +32,15 @@ const queryClient = new QueryClient({
     },
 });
 
-function PrivateRoute({ children, requireOnboarding = false }: { children: React.ReactNode, requireOnboarding?: boolean }) {
+function PrivateRoute({
+    children,
+    requireOnboarding = false,
+    mobileShell = false
+}: {
+    children: React.ReactNode,
+    requireOnboarding?: boolean,
+    mobileShell?: boolean
+}) {
     const { user, restaurant, loading } = useAuth();
 
     if (loading) {
@@ -65,7 +73,7 @@ function PrivateRoute({ children, requireOnboarding = false }: { children: React
         }
     }
 
-    return <Layout>{children}</Layout>;
+    return <Layout mobileShell={mobileShell}>{children}</Layout>;
 }
 
 // Guard to wait for language to be ready
@@ -114,7 +122,7 @@ function App() {
                                     <Route
                                         path="/"
                                         element={
-                                            <PrivateRoute>
+                                            <PrivateRoute mobileShell>
                                                 <Home />
                                             </PrivateRoute>
                                         }
@@ -124,7 +132,7 @@ function App() {
                                     <Route
                                         path="/waitlist"
                                         element={
-                                            <PrivateRoute>
+                                            <PrivateRoute mobileShell>
                                                 <Waitlist />
                                             </PrivateRoute>
                                         }
@@ -143,7 +151,7 @@ function App() {
                                     <Route
                                         path="/pickup-orders"
                                         element={
-                                            <PrivateRoute>
+                                            <PrivateRoute mobileShell>
                                                 <PickupOrders />
                                             </PrivateRoute>
                                         }
@@ -194,7 +202,7 @@ function App() {
                                     <Route
                                         path="/settings/profile"
                                         element={
-                                            <PrivateRoute>
+                                            <PrivateRoute mobileShell>
                                                 <ProfileSettings />
                                             </PrivateRoute>
                                         }
@@ -203,7 +211,7 @@ function App() {
                                     <Route
                                         path="/settings"
                                         element={
-                                            <PrivateRoute>
+                                            <PrivateRoute mobileShell>
                                                 <Settings />
                                             </PrivateRoute>
                                         }

@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
 import { usePlan } from '../hooks/usePlan';
 import { Button, Modal, Input, Badge, EmptyState, Progress, Spinner } from '../components/ui';
+import { PageShell, PageContent } from '../components/mobile/PageShell';
+import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
 import { InternationalPhoneInput } from '../components/ui/InternationalPhoneInput';
 import { format } from 'date-fns';
 import { DEFAULT_COUNTRY, getCountryByCode } from '../data/countries';
@@ -404,513 +406,531 @@ export function Waitlist() {
     }
 
     return (
-        <div className="space-y-6 animate-fade-in">
-            {/* Header with Stats */}
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-dark-900 mb-2">{t('title')}</h1>
-                    <p className="text-dark-500">{t('subtitle')}</p>
-                </div>
-                <Button onClick={handleOpenModal} size="lg" className="gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    {t('actions.addToQueue')}
-                </Button>
-            </div>
+        <PageShell>
+            {/* Mobile Header */}
+            <MobilePageHeader
+                title={t('title')}
+                subtitle={t('subtitle')}
+                actions={
+                    <Button onClick={handleOpenModal} size="sm" className="gap-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        {t('actions.addToQueue')}
+                    </Button>
+                }
+            />
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="card-premium p-5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-warning-100 rounded-xl flex items-center justify-center">
-                            <svg className="w-6 h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
+            <PageContent>
+                <div className="space-y-6 animate-fade-in">
+                    {/* Desktop Header (Hidden on Mobile) */}
+                    <div className="hidden lg:flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                         <div>
-                            <p className="text-sm font-medium text-dark-600">{t('stats.inQueue')}</p>
-                            <p className="text-3xl font-bold text-dark-900">{activeEntries.length}</p>
+                            <h1 className="text-3xl font-bold text-dark-900 mb-2">{t('title')}</h1>
+                            <p className="text-dark-500">{t('subtitle')}</p>
                         </div>
-                    </div>
-                </div>
-
-                <div className="card-premium p-5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center">
-                            <svg className="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p className="text-sm font-medium text-dark-600">{t('stats.servedToday')}</p>
-                            <p className="text-3xl font-bold text-dark-900">
-                                {metrics?.servedToday ?? 0}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="card-premium p-5">
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
-                            <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p className="text-sm font-medium text-dark-600">
-                                {t('stats.avgWaitTime')}
-                                {metrics?.windowMinutes && <span className="text-xs text-dark-400 ml-1">{t('stats.lastMinutes', { minutes: metrics.windowMinutes })}</span>}
-                            </p>
-                            <div className="flex items-center gap-2">
-                                <p className="text-3xl font-bold text-dark-900">
-                                    {metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}
-                                    <span className="text-lg ml-1">{t('common:time.minutes', { count: 0 }).split(' ')[1]}</span>
-                                </p>
-                                {metrics?.isFallbackUsed && (
-                                    <span title="Sem dados suficientes na janela. Exibindo fallback." className="cursor-help text-xs bg-light-200 text-dark-500 px-2 py-1 rounded-full hover:bg-light-300 transition-colors">
-                                        {t('stats.estimated')}
-                                    </span>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Filters */}
-            <div className="card-premium p-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {/* Phone filter */}
-                    <Input
-                        placeholder={t('filters.phoneSearch')}
-                        value={filters.phone}
-                        onChange={(e) => setFilters({ ...filters, phone: e.target.value })}
-                        leftIcon={
+                        <Button onClick={handleOpenModal} size="lg" className="gap-2">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                             </svg>
-                        }
-                    />
-
-                    {/* Name filter */}
-                    <Input
-                        placeholder={t('filters.nameSearch')}
-                        value={filters.name}
-                        onChange={(e) => setFilters({ ...filters, name: e.target.value })}
-                        leftIcon={
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        }
-                    />
-
-                    {/* Party size filter */}
-                    <div className="flex flex-col gap-2">
-                        <label className="text-xs font-medium text-dark-600">{t('filters.partySizeLabel')}</label>
-                        <div className="flex flex-wrap gap-2">
-                            <Button
-                                variant={filters.partySize === null ? 'primary' : 'outline'}
-                                size="sm"
-                                onClick={() => setFilters({ ...filters, partySize: null })}
-                            >
-                                {t('filters.all')}
-                            </Button>
-                            {[1, 2, 3, 4].map(size => (
-                                <Button
-                                    key={size}
-                                    variant={filters.partySize === size ? 'primary' : 'outline'}
-                                    size="sm"
-                                    onClick={() => setFilters({ ...filters, partySize: size })}
-                                >
-                                    {size}
-                                </Button>
-                            ))}
-                            <Button
-                                variant={filters.partySize === 5 ? 'primary' : 'outline'}
-                                size="sm"
-                                onClick={() => setFilters({ ...filters, partySize: 5 })}
-                            >
-                                5+
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Clear filters button */}
-                {hasActiveFilters && (
-                    <div className="mt-3 flex justify-end">
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setFilters({ phone: '', name: '', partySize: null })}
-                            className="gap-2"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                            {t('filters.clearFilters')}
-                        </Button>
-                    </div>
-                )}
-            </div>
-
-            {/* Active Queue */}
-            <div>
-                <h2 className="text-xl font-semibold text-dark-900 mb-4">{t('activeQueue')}</h2>
-                {activeEntries.length === 0 ? (
-                    <div className="card-premium">
-                        <EmptyState
-                            icon={
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                            }
-                            title={t('empty.title')}
-                            description={t('empty.description')}
-                            action={
-                                <Button onClick={handleOpenModal}>
-                                    {t('empty.action')}
-                                </Button>
-                            }
-                        />
-                    </div>
-                ) : filteredActiveEntries.length === 0 ? (
-                    <div className="card-premium">
-                        <EmptyState
-                            icon={
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                            }
-                            title={t('filters.noResults.title')}
-                            description={t('filters.noResults.description')}
-                            action={
-                                <Button onClick={() => setFilters({ phone: '', name: '', partySize: null })} variant="outline">
-                                    {t('filters.clearFilters')}
-                                </Button>
-                            }
-                        />
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        {filteredActiveEntries.map((entry: any, index: number) => {
-                            const { elapsedString, progress, etaString, variant } = calculateWaitMetrics(entry);
-                            const alertStatus = getAlertStatus(entry);
-
-                            // Define visual styles based on alert status
-                            let cardBorderClass = '';
-                            let badgeContent = null;
-                            let timerClass = 'text-dark-900';
-
-                            if (alertStatus === 'waiting') {
-                                cardBorderClass = 'border-l-4 border-l-warning-500 bg-warning-50/10';
-                                timerClass = 'text-warning-700 font-bold';
-                                badgeContent = (
-                                    <div className="absolute top-0 right-0 p-2 flex items-center gap-1">
-                                        <span className="flex h-3 w-3 relative mr-1">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-warning-400 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-warning-500"></span>
-                                        </span>
-                                        <span className="bg-warning-100 text-warning-700 text-xs px-2 py-0.5 rounded-full font-medium border border-warning-200">
-                                            ⚠️ {t('entry.delay')}
-                                        </span>
-                                    </div>
-                                );
-                            } else if (alertStatus === 'called') {
-                                cardBorderClass = 'border-l-4 border-l-danger-500 bg-danger-50/10';
-                                timerClass = 'text-danger-700 font-bold';
-                                badgeContent = (
-                                    <div className="absolute top-0 right-0 p-2 flex items-center gap-1">
-                                        <span className="flex h-3 w-3 relative mr-1">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger-400 opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-danger-500"></span>
-                                        </span>
-                                        <span className="bg-danger-100 text-danger-700 text-xs px-2 py-0.5 rounded-full font-medium border border-danger-200">
-                                            📣 {t('entry.delaySeating')}
-                                        </span>
-                                    </div>
-                                );
-                            }
-
-                            return (
-                                <div
-                                    key={entry.id}
-                                    className={`
-                                        card-premium p-6 hover:shadow-xl transition-all duration-200 relative overflow-hidden
-                                        ${cardBorderClass}
-                                    `}
-                                >
-                                    {badgeContent}
-
-                                    {/* Header */}
-                                    <div className="flex items-start justify-between mb-4">
-                                        <div className="flex items-center gap-3">
-                                            {/* Position Badge */}
-                                            <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center text-white font-bold shadow-md">
-                                                {index + 1}
-                                            </div>
-                                            <div>
-                                                <h3 className="text-lg font-semibold text-dark-900">
-                                                    {entry.customerName}
-                                                </h3>
-                                                <p className="text-sm text-dark-500 flex items-center gap-2">
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                                    </svg>
-                                                    {entry.customerPhone}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        {getStatusBadge(entry.status)}
-                                    </div>
-
-                                    {/* Info Grid */}
-                                    <div className="grid grid-cols-2 gap-3 mb-4">
-                                        <div className="bg-light-50 rounded-lg p-3">
-                                            <p className="text-xs text-dark-500 mb-1">{t('entry.partySize')}</p>
-                                            <p className="text-lg font-semibold text-dark-900 flex items-center gap-1">
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                                </svg>
-                                                {entry.partySize}
-                                            </p>
-                                        </div>
-                                        <div className="bg-light-50 rounded-lg p-3">
-                                            <p className="text-xs text-dark-500 mb-1">
-                                                {entry.status === 'CALLED' ? t('entry.calledSince') : t('entry.timeInQueue')}
-                                            </p>
-                                            <p className={`text-lg font-semibold flex items-center gap-2 ${timerClass}`}>
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                </svg>
-                                                <span>{entry.status === 'CALLED' ? elapsedString : elapsedString}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    {/* Wait Time Progress (Only relevant if still WAITING) */}
-                                    {entry.status === 'WAITING' && (
-                                        <div className="mb-4">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-xs font-medium text-dark-600">
-                                                    {t('entry.eta', { time: etaString })}
-                                                </span>
-                                            </div>
-                                            <Progress value={progress} variant={variant as any} size="md" />
-                                        </div>
-                                    )}
-
-                                    {/* For CALLED status, show when they were called */}
-                                    {entry.status === 'CALLED' && (
-                                        <div className="mb-4">
-                                            <div className="p-3 bg-primary-50 rounded-lg border border-primary-100 flex items-center justify-between">
-                                                <span className="text-sm text-primary-700 font-medium">{t('entry.customerCalled')}</span>
-                                                <span className="text-xs text-primary-600">
-                                                    {t('entry.at')} {format(new Date(entry.calledAt || entry.updatedAt), 'HH:mm')}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Action Buttons */}
-                                    <div className="flex gap-2">
-                                        {entry.status === 'WAITING' && (
-                                            <>
-                                                <Button
-                                                    size="sm"
-                                                    variant="outline"
-                                                    onClick={() => callMutation.mutate(entry.id)}
-                                                    className="flex-1"
-                                                    isLoading={callMutation.isPending}
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                                    </svg>
-                                                    {t('actions.call')}
-                                                </Button>
-                                                <Button
-                                                    size="sm"
-                                                    variant="success"
-                                                    onClick={() => seatMutation.mutate(entry.id)}
-                                                    className="flex-1"
-                                                    isLoading={seatMutation.isPending}
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
-                                                    {t('actions.seat')}
-                                                </Button>
-                                                <Button
-                                                    size="sm"
-                                                    variant="danger"
-                                                    onClick={() => cancelMutation.mutate(entry.id)}
-                                                    isLoading={cancelMutation.isPending}
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                </Button>
-                                            </>
-                                        )}
-                                        {entry.status === 'CALLED' && (
-                                            <>
-                                                <Button
-                                                    size="sm"
-                                                    variant="success"
-                                                    onClick={() => seatMutation.mutate(entry.id)}
-                                                    className="flex-1"
-                                                    isLoading={seatMutation.isPending}
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg>
-                                                    {t('actions.seat')}
-                                                </Button>
-                                                <Button
-                                                    size="sm"
-                                                    variant="danger"
-                                                    onClick={() => noShowMutation.mutate(entry.id)}
-                                                    className="flex-1"
-                                                    isLoading={noShowMutation.isPending}
-                                                >
-                                                    {t('actions.noShow')}
-                                                </Button>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                )}
-            </div>
-
-
-            <Modal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                title={t('form.title')}
-            >
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                        <InternationalPhoneInput
-                            label={t('form.customerPhone')}
-                            countryCode={formData.country.code}
-                            phoneNumber={formData.phone}
-                            onChange={(code, phone) => {
-                                const country = getCountryByCode(code) || DEFAULT_COUNTRY;
-                                setFormData(prev => ({ ...prev, country, phone }));
-                            }}
-                            required
-                        />
-                        {isLookingUp && (
-                            <p className="text-xs text-primary-600 flex items-center gap-1">
-                                <Spinner size="sm" />
-                                {t('form.lookingUp')}
-                            </p>
-                        )}
-                        {!isLookingUp && customerFound && (
-                            <p className="text-xs text-success-600 flex items-center gap-1">
-                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                </svg>
-                                {t('form.customerFound', { name: customerFound.name })}
-                            </p>
-                        )}
-                        {!isLookingUp && !customerFound && formData.phone.length >= (formData.country.code === 'BR' ? 10 : 6) && (
-                            <p className="text-xs text-dark-500 flex items-center gap-1">
-                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                </svg>
-                                {t('form.newCustomer')}
-                            </p>
-                        )}
-                    </div>
-
-                    {shouldShowWhatsappOptIn && canUseWhatsApp && (
-                        <div className="p-3 rounded-lg border bg-green-50/50 border-green-100 animate-fade-in">
-                            <div className="flex items-start gap-3">
-                                <div className="flex items-center h-5 mt-0.5">
-                                    <input
-                                        type="checkbox"
-                                        id="whatsappOptIn"
-                                        checked={formData.whatsappOptIn}
-                                        onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
-                                        className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-                                    />
-                                </div>
-                                <div className="flex-1">
-                                    <label htmlFor="whatsappOptIn" className="text-sm font-medium block text-gray-900 cursor-pointer select-none">
-                                        {t('form.whatsappOptIn')}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
-                    <Input
-                        label={t('form.customerName')}
-                        value={formData.customerName}
-                        onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
-                        required
-                        placeholder={t('form.fullName')}
-                        leftIcon={
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        }
-                    />
-
-                    <div className="grid grid-cols-2 gap-4">
-                        <Input
-                            label={t('form.partySize')}
-                            type="number"
-                            min="1"
-                            max="20"
-                            value={formData.partySize}
-                            onChange={(e) => setFormData({ ...formData, partySize: parseInt(e.target.value) || 1 })}
-                            required
-                            leftIcon={
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                            }
-                        />
-                    </div>
-
-                    <Input
-                        label={t('form.notes')}
-                        value={formData.notes}
-                        onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                        placeholder={t('form.notesPlaceholder')}
-                        leftIcon={
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                        }
-                    />
-
-                    <div className="flex gap-3 pt-2">
-                        <Button
-                            type="button"
-                            variant="ghost"
-                            className="flex-1"
-                            onClick={() => setIsModalOpen(false)}
-                        >
-                            {t('common:actions.cancel')}
-                        </Button>
-                        <Button
-                            type="submit"
-                            className="flex-1"
-                            isLoading={createMutation.isPending}
-                        >
                             {t('actions.addToQueue')}
                         </Button>
                     </div>
-                </form>
-            </Modal>
-        </div >
+
+                    {/* Stats Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="card-premium p-5">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 bg-warning-100 rounded-xl flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium text-dark-600">{t('stats.inQueue')}</p>
+                                    <p className="text-3xl font-bold text-dark-900">{activeEntries.length}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card-premium p-5">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium text-dark-600">{t('stats.servedToday')}</p>
+                                    <p className="text-3xl font-bold text-dark-900">
+                                        {metrics?.servedToday ?? 0}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="card-premium p-5">
+                            <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center">
+                                    <svg className="w-6 h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium text-dark-600">
+                                        {t('stats.avgWaitTime')}
+                                        {metrics?.windowMinutes && <span className="text-xs text-dark-400 ml-1">{t('stats.lastMinutes', { minutes: metrics.windowMinutes })}</span>}
+                                    </p>
+                                    <div className="flex items-center gap-2">
+                                        <p className="text-3xl font-bold text-dark-900">
+                                            {metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}
+                                            <span className="text-lg ml-1">{t('common:time.minutes', { count: 0 }).split(' ')[1]}</span>
+                                        </p>
+                                        {metrics?.isFallbackUsed && (
+                                            <span title="Sem dados suficientes na janela. Exibindo fallback." className="cursor-help text-xs bg-light-200 text-dark-500 px-2 py-1 rounded-full hover:bg-light-300 transition-colors">
+                                                {t('stats.estimated')}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Filters */}
+                    <div className="card-premium p-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {/* Phone filter */}
+                            <Input
+                                placeholder={t('filters.phoneSearch')}
+                                value={filters.phone}
+                                onChange={(e) => setFilters({ ...filters, phone: e.target.value })}
+                                leftIcon={
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                }
+                            />
+
+                            {/* Name filter */}
+                            <Input
+                                placeholder={t('filters.nameSearch')}
+                                value={filters.name}
+                                onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+                                leftIcon={
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                }
+                            />
+
+                            {/* Party size filter */}
+                            <div className="flex flex-col gap-2">
+                                <label className="text-xs font-medium text-dark-600">{t('filters.partySizeLabel')}</label>
+                                <div className="flex flex-wrap gap-2">
+                                    <Button
+                                        variant={filters.partySize === null ? 'primary' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setFilters({ ...filters, partySize: null })}
+                                    >
+                                        {t('filters.all')}
+                                    </Button>
+                                    {[1, 2, 3, 4].map(size => (
+                                        <Button
+                                            key={size}
+                                            variant={filters.partySize === size ? 'primary' : 'outline'}
+                                            size="sm"
+                                            onClick={() => setFilters({ ...filters, partySize: size })}
+                                        >
+                                            {size}
+                                        </Button>
+                                    ))}
+                                    <Button
+                                        variant={filters.partySize === 5 ? 'primary' : 'outline'}
+                                        size="sm"
+                                        onClick={() => setFilters({ ...filters, partySize: 5 })}
+                                    >
+                                        5+
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Clear filters button */}
+                        {hasActiveFilters && (
+                            <div className="mt-3 flex justify-end">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={() => setFilters({ phone: '', name: '', partySize: null })}
+                                    className="gap-2"
+                                >
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                    {t('filters.clearFilters')}
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Active Queue */}
+                    <div>
+                        <h2 className="text-xl font-semibold text-dark-900 mb-4">{t('activeQueue')}</h2>
+                        {activeEntries.length === 0 ? (
+                            <div className="card-premium">
+                                <EmptyState
+                                    icon={
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    }
+                                    title={t('empty.title')}
+                                    description={t('empty.description')}
+                                    action={
+                                        <Button onClick={handleOpenModal}>
+                                            {t('empty.action')}
+                                        </Button>
+                                    }
+                                />
+                            </div>
+                        ) : filteredActiveEntries.length === 0 ? (
+                            <div className="card-premium">
+                                <EmptyState
+                                    icon={
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    }
+                                    title={t('filters.noResults.title')}
+                                    description={t('filters.noResults.description')}
+                                    action={
+                                        <Button onClick={() => setFilters({ phone: '', name: '', partySize: null })} variant="outline">
+                                            {t('filters.clearFilters')}
+                                        </Button>
+                                    }
+                                />
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                {filteredActiveEntries.map((entry: any, index: number) => {
+                                    const { elapsedString, progress, etaString, variant } = calculateWaitMetrics(entry);
+                                    const alertStatus = getAlertStatus(entry);
+
+                                    // Define visual styles based on alert status
+                                    let cardBorderClass = '';
+                                    let badgeContent = null;
+                                    let timerClass = 'text-dark-900';
+
+                                    if (alertStatus === 'waiting') {
+                                        cardBorderClass = 'border-l-4 border-l-warning-500 bg-warning-50/10';
+                                        timerClass = 'text-warning-700 font-bold';
+                                        badgeContent = (
+                                            <div className="absolute top-0 right-0 p-2 flex items-center gap-1">
+                                                <span className="flex h-3 w-3 relative mr-1">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-warning-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-warning-500"></span>
+                                                </span>
+                                                <span className="bg-warning-100 text-warning-700 text-xs px-2 py-0.5 rounded-full font-medium border border-warning-200">
+                                                    ⚠️ {t('entry.delay')}
+                                                </span>
+                                            </div>
+                                        );
+                                    } else if (alertStatus === 'called') {
+                                        cardBorderClass = 'border-l-4 border-l-danger-500 bg-danger-50/10';
+                                        timerClass = 'text-danger-700 font-bold';
+                                        badgeContent = (
+                                            <div className="absolute top-0 right-0 p-2 flex items-center gap-1">
+                                                <span className="flex h-3 w-3 relative mr-1">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-danger-500"></span>
+                                                </span>
+                                                <span className="bg-danger-100 text-danger-700 text-xs px-2 py-0.5 rounded-full font-medium border border-danger-200">
+                                                    📣 {t('entry.delaySeating')}
+                                                </span>
+                                            </div>
+                                        );
+                                    }
+
+                                    return (
+                                        <div
+                                            key={entry.id}
+                                            className={`
+                                        card-premium p-6 hover:shadow-xl transition-all duration-200 relative overflow-hidden
+                                        ${cardBorderClass}
+                                    `}
+                                        >
+                                            {badgeContent}
+
+                                            {/* Header */}
+                                            <div className="flex items-start justify-between mb-4">
+                                                <div className="flex items-center gap-3">
+                                                    {/* Position Badge */}
+                                                    <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center text-white font-bold shadow-md">
+                                                        {index + 1}
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="text-lg font-semibold text-dark-900">
+                                                            {entry.customerName}
+                                                        </h3>
+                                                        <p className="text-sm text-dark-500 flex items-center gap-2">
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                            </svg>
+                                                            {entry.customerPhone}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                {getStatusBadge(entry.status)}
+                                            </div>
+
+                                            {/* Info Grid */}
+                                            <div className="grid grid-cols-2 gap-3 mb-4">
+                                                <div className="bg-light-50 rounded-lg p-3">
+                                                    <p className="text-xs text-dark-500 mb-1">{t('entry.partySize')}</p>
+                                                    <p className="text-lg font-semibold text-dark-900 flex items-center gap-1">
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                        </svg>
+                                                        {entry.partySize}
+                                                    </p>
+                                                </div>
+                                                <div className="bg-light-50 rounded-lg p-3">
+                                                    <p className="text-xs text-dark-500 mb-1">
+                                                        {entry.status === 'CALLED' ? t('entry.calledSince') : t('entry.timeInQueue')}
+                                                    </p>
+                                                    <p className={`text-lg font-semibold flex items-center gap-2 ${timerClass}`}>
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        <span>{entry.status === 'CALLED' ? elapsedString : elapsedString}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            {/* Wait Time Progress (Only relevant if still WAITING) */}
+                                            {entry.status === 'WAITING' && (
+                                                <div className="mb-4">
+                                                    <div className="flex justify-between items-center mb-2">
+                                                        <span className="text-xs font-medium text-dark-600">
+                                                            {t('entry.eta', { time: etaString })}
+                                                        </span>
+                                                    </div>
+                                                    <Progress value={progress} variant={variant as any} size="md" />
+                                                </div>
+                                            )}
+
+                                            {/* For CALLED status, show when they were called */}
+                                            {entry.status === 'CALLED' && (
+                                                <div className="mb-4">
+                                                    <div className="p-3 bg-primary-50 rounded-lg border border-primary-100 flex items-center justify-between">
+                                                        <span className="text-sm text-primary-700 font-medium">{t('entry.customerCalled')}</span>
+                                                        <span className="text-xs text-primary-600">
+                                                            {t('entry.at')} {format(new Date(entry.calledAt || entry.updatedAt), 'HH:mm')}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Action Buttons */}
+                                            <div className="flex gap-2">
+                                                {entry.status === 'WAITING' && (
+                                                    <>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline"
+                                                            onClick={() => callMutation.mutate(entry.id)}
+                                                            className="flex-1"
+                                                            isLoading={callMutation.isPending}
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                                            </svg>
+                                                            {t('actions.call')}
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="success"
+                                                            onClick={() => seatMutation.mutate(entry.id)}
+                                                            className="flex-1"
+                                                            isLoading={seatMutation.isPending}
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            </svg>
+                                                            {t('actions.seat')}
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="danger"
+                                                            onClick={() => cancelMutation.mutate(entry.id)}
+                                                            isLoading={cancelMutation.isPending}
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </Button>
+                                                    </>
+                                                )}
+                                                {entry.status === 'CALLED' && (
+                                                    <>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="success"
+                                                            onClick={() => seatMutation.mutate(entry.id)}
+                                                            className="flex-1"
+                                                            isLoading={seatMutation.isPending}
+                                                        >
+                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                            </svg>
+                                                            {t('actions.seat')}
+                                                        </Button>
+                                                        <Button
+                                                            size="sm"
+                                                            variant="danger"
+                                                            onClick={() => noShowMutation.mutate(entry.id)}
+                                                            className="flex-1"
+                                                            isLoading={noShowMutation.isPending}
+                                                        >
+                                                            {t('actions.noShow')}
+                                                        </Button>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
+
+
+                    <Modal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        title={t('form.title')}
+                    >
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="space-y-2">
+                                <InternationalPhoneInput
+                                    label={t('form.customerPhone')}
+                                    countryCode={formData.country.code}
+                                    phoneNumber={formData.phone}
+                                    onChange={(code, phone) => {
+                                        const country = getCountryByCode(code) || DEFAULT_COUNTRY;
+                                        setFormData(prev => ({ ...prev, country, phone }));
+                                    }}
+                                    required
+                                />
+                                {isLookingUp && (
+                                    <p className="text-xs text-primary-600 flex items-center gap-1">
+                                        <Spinner size="sm" />
+                                        {t('form.lookingUp')}
+                                    </p>
+                                )}
+                                {!isLookingUp && customerFound && (
+                                    <p className="text-xs text-success-600 flex items-center gap-1">
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        {t('form.customerFound', { name: customerFound.name })}
+                                    </p>
+                                )}
+                                {!isLookingUp && !customerFound && formData.phone.length >= (formData.country.code === 'BR' ? 10 : 6) && (
+                                    <p className="text-xs text-dark-500 flex items-center gap-1">
+                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                        </svg>
+                                        {t('form.newCustomer')}
+                                    </p>
+                                )}
+                            </div>
+
+                            {shouldShowWhatsappOptIn && canUseWhatsApp && (
+                                <div className="p-3 rounded-lg border bg-green-50/50 border-green-100 animate-fade-in">
+                                    <div className="flex items-start gap-3">
+                                        <div className="flex items-center h-5 mt-0.5">
+                                            <input
+                                                type="checkbox"
+                                                id="whatsappOptIn"
+                                                checked={formData.whatsappOptIn}
+                                                onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
+                                                className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <label htmlFor="whatsappOptIn" className="text-sm font-medium block text-gray-900 cursor-pointer select-none">
+                                                {t('form.whatsappOptIn')}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            <Input
+                                label={t('form.customerName')}
+                                value={formData.customerName}
+                                onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
+                                required
+                                placeholder={t('form.fullName')}
+                                leftIcon={
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                }
+                            />
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <Input
+                                    label={t('form.partySize')}
+                                    type="number"
+                                    min="1"
+                                    max="20"
+                                    value={formData.partySize}
+                                    onChange={(e) => setFormData({ ...formData, partySize: parseInt(e.target.value) || 1 })}
+                                    required
+                                    leftIcon={
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                        </svg>
+                                    }
+                                />
+                            </div>
+
+                            <Input
+                                label={t('form.notes')}
+                                value={formData.notes}
+                                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                                placeholder={t('form.notesPlaceholder')}
+                                leftIcon={
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                }
+                            />
+
+                            <div className="flex gap-3 pt-2">
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    className="flex-1"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    {t('common:actions.cancel')}
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="flex-1"
+                                    isLoading={createMutation.isPending}
+                                >
+                                    {t('actions.addToQueue')}
+                                </Button>
+                            </div>
+                        </form>
+                    </Modal>
+                </div>
+            </PageContent>
+        </PageShell>
     );
 }

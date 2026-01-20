@@ -9,9 +9,10 @@ interface LayoutProps {
     children: ReactNode;
     pageTitle?: string;
     simple?: boolean;
+    mobileShell?: boolean;
 }
 
-export function Layout({ children, pageTitle, simple = false }: LayoutProps) {
+export function Layout({ children, pageTitle, simple = false, mobileShell = false }: LayoutProps) {
     const { t } = useTranslation(['nav', 'common']);
     const location = useLocation();
     const navigate = useNavigate();
@@ -311,8 +312,8 @@ export function Layout({ children, pageTitle, simple = false }: LayoutProps) {
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
-                {/* Mobile Header */}
-                {!simple && <MobileHeader title={getCurrentPageTitle()} />}
+                {/* Mobile Header: Hide if using mobileShell or simple layout */}
+                {!simple && !mobileShell && <MobileHeader title={getCurrentPageTitle()} />}
 
                 {/* Desktop Header */}
                 {!simple && (
@@ -330,14 +331,21 @@ export function Layout({ children, pageTitle, simple = false }: LayoutProps) {
                 )}
 
                 {/* Page Content */}
-                <main className="flex-1 overflow-y-auto p-4 lg:p-8 pb-20 lg:pb-8">
-                    <div className="max-w-7xl mx-auto">
+                <main className={`
+                    flex-1 
+                    ${mobileShell
+                        ? 'overflow-hidden p-0'  // No scrolling container, no padding (PageShell handles it)
+                        : 'overflow-y-auto p-4' // Default scroll behavior
+                    } 
+                    lg:overflow-y-auto lg:p-8 pb-20 lg:pb-8
+                `}>
+                    <div className={mobileShell ? 'h-full' : 'max-w-7xl mx-auto'}>
                         {children}
                     </div>
                 </main>
             </div>
 
-            {/* Mobile Bottom Navigation */}
+            {/* Mobile Bottom Navigation - stays! */}
             {!simple && <BottomNavigation />}
         </div>
     );
