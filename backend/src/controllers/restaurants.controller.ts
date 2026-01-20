@@ -85,7 +85,8 @@ export class RestaurantsController {
                     addressNumber: data.addressNumber,
                     addressComplement: data.addressComplement,
                     postalCode: data.postalCode,
-                    // email and cnpj are intentionally NOT updated
+                    cnpj: data.cnpj,
+                    // email is intentionally NOT updated
                 },
                 select: {
                     name: true,

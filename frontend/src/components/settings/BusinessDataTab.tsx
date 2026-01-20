@@ -32,6 +32,7 @@ type BusinessDataForm = {
     addressNumber: string | null;
     addressComplement: string | null;
     postalCode: string | null;
+    cnpj: string | null;
 };
 
 export function BusinessDataTab() {
@@ -135,11 +136,17 @@ export function BusinessDataTab() {
                     </label>
                     <input
                         type="text"
-                        value={selectedCountry === 'BR' ? applyCnpjMask(businessData?.cnpj || '') : (businessData?.cnpj || 'N/A')}
-                        disabled
-                        className="w-full px-4 py-2 rounded-lg border border-light-300 bg-light-100 text-dark-500 cursor-not-allowed"
+                        {...register('cnpj')}
+                        defaultValue={selectedCountry === 'BR' ? applyCnpjMask(businessData?.cnpj || '') : (businessData?.cnpj || '')}
+                        className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                        placeholder={selectedCountry === 'BR' ? "00.000.000/0000-00" : ""}
+                        onChange={(e) => {
+                            if (selectedCountry === 'BR') {
+                                e.target.value = applyCnpjMask(e.target.value);
+                            }
+                            register('cnpj').onChange(e);
+                        }}
                     />
-                    <p className="mt-1 text-xs text-dark-500 italic">{t('business.fields.taxId.readOnly')}</p>
                 </div>
             </div>
 
