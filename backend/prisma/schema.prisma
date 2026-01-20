@@ -58,12 +58,24 @@ model Restaurant {
   plan          Plan     @default(BASIC)
   planUpdatedAt DateTime @default(now())
 
+  // Trial Logic
+  trialStatus     TrialStatus @default(NONE)
+  trialStartAt    DateTime?
+  trialEndAt      DateTime?
+  trialConsumedAt DateTime?
+
   @@map("restaurants")
 }
 
 enum Plan {
   BASIC
   PRO
+}
+
+enum TrialStatus {
+  NONE
+  ACTIVE
+  EXPIRED
 }
 
 model User {

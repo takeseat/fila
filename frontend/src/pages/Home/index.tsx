@@ -6,6 +6,7 @@ import { usePickupOrders } from '../../hooks/usePickupOrders';
 import { usePlan } from '../../hooks/usePlan';
 import { useAuth } from '../../hooks/useAuth';
 import { Users, ShoppingBag, AlertTriangle, MessageSquare } from 'lucide-react';
+import { Button } from '../../components/ui/Button';
 
 export const Home: React.FC = () => {
     const { t } = useTranslation('home');
@@ -66,6 +67,24 @@ export const Home: React.FC = () => {
                     {t('greeting', { name: user?.name?.split(' ')[0] })}
                 </h1>
             </div>
+
+            {/* Trial Expiration Banner */}
+            {canUsePickupOrders === false && usePlan().trialStatus === 'EXPIRED' && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                    <div className="flex items-start gap-4">
+                        <div className="bg-red-100 p-2 rounded-full hidden md:block">
+                            <AlertTriangle className="w-6 h-6 text-red-600" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-bold text-red-900">{t('trial_expired.title')}</h3>
+                            <p className="text-red-700 mt-1">{t('trial_expired.description')}</p>
+                        </div>
+                    </div>
+                    <Button onClick={() => window.dispatchEvent(new CustomEvent('open-upgrade-modal'))} variant="danger">
+                        {t('trial_expired.cta')}
+                    </Button>
+                </div>
+            )}
 
             {/* LAYER 1: Operational Status (Conditional) */}
             {operationalAlerts.length > 0 && (

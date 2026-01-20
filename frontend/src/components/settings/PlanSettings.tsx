@@ -1,14 +1,39 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePlan } from '../../hooks/usePlan';
+import { useAuth } from '../../hooks/useAuth';
 import { Card, Button, Badge } from '../ui';
+import { restaurantsApi } from '../../services/restaurantsApi';
+import toast from 'react-hot-toast';
 
 export function PlanSettings() {
     const { t } = useTranslation('plans');
-    const { isPro } = usePlan();
+    const { isPro, isTrialActive, hasConsumedTrial, trialDaysRemaining, trialStatus } = usePlan();
+    const { refreshProfile } = useAuth();
+    const [loading, setLoading] = useState(false);
 
     const handleUpgrade = () => {
         // Trigger the global upgrade modal
         window.dispatchEvent(new CustomEvent('open-upgrade-modal'));
+    };
+
+    const handleStartTrial = async () => {
+        try {
+            setLoading(true);
+            await restaurantsApi.startTrial();
+            await refreshProfile();
+            toast.success(t('trial.active'));
+        } catch (error: any) {
+            console.error('Failed to start trial', error);
+            if (error.response?.data?.error === 'INCOMPLETE_PROFILE') {
+                toast.error('Complete your profile to start trial'); // Should be localized ideally, or handled by global error handler?
+                // Simple fallback message if translation missing
+            } else {
+                toast.error('Failed to start trial');
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -22,15 +47,30 @@ export function PlanSettings() {
                                 <h2 className="text-3xl font-bold text-gray-900">
                                     {isPro ? t('pro.title') : t('basic.title')}
                                 </h2>
-                                {isPro && (
+                                {isPro && !isTrialActive && (
                                     <Badge size="md" variant="success">
                                         {t('pro.active')}
+                                    </Badge>
+                                )}
+                                {isTrialActive && (
+                                    <Badge size="md" variant="warning">
+                                        {t('trial.active')}
+                                    </Badge>
+                                )}
+                                {trialStatus === 'EXPIRED' && !isPro && (
+                                    <Badge size="md" variant="danger">
+                                        {t('trial.expired')}
                                     </Badge>
                                 )}
                             </div>
                             <p className="mt-2 text-gray-600">
                                 {isPro ? t('pro.description') : t('basic.description')}
                             </p>
+                            {isTrialActive && (
+                                <p className="mt-1 text-sm font-medium text-orange-600">
+                                    {t('trial.expiresIn', { days: trialDaysRemaining })}
+                                </p>
+                            )}
                         </div>
 
                         <div className="flex flex-col items-end gap-2">
@@ -40,7 +80,23 @@ export function PlanSettings() {
                                     {isPro && <span className="text-sm font-normal text-gray-500">{t('pro.period')}</span>}
                                 </p>
                             </div>
-                            {!isPro && (
+
+                            {!isPro && !hasConsumedTrial && (
+                                <div className="flex flex-col items-end gap-2">
+                                    <Button
+                                        onClick={handleStartTrial}
+                                        disabled={loading}
+                                        variant="outline"
+                                        size="lg"
+                                        className="border-primary-600 text-primary-600 hover:bg-primary-50"
+                                    >
+                                        {loading ? '...' : t('trial.start')}
+                                    </Button>
+                                    <p className="text-xs text-gray-500">{t('trial.description')}</p>
+                                </div>
+                            )}
+
+                            {!isPro && (hasConsumedTrial || isTrialActive) && (
                                 <Button
                                     onClick={handleUpgrade}
                                     variant="primary"
@@ -85,7 +141,7 @@ export function PlanSettings() {
                                         {!isPro && <Badge size="sm" variant="default" className="text-xs">{t('pro.badge')}</Badge>}
                                     </div>
                                     <p className="text-sm text-gray-500 mt-1">
-                                        {isPro ? t('features.activeState') : t('upgrade.featureLocked')} 
+                                        {isPro ? t('features.activeState') : t('upgrade.featureLocked')}
                                     </p>
                                 </div>
                             </div>

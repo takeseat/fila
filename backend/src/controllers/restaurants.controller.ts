@@ -210,4 +210,88 @@ export class RestaurantsController {
             res.status(500).json({ error: 'Internal server error' });
         }
     }
+
+    /**
+     * Start PRO Plan Trial (7 days)
+     */
+    async startTrial(req: AuthRequest, res: Response): Promise<void> {
+        try {
+            const restaurantId = req.user!.restaurantId;
+
+            // 1. Fetch current data to validate eligibility and profile
+            const restaurant = await prisma.restaurant.findUnique({
+                where: { id: restaurantId },
+                select: {
+                    plan: true,
+                    trialConsumedAt: true,
+                    trialStatus: true,
+                    cnpj: true,
+                    addressLine: true,
+                    addressNumber: true,
+                    city: true,
+                    stateCode: true,
+                    postalCode: true
+                }
+            });
+
+            if (!restaurant) {
+                res.status(404).json({ error: 'Restaurant not found' });
+                return;
+            }
+
+            // 2. Validate Eligibility
+            if (restaurant.trialConsumedAt) {
+                res.status(400).json({ error: 'TRIAL_ALREADY_CONSUMED' });
+                return;
+            }
+
+            if (restaurant.trialStatus === 'ACTIVE') {
+                res.status(400).json({ error: 'TRIAL_ALREADY_ACTIVE' });
+                return;
+            }
+
+            // 3. Validate Profile Completeness
+            const isProfileComplete =
+                !!restaurant.cnpj &&
+                !!restaurant.addressLine &&
+                !!restaurant.addressNumber &&
+                !!restaurant.city &&
+                !!restaurant.stateCode &&
+                !!restaurant.postalCode;
+
+            if (!isProfileComplete) {
+                res.status(400).json({ error: 'RESTAURANT_PROFILE_INCOMPLETE' });
+                return;
+            }
+
+            // 4. Activate Trial
+            const now = new Date();
+            const expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // +7 days
+
+            const updated = await prisma.restaurant.update({
+                where: { id: restaurantId },
+                data: {
+                    plan: 'PRO',
+                    trialStatus: 'ACTIVE',
+                    trialStartAt: now,
+                    trialEndAt: expiresAt,
+                    trialConsumedAt: now,
+                    // Auto-enable features for better UX
+                    pickupOrdersEnabled: true,
+                    pickupOrdersWhatsappEnabled: true
+                }
+            });
+
+            res.json({
+                success: true,
+                plan: updated.plan,
+                trialStatus: updated.trialStatus,
+                trialEndAt: updated.trialEndAt
+            });
+
+        } catch (error: any) {
+            console.error('Error starting trial:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
 }

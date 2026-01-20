@@ -23,5 +23,10 @@
             "nps_action": "Rate"
         }
     },
+    "trial_expired": {
+        "title": "Trial Expired",
+        "description": "Your 7-day trial has ended. Upgrade to PRO to continue using premium features.",
+        "cta": "Upgrade Now"
+    },
     "greeting": "Hello, {{name}}"
 }

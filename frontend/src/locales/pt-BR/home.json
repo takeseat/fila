@@ -23,5 +23,10 @@
             "nps_action": "Avaliar"
         }
     },
+    "trial_expired": {
+        "title": "Teste Expirado",
+        "description": "Seu teste de 7 dias acabou. Faça o upgrade para PRO para continuar usando recursos premium.",
+        "cta": "Fazer Upgrade Agora"
+    },
     "greeting": "Olá, {{name}}"
 }

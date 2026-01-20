@@ -20,6 +20,10 @@ interface Restaurant {
     countryCode: string;
     onboardingPending?: boolean;
     plan?: 'BASIC' | 'PRO';
+    trialStatus?: 'NONE' | 'ACTIVE' | 'EXPIRED';
+    trialStartAt?: string;
+    trialEndAt?: string;
+    trialConsumedAt?: string;
 }
 
 interface AuthContextType {

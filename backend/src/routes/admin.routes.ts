@@ -3,6 +3,7 @@ import { authenticate } from '../middleware/auth';
 import { adminAuthMiddleware } from '../middleware/admin-auth.middleware';
 import { AdminRestaurantsController } from '../controllers/admin-restaurants.controller';
 import { ImpersonationController } from '../controllers/impersonation.controller';
+import jobsRouter from './jobs.routes';
 
 const router = Router();
 
@@ -21,5 +22,8 @@ router.patch('/restaurants/:id/status', AdminRestaurantsController.toggleStatus)
 router.post('/restaurants/:id/impersonate', ImpersonationController.generateToken);
 router.post('/impersonation/end', ImpersonationController.endSession);
 router.get('/impersonation/logs', ImpersonationController.getLogs);
+
+// Jobs
+router.use('/jobs', jobsRouter);
 
 export default router;

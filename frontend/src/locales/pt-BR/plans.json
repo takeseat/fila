@@ -41,5 +41,12 @@
         "subtitle": "Gerencie seu plano e assinatura",
         "currentPlan": "Plano atual:",
         "featuresTitle": "Funcionalidades incluídas:"
+    },
+    "trial": {
+        "start": "Começar teste grátis de 7 dias",
+        "active": "Teste Ativo",
+        "expiresIn": "Expira em {{days}} dias",
+        "expired": "Teste Expirado",
+        "description": "Experimente recursos PRO por 7 dias."
     }
 }

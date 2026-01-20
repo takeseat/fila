@@ -41,5 +41,12 @@
         "subtitle": "Manage your plan and subscription",
         "currentPlan": "Current Plan:",
         "featuresTitle": "Included Features:"
+    },
+    "trial": {
+        "start": "Start 7-day free trial",
+        "active": "Trial Active",
+        "expiresIn": "Expires in {{days}} days",
+        "expired": "Trial Expired",
+        "description": "Try PRO features for 7 days."
     }
 }
