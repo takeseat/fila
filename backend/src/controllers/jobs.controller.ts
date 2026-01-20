@@ -5,7 +5,7 @@ export class JobsController {
     /**
      * Trigger trial expiration check
      */
-    async checkTrialExpiration(req: Request, res: Response): Promise<void> {
+    async checkTrialExpiration(_req: Request, res: Response) {
         try {
             const result = await TrialExpirationJob.processExpiredTrials();
             res.json(result);
