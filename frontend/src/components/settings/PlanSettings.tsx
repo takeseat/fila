@@ -27,7 +27,7 @@ export function PlanSettings() {
             toast.success(t('trial.active'));
         } catch (error: any) {
             console.error('Failed to start trial', error);
-            if (error.response?.data?.error === 'INCOMPLETE_PROFILE') {
+            if (error.response?.data?.error === 'RESTAURANT_PROFILE_INCOMPLETE') {
                 // Open the profile completion modal instead of redirecting
                 setIsStartTrialModalOpen(true);
             } else {

@@ -32,7 +32,7 @@ export function UpgradePlanModal({ isOpen, onClose, onUpgrade }: UpgradePlanModa
             onClose();
         } catch (error: any) {
             console.error('Failed to start trial', error);
-            if (error.response?.data?.error === 'INCOMPLETE_PROFILE') {
+            if (error.response?.data?.error === 'RESTAURANT_PROFILE_INCOMPLETE') {
                 // Instead of redirecting, open the completion modal
                 setIsStartTrialModalOpen(true);
             } else {
