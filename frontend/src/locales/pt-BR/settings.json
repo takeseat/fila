@@ -5,7 +5,8 @@
         "business": "Dados do Negócio",
         "parameters": "Parâmetros",
         "team": "Equipe",
-        "messages": "Mensagens"
+        "messages": "Mensagens",
+        "plan": "Meu Plano"
     },
     "business": {
         "title": "Informações do Negócio",

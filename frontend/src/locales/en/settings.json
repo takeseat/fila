@@ -5,7 +5,8 @@
         "business": "Business Data",
         "parameters": "Parameters",
         "team": "Team",
-        "messages": "Messages"
+        "messages": "Messages",
+        "plan": "My Plan"
     },
     "business": {
         "title": "Business Information",
