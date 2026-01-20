@@ -114,6 +114,56 @@ export class RestaurantsController {
     }
 
     /**
+     * Patch business data (partial update)
+     */
+    async patchBusinessData(req: AuthRequest, res: Response): Promise<void> {
+        try {
+            const restaurantId = req.user!.restaurantId;
+            // Use .partial() to make all fields optional
+            const data = updateBusinessDataSchema.partial().parse(req.body);
+
+            const updatedRestaurant = await prisma.restaurant.update({
+                where: { id: restaurantId },
+                data: { // Only update fields that are present in data
+                    ...(data.name && { name: data.name }),
+                    ...(data.tradeName !== undefined && { tradeName: data.tradeName }),
+                    ...(data.phone && { phone: data.phone }),
+                    ...(data.countryCode && { countryCode: data.countryCode }),
+                    ...(data.stateCode !== undefined && { stateCode: data.stateCode }),
+                    ...(data.city && { city: data.city }),
+                    ...(data.addressLine !== undefined && { addressLine: data.addressLine }),
+                    ...(data.addressNumber !== undefined && { addressNumber: data.addressNumber }),
+                    ...(data.addressComplement !== undefined && { addressComplement: data.addressComplement }),
+                    ...(data.postalCode !== undefined && { postalCode: data.postalCode }),
+                },
+                select: {
+                    name: true,
+                    tradeName: true,
+                    email: true,
+                    cnpj: true,
+                    phone: true,
+                    countryCode: true,
+                    stateCode: true,
+                    city: true,
+                    addressLine: true,
+                    addressNumber: true,
+                    addressComplement: true,
+                    postalCode: true,
+                }
+            });
+
+            res.json(updatedRestaurant);
+        } catch (error: any) {
+            if (error instanceof z.ZodError) {
+                res.status(400).json({ error: 'Validation error', details: error.errors });
+                return;
+            }
+            console.error('Error patching business data:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+    /**
      * Get restaurant settings
      */
     async getSettings(req: AuthRequest, res: Response): Promise<void> {

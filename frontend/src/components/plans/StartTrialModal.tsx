@@ -45,7 +45,7 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
         setLoading(true);
         try {
             // 1. Update Profile
-            await api.put('/restaurants/business', data);
+            await api.patch('/restaurants/business', data);
 
             // 2. Start Trial
             await restaurantsApi.startTrial();
