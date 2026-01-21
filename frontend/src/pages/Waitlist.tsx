@@ -927,7 +927,7 @@ export function Waitlist() {
                                     className="flex-1"
                                     isLoading={createMutation.isPending}
                                 >
-                                    {t('actions.addToQueue')}
+                                    {t('actions.add', 'Adicionar')}
                                 </Button>
                             </div>
                         </form>

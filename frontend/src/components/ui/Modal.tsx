@@ -19,7 +19,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
     if (!isOpen || !mounted) return null;
 
     return createPortal(
-        <div className="fixed inset-0 z-[100] overflow-y-auto">
+        <div className="fixed inset-0 z-[9999] overflow-y-auto">
             {/* Backdrop */}
             <div
                 className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
@@ -27,7 +27,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             />
 
             {/* Modal */}
-            <div className="flex min-h-full items-start justify-center p-4 pt-20">
+            <div className="flex min-h-full items-start justify-center p-4 pt-4 safe-area-top">
                 <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-scale-in">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
