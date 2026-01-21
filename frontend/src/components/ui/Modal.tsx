@@ -19,15 +19,33 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
     if (!isOpen || !mounted) return null;
 
     return createPortal(
-        <div className="fixed inset-0 overflow-y-auto" style={{ zIndex: 9999 }}>
+        <div
+            className="overflow-y-auto"
+            style={{
+                position: 'fixed',
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+                zIndex: 9999
+            }}
+        >
             {/* Backdrop */}
             <div
-                className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+                className="bg-black bg-opacity-50 transition-opacity"
                 onClick={onClose}
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    zIndex: 9998
+                }}
             />
 
             {/* Modal */}
-            <div className="flex min-h-full items-start justify-center p-4 safe-area-top pt-2">
+            <div className="flex min-h-full items-start justify-center p-4 safe-area-top pt-2" style={{ position: 'relative', zIndex: 9999 }}>
                 <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-scale-in">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
