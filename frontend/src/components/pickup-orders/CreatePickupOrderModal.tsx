@@ -216,7 +216,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
                         disabled={createOrder.isPending}
                         className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                     >
-                        {createOrder.isPending ? 'Criando...' : 'Criar Pedido'}
+                        {createOrder.isPending ? 'Adicionando...' : 'Adicionar'}
                     </button>
                 </div>
             </form>

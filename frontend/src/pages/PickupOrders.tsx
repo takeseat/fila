@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { usePickupOrders, useChangePickupOrderStatus, useResendWhatsApp } from '../hooks/usePickupOrders';
 import { PickupOrder } from '../services/pickupOrdersApi';
+import { Button } from '../components/ui';
 
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -75,14 +76,12 @@ export default function PickupOrders() {
                 title="Pedidos (Retirada)"
                 subtitle="Gerencie pedidos para retirada"
                 actions={
-                    <button
-                        onClick={() => setShowCreateModal(true)}
-                        className="p-2 text-primary-600 hover:bg-primary-50 rounded-full md:hidden"
-                    >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <Button onClick={() => setShowCreateModal(true)} size="sm" className="gap-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
-                    </button>
+                        Adicionar
+                    </Button>
                 }
             />
 
