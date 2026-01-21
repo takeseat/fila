@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import api from '../../lib/api';
 import { Spinner } from '../ui';
+import { Modal } from '../ui/Modal';
 import { useCreatePickupOrder } from '../../hooks/usePickupOrders';
 import { InternationalPhoneInput } from '../ui/InternationalPhoneInput';
 import { getCountryByCode, DEFAULT_COUNTRY } from '../../data/countries';
@@ -103,130 +104,122 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
-                {/* Header */}
-                <div className="px-6 py-4 border-b">
-                    <h2 className="text-xl font-semibold">Novo Pedido</h2>
+        <Modal isOpen={true} onClose={onClose} title="Novo Pedido">
+            <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Order Code */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Código do Pedido *
+                    </label>
+                    <input
+                        type="text"
+                        required
+                        value={orderCode}
+                        onChange={(e) => setOrderCode(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="Ex: #001"
+                    />
                 </div>
 
-                {/* Form */}
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                    {/* Order Code */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Código do Pedido *
-                        </label>
+                {/* Customer Phone */}
+                <div>
+                    <InternationalPhoneInput
+                        label="Celular do Cliente"
+                        countryCode={countryCode}
+                        phoneNumber={customerPhone}
+                        onChange={(code, phone) => {
+                            setCountryCode(code);
+                            setCustomerPhone(phone);
+                        }}
+                        required
+                    />
+                    <div className="mt-1 h-5">
+                        {isLookingUp && (
+                            <p className="text-xs text-blue-600 flex items-center gap-1">
+                                <Spinner size="sm" />
+                                Buscando cliente...
+                            </p>
+                        )}
+                        {!isLookingUp && customerFound && (
+                            <p className="text-xs text-green-600 flex items-center gap-1">
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                                Cliente encontrado
+                            </p>
+                        )}
+                        {!isLookingUp && !customerFound && customerPhone.length >= (countryCode === 'BR' ? 10 : 6) && (
+                            <p className="text-xs text-gray-500 flex items-center gap-1">
+                                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                                Novo cliente
+                            </p>
+                        )}
+                    </div>
+                </div>
+
+                {/* Customer Name */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Nome do Cliente
+                    </label>
+                    <input
+                        type="text"
+                        value={customerName}
+                        onChange={(e) => setCustomerName(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="Opcional"
+                    />
+                </div>
+
+                {/* Notes */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Observações
+                    </label>
+                    <textarea
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        rows={3}
+                        className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        placeholder="Observações sobre o pedido..."
+                    />
+                </div>
+
+                {/* WhatsApp Opt-in */}
+                <div>
+                    <label className="flex items-center space-x-2">
                         <input
-                            type="text"
-                            required
-                            value={orderCode}
-                            onChange={(e) => setOrderCode(e.target.value)}
-                            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                            placeholder="Ex: #001"
+                            type="checkbox"
+                            checked={whatsappOptIn}
+                            onChange={(e) => setWhatsappOptIn(e.target.checked)}
+                            className="w-4 h-4 text-blue-600 rounded"
                         />
-                    </div>
+                        <span className="text-sm text-gray-700">
+                            Enviar notificações por WhatsApp
+                        </span>
+                    </label>
+                </div>
 
-                    {/* Customer Phone */}
-                    <div>
-                        <InternationalPhoneInput
-                            label="Celular do Cliente"
-                            countryCode={countryCode}
-                            phoneNumber={customerPhone}
-                            onChange={(code, phone) => {
-                                setCountryCode(code);
-                                setCustomerPhone(phone);
-                            }}
-                            required
-                        />
-                        <div className="mt-1 h-5">
-                            {isLookingUp && (
-                                <p className="text-xs text-blue-600 flex items-center gap-1">
-                                    <Spinner size="sm" />
-                                    Buscando cliente...
-                                </p>
-                            )}
-                            {!isLookingUp && customerFound && (
-                                <p className="text-xs text-green-600 flex items-center gap-1">
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    Cliente encontrado
-                                </p>
-                            )}
-                            {!isLookingUp && !customerFound && customerPhone.length >= (countryCode === 'BR' ? 10 : 6) && (
-                                <p className="text-xs text-gray-500 flex items-center gap-1">
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                    </svg>
-                                    Novo cliente
-                                </p>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Customer Name */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Nome do Cliente
-                        </label>
-                        <input
-                            type="text"
-                            value={customerName}
-                            onChange={(e) => setCustomerName(e.target.value)}
-                            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                            placeholder="Opcional"
-                        />
-                    </div>
-
-                    {/* Notes */}
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Observações
-                        </label>
-                        <textarea
-                            value={notes}
-                            onChange={(e) => setNotes(e.target.value)}
-                            rows={3}
-                            className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                            placeholder="Observações sobre o pedido..."
-                        />
-                    </div>
-
-                    {/* WhatsApp Opt-in */}
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input
-                                type="checkbox"
-                                checked={whatsappOptIn}
-                                onChange={(e) => setWhatsappOptIn(e.target.checked)}
-                                className="w-4 h-4 text-blue-600 rounded"
-                            />
-                            <span className="text-sm text-gray-700">
-                                Enviar notificações por WhatsApp
-                            </span>
-                        </label>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="flex justify-end space-x-3 pt-4">
-                        <button
-                            type="button"
-                            onClick={onClose}
-                            className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
-                        >
-                            Cancelar
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={createOrder.isPending}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
-                        >
-                            {createOrder.isPending ? 'Criando...' : 'Criar Pedido'}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                {/* Actions */}
+                <div className="flex justify-end space-x-3 pt-4">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        type="submit"
+                        disabled={createOrder.isPending}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                    >
+                        {createOrder.isPending ? 'Criando...' : 'Criar Pedido'}
+                    </button>
+                </div>
+            </form>
+        </Modal>
     );
 }
