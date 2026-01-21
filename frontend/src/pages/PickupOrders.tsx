@@ -85,7 +85,7 @@ export default function PickupOrders() {
                 }
             />
 
-            <PageContent className="p-4 lg:p-8 space-y-6">
+            <PageContent className="p-4 space-y-6">
                 {/* Header (Desktop) */}
                 <div className="hidden md:block">
                     <h1 className="text-2xl font-bold text-gray-900">Pedidos (Retirada)</h1>

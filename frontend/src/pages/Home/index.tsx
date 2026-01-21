@@ -67,7 +67,7 @@ export const Home: React.FC = () => {
                 subtitle={t('greeting', { name: user?.name?.split(' ')[0] })}
             />
 
-            <PageContent className="p-4 lg:p-8">
+            <PageContent className="p-4">
                 <div className="max-w-5xl mx-auto space-y-8">
                     {/* Header / Greeting (Hidden on mobile as it is in header) */}
                     <div className="hidden lg:block">
