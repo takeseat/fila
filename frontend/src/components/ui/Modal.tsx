@@ -27,7 +27,8 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
                 right: 0,
                 bottom: 0,
                 left: 0,
-                zIndex: 9999
+                zIndex: 9999,
+                margin: 0
             }}
         >
             {/* Backdrop */}
