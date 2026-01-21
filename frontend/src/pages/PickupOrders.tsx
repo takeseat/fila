@@ -136,33 +136,33 @@ export default function PickupOrders() {
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-3">
                     <KPICard
                         icon={
-                            <svg className="w-full h-full text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 md:w-6 md:h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                             </svg>
                         }
                         value={metrics.ready}
                         label="Prontos"
-                        variant="warning"
+                        iconBgColor="bg-warning-100"
                     />
                     <KPICard
                         icon={
-                            <svg className="w-full h-full text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 md:w-6 md:h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         }
                         value={`${metrics.avgWait} min`}
                         label="Tempo médio"
-                        variant="primary"
+                        iconBgColor="bg-primary-100"
                     />
                     <KPICard
                         icon={
-                            <svg className="w-full h-full text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 md:w-6 md:h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                             </svg>
                         }
                         value={metrics.called}
                         label="Chamados"
-                        variant="success"
+                        iconBgColor="bg-success-100"
                     />
                 </div>
 
@@ -226,8 +226,9 @@ export default function PickupOrders() {
                                             : order.status === 'PICKED_UP' ? 'PICKED_UP'
                                                 : 'READY',
                                     createdAt: order.createdAt,
-                                    whatsappSent: false, // Simplified for now
+                                    whatsappSent: !!order.lastWhatsAppNotifiedAt,
                                 }}
+                                onMarkReady={() => changeStatus.mutate({ id: order.id, status: 'READY_FOR_PICKUP' })}
                                 onCall={() => handleCall(order.id)}
                                 onComplete={() => handleComplete(order.id)}
                                 isLoading={changeStatus.isPending || resendWhatsApp.isPending}
