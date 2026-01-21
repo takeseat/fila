@@ -18,7 +18,6 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
     const [countryCode, setCountryCode] = useState(DEFAULT_COUNTRY.code);
     const [customerPhone, setCustomerPhone] = useState('');
     const [notes, setNotes] = useState('');
-    const [whatsappOptIn, setWhatsappOptIn] = useState(true);
 
     const [isLookingUp, setIsLookingUp] = useState(false);
     const [customerFound, setCustomerFound] = useState<any>(null);
@@ -40,10 +39,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
                     // Auto-fill form
                     if (data.data.name) setCustomerName(data.data.name);
                     if (data.data.notes) setNotes(data.data.notes);
-                    // Use customer preference or keep default true
-                    if (data.data.whatsappOptIn !== undefined) {
-                        setWhatsappOptIn(data.data.whatsappOptIn);
-                    }
+                    // WhatsApp opt-in is always true, no longer configurable per customer
                 } else {
                     setCustomerFound(null);
                     // Clear name if it was auto-filled? Better to keep what user typed if they started typing before lookup
@@ -97,7 +93,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
             customerPhoneE164: phoneE164,
             customerCountryCode: countryCode,
             notes: notes || undefined,
-            whatsappOptIn,
+            whatsappOptIn: true,
         });
 
         onSuccess();
@@ -187,20 +183,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
                     />
                 </div>
 
-                {/* WhatsApp Opt-in */}
-                <div>
-                    <label className="flex items-center space-x-2">
-                        <input
-                            type="checkbox"
-                            checked={whatsappOptIn}
-                            onChange={(e) => setWhatsappOptIn(e.target.checked)}
-                            className="w-4 h-4 text-blue-600 rounded"
-                        />
-                        <span className="text-sm text-gray-700">
-                            Enviar notificações por WhatsApp
-                        </span>
-                    </label>
-                </div>
+
 
                 {/* Actions */}
                 <div className="flex justify-end space-x-3 pt-4">
