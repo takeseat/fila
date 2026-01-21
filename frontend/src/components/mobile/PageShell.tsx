@@ -33,7 +33,7 @@ export function PageShell({ children, className = '' }: PageShellProps) {
 // Helper component for the scrollable content area if we want more granular control
 export function PageContent({ children, className = '' }: { children: ReactNode, className?: string }) {
     return (
-        <div className={`p-4 lg:p-8 pb-24 lg:pb-8 ${className}`}>
+        <div className={className}>
             {children}
         </div>
     );

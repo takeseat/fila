@@ -424,7 +424,7 @@ export function Waitlist() {
                 }
             />
 
-            <PageContent className="space-y-6 animate-fade-in">
+            <PageContent className="p-4 lg:p-8 space-y-6 animate-fade-in">
                 {/* Desktop Header (Hidden on Mobile) */}
                 <div className="hidden lg:flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
