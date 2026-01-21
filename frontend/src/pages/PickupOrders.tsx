@@ -11,7 +11,7 @@ import { OrderCard } from '../components/pickup-orders/OrderCard';
 import { FilterChips } from '../components/pickup-orders/FilterChips';
 
 export default function PickupOrders() {
-    const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'called' | 'completed'>('all');
+    const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'called' | 'completed'>('pending');
     const [searchTerm, setSearchTerm] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
 
