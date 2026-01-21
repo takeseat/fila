@@ -6,17 +6,18 @@ interface OrderCardProps {
         orderCode: string;
         customerName: string;
         customerPhone: string;
-        status: 'PENDING' | 'READY' | 'CALLED' | 'PICKED_UP';
+        status: 'CREATED' | 'READY_FOR_PICKUP' | 'PICKED_UP' | 'NOT_PICKED_UP';
         createdAt: string;
         whatsappSent: boolean;
     };
+    onMarkReady: () => void;
     onCall: () => void;
-    onComplete: () => void;
-    onMarkReady?: () => void;
+    onPickedUp: () => void;
+    onNotPickedUp: () => void;
     isLoading?: boolean;
 }
 
-export function OrderCard({ order, onCall, onComplete, onMarkReady, isLoading }: OrderCardProps) {
+export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedUp, isLoading }: OrderCardProps) {
     // Calculate time waiting
     const createdAt = new Date(order.createdAt);
     const now = new Date();
@@ -35,10 +36,10 @@ export function OrderCard({ order, onCall, onComplete, onMarkReady, isLoading }:
     // Status badge styling
     const getStatusBadge = (status: typeof order.status) => {
         const statusConfig = {
-            PENDING: { label: 'Pendente', color: 'bg-gray-100 text-gray-700' },
-            READY: { label: 'Pronto', color: 'bg-warning-100 text-warning-700' },
-            CALLED: { label: 'Chamado', color: 'bg-primary-100 text-primary-700' },
+            CREATED: { label: 'Criado', color: 'bg-gray-100 text-gray-700' },
+            READY_FOR_PICKUP: { label: 'Pronto', color: 'bg-warning-100 text-warning-700' },
             PICKED_UP: { label: 'Retirado', color: 'bg-success-100 text-success-700' },
+            NOT_PICKED_UP: { label: 'Não Retirou', color: 'bg-danger-100 text-danger-700' },
         };
         const config = statusConfig[status];
         return (
@@ -48,14 +49,15 @@ export function OrderCard({ order, onCall, onComplete, onMarkReady, isLoading }:
         );
     };
 
-    // Determine card border based on urgency (only if not picked up)
+    // Determine card border based on urgency (only if not completed)
     let borderClass = '';
     let timerClass = 'text-dark-900';
+    const isCompleted = order.status === 'PICKED_UP' || order.status === 'NOT_PICKED_UP';
 
-    if (order.status !== 'PICKED_UP' && minutesWaiting > 30) {
+    if (!isCompleted && minutesWaiting > 30) {
         borderClass = 'border-l-4 border-l-danger-500 bg-danger-50/10';
         timerClass = 'text-danger-700 font-bold';
-    } else if (order.status !== 'PICKED_UP' && minutesWaiting > 15) {
+    } else if (!isCompleted && minutesWaiting > 15) {
         borderClass = 'border-l-4 border-l-warning-500 bg-warning-50/10';
         timerClass = 'text-warning-700 font-bold';
     }
@@ -96,8 +98,8 @@ export function OrderCard({ order, onCall, onComplete, onMarkReady, isLoading }:
                     </p>
                 </div>
 
-                {/* Only show time if not picked up */}
-                {order.status !== 'PICKED_UP' && (
+                {/* Only show time if not completed */}
+                {!isCompleted && (
                     <div className="bg-light-50 rounded-lg p-3">
                         <p className="text-xs text-dark-500 mb-1">Tempo aguardando</p>
                         <p className={`text-lg font-semibold flex items-center gap-2 ${timerClass}`}>
@@ -110,16 +112,14 @@ export function OrderCard({ order, onCall, onComplete, onMarkReady, isLoading }:
                 )}
             </div>
 
-            {/* Progress Bar (Only if not picked up) */}
-            {order.status !== 'PICKED_UP' && (
+            {/* Progress Bar (Only if not completed) */}
+            {!isCompleted && (
                 <div className="mb-4">
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-xs font-medium text-dark-600">
-                            {order.status === 'READY'
+                            {order.status === 'READY_FOR_PICKUP'
                                 ? 'Pronto para retirada'
-                                : order.status === 'CALLED'
-                                    ? 'Cliente chamado'
-                                    : 'Em preparo'}
+                                : 'Em preparo'}
                         </span>
                     </div>
                     <Progress value={progressValue} variant={progressVariant} size="md" />
@@ -128,48 +128,72 @@ export function OrderCard({ order, onCall, onComplete, onMarkReady, isLoading }:
 
             {/* Action Buttons */}
             <div className="flex gap-2">
-                {order.status === 'PENDING' && onMarkReady && (
-                    <Button
-                        onClick={onMarkReady}
-                        isLoading={isLoading}
-                        className="flex-1"
-                        size="sm"
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Marcar como Pronto
-                    </Button>
+                {/* CREATED: Marcar como Pronto OU Chamar */}
+                {order.status === 'CREATED' && (
+                    <>
+                        <Button
+                            onClick={onMarkReady}
+                            isLoading={isLoading}
+                            className="flex-1"
+                            size="sm"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Marcar Pronto
+                        </Button>
+                        <Button
+                            onClick={onCall}
+                            isLoading={isLoading}
+                            variant="outline"
+                            className="flex-1"
+                            size="sm"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                            Chamar
+                        </Button>
+                    </>
                 )}
 
-                {order.status === 'READY' && (
-                    <Button
-                        onClick={onCall}
-                        isLoading={isLoading}
-                        variant="outline"
-                        className="flex-1"
-                        size="sm"
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                        Chamar
-                    </Button>
-                )}
-
-                {order.status === 'CALLED' && (
-                    <Button
-                        onClick={onComplete}
-                        isLoading={isLoading}
-                        variant="success"
-                        className="flex-1"
-                        size="sm"
-                    >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Confirmar Retirada
-                    </Button>
+                {/* READY_FOR_PICKUP: Chamar Novamente, Entregar, Não Retirou */}
+                {order.status === 'READY_FOR_PICKUP' && (
+                    <>
+                        <Button
+                            onClick={onCall}
+                            isLoading={isLoading}
+                            variant="outline"
+                            size="sm"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                            {order.whatsappSent ? 'Chamar Novamente' : 'Chamar'}
+                        </Button>
+                        <Button
+                            onClick={onPickedUp}
+                            isLoading={isLoading}
+                            variant="success"
+                            className="flex-1"
+                            size="sm"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Entregar
+                        </Button>
+                        <Button
+                            onClick={onNotPickedUp}
+                            isLoading={isLoading}
+                            variant="danger"
+                            size="sm"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </Button>
+                    </>
                 )}
             </div>
         </div>

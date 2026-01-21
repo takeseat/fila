@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 
 import { usePickupOrders, useChangePickupOrderStatus, useResendWhatsApp } from '../hooks/usePickupOrders';
 import { Button, Input, EmptyState } from '../components/ui';
+
 import CreatePickupOrderModal from '../components/pickup-orders/CreatePickupOrderModal';
 import { PageShell, PageContent } from '../components/mobile/PageShell';
 import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
@@ -84,13 +85,23 @@ export default function PickupOrders() {
         });
     }, [data, activeFilter, searchTerm]);
 
+    const handleMarkReady = async (orderId: string) => {
+        await changeStatus.mutateAsync({ id: orderId, status: 'READY_FOR_PICKUP' });
+        refetch();
+    };
+
     const handleCall = async (orderId: string) => {
         await resendWhatsApp.mutateAsync(orderId);
         refetch();
     };
 
-    const handleComplete = async (orderId: string) => {
+    const handlePickedUp = async (orderId: string) => {
         await changeStatus.mutateAsync({ id: orderId, status: 'PICKED_UP' });
+        refetch();
+    };
+
+    const handleNotPickedUp = async (orderId: string) => {
+        await changeStatus.mutateAsync({ id: orderId, status: 'NOT_PICKED_UP' });
         refetch();
     };
 
@@ -221,16 +232,14 @@ export default function PickupOrders() {
                                     orderCode: order.orderCode,
                                     customerName: order.customerName || 'Cliente',
                                     customerPhone: order.customerPhoneE164,
-                                    status: order.status === 'CREATED' ? 'PENDING'
-                                        : order.status === 'READY_FOR_PICKUP' ? 'READY'
-                                            : order.status === 'PICKED_UP' ? 'PICKED_UP'
-                                                : 'READY',
+                                    status: order.status,
                                     createdAt: order.createdAt,
                                     whatsappSent: !!order.lastWhatsAppNotifiedAt,
                                 }}
-                                onMarkReady={() => changeStatus.mutate({ id: order.id, status: 'READY_FOR_PICKUP' })}
+                                onMarkReady={() => handleMarkReady(order.id)}
                                 onCall={() => handleCall(order.id)}
-                                onComplete={() => handleComplete(order.id)}
+                                onPickedUp={() => handlePickedUp(order.id)}
+                                onNotPickedUp={() => handleNotPickedUp(order.id)}
                                 isLoading={changeStatus.isPending || resendWhatsApp.isPending}
                             />
                         ))}
@@ -240,7 +249,7 @@ export default function PickupOrders() {
 
             {showCreateModal && (
                 <CreatePickupOrderModal
-                    onClose={() => setShowCreateModal(false)}
+                    onClose={() => setShowCreateModal(true)}
                     onSuccess={() => {
                         setShowCreateModal(false);
                         refetch();
