@@ -1,65 +1,97 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import { usePickupOrders, useChangePickupOrderStatus, useResendWhatsApp } from '../hooks/usePickupOrders';
-import { PickupOrder } from '../services/pickupOrdersApi';
-import { Button } from '../components/ui';
-
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { Button, Input, EmptyState } from '../components/ui';
 import CreatePickupOrderModal from '../components/pickup-orders/CreatePickupOrderModal';
 import { PageShell, PageContent } from '../components/mobile/PageShell';
 import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
-
-const STATUS_COLORS = {
-    CREATED: 'bg-blue-100 text-blue-800',
-    READY_FOR_PICKUP: 'bg-green-100 text-green-800',
-    PICKED_UP: 'bg-gray-100 text-gray-800',
-    NOT_PICKED_UP: 'bg-red-100 text-red-800',
-};
-
-const STATUS_LABELS = {
-    CREATED: 'Criado',
-    READY_FOR_PICKUP: 'Pronto',
-    PICKED_UP: 'Retirado',
-    NOT_PICKED_UP: 'Não Retirado',
-};
+import { KPICard } from '../components/pickup-orders/KPICard';
+import { OrderCard } from '../components/pickup-orders/OrderCard';
+import { FilterChips } from '../components/pickup-orders/FilterChips';
 
 export default function PickupOrders() {
-    const [statusFilter, setStatusFilter] = useState<string>('');
+    const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'called' | 'completed'>('all');
     const [searchTerm, setSearchTerm] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
 
-
-    const { data, isLoading, refetch } = usePickupOrders({
-        status: statusFilter || undefined,
-        search: searchTerm || undefined,
-    });
-
+    const { data, isLoading, refetch } = usePickupOrders({});
     const changeStatus = useChangePickupOrderStatus();
     const resendWhatsApp = useResendWhatsApp();
 
-    const handleStatusChange = async (orderId: string, newStatus: string) => {
-        await changeStatus.mutateAsync({ id: orderId, status: newStatus });
+    // Calculate metrics
+    const metrics = useMemo(() => {
+        const orders = data?.data || [];
+        const ready = orders.filter(o => o.status === 'READY_FOR_PICKUP').length;
+        const called = orders.filter(o => o.status === 'READY_FOR_PICKUP' && o.lastWhatsAppNotifiedAt).length;
+
+        // Calculate average wait time for ready orders
+        const readyOrders = orders.filter(o => o.status === 'READY_FOR_PICKUP');
+        const avgWait = readyOrders.length > 0
+            ? Math.floor(readyOrders.reduce((sum, o) => {
+                const mins = Math.floor((new Date().getTime() - new Date(o.createdAt).getTime()) / (1000 * 60));
+                return sum + mins;
+            }, 0) / readyOrders.length)
+            : 0;
+
+        return { ready, called, avgWait };
+    }, [data]);
+
+    // Filter and sort orders
+    const filteredOrders = useMemo(() => {
+        let orders = data?.data || [];
+
+        // Apply status filter
+        if (activeFilter === 'pending') {
+            orders = orders.filter(o => o.status === 'CREATED' || o.status === 'READY_FOR_PICKUP');
+        } else if (activeFilter === 'called') {
+            orders = orders.filter(o => o.status === 'READY_FOR_PICKUP');
+        } else if (activeFilter === 'completed') {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            orders = orders.filter(o => {
+                const orderDate = new Date(o.createdAt);
+                return o.status === 'PICKED_UP' && orderDate >= today;
+            });
+        }
+
+        // Apply search
+        if (searchTerm.trim()) {
+            orders = orders.filter(o =>
+                o.orderCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                o.customerName?.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+        }
+
+        // Sort by urgency
+        return orders.sort((a, b) => {
+            // Late orders first (>30min and ready)
+            const aLate = a.status === 'READY_FOR_PICKUP' &&
+                Math.floor((new Date().getTime() - new Date(a.createdAt).getTime()) / (1000 * 60)) > 30;
+            const bLate = b.status === 'READY_FOR_PICKUP' &&
+                Math.floor((new Date().getTime() - new Date(b.createdAt).getTime()) / (1000 * 60)) > 30;
+
+            if (aLate && !bLate) return -1;
+            if (!aLate && bLate) return 1;
+
+            // Then by status priority
+            const statusPriority = {
+                'READY_FOR_PICKUP': 1,
+                'CREATED': 2,
+                'PICKED_UP': 3,
+                'NOT_PICKED_UP': 4,
+            };
+            return (statusPriority[a.status] || 99) - (statusPriority[b.status] || 99);
+        });
+    }, [data, activeFilter, searchTerm]);
+
+    const handleCall = async (orderId: string) => {
+        await resendWhatsApp.mutateAsync(orderId);
         refetch();
     };
 
-    const handleResendWhatsApp = async (orderId: string) => {
-        await resendWhatsApp.mutateAsync(orderId);
-    };
-
-    const getAvailableActions = (order: PickupOrder) => {
-        const actions: { label: string; status: string; color: string }[] = [];
-
-        if (order.status === 'CREATED') {
-            actions.push({ label: 'Marcar como Pronto', status: 'READY_FOR_PICKUP', color: 'green' });
-        }
-
-        if (order.status === 'READY_FOR_PICKUP') {
-            actions.push({ label: 'Marcar como Retirado', status: 'PICKED_UP', color: 'gray' });
-            actions.push({ label: 'Não Retirado', status: 'NOT_PICKED_UP', color: 'red' });
-        }
-
-        return actions;
+    const handleComplete = async (orderId: string) => {
+        await changeStatus.mutateAsync({ id: orderId, status: 'PICKED_UP' });
+        refetch();
     };
 
     if (isLoading) {
@@ -73,8 +105,8 @@ export default function PickupOrders() {
     return (
         <PageShell>
             <MobilePageHeader
-                title="Pedidos (Retirada)"
-                subtitle="Gerencie pedidos para retirada"
+                title="Pedidos para Retirada"
+                subtitle="Chame clientes e finalize retiradas"
                 actions={
                     <Button onClick={() => setShowCreateModal(true)} size="sm" className="gap-2">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,228 +118,134 @@ export default function PickupOrders() {
             />
 
             <PageContent className="p-4 space-y-6">
-                {/* Header (Desktop) */}
-                <div className="hidden md:block">
-                    <h1 className="text-2xl font-bold text-gray-900">Pedidos (Retirada)</h1>
-                    <p className="text-gray-600 mt-1">Gerencie pedidos para retirada</p>
+                {/* Desktop Header */}
+                <div className="hidden lg:flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <h1 className="text-3xl font-bold text-dark-900 mb-2">Pedidos para Retirada</h1>
+                        <p className="text-dark-500">Chame clientes e finalize retiradas</p>
+                    </div>
+                    <Button onClick={() => setShowCreateModal(true)} size="lg" className="gap-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        Novo Pedido
+                    </Button>
                 </div>
 
-                {/* Filters and Actions */}
-                <div className="bg-white rounded-lg shadow p-4">
-                    <div className="flex flex-col md:flex-row gap-4">
-                        {/* Search */}
-                        <div className="flex-1">
-                            <input
-                                type="text"
-                                placeholder="Buscar por código ou nome..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-lg"
-                            />
-                        </div>
+                {/* KPI Cards */}
+                <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-3">
+                    <KPICard
+                        icon={
+                            <svg className="w-full h-full text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                            </svg>
+                        }
+                        value={metrics.ready}
+                        label="Prontos"
+                        variant="warning"
+                    />
+                    <KPICard
+                        icon={
+                            <svg className="w-full h-full text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        }
+                        value={`${metrics.avgWait} min`}
+                        label="Tempo médio"
+                        variant="primary"
+                    />
+                    <KPICard
+                        icon={
+                            <svg className="w-full h-full text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                        }
+                        value={metrics.called}
+                        label="Chamados"
+                        variant="success"
+                    />
+                </div>
 
-                        {/* Status Filter */}
-                        <select
-                            value={statusFilter}
-                            onChange={(e) => setStatusFilter(e.target.value)}
-                            className="px-4 py-2 border rounded-lg"
-                        >
-                            <option value="">Todos os status</option>
-                            <option value="CREATED">Criado</option>
-                            <option value="READY_FOR_PICKUP">Pronto</option>
-                            <option value="PICKED_UP">Retirado</option>
-                            <option value="NOT_PICKED_UP">Não Retirado</option>
-                        </select>
-
-                        {/* Create Button (Desktop) */}
-                        <button
-                            onClick={() => setShowCreateModal(true)}
-                            className="hidden md:block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                        >
-                            + Novo Pedido
-                        </button>
-                    </div>
+                {/* Filters */}
+                <div className="space-y-3">
+                    <FilterChips
+                        activeFilter={activeFilter}
+                        onFilterChange={setActiveFilter}
+                    />
+                    <Input
+                        placeholder="Buscar por código ou nome..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        leftIcon={
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        }
+                    />
                 </div>
 
                 {/* Orders List */}
-                <div className="bg-white rounded-lg shadow overflow-hidden">
-                    <>
-                        {/* Mobile View: Cards */}
-                        <div className="md:hidden space-y-4 p-4 bg-gray-50">
-                            {data?.data?.map((order) => (
-                                <div key={order.id} className="bg-white p-4 rounded-lg shadow space-y-3 border border-gray-100">
-                                    <div className="flex justify-between items-start">
-                                        <div>
-                                            <div className="font-bold text-gray-900 text-lg">#{order.orderCode}</div>
-                                            <div className="text-gray-500 text-xs">{format(new Date(order.createdAt), 'dd/MM HH:mm', { locale: ptBR })}</div>
-                                        </div>
-                                        <span
-                                            className={`px-2 py-1 text-xs font-medium rounded-full ${STATUS_COLORS[order.status]}`}
-                                        >
-                                            {STATUS_LABELS[order.status]}
-                                        </span>
-                                    </div>
-
-                                    <div>
-                                        <div className="font-medium text-gray-900">{order.customerName || 'Sem nome'}</div>
-                                        <div className="text-gray-600 text-sm flex items-center gap-2">
-                                            {order.customerPhoneE164}
-                                            {order.whatsappOptIn && (
-                                                <span className="text-green-600" title="WhatsApp Ativo">
-                                                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                                                        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.16C10.58 20.16 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.05 20.16Z" />
-                                                    </svg>
-                                                </span>
-                                            )}
-                                        </div>
-                                        {order.notes && (
-                                            <div className="mt-2 text-sm text-gray-500 bg-gray-50 p-2 rounded">
-                                                {order.notes}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="pt-2 border-t border-gray-100 flex flex-wrap gap-2">
-                                        {getAvailableActions(order).map((action) => (
-                                            <button
-                                                key={action.status}
-                                                onClick={() => handleStatusChange(order.id, action.status)}
-                                                disabled={changeStatus.isPending}
-                                                className={`flex-1 min-w-[120px] px-3 py-2 text-xs font-medium rounded border border-${action.color}-200 bg-${action.color}-50 text-${action.color}-700 hover:bg-${action.color}-100 disabled:opacity-50 text-center transition-colors`}
-                                            >
-                                                {action.label}
-                                            </button>
-                                        ))}
-
-                                        {order.whatsappOptIn && order.status === 'READY_FOR_PICKUP' && (
-                                            <button
-                                                onClick={() => handleResendWhatsApp(order.id)}
-                                                disabled={resendWhatsApp.isPending}
-                                                className="px-3 py-2 text-xs font-medium rounded border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 disabled:opacity-50 transition-colors"
-                                                title="Reenviar WhatsApp"
-                                            >
-                                                📱 Reenviar
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Desktop View: Table */}
-                        <div className="hidden md:block overflow-x-auto">
-                            <table className="w-full">
-                                <thead className="bg-gray-50 border-b">
-                                    <tr>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Código
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Cliente
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Telefone
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Status
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Criado
-                                        </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                            Ações
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-200">
-                                    {data?.data?.map((order) => (
-                                        <tr key={order.id} className="hover:bg-gray-50">
-                                            <td className="px-6 py-4">
-                                                <div className="font-medium text-gray-900">{order.orderCode}</div>
-                                                {order.notes && (
-                                                    <div className="text-xs text-gray-500 mt-1">{order.notes}</div>
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="text-sm text-gray-900">
-                                                    {order.customerName || 'Sem nome'}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="text-sm text-gray-600">{order.customerPhoneE164}</div>
-                                                {order.whatsappOptIn && (
-                                                    <span className="text-xs text-green-600">✓ WhatsApp</span>
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <span
-                                                    className={`px-2 py-1 text-xs font-medium rounded-full ${STATUS_COLORS[order.status]
-                                                        }`}
-                                                >
-                                                    {STATUS_LABELS[order.status]}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-4 text-sm text-gray-600">
-                                                {format(new Date(order.createdAt), 'dd/MM HH:mm', { locale: ptBR })}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center gap-2">
-                                                    {/* Status Actions */}
-                                                    {getAvailableActions(order).map((action) => (
-                                                        <button
-                                                            key={action.status}
-                                                            onClick={() => handleStatusChange(order.id, action.status)}
-                                                            disabled={changeStatus.isPending}
-                                                            className={`px-3 py-1 text-xs rounded bg-${action.color}-100 text-${action.color}-700 hover:bg-${action.color}-200 disabled:opacity-50`}
-                                                        >
-                                                            {action.label}
-                                                        </button>
-                                                    ))}
-
-                                                    {/* Resend WhatsApp */}
-                                                    {order.whatsappOptIn && order.status === 'READY_FOR_PICKUP' && (
-                                                        <button
-                                                            onClick={() => handleResendWhatsApp(order.id)}
-                                                            disabled={resendWhatsApp.isPending}
-                                                            className="px-3 py-1 text-xs rounded bg-blue-100 text-blue-700 hover:bg-blue-200 disabled:opacity-50"
-                                                            title="Reenviar WhatsApp"
-                                                        >
-                                                            📱
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </>
-
-                    {/* Pagination */}
-                    {data && data.pagination.totalPages > 1 && (
-                        <div className="px-6 py-4 border-t flex items-center justify-between">
-                            <div className="text-sm text-gray-600">
-                                Mostrando {data.data.length} de {data.pagination.total} pedidos
-                            </div>
-                            <div className="text-sm text-gray-600">
-                                Página {data.pagination.page} de {data.pagination.totalPages}
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                {/* Create Modal */}
-                {showCreateModal && (
-                    <CreatePickupOrderModal
-                        onClose={() => setShowCreateModal(false)}
-                        onSuccess={() => {
-                            setShowCreateModal(false);
-                            refetch();
-                        }}
-                    />
+                {filteredOrders.length === 0 ? (
+                    <div className="card-premium">
+                        <EmptyState
+                            icon={
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                            }
+                            title="Nenhum pedido encontrado"
+                            description={searchTerm || activeFilter !== 'all'
+                                ? "Tente ajustar os filtros para ver mais resultados"
+                                : "Crie seu primeiro pedido para começar"
+                            }
+                            action={
+                                (searchTerm || activeFilter !== 'all') ? (
+                                    <Button onClick={() => { setSearchTerm(''); setActiveFilter('all'); }} variant="outline">
+                                        Limpar Filtros
+                                    </Button>
+                                ) : (
+                                    <Button onClick={() => setShowCreateModal(true)}>
+                                        Novo Pedido
+                                    </Button>
+                                )
+                            }
+                        />
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        {filteredOrders.map((order) => (
+                            <OrderCard
+                                key={order.id}
+                                order={{
+                                    id: order.id,
+                                    orderCode: order.orderCode,
+                                    customerName: order.customerName || 'Cliente',
+                                    customerPhone: order.customerPhoneE164,
+                                    status: order.status === 'CREATED' ? 'PENDING'
+                                        : order.status === 'READY_FOR_PICKUP' ? 'READY'
+                                            : order.status === 'PICKED_UP' ? 'PICKED_UP'
+                                                : 'READY',
+                                    createdAt: order.createdAt,
+                                    whatsappSent: false, // Simplified for now
+                                }}
+                                onCall={() => handleCall(order.id)}
+                                onComplete={() => handleComplete(order.id)}
+                                isLoading={changeStatus.isPending || resendWhatsApp.isPending}
+                            />
+                        ))}
+                    </div>
                 )}
             </PageContent>
+
+            {showCreateModal && (
+                <CreatePickupOrderModal
+                    onClose={() => setShowCreateModal(false)}
+                    onSuccess={() => {
+                        setShowCreateModal(false);
+                        refetch();
+                    }}
+                />
+            )}
         </PageShell>
     );
 }
