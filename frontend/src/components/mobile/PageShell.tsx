@@ -21,7 +21,7 @@ export function PageShell({ children, className = '' }: PageShellProps) {
                 MobilePageHeader is h-14 (56px) + safe-area-top.
                 The content container should handle the scrolling.
             */}
-            <div className="flex-1 overflow-hidden relative pt-14 safe-area-pt">
+            <div className="flex-1 overflow-hidden relative pt-14 lg:pt-0 safe-area-pt">
                 <div className="h-full overflow-y-auto scrollbar-hide">
                     {children}
                 </div>
