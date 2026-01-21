@@ -46,7 +46,7 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             />
 
             {/* Modal */}
-            <div className="flex min-h-full items-start justify-center p-4 safe-area-top pt-2" style={{ position: 'relative', zIndex: 9999 }}>
+            <div className="flex min-h-full items-center justify-center p-4 safe-area-top" style={{ position: 'relative', zIndex: 9999 }}>
                 <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-scale-in">
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
