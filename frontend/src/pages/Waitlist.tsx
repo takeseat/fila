@@ -811,9 +811,13 @@ export function Waitlist() {
                                                     </Button>
                                                     <Button
                                                         size="sm"
-                                                        variant="danger"
-                                                        onClick={() => noShowMutation.mutate(entry.id)}
-                                                        className="flex-1"
+                                                        variant="outline"
+                                                        onClick={() => {
+                                                            if (window.confirm('Deseja realmente marcar este cliente como faltoso?')) {
+                                                                noShowMutation.mutate(entry.id);
+                                                            }
+                                                        }}
+                                                        className="flex-1 border-gray-300 text-gray-600 hover:bg-gray-50"
                                                         isLoading={noShowMutation.isPending}
                                                     >
                                                         {t('actions.noShow')}

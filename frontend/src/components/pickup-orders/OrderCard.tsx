@@ -184,9 +184,14 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             Entregar
                         </Button>
                         <Button
-                            onClick={onNotPickedUp}
+                            onClick={() => {
+                                if (window.confirm('Deseja realmente marcar este pedido como não retirado?')) {
+                                    onNotPickedUp?.();
+                                }
+                            }}
                             isLoading={isLoading}
-                            variant="danger"
+                            variant="outline"
+                            className="border-gray-300 text-gray-600 hover:bg-gray-50"
                             size="sm"
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
