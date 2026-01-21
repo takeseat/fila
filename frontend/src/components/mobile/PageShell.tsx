@@ -22,7 +22,7 @@ export function PageShell({ children, className = '' }: PageShellProps) {
                 The content container should handle the scrolling.
             */}
             <div className="flex-1 overflow-hidden relative pt-14 safe-area-pt">
-                <div className="h-full overflow-y-auto">
+                <div className="h-full overflow-y-auto scrollbar-hide">
                     {children}
                 </div>
             </div>
