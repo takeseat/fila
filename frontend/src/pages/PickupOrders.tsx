@@ -249,7 +249,7 @@ export default function PickupOrders() {
 
             {showCreateModal && (
                 <CreatePickupOrderModal
-                    onClose={() => setShowCreateModal(true)}
+                    onClose={() => setShowCreateModal(false)}
                     onSuccess={() => {
                         setShowCreateModal(false);
                         refetch();
