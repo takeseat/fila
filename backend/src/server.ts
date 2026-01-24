@@ -20,7 +20,9 @@ import usersRoutes from './routes/users.routes';
 import whatsappSettingsRouter from './routes/whatsapp-settings.routes';
 import adminRoutes from './routes/admin.routes';
 import pickupOrdersRoutes from './routes/pickup-orders.routes';
+import billingRoutes from './routes/billing.routes';
 import { impersonationMiddleware } from './middleware/impersonation.middleware';
+import { checkSubscriptionAccess } from './middleware/subscription';
 import { WhatsAppWebhookController } from './controllers/whatsapp-webhook.controller';
 import { ZApiWebhookController } from './controllers/zapi-webhook.controller';
 
@@ -57,6 +59,12 @@ app.get('/health', (_req, res) => {
 
 // API Routes
 app.use('/auth', authRoutes);
+app.use('/billing', billingRoutes); // No subscription check needed (allowed in middleware)
+app.use('/onboarding', onboardingRouter); // No subscription check during onboarding
+
+// Apply subscription middleware to all routes below
+app.use(checkSubscriptionAccess);
+
 app.use('/waitlist', waitlistRoutes);
 app.use('/customers', customersRoutes);
 app.use('/restaurants', restaurantRoutes);
@@ -66,7 +74,6 @@ app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
 app.use('/whatsapp-settings', whatsappSettingsRouter);
 app.use('/pickup-orders', pickupOrdersRoutes);
-app.use('/onboarding', onboardingRouter);
 
 // Admin routes (SYSADMIN only)
 app.use('/admin', adminRoutes);

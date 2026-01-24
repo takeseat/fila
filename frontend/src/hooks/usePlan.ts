@@ -1,43 +1,66 @@
 import { useAuth } from './useAuth';
 import { differenceInDays, parseISO } from 'date-fns';
 
-export type PlanType = 'BASIC' | 'PRO';
+export type PlanType = 'PRO'; // Only PRO now
 export type TrialStatus = 'NONE' | 'ACTIVE' | 'EXPIRED';
+export type SubscriptionStatus = 'TRIALING' | 'ACTIVE' | 'PAST_DUE' | 'EXPIRED';
 
 export function usePlan() {
     const { restaurant } = useAuth();
 
-    // Default to BASIC if undefined/null (safe fail)
-    const plan: PlanType = restaurant?.plan || 'BASIC';
+    // Always PRO plan (BASIC is deprecated)
+    const plan: PlanType = 'PRO';
+    const subscriptionStatus: SubscriptionStatus = restaurant?.subscriptionStatus || 'TRIALING';
     const trialStatus: TrialStatus = restaurant?.trialStatus || 'NONE';
 
-    const isPro = plan === 'PRO';
-    const isTrialActive = trialStatus === 'ACTIVE';
+    // Subscription status checks
+    const isTrialing = subscriptionStatus === 'TRIALING';
+    const isActive = subscriptionStatus === 'ACTIVE';
+    const isPastDue = subscriptionStatus === 'PAST_DUE';
+    const isExpired = subscriptionStatus === 'EXPIRED';
+
+    // Legacy compatibility
+    const isPro = true; // Always true now
+    const isTrialActive = isTrialing; // Legacy name
     const hasConsumedTrial = !!restaurant?.trialConsumedAt || trialStatus === 'EXPIRED';
 
+    // Calculate trial days remaining
     let trialDaysRemaining = 0;
-    if (isTrialActive && restaurant?.trialEndAt) {
-        // Calculate remaining days
+    if (isTrialing && restaurant?.trialEndAt) {
         const end = parseISO(restaurant.trialEndAt);
         const now = new Date();
         trialDaysRemaining = Math.max(0, differenceInDays(end, now));
     }
 
+    // Feature access based on subscription status
+    const canAccessFeatures = isTrialing || isActive;
+
     return {
         plan,
+        subscriptionStatus,
         trialStatus,
+
+        // Primary status flags
+        isTrialing,
+        isActive,
+        isPastDue,
+        isExpired,
+
+        // Feature access
+        canAccessFeatures,
+        canUseWhatsApp: canAccessFeatures,
+        canUsePickupOrders: canAccessFeatures,
+
+        // Legacy compatibility (always true/false for PRO-only)
         isPro,
+        isBasic: false, // BASIC no longer exists
         isTrialActive,
         hasConsumedTrial,
         trialDaysRemaining,
-        isBasic: plan === 'BASIC',
-        canUseWhatsApp: isPro,
-        canUsePickupOrders: isPro,
 
-        // Helper to check specific features if we add more granular ones later
-        checkFeature: (feature: 'WHATSAPP' | 'PICKUP_ORDERS') => {
-            if (feature === 'WHATSAPP' || feature === 'PICKUP_ORDERS') return isPro;
-            return true;
+        // Helper to check specific features (legacy)
+        checkFeature: (_feature: 'WHATSAPP' | 'PICKUP_ORDERS') => {
+            return canAccessFeatures;
         }
     };
 }

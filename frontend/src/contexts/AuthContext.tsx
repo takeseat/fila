@@ -14,13 +14,22 @@ interface User {
 interface Restaurant {
     id: string;
     name: string;
-    email: string;
-    phone: string;
-    city: string;
-    countryCode: string;
-    onboardingPending?: boolean;
-    plan?: 'BASIC' | 'PRO';
-    trialStatus?: 'NONE' | 'ACTIVE' | 'EXPIRED';
+    email?: string;
+    phone: string; // Retained from original, not in instruction's snippet but not explicitly removed
+    city: string; // Retained from original
+    countryCode: string; // Retained from original
+    plan: 'BASIC' | 'PRO'; // Keep for backward compatibility
+    planUpdatedAt?: string;
+    timezone?: string;
+    onboardingPending: boolean;
+
+    // Subscription status (new model)
+    subscriptionStatus?: 'TRIALING' | 'ACTIVE' | 'PAST_DUE' | 'EXPIRED';
+    subscriptionStartedAt?: string;
+    subscriptionEndsAt?: string;
+
+    // Trial information
+    trialStatus: 'NONE' | 'ACTIVE' | 'EXPIRED';
     trialStartAt?: string;
     trialEndAt?: string;
     trialConsumedAt?: string;

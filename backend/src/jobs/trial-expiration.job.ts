@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export class TrialExpirationJob {
     /**
      * Process expired trials.
-     * Reverts plan to BASIC and marks status as EXPIRED.
+     * Sets subscriptionStatus to EXPIRED while keeping plan as PRO.
      */
     static async processExpiredTrials() {
         console.log('[TrialExpirationJob] Starting check...');
@@ -13,10 +13,10 @@ export class TrialExpirationJob {
         try {
             const now = new Date();
 
-            // Find candidates
+            // Find tenants with TRIALING status AND trial expired
             const expiredRestaurants = await prisma.restaurant.findMany({
                 where: {
-                    trialStatus: 'ACTIVE',
+                    subscriptionStatus: 'TRIALING', // Check subscription status instead of trialStatus
                     trialEndAt: {
                         lt: now
                     }
@@ -39,15 +39,14 @@ export class TrialExpirationJob {
                     await prisma.restaurant.update({
                         where: { id: restaurant.id },
                         data: {
-                            plan: 'BASIC',
-                            trialStatus: 'EXPIRED',
-                            // Disable features immediately
-                            pickupOrdersEnabled: false,
-                            pickupOrdersWhatsappEnabled: false
+                            subscriptionStatus: 'EXPIRED', // Set to EXPIRED
+                            trialStatus: 'EXPIRED', // Also update legacy trialStatus for consistency
+                            // Keep plan as PRO - don't revert to BASIC
+                            // Don't disable features - gate will handle access control
                         }
                     });
 
-                    // TODO: Audit log here if needed (e.g. PlanChangeLog)
+                    // TODO: Consider sending notification email to restaurant owner
 
                     processed++;
                 } catch (err) {
@@ -55,6 +54,7 @@ export class TrialExpirationJob {
                 }
             }
 
+            console.log(`[TrialExpirationJob] Successfully processed ${processed} expirations.`);
             return { success: true, processed };
 
         } catch (error) {

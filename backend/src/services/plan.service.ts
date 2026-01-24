@@ -1,4 +1,5 @@
 import { PrismaClient, Plan } from '@prisma/client';
+import { subscriptionService } from './subscription.service';
 
 const prisma = new PrismaClient();
 
@@ -6,10 +7,10 @@ export class PlanPermissionError extends Error {
     public code: string;
     public feature: string;
 
-    constructor(feature: string) {
-        super(`Upgrade to PRO plan required for feature: ${feature}`);
+    constructor(feature: string, reason: string = 'SUBSCRIPTION_REQUIRED') {
+        super(`Subscription required for feature: ${feature}`);
         this.name = 'PlanPermissionError';
-        this.code = 'PLAN_UPGRADE_REQUIRED';
+        this.code = reason;
         this.feature = feature;
     }
 }
@@ -18,29 +19,50 @@ export const planService = {
     async checkPermission(restaurantId: string, feature: 'WHATSAPP' | 'PICKUP_ORDERS') {
         const restaurant = await prisma.restaurant.findUnique({
             where: { id: restaurantId },
-            select: { plan: true }
+            select: {
+                plan: true,
+                subscriptionStatus: true
+            }
         });
 
         if (!restaurant) {
             throw new Error('Restaurant not found');
         }
 
-        // Basic Plan Restrictions
-        if (restaurant.plan === Plan.BASIC) {
-            if (feature === 'WHATSAPP' || feature === 'PICKUP_ORDERS') {
-                throw new PlanPermissionError(feature);
-            }
+        // Check subscription status instead of plan
+        const { subscriptionStatus } = restaurant;
+
+        // EXPIRED or PAST_DUE = no access to PRO features
+        if (subscriptionStatus === 'EXPIRED' || subscriptionStatus === 'PAST_DUE') {
+            throw new PlanPermissionError(feature, 'SUBSCRIPTION_EXPIRED');
         }
 
-        // PRO plan has access to everything
-        return true;
+        // TRIALING or ACTIVE = full access to all features
+        if (subscriptionStatus === 'TRIALING' || subscriptionStatus === 'ACTIVE') {
+            return true;
+        }
+
+        // Fallback - deny if status is unknown
+        throw new PlanPermissionError(feature, 'SUBSCRIPTION_REQUIRED');
     },
 
     async getPlan(restaurantId: string) {
         const restaurant = await prisma.restaurant.findUnique({
             where: { id: restaurantId },
-            select: { plan: true }
+            select: {
+                plan: true,
+                subscriptionStatus: true
+            }
         });
-        return restaurant?.plan || Plan.BASIC;
+
+        // Always return PRO (BASIC is deprecated)
+        return restaurant?.plan || Plan.PRO;
+    },
+
+    /**
+     * Check if restaurant can access features (based on subscription status)
+     */
+    async canAccessFeatures(restaurantId: string): Promise<boolean> {
+        return await subscriptionService.canAccessFeatures(restaurantId);
     }
 };

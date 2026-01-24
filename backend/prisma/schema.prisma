@@ -55,10 +55,15 @@ model Restaurant {
   impersonationLogs   ImpersonationLog[]
   pickupOrders        PickupOrder[]
 
-  plan          Plan     @default(BASIC)
+  plan          Plan     @default(PRO) // New tenants always start with PRO
   planUpdatedAt DateTime @default(now())
 
-  // Trial Logic
+  // Subscription Status (new model)
+  subscriptionStatus    SubscriptionStatus @default(TRIALING)
+  subscriptionStartedAt DateTime?
+  subscriptionEndsAt    DateTime?
+
+  // Trial Logic (existing fields - keep names for backward compatibility)
   trialStatus     TrialStatus @default(NONE)
   trialStartAt    DateTime?
   trialEndAt      DateTime?
@@ -68,7 +73,7 @@ model Restaurant {
 }
 
 enum Plan {
-  BASIC
+  BASIC // DEPRECATED - kept for backward compatibility only
   PRO
 }
 
@@ -76,6 +81,13 @@ enum TrialStatus {
   NONE
   ACTIVE
   EXPIRED
+}
+
+enum SubscriptionStatus {
+  TRIALING // 7-day trial period
+  ACTIVE   // Active paid subscription
+  PAST_DUE // Payment failed, grace period
+  EXPIRED  // Trial expired without subscription
 }
 
 model User {
