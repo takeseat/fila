@@ -73,6 +73,30 @@ export class AuthService {
                 },
             });
 
+            // Create default WhatsApp settings with templates enabled
+            await tx.restaurantWhatsAppSettings.create({
+                data: {
+                    restaurantId: restaurant.id,
+                    isEnabled: true,
+                    // Waitlist messages - enabled by default
+                    sendWelcome: true,
+                    sendPositionUpdates: true,
+                    sendTurnMessage: true,
+                    welcomeText: 'Olá {{customer_name}}! Você entrou na fila de {{business_name}}. Sua posição atual é {{position}}. Tempo estimado: {{eta_minutes}} minutos.',
+                    positionUpdateText: 'Olá {{customer_name}}! Sua posição na fila foi atualizada. Posição atual: {{position}}. Faltam aproximadamente {{eta_minutes}} minutos.',
+                    yourTurnText: 'Olá {{customer_name}}, sua mesa está pronta! Por favor, dirija-se ao balcão de {{business_name}}. Até já!',
+                    minSecondsBetweenUpdates: 300,
+                    minPositionsChangeToNotify: 5,
+                    // Pickup order messages - enabled by default
+                    sendOrderCreated: true,
+                    sendOrderReady: true,
+                    sendOrderNotPickedUp: false,
+                    orderCreatedText: 'Olá {{customer_name}}! Seu pedido {{order_code}} foi recebido em {{business_name}} e já está sendo preparado. Aguarde a confirmação quando estiver pronto!',
+                    orderReadyText: 'Olá {{customer_name}}! Seu pedido {{order_code}} está pronto para retirada em {{business_name}}. Venha buscar! 🎉',
+                    orderNotPickedUpText: 'Olá {{customer_name}}, notamos que seu pedido {{order_code}} ainda não foi retirado em {{business_name}}. Estamos aguardando você!',
+                },
+            });
+
             const user = await tx.user.create({
                 data: {
                     restaurantId: restaurant.id,
