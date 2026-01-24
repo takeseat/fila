@@ -78,6 +78,7 @@ export class OnboardingController {
 
     /**
      * Complete Onboarding
+     * Now auto-starts PRO trial with 7-day period
      */
     static async complete(req: Request, res: Response): Promise<void> {
         try {
@@ -88,12 +89,33 @@ export class OnboardingController {
             // @ts-ignore
             const restaurantId = req.user.restaurantId;
 
+            const now = new Date();
+            const trialEndsAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // +7 days
+
             await prisma.restaurant.update({
                 where: { id: restaurantId },
-                data: { onboardingPending: false },
+                data: {
+                    onboardingPending: false,
+                    // Initialize PRO trial
+                    plan: 'PRO',
+                    subscriptionStatus: 'TRIALING',
+                    trialStatus: 'ACTIVE',
+                    trialStartAt: now,
+                    trialEndAt: trialEndsAt,
+                    trialConsumedAt: now,
+                },
             });
 
-            res.json({ success: true, message: 'Onboarding completed', onboardingPending: false });
+            console.log(`[Onboarding] PRO trial started for restaurant ${restaurantId}. Expires: ${trialEndsAt.toISOString()}`);
+
+            res.json({
+                success: true,
+                message: 'Onboarding completed - PRO trial activated',
+                onboardingPending: false,
+                plan: 'PRO',
+                subscriptionStatus: 'TRIALING',
+                trialEndsAt: trialEndsAt.toISOString()
+            });
         } catch (error: any) {
             console.error('[Onboarding] Complete error:', error);
             res.status(400).json({ error: error.message || 'Failed to complete onboarding' });
