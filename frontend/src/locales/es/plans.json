@@ -13,26 +13,26 @@
         "period": "/mes",
         "cta": "Activar Profesional",
         "active": "Plan Activo",
-        "upgrade": "Mejorar Plan",
+        "upgrade": "Actualizar",
         "badge": "PRO"
     },
     "features": {
         "waitlist": "Lista de Espera Ilimitada",
         "whatsapp": "Notificaciones por WhatsApp",
-        "pickupOrders": "Pedidos para Retirar",
+        "pickupOrders": "Pedidos para Llevar",
         "activeState": "Activo"
     },
     "upgrade": {
         "modalTitle": "Desbloquea todo el potencial",
-        "modalDescription": "El plan Profesional incluye funciones exclusivas para automatizar tu operación y aumentar tus ventas.",
-        "cta": "Mejorar Ahora",
+        "modalDescription": "El plan Profesional incluye funciones exclusivas para automatizar tu operación y aumentar las ventas.",
+        "cta": "Actualizar Ahora",
         "maybeLater": "Quizás más tarde",
         "featureLocked": "Función disponible en el plan Profesional.",
-        "ctaInline": "Mejorar para usar.",
+        "ctaInline": "Actualiza para usar.",
         "whatsappHint": "Notifica a tus clientes automáticamente por WhatsApp."
     },
     "banner": {
-        "title": "Mejora disponible",
+        "title": "Actualización disponible",
         "description": "Desbloquea WhatsApp y Pedidos con el plan Profesional.",
         "cta": "Ver Planes"
     },
@@ -40,13 +40,27 @@
         "title": "Mi Plan",
         "subtitle": "Gestiona tu plan y suscripción",
         "currentPlan": "Plan actual:",
-        "featuresTitle": "Funciones incluidas:"
+        "featuresTitle": "Funciones Incluidas"
     },
     "trial": {
-        "start": "Iniciar prueba gratis de 7 días",
+        "start": "Comenzar prueba gratis de 7 días",
         "active": "Prueba Activa",
         "expiresIn": "Expira en {{days}} días",
         "expired": "Prueba Expirada",
-        "description": "Prueba las funciones PRO por 7 días."
+        "description": "Prueba funciones PRO por 7 días.",
+        "profileIncomplete": "Completa tu perfil para iniciar la prueba",
+        "completeProfileTitle": "¡Casi listo!",
+        "completeProfileDesc": "Para iniciar tu prueba gratuita, necesitamos algunos detalles sobre tu negocio.",
+        "completeAndStart": "Guardar e Iniciar Prueba"
+    },
+    "subscription": {
+        "subscribe": "Suscribirse Ahora",
+        "manage": "Gestionar Suscripción",
+        "status": {
+            "trialing": "Prueba Activa",
+            "active": "Activo",
+            "pastDue": "Pago Atrasado",
+            "expired": "Expirado"
+        }
     }
 }

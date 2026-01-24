@@ -1,15 +1,15 @@
 {
     "basic": {
-        "title": "Basique",
+        "title": "Basic",
         "description": "Parfait pour commencer",
         "price": "Gratuit",
-        "cta": "Continuer avec Basique",
+        "cta": "Continuer avec Basic",
         "current": "Votre plan actuel"
     },
     "pro": {
         "title": "Professionnel",
         "description": "Pour les restaurants en croissance",
-        "price": "19 $",
+        "price": "€19",
         "period": "/mois",
         "cta": "Activer Professionnel",
         "active": "Plan Actif",
@@ -17,36 +17,50 @@
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "File d'attente illimitée",
+        "waitlist": "Liste d'attente illimitée",
         "whatsapp": "Notifications WhatsApp",
         "pickupOrders": "Commandes à emporter",
         "activeState": "Actif"
     },
     "upgrade": {
         "modalTitle": "Débloquez tout le potentiel",
-        "modalDescription": "Le plan Professionnel comprend des fonctionnalités exclusives pour automatiser vos opérations et augmenter vos ventes.",
+        "modalDescription": "Le plan Professionnel inclut des fonctionnalités exclusives pour automatiser votre opération et augmenter les ventes.",
         "cta": "Mettre à niveau maintenant",
         "maybeLater": "Peut-être plus tard",
-        "featureLocked": "Fonctionnalité disponible dans le plan Professionnel.",
-        "ctaInline": "Mettre à niveau pour utiliser.",
-        "whatsappHint": "Avertissez vos clients automatiquement via WhatsApp."
+        "featureLocked": "Fonctionnalité disponible sur le plan Professionnel.",
+        "ctaInline": "Mettez à niveau pour utiliser.",
+        "whatsappHint": "Notifiez vos clients automatiquement via WhatsApp."
     },
     "banner": {
         "title": "Mise à niveau disponible",
-        "description": "Débloquez WhatsApp et les Commandes avec le plan Professionnel.",
+        "description": "Débloquez WhatsApp et Commandes avec le plan Professionnel.",
         "cta": "Voir les plans"
     },
     "settings": {
         "title": "Mon Plan",
         "subtitle": "Gérez votre plan et abonnement",
-        "currentPlan": "Plan actuel :",
-        "featuresTitle": "Fonctionnalités incluses :"
+        "currentPlan": "Plan actuel:",
+        "featuresTitle": "Fonctionnalités Incluses"
     },
     "trial": {
         "start": "Commencer l'essai gratuit de 7 jours",
-        "active": "Essai actif",
+        "active": "Essai Actif",
         "expiresIn": "Expire dans {{days}} jours",
-        "expired": "Essai expiré",
-        "description": "Essayez les fonctionnalités PRO pendant 7 jours."
+        "expired": "Essai Expiré",
+        "description": "Essayez les fonctionnalités PRO pendant 7 jours.",
+        "profileIncomplete": "Complétez votre profil pour commencer l'essai",
+        "completeProfileTitle": "Presque là!",
+        "completeProfileDesc": "Pour commencer votre essai gratuit, nous avons besoin de quelques détails sur votre entreprise.",
+        "completeAndStart": "Enregistrer et Commencer l'essai"
+    },
+    "subscription": {
+        "subscribe": "S'abonner Maintenant",
+        "manage": "Gérer l'abonnement",
+        "status": {
+            "trialing": "Essai Actif",
+            "active": "Actif",
+            "pastDue": "Paiement En Retard",
+            "expired": "Expiré"
+        }
     }
 }

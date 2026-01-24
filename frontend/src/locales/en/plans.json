@@ -40,7 +40,7 @@
         "title": "My Plan",
         "subtitle": "Manage your plan and subscription",
         "currentPlan": "Current Plan:",
-        "featuresTitle": "Included Features:"
+        "featuresTitle": "Included Features"
     },
     "trial": {
         "start": "Start 7-day free trial",
@@ -52,5 +52,15 @@
         "completeProfileTitle": "Almost there!",
         "completeProfileDesc": "To start your free trial, we need a few details about your business.",
         "completeAndStart": "Save & Start Trial"
+    },
+    "subscription": {
+        "subscribe": "Subscribe Now",
+        "manage": "Manage Subscription",
+        "status": {
+            "trialing": "Trial Active",
+            "active": "Active",
+            "pastDue": "Past Due",
+            "expired": "Expired"
+        }
     }
 }

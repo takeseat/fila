@@ -9,7 +9,7 @@
     "pro": {
         "title": "Profesjonalny",
         "description": "Dla rozwijających się restauracji",
-        "price": "$19",
+        "price": "99 zł",
         "period": "/miesiąc",
         "cta": "Aktywuj Profesjonalny",
         "active": "Aktywny Plan",
@@ -17,36 +17,50 @@
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "Nielimitowana Kolejka",
+        "waitlist": "Nieograniczona lista oczekujących",
         "whatsapp": "Powiadomienia WhatsApp",
-        "pickupOrders": "Zamówienia na Odbiór",
+        "pickupOrders": "Zamówienia na wynos",
         "activeState": "Aktywny"
     },
     "upgrade": {
-        "modalTitle": "Odblokuj pełny potencjał",
-        "modalDescription": "Plan Profesjonalny zawiera ekskluzywne funkcje do automatyzacji Twojej operacji i zwiększenia sprzedaży.",
-        "cta": "Ulepsz Teraz",
+        "modalTitle": "Odblokuj pełen potencjał",
+        "modalDescription": "Plan Profesjonalny zawiera ekskluzywne funkcje do automatyzacji operacji i zwiększenia sprzedaży.",
+        "cta": "Ulepsz teraz",
         "maybeLater": "Może później",
         "featureLocked": "Funkcja dostępna w planie Profesjonalnym.",
-        "ctaInline": "Ulepsz, aby użyć.",
+        "ctaInline": "Ulepsz, aby używać.",
         "whatsappHint": "Powiadamiaj klientów automatycznie przez WhatsApp."
     },
     "banner": {
-        "title": "Dostępne ulepszenie",
-        "description": "Odblokuj WhatsApp i Zamówienia z planem Profesjonalnym.",
+        "title": "Dostępna aktualizacja",
+        "description": "Odblokuj WhatsApp i Zamówienia dzięki planowi Profesjonalnemu.",
         "cta": "Zobacz Plany"
     },
     "settings": {
         "title": "Mój Plan",
-        "subtitle": "Zarządzaj swoim planem i subskrypcją",
-        "currentPlan": "Obecny Plan:",
-        "featuresTitle": "Wliczone funkcje:"
+        "subtitle": "Zarządzaj planem i subskrypcją",
+        "currentPlan": "Obecny plan:",
+        "featuresTitle": "Załączone Funkcje"
     },
     "trial": {
-        "start": "Rozpocznij 7-dniowy okres próbny",
+        "start": "Rozpocznij 7-dniowy darmowy okres próbny",
         "active": "Okres Próbny Aktywny",
         "expiresIn": "Wygasa za {{days}} dni",
-        "expired": "Okres Próbny Zakończony",
-        "description": "Wypróbuj funkcje PRO przez 7 dni."
+        "expired": "Okres Próbny Wygasł",
+        "description": "Wypróbuj funkcje PRO przez 7 dni.",
+        "profileIncomplete": "Uzupełnij profil, aby rozpocząć okres próbny",
+        "completeProfileTitle": "Prawie gotowe!",
+        "completeProfileDesc": "Aby rozpocząć darmowy okres próbny, potrzebujemy kilku szczegółów o Twojej firmie.",
+        "completeAndStart": "Zapisz i Rozpocznij Okres Próbny"
+    },
+    "subscription": {
+        "subscribe": "Subskrybuj Teraz",
+        "manage": "Zarządzaj Subskrypcją",
+        "status": {
+            "trialing": "Okres Próbny Aktywny",
+            "active": "Aktywny",
+            "pastDue": "Zaległa Płatność",
+            "expired": "Wygasły"
+        }
     }
 }

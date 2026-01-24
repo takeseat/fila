@@ -40,7 +40,7 @@
         "title": "Meu Plano",
         "subtitle": "Gerencie seu plano e assinatura",
         "currentPlan": "Plano atual:",
-        "featuresTitle": "Funcionalidades incluídas:"
+        "featuresTitle": "Funcionalidades Incluídas"
     },
     "trial": {
         "start": "Começar teste grátis de 7 dias",
@@ -52,5 +52,15 @@
         "completeProfileTitle": "Quase lá!",
         "completeProfileDesc": "Para iniciar seu teste grátis, precisamos de alguns detalhes sobre seu negócio.",
         "completeAndStart": "Salvar e Iniciar Teste"
+    },
+    "subscription": {
+        "subscribe": "Assinar Agora",
+        "manage": "Gerenciar Assinatura",
+        "status": {
+            "trialing": "Trial Ativo",
+            "active": "Ativo",
+            "pastDue": "Pagamento Atrasado",
+            "expired": "Expirado"
+        }
     }
 }

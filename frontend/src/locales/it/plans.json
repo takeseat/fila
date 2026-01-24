@@ -13,26 +13,26 @@
         "period": "/mese",
         "cta": "Attiva Professionale",
         "active": "Piano Attivo",
-        "upgrade": "Esegui Upgrade",
+        "upgrade": "Aggiorna",
         "badge": "PRO"
     },
     "features": {
         "waitlist": "Lista d'attesa illimitata",
         "whatsapp": "Notifiche WhatsApp",
-        "pickupOrders": "Ordini da Asporto",
+        "pickupOrders": "Ordini da asporto",
         "activeState": "Attivo"
     },
     "upgrade": {
         "modalTitle": "Sblocca tutto il potenziale",
-        "modalDescription": "Il piano Professionale include funzionalità esclusive per automatizzare le tue operazioni e aumentare le vendite.",
-        "cta": "Esegui Upgrade Ora",
+        "modalDescription": "Il piano Professionale include funzionalità esclusive per automatizzare la tua operazione e aumentare le vendite.",
+        "cta": "Aggiorna ora",
         "maybeLater": "Forse più tardi",
         "featureLocked": "Funzionalità disponibile nel piano Professionale.",
-        "ctaInline": "Fai upgrade per usare.",
-        "whatsappHint": "Avvisa i tuoi clienti automaticamente tramite WhatsApp."
+        "ctaInline": "Aggiorna per utilizzare.",
+        "whatsappHint": "Notifica automaticamente i tuoi clienti via WhatsApp."
     },
     "banner": {
-        "title": "Upgrade disponibile",
+        "title": "Aggiornamento disponibile",
         "description": "Sblocca WhatsApp e Ordini con il piano Professionale.",
         "cta": "Vedi Piani"
     },
@@ -40,13 +40,27 @@
         "title": "Il Mio Piano",
         "subtitle": "Gestisci il tuo piano e abbonamento",
         "currentPlan": "Piano attuale:",
-        "featuresTitle": "Funzionalità incluse:"
+        "featuresTitle": "Funzionalità Incluse"
     },
     "trial": {
-        "start": "Inizia prova gratuita di 7 giorni",
+        "start": "Inizia la prova gratuita di 7 giorni",
         "active": "Prova Attiva",
         "expiresIn": "Scade tra {{days}} giorni",
         "expired": "Prova Scaduta",
-        "description": "Prova le funzionalità PRO per 7 giorni."
+        "description": "Prova le funzionalità PRO per 7 giorni.",
+        "profileIncomplete": "Completa il tuo profilo per iniziare la prova",
+        "completeProfileTitle": "Quasi fatto!",
+        "completeProfileDesc": "Per iniziare la tua prova gratuita, abbiamo bisogno di alcuni dettagli sulla tua attività.",
+        "completeAndStart": "Salva e Inizia Prova"
+    },
+    "subscription": {
+        "subscribe": "Iscriviti Ora",
+        "manage": "Gestisci Abbonamento",
+        "status": {
+            "trialing": "Prova Attiva",
+            "active": "Attivo",
+            "pastDue": "Pagamento Scaduto",
+            "expired": "Scaduto"
+        }
     }
 }

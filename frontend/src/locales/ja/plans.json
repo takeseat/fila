@@ -3,50 +3,64 @@
         "title": "ベーシック",
         "description": "始めるのに最適",
         "price": "無料",
-        "cta": "ベーシックで続ける",
+        "cta": "ベーシックを続ける",
         "current": "現在のプラン"
     },
     "pro": {
-        "title": "プロ",
+        "title": "プロフェッショナル",
         "description": "成長中のレストラン向け",
-        "price": "$19",
+        "price": "¥2,000",
         "period": "/月",
-        "cta": "プロを有効にする",
-        "active": "アクティブなプラン",
+        "cta": "プロフェッショナルを有効化",
+        "active": "有効なプラン",
         "upgrade": "アップグレード",
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "無制限の順番待ちリスト",
+        "waitlist": "無制限の待機リスト",
         "whatsapp": "WhatsApp通知",
         "pickupOrders": "テイクアウト注文",
         "activeState": "有効"
     },
     "upgrade": {
-        "modalTitle": "可能性を最大限に引き出す",
-        "modalDescription": "プロプランには、運営を自動化し、売上を向上させるための専用機能が含まれています。",
+        "modalTitle": "全機能をアンロック",
+        "modalDescription": "プロフェッショナルプランには、業務を自動化し売上を向上させる専用機能が含まれています。",
         "cta": "今すぐアップグレード",
         "maybeLater": "後で",
-        "featureLocked": "プロプランで利用可能な機能です。",
-        "ctaInline": "使用するにはアップグレードしてください。",
-        "whatsappHint": "WhatsAppで顧客に自動的に通知します。"
+        "featureLocked": "プロフェッショナルプランで利用可能な機能。",
+        "ctaInline": "使用するにはアップグレード。",
+        "whatsappHint": "WhatsAppで顧客に自動的に通知。"
     },
     "banner": {
         "title": "アップグレード可能",
-        "description": "プロプランでWhatsAppと注文機能を解除しましょう。",
-        "cta": "プランを表示"
+        "description": "プロフェッショナルプランでWhatsAppと注文をアンロック。",
+        "cta": "プランを見る"
     },
     "settings": {
         "title": "マイプラン",
-        "subtitle": "プランとサブスクリプションの管理",
+        "subtitle": "プランとサブスクリプションを管理",
         "currentPlan": "現在のプラン:",
-        "featuresTitle": "含まれる機能:"
+        "featuresTitle": "含まれる機能"
     },
     "trial": {
-        "start": "7日間の無料トライアルを開始",
-        "active": "トライアル中",
-        "expiresIn": "{{days}}日で期限切れ",
-        "expired": "トライアル終了",
-        "description": "PRO機能を7日間お試しください。"
+        "start": "7日間無料トライアルを開始",
+        "active": "トライアル有効",
+        "expiresIn": "あと{{days}}日で期限切れ",
+        "expired": "トライアル期限切れ",
+        "description": "PRO機能を7日間お試しください。",
+        "profileIncomplete": "トライアルを開始するにはプロフィールを完成させてください",
+        "completeProfileTitle": "もう少しです！",
+        "completeProfileDesc": "無料トライアルを開始するには、ビジネスに関するいくつかの詳細が必要です。",
+        "completeAndStart": "保存してトライアルを開始"
+    },
+    "subscription": {
+        "subscribe": "今すぐ登録",
+        "manage": "サブスクリプションを管理",
+        "status": {
+            "trialing": "トライアル有効",
+            "active": "有効",
+            "pastDue": "支払い遅延",
+            "expired": "期限切れ"
+        }
     }
 }

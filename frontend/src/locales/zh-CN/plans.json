@@ -1,52 +1,66 @@
 {
     "basic": {
         "title": "基础版",
-        "description": "适合入门",
+        "description": "完美起步",
         "price": "免费",
         "cta": "继续使用基础版",
-        "current": "当前方案"
+        "current": "您当前的计划"
     },
     "pro": {
         "title": "专业版",
         "description": "适合成长中的餐厅",
-        "price": "$19",
+        "price": "¥128",
         "period": "/月",
-        "cta": "启用专业版",
-        "active": "生效中",
+        "cta": "激活专业版",
+        "active": "活跃计划",
         "upgrade": "升级",
         "badge": "PRO"
     },
     "features": {
-        "waitlist": "无限排队列表",
-        "whatsapp": "WhatsApp 通知",
-        "pickupOrders": "自提订单",
-        "activeState": "已激活"
+        "waitlist": "无限等候列表",
+        "whatsapp": "WhatsApp通知",
+        "pickupOrders": "外卖订单",
+        "activeState": "活跃"
     },
     "upgrade": {
-        "modalTitle": "释放全部潜力",
-        "modalDescription": "专业版包含独家功能，可自动化您的运营并提升销售额。",
+        "modalTitle": "解锁全部潜力",
+        "modalDescription": "专业版计划包含独家功能，可自动化您的运营并提升销售额。",
         "cta": "立即升级",
-        "maybeLater": "以后再说",
-        "featureLocked": "专业版可用功能。",
-        "ctaInline": "升级即可使用。",
-        "whatsappHint": "通过 WhatsApp 自动通知您的客户。"
+        "maybeLater": "稍后再说",
+        "featureLocked": "专业版计划可用功能。",
+        "ctaInline": "升级以使用。",
+        "whatsappHint": "通过WhatsApp自动通知您的客户。"
     },
     "banner": {
         "title": "可升级",
-        "description": "使用专业版解锁 WhatsApp 和订单功能。",
-        "cta": "查看方案"
+        "description": "使用专业版计划解锁WhatsApp和订单功能。",
+        "cta": "查看计划"
     },
     "settings": {
-        "title": "我的方案",
-        "subtitle": "管理您的方案和订阅",
-        "currentPlan": "当前方案：",
-        "featuresTitle": "包含功能："
+        "title": "我的计划",
+        "subtitle": "管理您的计划和订阅",
+        "currentPlan": "当前计划：",
+        "featuresTitle": "包含的功能"
     },
     "trial": {
         "start": "开始7天免费试用",
-        "active": "试用期内",
-        "expiresIn": "{{days}} 天后过期",
+        "active": "试用活跃",
+        "expiresIn": "{{days}}天后过期",
         "expired": "试用已过期",
-        "description": "免费试用 PRO 功能 7 天。"
+        "description": "试用PRO功能7天。",
+        "profileIncomplete": "完成您的个人资料以开始试用",
+        "completeProfileTitle": "快完成了！",
+        "completeProfileDesc": "要开始免费试用，我们需要一些关于您业务的详细信息。",
+        "completeAndStart": "保存并开始试用"
+    },
+    "subscription": {
+        "subscribe": "立即订阅",
+        "manage": "管理订阅",
+        "status": {
+            "trialing": "试用活跃",
+            "active": "活跃",
+            "pastDue": "逾期付款",
+            "expired": "已过期"
+        }
     }
 }
