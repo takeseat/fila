@@ -17,13 +17,7 @@ export async function checkSubscriptionAccess(
             return next();
         }
 
-        const restaurantId = req.user?.restaurantId;
-
-        if (!restaurantId) {
-            return res.status(401).json({ error: 'Restaurant ID required' });
-        }
-
-        // Paths that are allowed even when subscription is expired
+        // Paths that are allowed even when subscription is expired (or missing restaurantId)
         const allowedPaths = [
             '/billing',
             '/auth',
@@ -31,11 +25,18 @@ export async function checkSubscriptionAccess(
             '/users/me', // Allow fetching user profile
         ];
 
-        // Check if current path is allowed
+        // Check if current path is allowed BEFORE checking restaurantId
         const isAllowedPath = allowedPaths.some(path => req.path.startsWith(path));
 
         if (isAllowedPath) {
             return next();
+        }
+
+        // Now check restaurantId (only for paths that require subscription check)
+        const restaurantId = req.user?.restaurantId;
+
+        if (!restaurantId) {
+            return res.status(401).json({ error: 'Restaurant ID required' });
         }
 
         // Check subscription status
