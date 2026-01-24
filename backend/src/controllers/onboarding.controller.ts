@@ -10,7 +10,7 @@ const updateStep1Schema = z.object({
 });
 
 const updateStep2Schema = z.object({
-    language: z.string().length(2, 'Invalid language code'),
+    language: z.string().min(2).max(5, 'Invalid language code'), // Support both 'pt' and 'pt-BR' formats
 });
 
 export class OnboardingController {

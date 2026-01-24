@@ -40,7 +40,7 @@ export function OnboardingWizard() {
 
             // Save Step 2: Language
             await api.put('/onboarding/step2', {
-                language: formData.language.slice(0, 2),
+                language: formData.language, // Keep full locale (e.g., pt-BR instead of just pt)
             });
 
             // Complete Onboarding (backend will auto-start PRO trial)
