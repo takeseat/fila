@@ -74,7 +74,7 @@ export function PlanSettings() {
                             >
                                 {isActive
                                     ? t('subscription.manage', { defaultValue: 'Gerenciar Assinatura' })
-                                    : t('subscription.subscribe', { defaultValue: 'Assinar PRO' })
+                                    : t('subscription.subscribe', { defaultValue: 'Assinar Agora' })
                                 }
                             </Button>
                         </div>
