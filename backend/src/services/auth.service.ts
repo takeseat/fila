@@ -68,7 +68,7 @@ export class AuthService {
                 data: {
                     name: `${data.userName}'s Restaurant`,
                     countryCode: 'BR',
-                    city: 'Pending',
+                    city: '', // Will be filled during onboarding
                     onboardingPending: true,
                 },
             });
