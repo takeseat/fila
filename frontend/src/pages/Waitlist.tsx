@@ -260,11 +260,11 @@ export function Waitlist() {
     }, []);
 
     const getStatusBadge = (status: string) => {
-        const variants: Record<string, 'warning' | 'info' | 'success' | 'default' | 'danger'> = {
+        const variants: Record<string, 'warning' | 'info' | 'success' | 'neutral' | 'danger'> = {
             WAITING: 'warning',
             CALLED: 'info',
             SEATED: 'success',
-            CANCELLED: 'default',
+            CANCELLED: 'neutral',
             NO_SHOW: 'danger',
         };
 

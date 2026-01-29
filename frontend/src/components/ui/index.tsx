@@ -50,97 +50,6 @@ export function Button({
 }
 
 
-// Card Component
-interface CardProps {
-    title?: string;
-    subtitle?: string;
-    children: React.ReactNode;
-    className?: string;
-    headerAction?: React.ReactNode;
-    variant?: 'default' | 'glass' | 'premium';
-}
-
-export function Card({
-    title,
-    subtitle,
-    children,
-    className = '',
-    headerAction,
-    variant = 'premium'
-}: CardProps) {
-    const variantClasses = {
-        default: 'bg-white border border-light-200',
-        glass: 'glass',
-        premium: 'card-premium',
-    };
-
-    return (
-        <div className={`${variantClasses[variant]} rounded-2xl p-6 ${className}`}>
-            {(title || subtitle || headerAction) && (
-                <div className="mb-6">
-                    <div className="flex items-start justify-between">
-                        <div>
-                            {title && (
-                                <h3 className="text-xl font-semibold text-dark-900 mb-1">
-                                    {title}
-                                </h3>
-                            )}
-                            {subtitle && (
-                                <p className="text-sm text-dark-500">
-                                    {subtitle}
-                                </p>
-                            )}
-                        </div>
-                        {headerAction && (
-                            <div>{headerAction}</div>
-                        )}
-                    </div>
-                </div>
-            )}
-            {children}
-        </div>
-    );
-}
-
-// Badge Component
-interface BadgeProps {
-    children: React.ReactNode;
-    variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
-    size?: 'sm' | 'md' | 'lg';
-    className?: string;
-}
-
-export function Badge({
-    children,
-    variant = 'default',
-    size = 'md',
-    className = ''
-}: BadgeProps) {
-    const variantClasses = {
-        default: 'bg-light-200 text-dark-700',
-        primary: 'bg-primary-100 text-primary-700',
-        success: 'bg-success-100 text-success-700',
-        warning: 'bg-warning-100 text-warning-700',
-        danger: 'bg-danger-100 text-danger-700',
-        info: 'bg-blue-100 text-blue-700',
-    };
-
-    const sizeClasses = {
-        sm: 'px-2 py-0.5 text-xs',
-        md: 'px-2.5 py-1 text-sm',
-        lg: 'px-3 py-1.5 text-base',
-    };
-
-    return (
-        <span className={`
-      inline-flex items-center font-medium rounded-full
-      ${variantClasses[variant]} ${sizeClasses[size]} ${className}
-    `}>
-            {children}
-        </span>
-    );
-}
-
 // Progress Bar Component
 interface ProgressProps {
     value: number;
@@ -353,59 +262,6 @@ export function Table({ children, className = '' }: TableProps) {
     );
 }
 
-// Modal Component
-interface ModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-    title: string;
-    children: React.ReactNode;
-    size?: 'sm' | 'md' | 'lg' | 'xl';
-}
-
-export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
-    if (!isOpen) return null;
-
-    const sizeClasses = {
-        sm: 'max-w-md',
-        md: 'max-w-lg',
-        lg: 'max-w-2xl',
-        xl: 'max-w-4xl',
-    };
-
-    return (
-        <div className="fixed inset-0 z-50 overflow-y-auto animate-fade-in">
-            <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
-                {/* Backdrop */}
-                <div
-                    className="fixed inset-0 bg-dark-900/50 backdrop-blur-sm transition-opacity"
-                    onClick={onClose}
-                ></div>
-
-                {/* Modal */}
-                <div className={`
-          relative bg-white rounded-2xl shadow-2xl 
-          w-full ${sizeClasses[size]} p-6 sm:p-8
-          text-left transform transition-all animate-scale-in
-        `}>
-                    <div className="flex justify-between items-start mb-6">
-                        <h2 className="text-2xl font-semibold text-dark-900">
-                            {title}
-                        </h2>
-                        <button
-                            onClick={onClose}
-                            className="text-dark-400 hover:text-dark-600 transition-colors p-1 hover:bg-light-100 rounded-lg"
-                        >
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                    {children}
-                </div>
-            </div>
-        </div>
-    );
-}
 
 // Skeleton Loader
 interface SkeletonProps {
@@ -457,3 +313,10 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
 }
 export { Pagination } from './Pagination';
 export { Input } from './Input';
+export { Select } from './Select';
+export { Card } from './Card';
+export { Badge } from './Badge';
+export { Alert } from './Alert';
+export { Tabs } from './Tabs';
+export { Stack } from './Stack';
+export { Modal } from './Modal';
