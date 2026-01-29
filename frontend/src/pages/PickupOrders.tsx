@@ -132,8 +132,8 @@ export default function PickupOrders() {
                 {/* Desktop Header */}
                 <div className="hidden lg:flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-dark-900 mb-2">Pedidos para Retirada</h1>
-                        <p className="text-dark-500">Chame clientes e finalize retiradas</p>
+                        <h1 className="text-3xl font-bold text-text-primary mb-2">Pedidos para Retirada</h1>
+                        <p className="text-text-secondary">Chame clientes e finalize retiradas</p>
                     </div>
                     <Button onClick={() => setShowCreateModal(true)} size="lg" className="gap-2">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,7 +197,7 @@ export default function PickupOrders() {
 
                 {/* Orders List */}
                 {filteredOrders.length === 0 ? (
-                    <div className="card-premium">
+                    <div className="bg-bg-surface border border-border-default rounded-card shadow-card">
                         <EmptyState
                             icon={
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">

@@ -118,7 +118,7 @@ export function TeamTab() {
                         placeholder={t('searchPlaceholder')}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
                     />
                 </div>
 
@@ -127,7 +127,7 @@ export function TeamTab() {
                     <select
                         value={roleFilter}
                         onChange={(e) => setRoleFilter(e.target.value as any)}
-                        className="px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 focus:outline-none focus:ring-4"
+                        className="px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 focus:outline-none focus:ring-4"
                     >
                         <option value="">{t('filters.all')}</option>
                         <option value="ADMIN">{t('roles.ADMIN')}</option>
@@ -138,7 +138,7 @@ export function TeamTab() {
                     <select
                         value={statusFilter === undefined ? '' : String(statusFilter)}
                         onChange={(e) => setStatusFilter(e.target.value === '' ? undefined : e.target.value === 'true')}
-                        className="px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 focus:outline-none focus:ring-4"
+                        className="px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 focus:outline-none focus:ring-4"
                     >
                         <option value="">{t('filters.all')}</option>
                         <option value="true">{t('filters.active')}</option>
@@ -159,7 +159,7 @@ export function TeamTab() {
             )}
 
             {/* Users Table */}
-            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div className="bg-bg-surface rounded-xl border border-gray-200 overflow-hidden">
                 {loading ? (
                     <div className="p-12 text-center text-gray-500">
                         {t('loading', { defaultValue: 'Carregando...' })}
@@ -193,7 +193,7 @@ export function TeamTab() {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-bg-surface divide-y divide-gray-200">
                                 {users.map((user) => (
                                     <tr key={user.id} className="hover:bg-gray-50 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap">

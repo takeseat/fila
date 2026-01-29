@@ -47,7 +47,7 @@ export function Toast({ message, type, onClose, duration = 3000 }: ToastProps) {
                 <p className="flex-1">{message}</p>
                 <button
                     onClick={onClose}
-                    className="flex-shrink-0 hover:bg-white/20 rounded p-1 transition-colors"
+                    className="flex-shrink-0 hover:bg-bg-surface/20 rounded p-1 transition-colors"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

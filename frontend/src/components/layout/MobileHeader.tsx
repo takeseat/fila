@@ -22,7 +22,7 @@ export function MobileHeader({ title, showMenu = true }: MobileHeaderProps) {
 
     return (
         <>
-            <header className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-40 safe-area-top">
+            <header className="lg:hidden fixed top-0 left-0 right-0 bg-bg-surface border-b border-gray-200 z-40 safe-area-top">
                 <div className="flex items-center justify-between h-14 px-4">
                     {/* Title */}
                     <h1 className="text-lg font-semibold text-gray-900 truncate flex-1">
@@ -64,7 +64,7 @@ export function MobileHeader({ title, showMenu = true }: MobileHeaderProps) {
                     />
 
                     {/* Drawer */}
-                    <div className="lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 shadow-2xl">
+                    <div className="lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-bg-surface z-50 shadow-2xl">
                         <div className="flex flex-col h-full">
                             {/* Header */}
                             <div className="flex items-center justify-between p-4 border-b border-gray-200">

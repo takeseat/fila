@@ -3,7 +3,7 @@ const buttonBase = "inline-flex items-center justify-center font-medium rounded-
 const buttonSizes = { sm: "px-2 py-0.5 text-sm" };
 const buttonVariants = {
     primary: "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-md hover:shadow-lg",
-    secondary: "bg-light-100 text-dark-900 hover:bg-light-200 active:bg-light-300"
+    secondary: "bg-bg-subtle text-text-primary hover:bg-bg-sunken active:bg-light-300"
 };
 
 interface PaginationProps {
@@ -41,7 +41,7 @@ export function Pagination({
     };
 
     const renderEllipsis = (key: string) => (
-        <span key={key} className="px-2 text-dark-400">...</span>
+        <span key={key} className="px-2 text-text-muted">...</span>
     );
 
     const getPageNumbers = () => {
@@ -82,8 +82,8 @@ export function Pagination({
     return (
         <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 ${className}`}>
             {totalItems !== undefined && pageSize !== undefined && (
-                <div className="text-sm text-dark-500">
-                    Mostrando <span className="font-semibold text-dark-900">{Math.min((currentPage - 1) * pageSize + 1, totalItems)}</span> até <span className="font-semibold text-dark-900">{Math.min(currentPage * pageSize, totalItems)}</span> de <span className="font-semibold text-dark-900">{totalItems}</span> registros
+                <div className="text-sm text-text-secondary">
+                    Mostrando <span className="font-semibold text-text-primary">{Math.min((currentPage - 1) * pageSize + 1, totalItems)}</span> até <span className="font-semibold text-text-primary">{Math.min(currentPage * pageSize, totalItems)}</span> de <span className="font-semibold text-text-primary">{totalItems}</span> registros
                 </div>
             )}
 

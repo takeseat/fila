@@ -46,7 +46,7 @@ export function FlowReport() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <FunnelChart data={data.funnel} />
 
-                        <div className="bg-white rounded-xl shadow-sm border p-6">
+                        <div className="bg-bg-surface rounded-xl shadow-sm border p-6">
                             <h3 className="text-lg font-semibold mb-4">{t('reports:flow.charts.stageTime')}</h3>
                             <ResponsiveContainer width="100%" height={320}>
                                 <LineChart data={data.series.stage_time_series}>

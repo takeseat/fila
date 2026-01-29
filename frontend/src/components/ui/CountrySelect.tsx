@@ -56,7 +56,7 @@ export function CountrySelect({
     return (
         <div className={`relative ${className}`} ref={dropdownRef}>
             {label && (
-                <label className="block text-sm font-medium text-dark-700 mb-2">
+                <label className="block text-sm font-medium text-text-primary mb-2">
                     {label}
                     {required && <span className="text-danger-600 ml-1">*</span>}
                 </label>
@@ -66,13 +66,13 @@ export function CountrySelect({
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full flex items-center justify-between gap-2 px-4 py-3 bg-white border-2 border-dark-200 hover:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${compact ? 'justify-center rounded-l-xl rounded-r-none border-r-0' : 'rounded-xl'}`}
+                className={`w-full flex items-center justify-between gap-2 px-4 py-3 bg-bg-surface border-2 border-border-default hover:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${compact ? 'justify-center rounded-l-xl rounded-r-none border-r-0' : 'rounded-xl'}`}
             >
                 {compact ? (
                     <div className="flex items-center gap-1">
                         <span className="text-xl leading-none">{selectedCountry.flag}</span>
                         <svg
-                            className={`w-3 h-3 text-dark-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                            className={`w-3 h-3 text-text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -85,18 +85,18 @@ export function CountrySelect({
                         <div className="flex items-center gap-3">
                             <span className="text-2xl">{selectedCountry.flag}</span>
                             <div className="text-left">
-                                <div className="text-sm font-medium text-dark-900">
+                                <div className="text-sm font-medium text-text-primary">
                                     {selectedCountry.name}
                                 </div>
                                 {showDdi && (
-                                    <div className="text-xs text-dark-500">
+                                    <div className="text-xs text-text-secondary">
                                         {selectedCountry.ddi}
                                     </div>
                                 )}
                             </div>
                         </div>
                         <svg
-                            className={`w-5 h-5 text-dark-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                            className={`w-5 h-5 text-text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -109,7 +109,7 @@ export function CountrySelect({
 
             {/* Dropdown */}
             {isOpen && (
-                <div className="absolute z-50 w-[240px] mt-2 bg-white border border-dark-200 rounded-xl shadow-xl max-h-80 overflow-hidden left-0">
+                <div className="absolute z-50 w-[240px] mt-2 bg-bg-surface border border-border-default rounded-xl shadow-xl max-h-80 overflow-hidden left-0">
                     {/* Search Input */}
                     <div className="p-3 border-b border-dark-100">
                         <input
@@ -117,7 +117,7 @@ export function CountrySelect({
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Buscar país..."
-                            className="w-full px-3 py-2 text-sm border border-dark-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                            className="w-full px-3 py-2 text-sm border border-border-default rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             autoFocus
                         />
                     </div>
@@ -125,7 +125,7 @@ export function CountrySelect({
                     {/* Countries List */}
                     <div className="overflow-y-auto max-h-64">
                         {filteredCountries.length === 0 ? (
-                            <div className="p-4 text-center text-sm text-dark-500">
+                            <div className="p-4 text-center text-sm text-text-secondary">
                                 Nenhum país encontrado
                             </div>
                         ) : (
@@ -139,11 +139,11 @@ export function CountrySelect({
                                 >
                                     <span className="text-2xl">{country.flag}</span>
                                     <div className="flex-1 text-left">
-                                        <div className="text-sm font-medium text-dark-900">
+                                        <div className="text-sm font-medium text-text-primary">
                                             {country.name}
                                         </div>
                                         {showDdi && (
-                                            <div className="text-xs text-dark-500">
+                                            <div className="text-xs text-text-secondary">
                                                 {country.ddi}
                                             </div>
                                         )}

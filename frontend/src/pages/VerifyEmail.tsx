@@ -136,7 +136,7 @@ export default function VerifyEmail() {
                 <LanguageSelector />
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10">
+            <div className="bg-bg-surface rounded-2xl shadow-xl p-8 sm:p-10">
                 {status === 'verifying' && (
                     <div className="text-center">
                         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
@@ -188,7 +188,7 @@ export default function VerifyEmail() {
                                         onBlur={handleBlur}
                                         placeholder="••••••••"
                                         required
-                                        className="w-full px-4 py-2.5 rounded-xl border-2 border-light-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-dark-900 placeholder:text-dark-400 focus:outline-none focus:ring-4 pr-10"
+                                        className="w-full px-4 py-2.5 rounded-xl border-2 border-border-default focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-4 pr-10"
                                     />
                                     <button
                                         type="button"

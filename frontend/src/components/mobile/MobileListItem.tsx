@@ -23,7 +23,7 @@ export function MobileListItem({
         <div
             onClick={onClick}
             className={`
-                flex items-center gap-3 p-4 bg-white border-b border-gray-100
+                flex items-center gap-3 p-4 bg-bg-surface border-b border-gray-100
                 ${onClick ? 'active:bg-gray-50 cursor-pointer' : ''}
                 transition-colors
                 ${className}

@@ -56,7 +56,7 @@ export function ExecutiveReport() {
                         <KpiCard title={t('reports:executive.kpis.groupsLost')} value={data.kpis.groups_lost} format="number" />
                     </div>
 
-                    <div className="bg-white rounded-xl shadow-sm border p-6">
+                    <div className="bg-bg-surface rounded-xl shadow-sm border p-6">
                         <h3 className="text-lg font-semibold mb-4">{t('reports:executive.charts.hourlyEntries')}</h3>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart data={data.series.hourly_entries}>

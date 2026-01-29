@@ -62,7 +62,7 @@ export function Login() {
             </div>
 
             {/* Auth Card */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10">
+            <div className="bg-bg-surface rounded-2xl shadow-xl p-8 sm:p-10">
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
@@ -211,7 +211,7 @@ export function Register() {
                 <div className="fixed top-6 right-6 z-50">
                     <LanguageSelector />
                 </div>
-                <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10 text-center">
+                <div className="bg-bg-surface rounded-2xl shadow-xl p-8 sm:p-10 text-center">
                     <div className="mb-6">
                         <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -259,7 +259,7 @@ export function Register() {
                 <p className="text-sm text-gray-200">{t('branding.headline')}</p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10">
+            <div className="bg-bg-surface rounded-2xl shadow-xl p-8 sm:p-10">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">
                         {t('signup.title')}

@@ -183,7 +183,7 @@ export function Customers() {
             <div className="flex items-center justify-center py-20">
                 <div className="text-center">
                     <Spinner size="lg" className="mx-auto mb-4" />
-                    <p className="text-dark-500">{t('loading')}</p>
+                    <p className="text-text-secondary">{t('loading')}</p>
                 </div>
             </div>
         );
@@ -197,8 +197,8 @@ export function Customers() {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-dark-900 mb-2">{t('title')}</h1>
-                    <p className="text-dark-500">{t('subtitle')}</p>
+                    <h1 className="text-3xl font-bold text-text-primary mb-2">{t('title')}</h1>
+                    <p className="text-text-secondary">{t('subtitle')}</p>
                 </div>
                 <Button onClick={handleOpenCreateModal} size="lg" className="gap-2">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -209,7 +209,7 @@ export function Customers() {
             </div>
 
             {/* Filters */}
-            <div className="card-premium p-6">
+            <div className="bg-bg-surface border border-border-default rounded-card shadow-card p-6">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <Input
                         label={t('filters.name')}
@@ -261,7 +261,7 @@ export function Customers() {
 
             {/* Table */}
             {customers.length === 0 ? (
-                <div className="card-premium">
+                <div className="bg-bg-surface border border-border-default rounded-card shadow-card">
                     <EmptyState
                         icon={
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
@@ -282,18 +282,18 @@ export function Customers() {
                     {/* Mobile View: Cards */}
                     <div className="md:hidden space-y-4">
                         {customers.map((customer) => (
-                            <div key={customer.id} className="card-premium p-4 space-y-3">
+                            <div key={customer.id} className="bg-bg-surface border border-border-default rounded-card shadow-card p-4 space-y-3">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <div className="font-semibold text-dark-900 text-lg">{customer.name}</div>
-                                        <div className="text-dark-600 text-sm flex items-center gap-1 mt-1">
+                                        <div className="font-semibold text-text-primary text-lg">{customer.name}</div>
+                                        <div className="text-text-secondary text-sm flex items-center gap-1 mt-1">
                                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                             </svg>
                                             {formatPhone(customer)}
                                         </div>
                                         {customer.email && (
-                                            <div className="text-dark-500 text-xs mt-0.5">{customer.email}</div>
+                                            <div className="text-text-secondary text-xs mt-0.5">{customer.email}</div>
                                         )}
                                     </div>
                                     <div className="bg-primary-50 text-primary-700 px-2 py-1 rounded text-xs font-bold">
@@ -301,7 +301,7 @@ export function Customers() {
                                     </div>
                                 </div>
 
-                                <div className="border-t border-light-200 pt-2 flex justify-between items-center text-xs text-dark-500">
+                                <div className="border-t border-border-default pt-2 flex justify-between items-center text-xs text-text-secondary">
                                     <span>{t('table.lastVisit')}</span>
                                     <span className="font-medium">{formatDate(customer.lastVisitAt)}</span>
                                 </div>
@@ -332,48 +332,48 @@ export function Customers() {
                     </div>
 
                     {/* Desktop View: Table */}
-                    <div className="hidden md:block card-premium overflow-hidden">
+                    <div className="hidden md:block bg-bg-surface border border-border-default rounded-card shadow-card overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full">
-                                <thead className="bg-light-50 border-b border-light-200">
+                                <thead className="bg-bg-subtle border-b border-border-default">
                                     <tr>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
                                             {t('table.name')}
                                         </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
                                             {t('table.phone')}
                                         </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
                                             {t('table.email')}
                                         </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
                                             {t('table.lastVisit')}
                                         </th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-dark-600 uppercase tracking-wider">
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-text-secondary uppercase tracking-wider">
                                             {t('table.totalVisits')}
                                         </th>
-                                        <th className="px-6 py-4 text-right text-xs font-semibold text-dark-600 uppercase tracking-wider">
+                                        <th className="px-6 py-4 text-right text-xs font-semibold text-text-secondary uppercase tracking-wider">
                                             {t('table.actions')}
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-light-200">
                                     {customers.map((customer) => (
-                                        <tr key={customer.id} className="hover:bg-light-50 transition-colors">
+                                        <tr key={customer.id} className="hover:bg-bg-subtle transition-colors">
                                             <td className="px-6 py-4">
-                                                <div className="font-medium text-dark-900">{customer.name}</div>
+                                                <div className="font-medium text-text-primary">{customer.name}</div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-dark-700">{formatPhone(customer)}</div>
+                                                <div className="text-text-primary">{formatPhone(customer)}</div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-dark-700">{customer.email || '-'}</div>
+                                                <div className="text-text-primary">{customer.email || '-'}</div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-dark-700">{formatDate(customer.lastVisitAt)}</div>
+                                                <div className="text-text-primary">{formatDate(customer.lastVisitAt)}</div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-dark-900 font-semibold">{customer.totalVisits}</div>
+                                                <div className="text-text-primary font-semibold">{customer.totalVisits}</div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-end gap-2">
@@ -409,7 +409,7 @@ export function Customers() {
 
                     {/* Pagination */}
                     {meta && meta.total > 0 && (
-                        <div className="mt-6 border-t border-light-200 pt-6">
+                        <div className="mt-6 border-t border-border-default pt-6">
                             <Pagination
                                 currentPage={meta.page}
                                 totalPages={meta.totalPages}
@@ -494,7 +494,7 @@ export function Customers() {
                             onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
                             className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
                         />
-                        <label htmlFor="whatsappOptIn" className="text-sm text-dark-700">
+                        <label htmlFor="whatsappOptIn" className="text-sm text-text-primary">
                             {t('form.whatsappOptIn')}
                         </label>
                     </div>
@@ -527,8 +527,8 @@ export function Customers() {
                 title={t('delete.title')}
             >
                 <div className="space-y-4">
-                    <p className="text-dark-700" dangerouslySetInnerHTML={{ __html: t('delete.message', { name: deletingCustomer?.name }) }} />
-                    <p className="text-sm text-dark-500">
+                    <p className="text-text-primary" dangerouslySetInnerHTML={{ __html: t('delete.message', { name: deletingCustomer?.name }) }} />
+                    <p className="text-sm text-text-secondary">
                         {t('delete.warning')}
                     </p>
 

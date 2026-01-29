@@ -40,7 +40,7 @@ export function QueueEntriesTable({ data, sortBy, sortOrder, onSort }: QueueEntr
     );
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
+        <div className="bg-bg-surface rounded-xl shadow-sm border overflow-hidden">
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -66,7 +66,7 @@ export function QueueEntriesTable({ data, sortBy, sortOrder, onSort }: QueueEntr
                             <SortableHeader column="status">Status</SortableHeader>
                         </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
+                    <tbody className="bg-bg-surface divide-y divide-gray-200">
                         {data.map((row) => (
                             <tr key={row.id} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">

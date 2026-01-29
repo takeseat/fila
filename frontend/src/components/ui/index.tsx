@@ -19,9 +19,9 @@ export function Button({
 
     const variantClasses = {
         primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-md hover:shadow-lg',
-        secondary: 'bg-light-100 text-dark-900 hover:bg-light-200 active:bg-light-300',
-        ghost: 'bg-transparent text-dark-700 hover:bg-light-100 active:bg-light-200',
-        outline: 'bg-transparent border-2 border-light-300 text-dark-900 hover:bg-light-50 hover:border-light-400',
+        secondary: 'bg-bg-subtle text-text-primary hover:bg-bg-sunken active:bg-light-300',
+        ghost: 'bg-transparent text-text-primary hover:bg-bg-subtle active:bg-bg-sunken',
+        outline: 'bg-transparent border-2 border-border-default text-text-primary hover:bg-bg-subtle hover:border-light-400',
         danger: 'bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700 shadow-md hover:shadow-lg',
         success: 'bg-success-500 text-white hover:bg-success-600 active:bg-success-700 shadow-md hover:shadow-lg',
     };
@@ -87,10 +87,10 @@ export function Progress({
         <div className={className}>
             {showLabel && (
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-dark-700">{Math.round(percentage)}%</span>
+                    <span className="text-sm font-medium text-text-primary">{Math.round(percentage)}%</span>
                 </div>
             )}
-            <div className={`w-full bg-light-200 rounded-full overflow-hidden ${sizeClasses[size]}`}>
+            <div className={`w-full bg-bg-sunken rounded-full overflow-hidden ${sizeClasses[size]}`}>
                 <div
                     className={`${variantClasses[variant]} ${sizeClasses[size]} rounded-full transition-all duration-300 ease-out`}
                     style={{ width: `${percentage}%` }}
@@ -170,14 +170,14 @@ export function Divider({ text, className = '' }: DividerProps) {
     if (text) {
         return (
             <div className={`relative flex items-center ${className}`}>
-                <div className="flex-grow border-t border-light-300"></div>
-                <span className="flex-shrink mx-4 text-sm text-dark-500 font-medium">{text}</span>
-                <div className="flex-grow border-t border-light-300"></div>
+                <div className="flex-grow border-t border-border-default"></div>
+                <span className="flex-shrink mx-4 text-sm text-text-secondary font-medium">{text}</span>
+                <div className="flex-grow border-t border-border-default"></div>
             </div>
         );
     }
 
-    return <div className={`border-t border-light-300 ${className}`}></div>;
+    return <div className={`border-t border-border-default ${className}`}></div>;
 }
 
 // Tooltip Component (simple version)
@@ -207,7 +207,7 @@ export function Tooltip({ content, children, position = 'top' }: TooltipProps) {
             {isVisible && (
                 <div className={`
           absolute z-50 px-3 py-2 text-xs font-medium text-white
-          bg-dark-900 rounded-lg shadow-lg whitespace-nowrap
+          bg-text-primary rounded-lg shadow-lg whitespace-nowrap
           animate-fade-in
           ${positionClasses[position]}
         `}>
@@ -293,15 +293,15 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
     return (
         <div className="text-center py-12 px-4">
             {icon && (
-                <div className="mx-auto w-16 h-16 mb-4 text-dark-300">
+                <div className="mx-auto w-16 h-16 mb-4 text-text-muted">
                     {icon}
                 </div>
             )}
-            <h3 className="text-lg font-semibold text-dark-900 mb-2">
+            <h3 className="text-lg font-semibold text-text-primary mb-2">
                 {title}
             </h3>
             {description && (
-                <p className="text-sm text-dark-500 mb-6 max-w-sm mx-auto">
+                <p className="text-sm text-text-secondary mb-6 max-w-sm mx-auto">
                     {description}
                 </p>
             )}

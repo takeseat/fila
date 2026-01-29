@@ -22,7 +22,7 @@ export function FunnelChart({ data }: FunnelChartProps) {
     const maxValue = Math.max(...funnelData.map(d => d.value));
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('reports:charts.conversionFunnel')}</h3>
 
             {/* Visual Funnel */}

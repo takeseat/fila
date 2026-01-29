@@ -37,7 +37,7 @@ export function LanguageSelector({ className = '' }: LanguageSelectorProps) {
             {/* Compact button showing only flag */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="glass rounded-lg px-2.5 py-2 text-xl cursor-pointer hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+                className="glass rounded-lg px-2.5 py-2 text-xl cursor-pointer hover:bg-bg-surface/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
             >
                 {currentLang.flag}
             </button>
@@ -49,7 +49,7 @@ export function LanguageSelector({ className = '' }: LanguageSelectorProps) {
                         <button
                             key={lang.code}
                             onClick={() => handleLanguageChange(lang.code)}
-                            className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm text-white hover:bg-white/10 transition-colors ${lang.code === currentLanguage ? 'bg-white/5' : ''
+                            className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm text-white hover:bg-bg-surface/10 transition-colors ${lang.code === currentLanguage ? 'bg-bg-surface/5' : ''
                                 }`}
                         >
                             <span className="text-lg">{lang.flag}</span>

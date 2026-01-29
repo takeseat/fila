@@ -29,7 +29,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             />
 
             {/* Drawer */}
-            <div className="lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-white z-50 shadow-2xl animate-slide-in-right">
+            <div className="lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-bg-surface z-50 shadow-2xl animate-slide-in-right">
                 <div className="flex flex-col h-full">
                     {/* Header */}
                     <div className="flex items-center justify-between p-4 border-b border-gray-200">

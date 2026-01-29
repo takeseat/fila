@@ -55,21 +55,21 @@ export function ProfileSettings() {
     }
 
     return (
-        <div className="min-h-screen bg-light-50">
+        <div className="min-h-screen bg-bg-subtle">
             <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
                 {/* Page Header */}
                 <div className="mb-8">
                     <button
                         onClick={() => navigate('/dashboard')}
-                        className="text-dark-500 hover:text-dark-900 transition-colors mb-4 flex items-center gap-2 text-sm"
+                        className="text-text-secondary hover:text-text-primary transition-colors mb-4 flex items-center gap-2 text-sm"
                     >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
                         Voltar
                     </button>
-                    <h1 className="text-3xl font-bold text-dark-900">{t('title')}</h1>
-                    <p className="mt-1 text-sm text-dark-500">
+                    <h1 className="text-3xl font-bold text-text-primary">{t('title')}</h1>
+                    <p className="mt-1 text-sm text-text-secondary">
                         Gerencie suas informações pessoais e preferências
                     </p>
                 </div>
@@ -117,11 +117,11 @@ function PersonalInfoCard({ user, onUpdate }: { user: User; onUpdate: () => void
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-light-200">
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-border-default">
             {/* Card Header */}
-            <div className="px-6 py-5 border-b border-light-200">
-                <h2 className="text-lg font-semibold text-dark-900">{t('profileInfo.title')}</h2>
-                <p className="mt-1 text-sm text-dark-500">
+            <div className="px-6 py-5 border-b border-border-default">
+                <h2 className="text-lg font-semibold text-text-primary">{t('profileInfo.title')}</h2>
+                <p className="mt-1 text-sm text-text-secondary">
                     Essas informações são usadas para identificar sua conta.
                 </p>
             </div>
@@ -147,7 +147,7 @@ function PersonalInfoCard({ user, onUpdate }: { user: User; onUpdate: () => void
                                 value={user.email}
                                 disabled
                             />
-                            <p className="mt-1.5 text-xs text-dark-400">
+                            <p className="mt-1.5 text-xs text-text-muted">
                                 {t('profileInfo.emailReadonly')}
                             </p>
                         </div>
@@ -168,7 +168,7 @@ function PersonalInfoCard({ user, onUpdate }: { user: User; onUpdate: () => void
                 </div>
 
                 {/* Card Footer */}
-                <div className="px-6 py-4 bg-light-50 border-t border-light-200 rounded-b-xl flex justify-end">
+                <div className="px-6 py-4 bg-bg-subtle border-t border-border-default rounded-b-xl flex justify-end">
                     <Button type="submit" isLoading={loading}>
                         {t('profileInfo.save')}
                     </Button>
@@ -216,11 +216,11 @@ function LanguageCard({ user, onUpdate }: { user: User; onUpdate: () => void }) 
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-light-200">
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-border-default">
             {/* Card Header */}
-            <div className="px-6 py-5 border-b border-light-200">
-                <h2 className="text-lg font-semibold text-dark-900">{t('language.title')}</h2>
-                <p className="mt-1 text-sm text-dark-500">
+            <div className="px-6 py-5 border-b border-border-default">
+                <h2 className="text-lg font-semibold text-text-primary">{t('language.title')}</h2>
+                <p className="mt-1 text-sm text-text-secondary">
                     {t('language.description')}
                 </p>
             </div>
@@ -228,14 +228,14 @@ function LanguageCard({ user, onUpdate }: { user: User; onUpdate: () => void }) 
             {/* Card Content */}
             <div className="px-6 py-6">
                 <div className="max-w-md">
-                    <label className="block text-sm font-medium text-dark-700 mb-2">
+                    <label className="block text-sm font-medium text-text-primary mb-2">
                         {t('language.select')}
                     </label>
                     <select
                         value={language}
                         onChange={(e) => handleChange(e.target.value)}
                         disabled={loading}
-                        className="w-full bg-white border border-light-300 rounded-lg px-4 py-2.5 text-dark-900 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        className="w-full bg-bg-surface border border-border-default rounded-lg px-4 py-2.5 text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                         {AVAILABLE_LANGUAGES.map((lang) => (
                             <option key={lang.code} value={lang.code}>
@@ -319,11 +319,11 @@ function SecurityCard() {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-light-200">
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-border-default">
             {/* Card Header */}
-            <div className="px-6 py-5 border-b border-light-200">
-                <h2 className="text-lg font-semibold text-dark-900">{t('password.title')}</h2>
-                <p className="mt-1 text-sm text-dark-500">
+            <div className="px-6 py-5 border-b border-border-default">
+                <h2 className="text-lg font-semibold text-text-primary">{t('password.title')}</h2>
+                <p className="mt-1 text-sm text-text-secondary">
                     Altere sua senha de acesso
                 </p>
             </div>
@@ -354,7 +354,7 @@ function SecurityCard() {
                                 error={errors.newPassword}
                                 required
                             />
-                            <p className="mt-1.5 text-xs text-dark-400">
+                            <p className="mt-1.5 text-xs text-text-muted">
                                 {t('password.requirements')}
                             </p>
                         </div>
@@ -387,7 +387,7 @@ function SecurityCard() {
                 </div>
 
                 {/* Card Footer */}
-                <div className="px-6 py-4 bg-light-50 border-t border-light-200 rounded-b-xl flex justify-end">
+                <div className="px-6 py-4 bg-bg-subtle border-t border-border-default rounded-b-xl flex justify-end">
                     <Button type="submit" variant="secondary" isLoading={loading}>
                         {t('password.save')}
                     </Button>

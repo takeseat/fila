@@ -52,7 +52,7 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border p-6 space-y-4">
+        <div className="bg-bg-surface rounded-xl shadow-sm border p-6 space-y-4">
             <h3 className="text-lg font-semibold text-gray-900">{t('reports:filters.title')}</h3>
 
             {/* Date Range */}

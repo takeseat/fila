@@ -54,7 +54,7 @@ export function InternationalPhoneInput({
     return (
         <div className={`w-full ${className}`}>
             {label && (
-                <label className="block text-sm font-medium text-dark-700 mb-2">
+                <label className="block text-sm font-medium text-text-primary mb-2">
                     {label}
                     {required && <span className="text-danger-600 ml-1">*</span>}
                 </label>

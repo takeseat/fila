@@ -114,7 +114,7 @@ export const Home: React.FC = () => {
                         {/* Queue Card */}
                         <div
                             onClick={handleQueueClick}
-                            className="group relative bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-primary-500 transition-all cursor-pointer overflow-hidden"
+                            className="group relative bg-bg-surface border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-primary-500 transition-all cursor-pointer overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
                                 <Users size={80} />
@@ -147,7 +147,7 @@ export const Home: React.FC = () => {
                         {canUsePickupOrders && (
                             <div
                                 onClick={handleOrdersClick}
-                                className="group relative bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-blue-500 transition-all cursor-pointer overflow-hidden"
+                                className="group relative bg-bg-surface border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-blue-500 transition-all cursor-pointer overflow-hidden"
                             >
                                 <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
                                     <ShoppingBag size={80} />

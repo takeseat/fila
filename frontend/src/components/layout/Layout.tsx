@@ -117,7 +117,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                 <aside className={`
                 hidden lg:flex flex-col
                 ${isSidebarCollapsed ? 'w-20' : 'w-72'} 
-                bg-white border-r border-gray-200 transition-all duration-300
+                bg-bg-surface border-r border-gray-200 transition-all duration-300
             `}>
                     {/* Logo */}
                     <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
@@ -255,7 +255,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
                         {/* Restaurant name */}
                         {!isSidebarCollapsed && (
-                            <div className="mt-2 flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg">
+                            <div className="mt-2 flex items-center gap-2 px-3 py-2 bg-bg-surface border border-gray-200 rounded-lg">
                                 <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
@@ -317,7 +317,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
                 {/* Desktop Header */}
                 {!simple && (
-                    <header className="hidden lg:flex h-16 bg-white border-b border-gray-200 px-8 items-center justify-between">
+                    <header className="hidden lg:flex h-16 bg-bg-surface border-b border-gray-200 px-8 items-center justify-between">
                         <div />
                         <div className="flex items-center gap-3">
                             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors relative group">

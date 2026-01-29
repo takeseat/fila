@@ -92,7 +92,7 @@ export function QueueEntriesReport() {
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => handleExport('csv')}
-                        className="group flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
+                        className="group flex items-center gap-2 px-4 py-2 bg-bg-surface border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
                         title={t('reports:queueEntries.exportCsv')}
                     >
                         <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,7 +102,7 @@ export function QueueEntriesReport() {
                     </button>
                     <button
                         onClick={() => handleExport('pdf')}
-                        className="group flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
+                        className="group flex items-center gap-2 px-4 py-2 bg-bg-surface border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
                         title={t('reports:queueEntries.exportPdf')}
                     >
                         <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -156,7 +156,7 @@ export function QueueEntriesReport() {
                             />
 
                             {/* Pagination */}
-                            <div className="flex items-center justify-between bg-white rounded-xl shadow-sm border p-4">
+                            <div className="flex items-center justify-between bg-bg-surface rounded-xl shadow-sm border p-4">
                                 <div className="flex items-center gap-4">
                                     <span className="text-sm text-gray-600">
                                         {t('reports:queueEntries.showing', { from: ((data.page - 1) * data.pageSize) + 1, to: Math.min(data.page * data.pageSize, data.total), total: data.total })}

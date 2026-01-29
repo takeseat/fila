@@ -19,7 +19,7 @@ export function MobilePageHeader({
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <header className={`lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50 safe-area-top ${className}`}>
+        <header className={`lg:hidden fixed top-0 left-0 right-0 bg-bg-surface border-b border-gray-200 z-50 safe-area-top ${className}`}>
             <div className="flex items-center justify-between h-14 px-4">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                     {/* Leading or Menu Trigger */}

@@ -96,14 +96,14 @@ export function BusinessDataTab() {
             {/* Business Name */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label className="block text-sm font-medium text-dark-700 mb-1">
+                    <label className="block text-sm font-medium text-text-primary mb-1">
                         {t('business.fields.name.label')}
                     </label>
                     <input
                         type="text"
                         {...register('name', { required: true })}
                         defaultValue={businessData?.name}
-                        className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                        className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                         placeholder={t('business.fields.name.placeholder')}
                     />
                     {errors.name && (
@@ -112,17 +112,17 @@ export function BusinessDataTab() {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-dark-700 mb-1">
+                    <label className="block text-sm font-medium text-text-primary mb-1">
                         {t('business.fields.tradeName.label')}
                     </label>
                     <input
                         type="text"
                         {...register('tradeName')}
                         defaultValue={businessData?.tradeName || ''}
-                        className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                        className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                         placeholder={t('business.fields.tradeName.placeholder')}
                     />
-                    <p className="mt-1 text-xs text-dark-500">{t('business.fields.tradeName.help')}</p>
+                    <p className="mt-1 text-xs text-text-secondary">{t('business.fields.tradeName.help')}</p>
                 </div>
             </div>
 
@@ -131,14 +131,14 @@ export function BusinessDataTab() {
 
 
                 <div>
-                    <label className="block text-sm font-medium text-dark-700 mb-1">
+                    <label className="block text-sm font-medium text-text-primary mb-1">
                         {selectedCountry === 'BR' ? 'CNPJ' : 'TAX ID'}
                     </label>
                     <input
                         type="text"
                         {...register('cnpj')}
                         defaultValue={selectedCountry === 'BR' ? applyCnpjMask(businessData?.cnpj || '') : (businessData?.cnpj || '')}
-                        className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                        className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                         placeholder={selectedCountry === 'BR' ? "00.000.000/0000-00" : ""}
                         onChange={(e) => {
                             if (selectedCountry === 'BR') {
@@ -159,19 +159,19 @@ export function BusinessDataTab() {
             />
 
             {/* Address Section */}
-            <div className="pt-4 border-t border-light-200">
-                <h3 className="text-lg font-semibold text-dark-800 mb-4">Address</h3>
+            <div className="pt-4 border-t border-border-default">
+                <h3 className="text-lg font-semibold text-text-primary mb-4">Address</h3>
 
                 {/* Country */}
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-dark-700 mb-1">
+                    <label className="block text-sm font-medium text-text-primary mb-1">
                         {t('business.fields.country.label')}
                     </label>
                     <select
                         {...register('countryCode', { required: true })}
                         defaultValue={businessData?.countryCode || 'BR'}
                         onChange={handleCountryChange}
-                        className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                        className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                     >
                         {COUNTRIES.map(country => (
                             <option key={country.code} value={country.code}>
@@ -185,13 +185,13 @@ export function BusinessDataTab() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     {states.length > 0 ? (
                         <div>
-                            <label className="block text-sm font-medium text-dark-700 mb-1">
+                            <label className="block text-sm font-medium text-text-primary mb-1">
                                 {t('business.fields.state.label')}
                             </label>
                             <select
                                 {...register('stateCode')}
                                 defaultValue={businessData?.stateCode || ''}
-                                className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                                className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             >
                                 <option value="">{t('business.fields.state.placeholder')}</option>
                                 {states.map(state => (
@@ -204,14 +204,14 @@ export function BusinessDataTab() {
                     ) : null}
 
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('business.fields.city.label')}
                         </label>
                         <input
                             type="text"
                             {...register('city', { required: true })}
                             defaultValue={businessData?.city}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('business.fields.city.placeholder')}
                         />
                         {errors.city && (
@@ -223,27 +223,27 @@ export function BusinessDataTab() {
                 {/* Address Line and Number */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div className="md:col-span-2">
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('business.fields.addressLine.label')}
                         </label>
                         <input
                             type="text"
                             {...register('addressLine')}
                             defaultValue={businessData?.addressLine || ''}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('business.fields.addressLine.placeholder')}
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('business.fields.addressNumber.label')}
                         </label>
                         <input
                             type="text"
                             {...register('addressNumber')}
                             defaultValue={businessData?.addressNumber || ''}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('business.fields.addressNumber.placeholder')}
                         />
                     </div>
@@ -252,20 +252,20 @@ export function BusinessDataTab() {
                 {/* Complement and Postal Code */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('business.fields.addressComplement.label')}
                         </label>
                         <input
                             type="text"
                             {...register('addressComplement')}
                             defaultValue={businessData?.addressComplement || ''}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('business.fields.addressComplement.placeholder')}
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('business.fields.postalCode.label')}
                         </label>
                         <input
@@ -277,7 +277,7 @@ export function BusinessDataTab() {
                                 register('postalCode').onChange(e);
                             }}
                             defaultValue={businessData?.postalCode ? (selectedCountry === 'BR' ? applyCepMask(businessData.postalCode) : businessData.postalCode) : ''}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('business.fields.postalCode.placeholder')}
                         />
                     </div>
@@ -285,7 +285,7 @@ export function BusinessDataTab() {
             </div>
 
             {/* Submit Actions */}
-            <div className="flex items-center justify-end pt-6 border-t border-light-200 gap-4">
+            <div className="flex items-center justify-end pt-6 border-t border-border-default gap-4">
                 {successMessage && (
                     <span className="text-sm text-success-600 font-medium animate-fade-in">
                         {successMessage}

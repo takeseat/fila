@@ -417,7 +417,7 @@ export function MessagesTab() {
                 </div>
             </Card>
 
-            <div className="flex items-center justify-end gap-4 sticky bottom-6 bg-white p-4 rounded-xl border border-gray-100 shadow-lg z-10">
+            <div className="flex items-center justify-end gap-4 sticky bottom-6 bg-bg-surface p-4 rounded-xl border border-gray-100 shadow-lg z-10">
                 {successMessage && (
                     <span className="text-sm text-green-600 font-medium animate-pulse">
                         {successMessage}

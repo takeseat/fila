@@ -72,20 +72,20 @@ export function ParametersTab() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
             {/* Queue Alerts Section */}
             <div className="space-y-6">
-                <div className="flex items-center gap-2 border-b border-light-200 pb-2">
+                <div className="flex items-center gap-2 border-b border-border-default pb-2">
                     <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <h3 className="text-lg font-semibold text-dark-800">{t('sections.queueAlerts.title')}</h3>
+                    <h3 className="text-lg font-semibold text-text-primary">{t('sections.queueAlerts.title')}</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Waiting Alert */}
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('sections.queueAlerts.waitingAlert.label')}
                         </label>
-                        <p className="text-xs text-dark-500 mb-2">
+                        <p className="text-xs text-text-secondary mb-2">
                             {t('sections.queueAlerts.waitingAlert.help')}
                             <br />
                             <span className="italic">{t('sections.queueAlerts.waitingAlert.helpExtra')}</span>
@@ -93,7 +93,7 @@ export function ParametersTab() {
                         <input
                             type="number"
                             {...register('waitingAlertMinutes', { min: 1 })}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('sections.queueAlerts.waitingAlert.placeholder')}
                         />
                         {errors.waitingAlertMinutes && (
@@ -103,10 +103,10 @@ export function ParametersTab() {
 
                     {/* Called Alert */}
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('sections.queueAlerts.calledAlert.label')}
                         </label>
-                        <p className="text-xs text-dark-500 mb-2">
+                        <p className="text-xs text-text-secondary mb-2">
                             {t('sections.queueAlerts.calledAlert.help')}
                             <br />
                             <span className="italic">{t('sections.queueAlerts.calledAlert.helpExtra')}</span>
@@ -114,7 +114,7 @@ export function ParametersTab() {
                         <input
                             type="number"
                             {...register('calledAlertMinutes', { min: 1 })}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('sections.queueAlerts.calledAlert.placeholder')}
                         />
                         {errors.calledAlertMinutes && (
@@ -125,27 +125,27 @@ export function ParametersTab() {
             </div>
 
             {/* Average Wait Time Calculation Section */}
-            <div className="space-y-6 pt-6 border-t border-light-200">
-                <div className="flex items-center gap-2 border-b border-light-200 pb-2">
+            <div className="space-y-6 pt-6 border-t border-border-default">
+                <div className="flex items-center gap-2 border-b border-border-default pb-2">
                     <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <h3 className="text-lg font-semibold text-dark-800">{t('sections.avgWaitCalculation.title')}</h3>
+                    <h3 className="text-lg font-semibold text-text-primary">{t('sections.avgWaitCalculation.title')}</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Calculation Window */}
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('sections.avgWaitCalculation.window.label')}
                         </label>
-                        <p className="text-xs text-dark-500 mb-2">
+                        <p className="text-xs text-text-secondary mb-2">
                             {t('sections.avgWaitCalculation.window.help')}
                         </p>
                         <input
                             type="number"
                             {...register('avgWaitWindowMinutes', { min: 1 })}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('sections.avgWaitCalculation.window.placeholder')}
                         />
                         {errors.avgWaitWindowMinutes && (
@@ -155,16 +155,16 @@ export function ParametersTab() {
 
                     {/* Fallback Time */}
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('sections.avgWaitCalculation.fallback.label')}
                         </label>
-                        <p className="text-xs text-dark-500 mb-2">
+                        <p className="text-xs text-text-secondary mb-2">
                             {t('sections.avgWaitCalculation.fallback.help')}
                         </p>
                         <input
                             type="number"
                             {...register('avgWaitFallbackMinutes', { min: 1 })}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('sections.avgWaitCalculation.fallback.placeholder')}
                         />
                         {errors.avgWaitFallbackMinutes && (
@@ -175,27 +175,27 @@ export function ParametersTab() {
             </div>
 
             {/* Pickup Orders Parameters */}
-            <div className="space-y-6 pt-6 border-t border-light-200">
-                <div className="flex items-center gap-2 border-b border-light-200 pb-2">
+            <div className="space-y-6 pt-6 border-t border-border-default">
+                <div className="flex items-center gap-2 border-b border-border-default pb-2">
                     <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <h3 className="text-lg font-semibold text-dark-800">{t('pickupParameters.title')}</h3>
+                    <h3 className="text-lg font-semibold text-text-primary">{t('pickupParameters.title')}</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Auto Not Picked Up */}
                     <div>
-                        <label className="block text-sm font-medium text-dark-700 mb-1">
+                        <label className="block text-sm font-medium text-text-primary mb-1">
                             {t('pickupParameters.autoNotPickedUp.label')}
                         </label>
-                        <p className="text-xs text-dark-500 mb-2">
+                        <p className="text-xs text-text-secondary mb-2">
                             {t('pickupParameters.autoNotPickedUp.help')}
                         </p>
                         <input
                             type="number"
                             {...register('autoNotPickedUpMinutes', { min: 10, max: 120 })}
-                            className="w-full px-4 py-2 rounded-lg border border-light-300 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                             placeholder={t('pickupParameters.autoNotPickedUp.placeholder')}
                         />
                         {errors.autoNotPickedUpMinutes && (
@@ -206,7 +206,7 @@ export function ParametersTab() {
             </div>
 
             {/* Submit Actions */}
-            <div className="flex items-center justify-end pt-6 border-t border-light-200 gap-4">
+            <div className="flex items-center justify-end pt-6 border-t border-border-default gap-4">
                 {successMessage && (
                     <span className="text-sm text-success-600 font-medium animate-fade-in">
                         {successMessage}

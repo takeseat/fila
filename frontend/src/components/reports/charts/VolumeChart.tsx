@@ -29,7 +29,7 @@ export function VolumeChart({ data }: VolumeChartProps) {
     }));
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('reports:charts.queueVolume')}</h3>
             <ResponsiveContainer width="100%" height={320}>
                 <BarChart data={formattedData}>

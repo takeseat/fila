@@ -24,7 +24,7 @@ export function UpgradeBanner() {
                 </p>
                 <Link
                     to="/settings/billing"
-                    className="flex-none rounded-full bg-white px-3.5 py-1 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    className="flex-none rounded-full bg-bg-surface px-3.5 py-1 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                     {t('banner.cta')} <span aria-hidden="true">&rarr;</span>
                 </Link>

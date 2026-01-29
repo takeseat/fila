@@ -27,7 +27,7 @@ export function WaitTimeChart({ data }: WaitTimeChartProps) {
     }));
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-gray-200 p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('reports:charts.waitTimeOverTime')}</h3>
             <ResponsiveContainer width="100%" height={320}>
                 <LineChart data={formattedData}>

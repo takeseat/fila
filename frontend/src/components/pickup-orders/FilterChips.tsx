@@ -22,7 +22,7 @@ export function FilterChips({ activeFilter, onFilterChange }: FilterChipsProps) 
                         transition-all duration-200
                         ${activeFilter === filter.id
                             ? 'bg-primary-500 text-white shadow-md'
-                            : 'bg-white text-dark-700 border-2 border-light-300 hover:border-primary-300'
+                            : 'bg-bg-surface text-text-primary border-2 border-border-default hover:border-primary-300'
                         }
                     `}
                 >

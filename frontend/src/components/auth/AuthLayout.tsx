@@ -10,7 +10,7 @@ export function AuthLayout({ children, branding }: AuthLayoutProps) {
     return (
         <div className="min-h-screen bg-gray-50 flex">
             {/* Left side - Branding (hidden on mobile) */}
-            <div className="hidden lg:flex lg:w-1/2 bg-white">
+            <div className="hidden lg:flex lg:w-1/2 bg-bg-surface">
                 {branding}
             </div>
 

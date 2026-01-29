@@ -116,7 +116,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder={t('placeholders.name')}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
                     />
                 </div>
 
@@ -131,7 +131,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder={t('placeholders.email')}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
                     />
                 </div>
 
@@ -148,7 +148,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                             placeholder={t('placeholders.password')}
                             required={!isEditing}
                             minLength={6}
-                            className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
+                            className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
                         />
                     </div>
                 )}
@@ -162,7 +162,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                         value={formData.role}
                         onChange={(e) => setFormData({ ...formData, role: e.target.value as any })}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 focus:outline-none focus:ring-4"
                     >
                         <option value="ADMIN">{t('roles.ADMIN')}</option>
                         <option value="MANAGER">{t('roles.MANAGER')}</option>
@@ -179,7 +179,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                         value={formData.language}
                         onChange={(e) => setFormData({ ...formData, language: e.target.value })}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-white text-gray-900 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 focus:outline-none focus:ring-4"
                     >
                         {AVAILABLE_LANGUAGES.map((lang) => (
                             <option key={lang.code} value={lang.code}>
