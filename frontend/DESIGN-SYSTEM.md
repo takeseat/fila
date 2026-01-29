@@ -550,3 +550,254 @@ Using this Design System ensures:
 ---
 
 End of document.
+
+---
+
+# Design System – Layout & Spacing Addendum
+
+This addendum extends the Design System with **layout, spacing, and structural components**
+to ensure **consistent vertical rhythm, predictable spacing, and screen-level cohesion**
+across all product surfaces.
+
+This document is **mandatory** for all screen-level implementations.
+
+---
+
+## 1. Purpose of This Addendum
+
+While base components (Buttons, Inputs, Cards, etc.) ensure visual consistency,
+**layout inconsistency often comes from missing structural components**.
+
+This addendum introduces:
+- Screen-level layout primitives
+- Semantic spacing for pages and sections
+- Structural components that define rhythm and hierarchy
+
+> **Goal:**  
+> Make spacing and layout decisions a **design system concern**, not a per-screen choice.
+
+---
+
+## 2. Layout Semantic Tokens
+
+These tokens define **intentional spacing**, not raw values.
+
+### 2.1 Page-Level Spacing
+
+```json
+{
+  "semantic": {
+    "layout": {
+      "page": {
+        "paddingX": "{base.space.6}",
+        "paddingXMobile": "{base.space.4}",
+        "paddingY": "{base.space.6}",
+        "maxWidth": "1200px"
+      }
+    }
+  }
+}
+```
+
+### 2.2 Section Spacing
+
+```json
+{
+  "semantic": {
+    "layout": {
+      "section": {
+        "gap": "{base.space.8}",
+        "gapMobile": "{base.space.6}"
+      }
+    }
+  }
+}
+```
+
+### 2.3 Component Spacing
+
+```json
+{
+  "semantic": {
+    "layout": {
+      "stack": {
+        "xs": "{base.space.2}",
+        "sm": "{base.space.3}",
+        "md": "{base.space.4}",
+        "lg": "{base.space.6}",
+        "xl": "{base.space.8}"
+      }
+    }
+  }
+}
+```
+
+---
+
+## 3. Structural Components
+
+### 3.1 PageContainer
+
+**Purpose:** Standardizes page-level padding and max-width.
+
+**Props:**
+- \`maxWidth?: 'sm' | 'md' | 'lg' | 'full'\` (default: \`'lg'\`)
+- \`noPadding?: boolean\` (default: \`false\`)
+
+**Usage:**
+```tsx
+<PageContainer maxWidth="lg">
+  {/* page content */}
+</PageContainer>
+```
+
+**Implementation:**
+```tsx
+export function PageContainer({ 
+  children, 
+  maxWidth = 'lg',
+  noPadding = false 
+}: PageContainerProps) {
+  const maxWidthClasses = {
+    sm: 'max-w-screen-sm',
+    md: 'max-w-screen-md',
+    lg: 'max-w-screen-lg',
+    full: 'max-w-full'
+  };
+
+  return (
+    <div className={clsx(
+      'mx-auto',
+      maxWidthClasses[maxWidth],
+      !noPadding && 'px-layout-page-x-mobile md:px-layout-page-x py-layout-page-y'
+    )}>
+      {children}
+    </div>
+  );
+}
+```
+
+---
+
+### 3.2 Section
+
+**Purpose:** Groups related content with consistent vertical spacing.
+
+**Props:**
+- \`spacing?: 'sm' | 'md' | 'lg'\` (default: \`'md'\`)
+- \`title?: string\`
+- \`description?: string\`
+
+**Usage:**
+```tsx
+<Section title="Recent Activity" spacing="lg">
+  {/* section content */}
+</Section>
+```
+
+---
+
+### 3.3 Stack (Already Implemented)
+
+**Purpose:** Consistent vertical/horizontal spacing between items.
+
+**Props:**
+- \`direction?: 'row' | 'column'\`
+- \`gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'\`
+- \`align?: 'start' | 'center' | 'end' | 'stretch'\`
+- \`justify?: 'start' | 'center' | 'end' | 'between' | 'around'\`
+
+---
+
+## 4. Layout Patterns
+
+### 4.1 Page Header
+
+All pages should follow this structure:
+
+```tsx
+<PageContainer>
+  <Stack direction="column" gap="lg">
+    {/* Header */}
+    <Stack direction="column" gap="sm">
+      <h1 className="text-display-lg font-semibold text-text-primary">
+        Page Title
+      </h1>
+      <p className="text-body-md text-text-secondary">
+        Page description
+      </p>
+    </Stack>
+
+    {/* Content sections */}
+    <Section spacing="lg">
+      {/* ... */}
+    </Section>
+  </Stack>
+</PageContainer>
+```
+
+---
+
+### 4.2 Two-Column Layout
+
+```tsx
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-layout-section">
+  <div>{/* Left column */}</div>
+  <div>{/* Right column */}</div>
+</div>
+```
+
+---
+
+### 4.3 Card Grid
+
+```tsx
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-layout-stack-md">
+  {items.map(item => <Card key={item.id}>{/* ... */}</Card>)}
+</div>
+```
+
+---
+
+## 5. Responsive Breakpoints
+
+Use these breakpoints consistently:
+
+```css
+/* Tailwind defaults (already configured) */
+sm: 640px   /* Mobile landscape / small tablet */
+md: 768px   /* Tablet */
+lg: 1024px  /* Desktop */
+xl: 1280px  /* Large desktop */
+```
+
+**Mobile-first rule:**  
+Always write mobile styles first, then add \`md:\` and \`lg:\` prefixes for larger screens.
+
+---
+
+## 6. Vertical Rhythm
+
+Maintain consistent vertical rhythm across all screens:
+
+- **Between sections:** \`gap-layout-section\` (32px desktop, 24px mobile)
+- **Between components:** \`gap-layout-stack-md\` (16px)
+- **Between related items:** \`gap-layout-stack-sm\` (12px)
+- **Between form fields:** \`gap-layout-stack-md\` (16px)
+
+---
+
+## 7. Implementation Checklist
+
+When implementing a new screen, verify:
+
+- [ ] Uses \`PageContainer\` for top-level layout
+- [ ] Uses \`Stack\` for consistent spacing
+- [ ] Uses \`Section\` for logical groupings
+- [ ] Uses semantic spacing tokens (no hardcoded values)
+- [ ] Responsive at all breakpoints (sm, md, lg)
+- [ ] Touch targets ≥ 44px on mobile
+- [ ] No horizontal scroll on mobile
+
+---
+
