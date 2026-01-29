@@ -69,6 +69,7 @@ export function Button({
         primary: clsx(
             'bg-action-primary-bg text-action-primary-fg',
             'hover:bg-action-primary-bg-hover active:bg-action-primary-bg-active',
+            'hover:shadow-purple-md', // Purple shadow on hover (DS Spec)
             'focus:ring-action-primary-bg/20'
         ),
         secondary: clsx(

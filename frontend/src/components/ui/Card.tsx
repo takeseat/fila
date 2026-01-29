@@ -36,6 +36,11 @@ export interface CardProps {
      * Padding size
      */
     padding?: 'none' | 'sm' | 'md' | 'lg';
+
+    /**
+     * Visual variant - DS Spec purple accents
+     */
+    variant?: 'default' | 'interactive' | 'featured';
 }
 
 /**
@@ -59,6 +64,7 @@ export function Card({
     headerAction,
     className = '',
     padding = 'md',
+    variant = 'default',  // New variant support
 }: CardProps) {
     // Padding classes
     const paddingClasses = {
@@ -66,6 +72,20 @@ export function Card({
         sm: 'p-space-sm',
         md: 'p-space-lg',
         lg: 'p-space-xl',
+    };
+
+    // Variant styles (DS Spec Section 6.4)
+    const variantStyles = {
+        default: '',
+        interactive: clsx(
+            'cursor-pointer transition-all duration-200',
+            'hover:border-purple-300 hover:shadow-purple-md',
+            'dark:hover:border-purple-700'
+        ),
+        featured: clsx(
+            'border-purple-200 shadow-purple-sm',
+            'dark:border-purple-800'
+        ),
     };
 
     return (
@@ -76,6 +96,7 @@ export function Card({
                 'border border-border-default',
                 'rounded-card',
                 'shadow-card',
+                variantStyles[variant],
                 className
             )}
         >

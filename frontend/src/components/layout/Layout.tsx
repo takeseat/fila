@@ -111,16 +111,16 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
     };
 
     return (
-        <div className="flex h-screen bg-gray-50">
+        <div className="flex h-screen bg-bg-canvas">
             {/* Desktop Sidebar */}
             {!simple && (
                 <aside className={`
                 hidden lg:flex flex-col
                 ${isSidebarCollapsed ? 'w-20' : 'w-72'} 
-                bg-bg-surface border-r border-gray-200 transition-all duration-300
+                bg-bg-surface border-r border-border-default shadow-sm transition-all duration-300
             `}>
                     {/* Logo */}
-                    <div className="h-16 flex items-center justify-between px-6 border-b border-gray-200">
+                    <div className="h-16 flex items-center justify-between px-6 border-b border-border-default">
                         {!isSidebarCollapsed && (
                             <img
                                 src="/assets/logo-dark.png"
@@ -137,9 +137,9 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                         )}
                         <button
                             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                            className="p-2 hover:bg-bg-subtle rounded-lg transition-colors"
                         >
-                            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </button>
@@ -161,15 +161,15 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                             className={`
                                             w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
                                             ${isSubmenuActive
-                                                    ? 'bg-primary-50 text-primary-700 font-semibold'
-                                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                                    ? 'bg-purple-50 text-purple-600 font-semibold dark:bg-purple-950 dark:text-purple-400'
+                                                    : 'text-text-secondary hover:bg-bg-subtle hover:text-text-primary'
                                                 }
                                         `}
                                         >
                                             {isSubmenuActive && (
-                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-600 rounded-r-full" />
+                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-purple-600 rounded-r-full" />
                                             )}
-                                            <span className={`transition-colors ${isSubmenuActive ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'}`}>
+                                            <span className={`transition-colors ${isSubmenuActive ? 'text-purple-600' : 'text-text-muted group-hover:text-text-secondary'}`}>
                                                 {item.icon}
                                             </span>
                                             {!isSidebarCollapsed && (
@@ -192,74 +192,77 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                             className={`
                                             flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
                                             ${isActive
-                                                    ? 'bg-primary-50 text-primary-700 font-semibold'
-                                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                                                    ? 'bg-purple-50 text-purple-600 font-semibold dark:bg-purple-950 dark:text-purple-400'
+                                                    : 'text-text-secondary hover:bg-bg-subtle hover:text-text-primary'
                                                 }
                                         `}
                                             title={isSidebarCollapsed ? item.label : undefined}
                                         >
                                             {isActive && (
-                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary-600 rounded-r-full" />
+                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-purple-600 rounded-r-full" />
                                             )}
-                                            <span className={`transition-colors ${isActive ? 'text-primary-600' : 'text-gray-400 group-hover:text-gray-600'}`}>
+                                            <span className={`transition-colors ${isActive ? 'text-purple-600' : 'text-text-muted group-hover:text-text-secondary'}`}>
                                                 {item.icon}
                                             </span>
                                             {!isSidebarCollapsed && (
                                                 <span className="text-sm">{item.label}</span>
                                             )}
                                         </Link>
-                                    )}
+                                    )
+                                    }
 
                                     {/* Submenu */}
-                                    {item.submenu && !isSidebarCollapsed && shouldExpand && (
-                                        <div className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-4">
-                                            {item.submenu.map((subItem) => {
-                                                const isSubActive = location.pathname === subItem.path;
-                                                return (
-                                                    <Link
-                                                        key={subItem.path}
-                                                        to={subItem.path}
-                                                        className={`
+                                    {
+                                        item.submenu && !isSidebarCollapsed && shouldExpand && (
+                                            <div className="ml-4 mt-1 space-y-1 border-l-2 border-border-muted pl-4">
+                                                {item.submenu.map((subItem) => {
+                                                    const isSubActive = location.pathname === subItem.path;
+                                                    return (
+                                                        <Link
+                                                            key={subItem.path}
+                                                            to={subItem.path}
+                                                            className={`
                                                         flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors
                                                         ${isSubActive
-                                                                ? 'bg-primary-100 text-primary-700 font-medium'
-                                                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                                                            }
+                                                                    ? 'bg-purple-100 text-purple-700 font-medium dark:bg-purple-900 dark:text-purple-300'
+                                                                    : 'text-text-secondary hover:bg-bg-subtle hover:text-text-primary'
+                                                                }
                                                     `}
-                                                    >
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                                                        {subItem.label}
-                                                    </Link>
-                                                );
-                                            })}
-                                        </div>
-                                    )}
+                                                        >
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                                                            {subItem.label}
+                                                        </Link>
+                                                    );
+                                                })}
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             );
                         })}
                     </nav>
 
                     {/* User Section */}
-                    <div className="p-4 border-t border-gray-200">
-                        <div className={`flex items-center gap-3 p-3 rounded-xl bg-gray-50 ${isSidebarCollapsed ? 'justify-center' : ''}`}>
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white font-semibold">
+                    <div className="p-4 border-t border-border-default">
+                        <div className={`flex items-center gap-3 p-3 rounded-xl bg-bg-subtle ${isSidebarCollapsed ? 'justify-center' : ''}`}>
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-semibold">
                                 {user?.name.charAt(0).toUpperCase()}
                             </div>
                             {!isSidebarCollapsed && (
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
-                                    <p className="text-xs text-gray-500 truncate">{t('common:roles.' + user?.role)}</p>
+                                    <p className="text-sm font-medium text-text-primary truncate">{user?.name}</p>
+                                    <p className="text-xs text-text-muted truncate">{t('common:roles.' + user?.role)}</p>
                                 </div>
                             )}
                         </div>
 
                         {/* Restaurant name */}
                         {!isSidebarCollapsed && (
-                            <div className="mt-2 flex items-center gap-2 px-3 py-2 bg-bg-surface border border-gray-200 rounded-lg">
-                                <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="mt-2 flex items-center gap-2 px-3 py-2 bg-bg-surface border border-border-default rounded-lg">
+                                <svg className="w-4 h-4 text-text-muted flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
-                                <p className="text-xs font-medium text-gray-600 truncate">{restaurant?.name}</p>
+                                <p className="text-xs font-medium text-text-secondary truncate">{restaurant?.name}</p>
                             </div>
                         )}
 
@@ -267,7 +270,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                             <div className="mt-2 space-y-2">
                                 <Link
                                     to="/settings/profile"
-                                    className="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-xl transition-colors flex items-center justify-center gap-2"
+                                    className="w-full px-4 py-2 text-sm text-text-primary hover:bg-bg-subtle rounded-xl transition-colors flex items-center justify-center gap-2"
                                 >
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -288,7 +291,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                             <div className="mt-2 flex flex-col gap-2 items-center">
                                 <Link
                                     to="/settings/profile"
-                                    className="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                                    className="p-2 text-text-secondary hover:bg-bg-subtle rounded-lg transition-colors"
                                     title={t('user.profile')}
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -308,7 +311,8 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                         )}
                     </div>
                 </aside>
-            )}
+            )
+            }
 
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
@@ -317,11 +321,11 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
                 {/* Desktop Header */}
                 {!simple && (
-                    <header className="hidden lg:flex h-16 bg-bg-surface border-b border-gray-200 px-8 items-center justify-between">
+                    <header className="hidden lg:flex h-16 bg-bg-surface border-b border-border-default px-8 items-center justify-between">
                         <div />
                         <div className="flex items-center gap-3">
-                            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors relative group">
-                                <svg className="w-5 h-5 text-gray-500 group-hover:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <button className="p-2 hover:bg-bg-subtle rounded-lg transition-colors relative group">
+                                <svg className="w-5 h-5 text-text-muted group-hover:text-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                 </svg>
                                 <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -347,6 +351,6 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
             {/* Mobile Bottom Navigation - stays! */}
             {!simple && <BottomNavigation />}
-        </div>
+        </div >
     );
 }

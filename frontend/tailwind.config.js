@@ -4,6 +4,7 @@ export default {
         "./index.html",
         "./src/**/*.{js,ts,jsx,tsx}",
     ],
+    darkMode: 'class', // Enable .dark class for dark mode (DS Spec)
     theme: {
         extend: {
             // Semantic colors mapped to CSS variables
@@ -54,6 +55,53 @@ export default {
                 // Action colors - Link (semantic tokens)
                 'action-link-fg': 'var(--semantic-action-link-fg)',
                 'action-link-fg-hover': 'var(--semantic-action-link-fg-hover)',
+
+
+                // Purple Primitive (Primary Brand) - DS Spec
+                purple: {
+                    50: 'var(--base-color-purple-50)',
+                    100: 'var(--base-color-purple-100)',
+                    200: 'var(--base-color-purple-200)',
+                    300: 'var(--base-color-purple-300)',
+                    400: 'var(--base-color-purple-400)',
+                    500: 'var(--base-color-purple-500)',
+                    600: 'var(--base-color-purple-600)',
+                    700: 'var(--base-color-purple-700)',
+                    800: 'var(--base-color-purple-800)',
+                    900: 'var(--base-color-purple-900)',
+                    950: 'var(--base-color-purple-950)',
+                },
+
+                // Violet Primitive (Secondary) - DS Spec
+                violet: {
+                    50: 'var(--base-color-violet-50)',
+                    100: 'var(--base-color-violet-100)',
+                    200: 'var(--base-color-violet-200)',
+                    300: 'var(--base-color-violet-300)',
+                    400: 'var(--base-color-violet-400)',
+                    500: 'var(--base-color-violet-500)',
+                    600: 'var(--base-color-violet-600)',
+                    700: 'var(--base-color-violet-700)',
+                    800: 'var(--base-color-violet-800)',
+                    900: 'var(--base-color-violet-900)',
+                    950: 'var(--base-color-violet-950)',
+                },
+
+                // Neutral Primitive - DS Spec
+                neutral: {
+                    0: 'var(--base-color-neutral-0)',
+                    50: 'var(--base-color-neutral-50)',
+                    100: 'var(--base-color-neutral-100)',
+                    200: 'var(--base-color-neutral-200)',
+                    300: 'var(--base-color-neutral-300)',
+                    400: 'var(--base-color-neutral-400)',
+                    500: 'var(--base-color-neutral-500)',
+                    600: 'var(--base-color-neutral-600)',
+                    700: 'var(--base-color-neutral-700)',
+                    800: 'var(--base-color-neutral-800)',
+                    900: 'var(--base-color-neutral-900)',
+                    950: 'var(--base-color-neutral-950)',
+                },
 
                 // Status colors (semantic tokens)
                 'status-success-bg': 'var(--semantic-status-success-bg)',
@@ -120,7 +168,7 @@ export default {
                 'space-md': 'var(--semantic-space-md)',   // 16px
                 'space-lg': 'var(--semantic-space-lg)',   // 24px
                 'space-xl': 'var(--semantic-space-xl)',   // 32px
-                
+
                 // Legacy spacing (kept for compatibility)
                 '18': '4.5rem',
                 '88': '22rem',
@@ -149,7 +197,7 @@ export default {
                 'card': 'var(--semantic-shape-radius-card)',
                 'modal': 'var(--semantic-shape-radius-modal)',
                 'pill': 'var(--semantic-shape-radius-pill)',
-                
+
                 // Legacy radius (kept for compatibility)
                 'sm': '0.375rem',
                 'DEFAULT': '0.5rem',
@@ -165,7 +213,7 @@ export default {
                 'control': 'var(--semantic-shape-shadow-control)',
                 'card': 'var(--semantic-shape-shadow-card)',
                 'modal': 'var(--semantic-shape-shadow-modal)',
-                
+
                 // Legacy shadows (kept for compatibility)
                 'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
                 'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
@@ -176,6 +224,13 @@ export default {
                 'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
                 'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
                 'premium': '0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06)',
+
+                // Purple Shadows (DS Spec)
+                'purple-sm': 'var(--shadow-purple-sm)',
+                'purple-md': 'var(--shadow-purple-md)',
+                'purple-lg': 'var(--shadow-purple-lg)',
+                'purple-xl': 'var(--shadow-purple-xl)',
+                'glow-purple': 'var(--glow-purple)',
             },
 
             backdropBlur: {

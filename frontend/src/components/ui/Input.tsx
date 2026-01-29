@@ -92,8 +92,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             'focus:outline-none focus:ring-2 focus:ring-border-focus focus:border-border-focus',
             'disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-bg-subtle',
 
-            // Shadow
+            //Shadow
             'shadow-control',
+            'focus:shadow-glow-purple', // Purple glow on focus (DS Spec)
 
             // Error state
             error && 'border-border-danger focus:ring-border-danger focus:border-border-danger',

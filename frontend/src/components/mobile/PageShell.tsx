@@ -15,7 +15,7 @@ interface PageShellProps {
  */
 export function PageShell({ children, className = '' }: PageShellProps) {
     return (
-        <div className={`flex flex-col h-full bg-gray-50 ${className}`}>
+        <div className={`flex flex-col h-full bg-bg-canvas ${className}`}>
             {/* The header is fixed, so we need to ensure the content 
                 doesn't get hidden behind it.
                 MobilePageHeader is h-14 (56px) + safe-area-top.

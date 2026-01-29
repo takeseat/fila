@@ -10,72 +10,156 @@
        BASE TOKENS (Primitives)
        Never use these directly in components!
        ============================================ */
-    
-    /* Base Colors - Blue */
-    --base-color-blue-50: #eef4ff;
-    --base-color-blue-100: #dbe8ff;
-    --base-color-blue-200: #b7d1ff;
-    --base-color-blue-300: #8bb3ff;
-    --base-color-blue-400: #5c8cff;
-    --base-color-blue-500: #3366ff;
-    --base-color-blue-600: #254eda;
-    --base-color-blue-700: #1e3fae;
 
-    /* Base Colors - Gray */
-    --base-color-gray-0: #ffffff;
-    --base-color-gray-50: #f8fafc;
-    --base-color-gray-100: #f1f5f9;
-    --base-color-gray-200: #e2e8f0;
-    --base-color-gray-300: #cbd5e1;
-    --base-color-gray-400: #94a3b8;
-    --base-color-gray-500: #64748b;
-    --base-color-gray-600: #475569;
-    --base-color-gray-700: #334155;
-    --base-color-gray-800: #1e293b;
-    --base-color-gray-900: #0f172a;
+    /* Base Colors - Purple (Primary Brand) */
+    --base-color-purple-50: #faf5ff;
+    --base-color-purple-100: #f3e8ff;
+    --base-color-purple-200: #e9d5ff;
+    --base-color-purple-300: #d8b4fe;
+    --base-color-purple-400: #c084fc;
+    --base-color-purple-500: #a855f7;
+    --base-color-purple-600: #9333ea;
+    --base-color-purple-700: #7e22ce;
+    --base-color-purple-800: #6b21a8;
+    --base-color-purple-900: #581c87;
+    --base-color-purple-950: #3b0764;
 
-    /* Base Colors - Status */
-    --base-color-green-500: #16a34a;
+    /* Base Colors - Violet (Secondary) */
+    --base-color-violet-50: #f5f3ff;
+    --base-color-violet-100: #ede9fe;
+    --base-color-violet-200: #ddd6fe;
+    --base-color-violet-300: #c4b5fd;
+    --base-color-violet-400: #a78bfa;
+    --base-color-violet-500: #8b5cf6;
+    --base-color-violet-600: #7c3aed;
+    --base-color-violet-700: #6d28d9;
+    --base-color-violet-800: #5b21b6;
+    --base-color-violet-900: #4c1d95;
+    --base-color-violet-950: #2e1065;
+
+    /* Base Colors - Neutral (DS Spec) */
+    --base-color-neutral-0: #ffffff;
+    --base-color-neutral-50: #fafafa;
+    --base-color-neutral-100: #f5f5f5;
+    --base-color-neutral-200: #e5e5e5;
+    --base-color-neutral-300: #d4d4d4;
+    --base-color-neutral-400: #a3a3a3;
+    --base-color-neutral-500: #737373;
+    --base-color-neutral-600: #525252;
+    --base-color-neutral-700: #404040;
+    --base-color-neutral-800: #262626;
+    --base-color-neutral-900: #171717;
+    --base-color-neutral-950: #0a0a0a;
+
+    /* Base Colors - Green (Success) */
+    --base-color-green-50: #f0fdf4;
+    --base-color-green-100: #dcfce7;
+    --base-color-green-200: #bbf7d0;
+    --base-color-green-300: #86efac;
+    --base-color-green-400: #4ade80;
+    --base-color-green-500: #22c55e;
+    --base-color-green-600: #16a34a;
+    --base-color-green-700: #15803d;
+    --base-color-green-800: #166534;
+    --base-color-green-900: #14532d;
+    --base-color-green-950: #052e16;
+
+    /* Base Colors - Red (Error) */
+    --base-color-red-50: #fef2f2;
+    --base-color-red-100: #fee2e2;
+    --base-color-red-200: #fecaca;
+    --base-color-red-300: #fca5a5;
+    --base-color-red-400: #f87171;
+    --base-color-red-500: #ef4444;
+    --base-color-red-600: #dc2626;
+    --base-color-red-700: #b91c1c;
+    --base-color-red-800: #991b1b;
+    --base-color-red-900: #7f1d1d;
+    --base-color-red-950: #450a0a;
+
+    /* Base Colors - Amber (Warning) */
+    --base-color-amber-50: #fffbeb;
+    --base-color-amber-100: #fef3c7;
+    --base-color-amber-200: #fde68a;
+    --base-color-amber-300: #fcd34d;
+    --base-color-amber-400: #fbbf24;
     --base-color-amber-500: #f59e0b;
-    --base-color-red-500: #dc2626;
-    --base-color-cyan-500: #0284c7;
+    --base-color-amber-600: #d97706;
+    --base-color-amber-700: #b45309;
+    --base-color-amber-800: #92400e;
+    --base-color-amber-900: #78350f;
+    --base-color-amber-950: #451a03;
+
+    /* Base Colors - Sky (Info) */
+    --base-color-sky-50: #f0f9ff;
+    --base-color-sky-100: #e0f2fe;
+    --base-color-sky-200: #bae6fd;
+    --base-color-sky-300: #7dd3fc;
+    --base-color-sky-400: #38bdf8;
+    --base-color-sky-500: #0ea5e9;
+    --base-color-sky-600: #0284c7;
+    --base-color-sky-700: #0369a1;
+    --base-color-sky-800: #075985;
+    --base-color-sky-900: #0c4a6e;
+    --base-color-sky-950: #082f49;
 
     /* Base Typography */
     --base-font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    --base-font-size-xs: 0.75rem;    /* 12px */
-    --base-font-size-sm: 0.875rem;   /* 14px */
-    --base-font-size-md: 1rem;       /* 16px */
-    --base-font-size-lg: 1.125rem;   /* 18px */
-    --base-font-size-xl: 1.25rem;    /* 20px */
-    --base-font-size-2xl: 1.5rem;    /* 24px */
-    --base-font-size-3xl: 2rem;      /* 32px */
-    
+    --base-font-size-xs: 0.75rem;
+    /* 12px */
+    --base-font-size-sm: 0.875rem;
+    /* 14px */
+    --base-font-size-md: 1rem;
+    /* 16px */
+    --base-font-size-lg: 1.125rem;
+    /* 18px */
+    --base-font-size-xl: 1.25rem;
+    /* 20px */
+    --base-font-size-2xl: 1.5rem;
+    /* 24px */
+    --base-font-size-3xl: 2rem;
+    /* 32px */
+
     --base-font-weight-regular: 400;
     --base-font-weight-medium: 500;
     --base-font-weight-semibold: 600;
-    
+
     --base-line-height-tight: 1.2;
     --base-line-height-normal: 1.5;
     --base-line-height-loose: 1.7;
 
     /* Base Spacing (4px base unit) */
     --base-space-0: 0;
-    --base-space-1: 0.25rem;   /* 4px */
-    --base-space-2: 0.5rem;    /* 8px */
-    --base-space-3: 0.75rem;   /* 12px */
-    --base-space-4: 1rem;      /* 16px */
-    --base-space-5: 1.25rem;   /* 20px */
-    --base-space-6: 1.5rem;    /* 24px */
-    --base-space-8: 2rem;      /* 32px */
-    --base-space-10: 2.5rem;   /* 40px */
-    --base-space-12: 3rem;     /* 48px */
+    --base-space-1: 0.25rem;
+    /* 4px */
+    --base-space-2: 0.5rem;
+    /* 8px */
+    --base-space-3: 0.75rem;
+    /* 12px */
+    --base-space-4: 1rem;
+    /* 16px */
+    --base-space-5: 1.25rem;
+    /* 20px */
+    --base-space-6: 1.5rem;
+    /* 24px */
+    --base-space-8: 2rem;
+    /* 32px */
+    --base-space-10: 2.5rem;
+    /* 40px */
+    --base-space-12: 3rem;
+    /* 48px */
 
     /* Base Radius */
-    --base-radius-sm: 0.375rem;  /* 6px */
-    --base-radius-md: 0.5rem;    /* 8px */
-    --base-radius-lg: 0.75rem;   /* 12px */
-    --base-radius-xl: 1rem;      /* 16px */
-    --base-radius-full: 624.9375rem; /* 9999px */
+    --base-radius-sm: 0.375rem;
+    /* 6px */
+    --base-radius-md: 0.5rem;
+    /* 8px */
+    --base-radius-lg: 0.75rem;
+    /* 12px */
+    --base-radius-xl: 1rem;
+    /* 16px */
+    --base-radius-full: 624.9375rem;
+    /* 9999px */
 
     /* Base Shadows */
     --base-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
@@ -88,93 +172,98 @@
        ============================================ */
 
     /* Semantic - Background Colors */
-    --semantic-bg-canvas: var(--base-color-gray-0);
-    --semantic-bg-surface: var(--base-color-gray-0);
-    --semantic-bg-subtle: var(--base-color-gray-50);
-    --semantic-bg-sunken: var(--base-color-gray-100);
+    --semantic-bg-canvas: var(--base-color-neutral-0);
+    --semantic-bg-surface: var(--base-color-neutral-0);
+    --semantic-bg-subtle: var(--base-color-neutral-50);
+    --semantic-bg-sunken: var(--base-color-neutral-100);
 
     /* Semantic - Text Colors */
-    --semantic-text-primary: var(--base-color-gray-900);
-    --semantic-text-secondary: var(--base-color-gray-600);
-    --semantic-text-muted: var(--base-color-gray-500);
-    --semantic-text-inverse: var(--base-color-gray-0);
+    --semantic-text-primary: var(--base-color-neutral-900);
+    --semantic-text-secondary: var(--base-color-neutral-600);
+    --semantic-text-muted: var(--base-color-neutral-500);
+    --semantic-text-inverse: var(--base-color-neutral-0);
     --semantic-text-danger: var(--base-color-red-500);
 
     /* Semantic - Border Colors */
-    --semantic-border-default: var(--base-color-gray-200);
-    --semantic-border-muted: var(--base-color-gray-100);
-    --semantic-border-strong: var(--base-color-gray-300);
-    --semantic-border-focus: var(--base-color-blue-500);
+    --semantic-border-default: var(--base-color-neutral-200);
+    --semantic-border-muted: var(--base-color-neutral-100);
+    --semantic-border-strong: var(--base-color-neutral-300);
+    --semantic-border-focus: var(--base-color-purple-500);
     --semantic-border-danger: var(--base-color-red-500);
 
-    /* Semantic - Action Colors (Primary) */
-    --semantic-action-primary-bg: var(--base-color-blue-500);
-    --semantic-action-primary-bg-hover: var(--base-color-blue-600);
-    --semantic-action-primary-bg-active: var(--base-color-blue-700);
-    --semantic-action-primary-fg: var(--base-color-gray-0);
+    /* Semantic - Action Colors (Primary) - PURPLE */
+    --semantic-action-primary-bg: var(--base-color-purple-600);
+    --semantic-action-primary-bg-hover: var(--base-color-purple-700);
+    --semantic-action-primary-bg-active: var(--base-color-purple-800);
+    --semantic-action-primary-fg: var(--base-color-neutral-0);
 
     /* Semantic - Action Colors (Secondary) */
-    --semantic-action-secondary-bg: var(--base-color-gray-0);
-    --semantic-action-secondary-bg-hover: var(--base-color-gray-50);
-    --semantic-action-secondary-bg-active: var(--base-color-gray-100);
-    --semantic-action-secondary-fg: var(--base-color-gray-900);
-    --semantic-action-secondary-border: var(--base-color-gray-200);
+    --semantic-action-secondary-bg: var(--base-color-neutral-0);
+    --semantic-action-secondary-bg-hover: var(--base-color-neutral-50);
+    --semantic-action-secondary-bg-active: var(--base-color-neutral-100);
+    --semantic-action-secondary-fg: var(--base-color-neutral-900);
+    --semantic-action-secondary-border: var(--base-color-neutral-200);
 
     /* Semantic - Action Colors (Ghost) */
     --semantic-action-ghost-bg: transparent;
-    --semantic-action-ghost-bg-hover: var(--base-color-gray-50);
-    --semantic-action-ghost-fg: var(--base-color-gray-900);
+    --semantic-action-ghost-bg-hover: var(--base-color-neutral-50);
+    --semantic-action-ghost-fg: var(--base-color-neutral-900);
 
     /* Semantic - Action Colors (Danger) */
     --semantic-action-danger-bg: var(--base-color-red-500);
     --semantic-action-danger-bg-hover: var(--base-color-red-500);
-    --semantic-action-danger-fg: var(--base-color-gray-0);
+    --semantic-action-danger-fg: var(--base-color-neutral-0);
 
-    /* Semantic - Action Colors (Link) */
-    --semantic-action-link-fg: var(--base-color-blue-600);
-    --semantic-action-link-fg-hover: var(--base-color-blue-700);
+    /* Semantic - Action Colors (Link) - PURPLE */
+    --semantic-action-link-fg: var(--base-color-purple-600);
+    --semantic-action-link-fg-hover: var(--base-color-purple-700);
 
     /* Semantic - Status Colors */
     --semantic-status-success-bg: var(--base-color-green-500);
-    --semantic-status-success-fg: var(--base-color-gray-0);
+    --semantic-status-success-fg: var(--base-color-neutral-0);
     --semantic-status-warning-bg: var(--base-color-amber-500);
-    --semantic-status-warning-fg: var(--base-color-gray-900);
+    --semantic-status-warning-fg: var(--base-color-neutral-900);
     --semantic-status-danger-bg: var(--base-color-red-500);
-    --semantic-status-danger-fg: var(--base-color-gray-0);
-    --semantic-status-info-bg: var(--base-color-cyan-500);
-    --semantic-status-info-fg: var(--base-color-gray-0);
+    --semantic-status-danger-fg: var(--base-color-neutral-0);
+    --semantic-status-info-bg: var(--base-color-sky-600);
+    --semantic-status-info-fg: var(--base-color-neutral-0);
 
     /* Semantic - Typography */
     --semantic-typography-body-size: var(--base-font-size-md);
     --semantic-typography-body-weight: var(--base-font-weight-regular);
     --semantic-typography-body-line-height: var(--base-line-height-normal);
-    
+
     --semantic-typography-label-size: var(--base-font-size-sm);
     --semantic-typography-label-weight: var(--base-font-weight-medium);
     --semantic-typography-label-line-height: var(--base-line-height-normal);
-    
+
     --semantic-typography-caption-size: var(--base-font-size-sm);
     --semantic-typography-caption-weight: var(--base-font-weight-regular);
     --semantic-typography-caption-line-height: var(--base-line-height-normal);
-    
+
     --semantic-typography-h1-size: var(--base-font-size-3xl);
     --semantic-typography-h1-weight: var(--base-font-weight-semibold);
     --semantic-typography-h1-line-height: var(--base-line-height-tight);
-    
+
     --semantic-typography-h2-size: var(--base-font-size-2xl);
     --semantic-typography-h2-weight: var(--base-font-weight-semibold);
     --semantic-typography-h2-line-height: var(--base-line-height-tight);
-    
+
     --semantic-typography-h3-size: var(--base-font-size-xl);
     --semantic-typography-h3-weight: var(--base-font-weight-semibold);
     --semantic-typography-h3-line-height: var(--base-line-height-tight);
 
     /* Semantic - Spacing */
-    --semantic-space-xs: var(--base-space-2);   /* 8px */
-    --semantic-space-sm: var(--base-space-3);   /* 12px */
-    --semantic-space-md: var(--base-space-4);   /* 16px */
-    --semantic-space-lg: var(--base-space-6);   /* 24px */
-    --semantic-space-xl: var(--base-space-8);   /* 32px */
+    --semantic-space-xs: var(--base-space-2);
+    /* 8px */
+    --semantic-space-sm: var(--base-space-3);
+    /* 12px */
+    --semantic-space-md: var(--base-space-4);
+    /* 16px */
+    --semantic-space-lg: var(--base-space-6);
+    /* 24px */
+    --semantic-space-xl: var(--base-space-8);
+    /* 32px */
 
     /* Semantic - Shape (Radius) */
     --semantic-shape-radius-control: var(--base-radius-md);
@@ -187,6 +276,15 @@
     --semantic-shape-shadow-card: var(--base-shadow-md);
     --semantic-shape-shadow-modal: var(--base-shadow-lg);
 
+    /* Purple Shadow Variants (DS Spec) */
+    --shadow-purple-sm: 0 1px 3px 0 rgba(147, 51, 234, 0.2);
+    --shadow-purple-md: 0 4px 6px -1px rgba(147, 51, 234, 0.2), 0 2px 4px -2px rgba(147, 51, 234, 0.15);
+    --shadow-purple-lg: 0 10px 15px -3px rgba(147, 51, 234, 0.2), 0 4px 6px -4px rgba(147, 51, 234, 0.15);
+    --shadow-purple-xl: 0 20px 25px -5px rgba(147, 51, 234, 0.25), 0 8px 10px -6px rgba(147, 51, 234, 0.2);
+
+    /* Purple Glow Effect (DS Spec) */
+    --glow-purple: 0 0 0 3px rgba(147, 51, 234, 0.1), 0 0 0 1px rgba(147, 51, 234, 0.3);
+
     /* Transitions (kept from original) */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -197,24 +295,53 @@
     --shadow-glow: 0 0 20px rgba(76, 111, 255, 0.15);
   }
 
-  /* Dark theme support (future enhancement) */
-  [data-theme="dark"] {
+  /* Dark Mode Support (DS Spec - using .dark class) */
+  .dark {
     /* Background Colors */
-    --semantic-bg-canvas: var(--base-color-gray-900);
-    --semantic-bg-surface: var(--base-color-gray-800);
-    --semantic-bg-subtle: var(--base-color-gray-700);
-    --semantic-bg-sunken: var(--base-color-gray-600);
+    --semantic-bg-canvas: var(--base-color-neutral-950);
+    --semantic-bg-surface: var(--base-color-neutral-900);
+    --semantic-bg-subtle: var(--base-color-neutral-800);
+    --semantic-bg-sunken: var(--base-color-neutral-800);
 
-    /* Text Colors */
-    --semantic-text-primary: var(--base-color-gray-0);
-    --semantic-text-secondary: var(--base-color-gray-400);
-    --semantic-text-muted: var(--base-color-gray-500);
-    --semantic-text-inverse: var(--base-color-gray-900);
+    /* Text Colors - use neutral-50 not white, purple-400 for brand */
+    --semantic-text-primary: var(--base-color-neutral-50);
+    --semantic-text-secondary: var(--base-color-neutral-400);
+    --semantic-text-muted: var(--base-color-neutral-500);
+    --semantic-text-inverse: var(--base-color-neutral-950);
 
     /* Border Colors */
-    --semantic-border-default: var(--base-color-gray-700);
-    --semantic-border-muted: var(--base-color-gray-800);
-    --semantic-border-strong: var(--base-color-gray-600);
+    --semantic-border-default: var(--base-color-neutral-700);
+    --semantic-border-muted: var(--base-color-neutral-800);
+    --semantic-border-strong: var(--base-color-neutral-600);
+    /* Focus stays purple-500 */
+
+    /* Action Colors - Primary stays purple-600, hover becomes purple-500 */
+    --semantic-action-primary-bg-hover: var(--base-color-purple-500);
+    --semantic-action-primary-bg-active: var(--base-color-purple-700);
+
+    /* Action Colors - Secondary */
+    --semantic-action-secondary-bg: var(--base-color-neutral-800);
+    --semantic-action-secondary-bg-hover: var(--base-color-neutral-700);
+    --semantic-action-secondary-bg-active: var(--base-color-neutral-600);
+    --semantic-action-secondary-border: var(--base-color-neutral-700);
+
+    /* Action Colors - Ghost/Tertiary */
+    --semantic-action-ghost-bg-hover: var(--base-color-purple-950);
+
+    /* Link Colors - use purple-400 for better visibility */
+    --semantic-action-link-fg: var(--base-color-purple-400);
+    --semantic-action-link-fg-hover: var(--base-color-purple-300);
+
+    /* Status backgrounds for dark mode */
+    --semantic-status-success-bg: var(--base-color-green-950);
+    --semantic-status-warning-bg: var(--base-color-amber-950);
+    --semantic-status-danger-bg: var(--base-color-red-950);
+    --semantic-status-info-bg: var(--base-color-sky-950);
+
+    /* Purple shadows - higher opacity for visibility in dark mode */
+    --shadow-purple-sm: 0 1px 3px 0 rgba(147, 51, 234, 0.3);
+    --shadow-purple-md: 0 4px 6px -1px rgba(147, 51, 234, 0.3), 0 2px 4px -2px rgba(147, 51, 234, 0.2);
+    --glow-purple: 0 0 0 3px rgba(147, 51, 234, 0.2), 0 0 0 1px rgba(147, 51, 234, 0.4);
   }
 
   * {
@@ -295,7 +422,7 @@
   }
 
   .bg-gradient-mesh {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--base-color-purple-600) 0%, var(--base-color-violet-600) 100%);
   }
 
   /* Focus states */
@@ -481,6 +608,7 @@
     overflow: hidden;
   }
 }
+
 /* RTL Support for Arabic */
 [dir="rtl"] {
   direction: rtl;
@@ -527,11 +655,11 @@
     width: 100vw;
     margin-left: calc(-50vw + 50%);
   }
-  
+
   .mobile-card {
     @apply rounded-lg shadow-sm;
   }
-  
+
   .mobile-list-item {
     @apply p-4 bg-white border-b border-gray-100 active:bg-gray-50 transition-colors;
   }
@@ -543,6 +671,7 @@
     transform: translateX(100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -559,6 +688,7 @@
     transform: scale(0.95);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
