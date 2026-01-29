@@ -153,7 +153,7 @@ export default function PickupOrders() {
                         }
                         value={metrics.ready}
                         label="Prontos"
-                        iconBgColor="bg-warning-100"
+                        iconVariant="warning"
                     />
                     <KPICard
                         icon={
@@ -163,7 +163,7 @@ export default function PickupOrders() {
                         }
                         value={`${metrics.avgWait} min`}
                         label="Tempo médio"
-                        iconBgColor="bg-primary-100"
+                        iconVariant="primary"
                     />
                     <KPICard
                         icon={
@@ -173,7 +173,7 @@ export default function PickupOrders() {
                         }
                         value={metrics.called}
                         label="Chamados"
-                        iconBgColor="bg-success-100"
+                        iconVariant="success"
                     />
                 </div>
 
