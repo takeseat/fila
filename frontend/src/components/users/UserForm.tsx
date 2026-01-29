@@ -218,7 +218,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                     <Button
                         type="submit"
                         variant="primary"
-                        loading={loading}
+                        isLoading={loading}
                     >
                         {isEditing ? t('actions.save') : t('actions.create')}
                     </Button>
