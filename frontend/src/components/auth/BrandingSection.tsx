@@ -20,7 +20,7 @@ export function BrandingSection({ className = '' }: BrandingSectionProps) {
                 <img
                     src="/assets/logo-dark.png"
                     alt="TakeSeat"
-                    className="h-10 w-auto"
+                    className="h-12 w-auto"
                     onError={(e) => {
                         // Fallback to text logo if image not found
                         e.currentTarget.style.display = 'none';

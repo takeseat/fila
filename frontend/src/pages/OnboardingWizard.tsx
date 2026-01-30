@@ -61,7 +61,7 @@ export function OnboardingWizard() {
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
                 <img
-                    className="mx-auto h-12 w-auto mb-6"
+                    className="mx-auto h-16 w-auto mb-6"
                     src="/assets/logo-icon.png"
                     alt="TakeSeat"
                 />

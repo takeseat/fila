@@ -125,14 +125,14 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                             <img
                                 src="/assets/logo-dark.png"
                                 alt="TakeSeat"
-                                className="h-8 w-auto"
+                                className="h-9 w-auto" // Slightly larger for better readability
                             />
                         )}
                         {isSidebarCollapsed && (
                             <img
                                 src="/assets/logo-icon.png"
                                 alt="TakeSeat"
-                                className="h-10 w-10"
+                                className="h-11 w-11" // Adjusted for the new square icon
                             />
                         )}
                         <button

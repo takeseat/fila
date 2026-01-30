@@ -49,7 +49,7 @@ export function Login() {
                 <img
                     src="/assets/logo-light.png"
                     alt="TakeSeat"
-                    className="h-8 w-auto mx-auto mb-2"
+                    className="h-10 w-auto mx-auto mb-2"
                     onError={(e) => {
                         e.currentTarget.style.display = 'none';
                         const textLogo = document.createElement('div');
