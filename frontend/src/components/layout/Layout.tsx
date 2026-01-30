@@ -161,15 +161,15 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                             className={`
                                             w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
                                             ${isSubmenuActive
-                                                    ? 'bg-purple-50 text-purple-600 font-semibold dark:bg-purple-950 dark:text-purple-400'
+                                                    ? 'bg-terracotta-50 text-terracotta-700 font-semibold dark:bg-terracotta-950 dark:text-terracotta-400'
                                                     : 'text-text-secondary hover:bg-bg-subtle hover:text-text-primary'
                                                 }
                                         `}
                                         >
                                             {isSubmenuActive && (
-                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-purple-600 rounded-r-full" />
+                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-terracotta-600 rounded-r-full" />
                                             )}
-                                            <span className={`transition-colors ${isSubmenuActive ? 'text-purple-600' : 'text-text-muted group-hover:text-text-secondary'}`}>
+                                            <span className={`transition-colors ${isSubmenuActive ? 'text-terracotta-600' : 'text-text-muted group-hover:text-text-secondary'}`}>
                                                 {item.icon}
                                             </span>
                                             {!isSidebarCollapsed && (
@@ -199,9 +199,9 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                             title={isSidebarCollapsed ? item.label : undefined}
                                         >
                                             {isActive && (
-                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-purple-600 rounded-r-full" />
+                                                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-terracotta-600 rounded-r-full" />
                                             )}
-                                            <span className={`transition-colors ${isActive ? 'text-purple-600' : 'text-text-muted group-hover:text-text-secondary'}`}>
+                                            <span className={`transition-colors ${isActive ? 'text-terracotta-600' : 'text-text-muted group-hover:text-text-secondary'}`}>
                                                 {item.icon}
                                             </span>
                                             {!isSidebarCollapsed && (
@@ -224,7 +224,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                                             className={`
                                                         flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors
                                                         ${isSubActive
-                                                                    ? 'bg-purple-100 text-purple-700 font-medium dark:bg-purple-900 dark:text-purple-300'
+                                                                    ? 'bg-terracotta-100 text-terracotta-700 font-medium dark:bg-terracotta-900 dark:text-terracotta-300'
                                                                     : 'text-text-secondary hover:bg-bg-subtle hover:text-text-primary'
                                                                 }
                                                     `}
@@ -245,7 +245,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                     {/* User Section */}
                     <div className="p-4 border-t border-border-default">
                         <div className={`flex items-center gap-3 p-3 rounded-xl bg-bg-subtle ${isSidebarCollapsed ? 'justify-center' : ''}`}>
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-terracotta-500 to-terracotta-600 flex items-center justify-center text-neutral-0 font-semibold text-sm flex-shrink-0">
                                 {user?.name.charAt(0).toUpperCase()}
                             </div>
                             {!isSidebarCollapsed && (

@@ -78,14 +78,9 @@ export function Card({
     const variantStyles = {
         default: '',
         interactive: clsx(
-            'cursor-pointer transition-all duration-200',
-            'hover:border-purple-300 hover:shadow-purple-md',
-            'dark:hover:border-purple-700'
+            'cursor-pointer hover:shadow-lg transition-all duration-200 hover:border-terracotta-300 hover:shadow-terracotta-md dark:hover:border-terracotta-700',
         ),
-        featured: clsx(
-            'border-purple-200 shadow-purple-sm',
-            'dark:border-purple-800'
-        ),
+        featured: 'border-terracotta-200 shadow-terracotta-sm dark:border-terracotta-800',
     };
 
     return (

@@ -11,45 +11,58 @@
        Never use these directly in components!
        ============================================ */
 
-    /* Base Colors - Purple (Primary Brand) */
-    --base-color-purple-50: #faf5ff;
-    --base-color-purple-100: #f3e8ff;
-    --base-color-purple-200: #e9d5ff;
-    --base-color-purple-300: #d8b4fe;
-    --base-color-purple-400: #c084fc;
-    --base-color-purple-500: #a855f7;
-    --base-color-purple-600: #9333ea;
-    --base-color-purple-700: #7e22ce;
-    --base-color-purple-800: #6b21a8;
-    --base-color-purple-900: #581c87;
-    --base-color-purple-950: #3b0764;
+    /* Base Colors - Terracotta (Primary Brand - Restaurant Optimized) */
+    --base-color-terracotta-50: #fef7f3;
+    --base-color-terracotta-100: #fdede3;
+    --base-color-terracotta-200: #fbd9c7;
+    --base-color-terracotta-300: #f8bfa0;
+    --base-color-terracotta-400: #f49a6b;
+    --base-color-terracotta-500: #e07856;
+    --base-color-terracotta-600: #d4663f;
+    --base-color-terracotta-700: #b35333;
+    --base-color-terracotta-800: #8f4530;
+    --base-color-terracotta-900: #743c2b;
+    --base-color-terracotta-950: #3e1d16;
 
-    /* Base Colors - Violet (Secondary) */
-    --base-color-violet-50: #f5f3ff;
-    --base-color-violet-100: #ede9fe;
-    --base-color-violet-200: #ddd6fe;
-    --base-color-violet-300: #c4b5fd;
-    --base-color-violet-400: #a78bfa;
-    --base-color-violet-500: #8b5cf6;
-    --base-color-violet-600: #7c3aed;
-    --base-color-violet-700: #6d28d9;
-    --base-color-violet-800: #5b21b6;
-    --base-color-violet-900: #4c1d95;
-    --base-color-violet-950: #2e1065;
+    /* Base Colors - Coral (Secondary Accent) */
+    --base-color-coral-50: #fff5f3;
+    --base-color-coral-100: #ffe9e5;
+    --base-color-coral-200: #ffd7cf;
+    --base-color-coral-300: #ffb8ab;
+    --base-color-coral-400: #ff8e7a;
+    --base-color-coral-500: #f86b54;
+    --base-color-coral-600: #e5492f;
+    --base-color-coral-700: #c13821;
+    --base-color-coral-800: #a0311f;
+    --base-color-coral-900: #842f21;
+    --base-color-coral-950: #481509;
 
-    /* Base Colors - Neutral (DS Spec) */
+    /* Base Colors - Peach (Light Accent) */
+    --base-color-peach-50: #fff9f5;
+    --base-color-peach-100: #fff1e8;
+    --base-color-peach-200: #ffe2d1;
+    --base-color-peach-300: #ffcbaf;
+    --base-color-peach-400: #ffaa81;
+    --base-color-peach-500: #ff8a5b;
+    --base-color-peach-600: #f06a3a;
+    --base-color-peach-700: #d85328;
+    --base-color-peach-800: #b04423;
+    --base-color-peach-900: #8f3a20;
+    --base-color-peach-950: #4d1c0d;
+
+    /* Base Colors - Neutral (Warm Stone Tones) */
     --base-color-neutral-0: #ffffff;
-    --base-color-neutral-50: #fafafa;
-    --base-color-neutral-100: #f5f5f5;
-    --base-color-neutral-200: #e5e5e5;
-    --base-color-neutral-300: #d4d4d4;
-    --base-color-neutral-400: #a3a3a3;
-    --base-color-neutral-500: #737373;
-    --base-color-neutral-600: #525252;
-    --base-color-neutral-700: #404040;
-    --base-color-neutral-800: #262626;
-    --base-color-neutral-900: #171717;
-    --base-color-neutral-950: #0a0a0a;
+    --base-color-neutral-50: #fafaf9;
+    --base-color-neutral-100: #f5f5f4;
+    --base-color-neutral-200: #e7e5e4;
+    --base-color-neutral-300: #d6d3d1;
+    --base-color-neutral-400: #a8a29e;
+    --base-color-neutral-500: #78716c;
+    --base-color-neutral-600: #57534e;
+    --base-color-neutral-700: #44403c;
+    --base-color-neutral-800: #292524;
+    --base-color-neutral-900: #1c1917;
+    --base-color-neutral-950: #0c0a09;
 
     /* Base Colors - Green (Success) */
     --base-color-green-50: #f0fdf4;
@@ -188,13 +201,13 @@
     --semantic-border-default: var(--base-color-neutral-200);
     --semantic-border-muted: var(--base-color-neutral-100);
     --semantic-border-strong: var(--base-color-neutral-300);
-    --semantic-border-focus: var(--base-color-purple-500);
+    --semantic-border-focus: var(--base-color-terracotta-500);
     --semantic-border-danger: var(--base-color-red-500);
 
-    /* Semantic - Action Colors (Primary) - PURPLE */
-    --semantic-action-primary-bg: var(--base-color-purple-600);
-    --semantic-action-primary-bg-hover: var(--base-color-purple-700);
-    --semantic-action-primary-bg-active: var(--base-color-purple-800);
+    /* Semantic - Action Colors (Primary) - TERRACOTTA */
+    --semantic-action-primary-bg: var(--base-color-terracotta-500);
+    --semantic-action-primary-bg-hover: var(--base-color-terracotta-700);
+    --semantic-action-primary-bg-active: var(--base-color-terracotta-800);
     --semantic-action-primary-fg: var(--base-color-neutral-0);
 
     /* Semantic - Action Colors (Secondary) */
@@ -214,9 +227,9 @@
     --semantic-action-danger-bg-hover: var(--base-color-red-500);
     --semantic-action-danger-fg: var(--base-color-neutral-0);
 
-    /* Semantic - Action Colors (Link) - PURPLE */
-    --semantic-action-link-fg: var(--base-color-purple-600);
-    --semantic-action-link-fg-hover: var(--base-color-purple-700);
+    /* Semantic - Action Colors (Link) - TERRACOTTA */
+    --semantic-action-link-fg: var(--base-color-terracotta-500);
+    --semantic-action-link-fg-hover: var(--base-color-terracotta-700);
 
     /* Semantic - Status Colors */
     --semantic-status-success-bg: var(--base-color-green-500);
@@ -276,14 +289,14 @@
     --semantic-shape-shadow-card: var(--base-shadow-md);
     --semantic-shape-shadow-modal: var(--base-shadow-lg);
 
-    /* Purple Shadow Variants (DS Spec) */
-    --shadow-purple-sm: 0 1px 3px 0 rgba(147, 51, 234, 0.2);
-    --shadow-purple-md: 0 4px 6px -1px rgba(147, 51, 234, 0.2), 0 2px 4px -2px rgba(147, 51, 234, 0.15);
-    --shadow-purple-lg: 0 10px 15px -3px rgba(147, 51, 234, 0.2), 0 4px 6px -4px rgba(147, 51, 234, 0.15);
-    --shadow-purple-xl: 0 20px 25px -5px rgba(147, 51, 234, 0.25), 0 8px 10px -6px rgba(147, 51, 234, 0.2);
+    /* Terracotta Shadow Variants (DS Spec - Restaurant Brand) */
+    --shadow-terracotta-sm: 0 1px 3px 0 rgba(224, 120, 86, 0.2);
+    --shadow-terracotta-md: 0 4px 6px -1px rgba(224, 120, 86, 0.2), 0 2px 4px -2px rgba(224, 120, 86, 0.15);
+    --shadow-terracotta-lg: 0 10px 15px -3px rgba(224, 120, 86, 0.2), 0 4px 6px -4px rgba(224, 120, 86, 0.15);
+    --shadow-terracotta-xl: 0 20px 25px -5px rgba(224, 120, 86, 0.25), 0 8px 10px -6px rgba(224, 120, 86, 0.2);
 
-    /* Purple Glow Effect (DS Spec) */
-    --glow-purple: 0 0 0 3px rgba(147, 51, 234, 0.1), 0 0 0 1px rgba(147, 51, 234, 0.3);
+    /* Terracotta Glow Effect (Focus States) */
+    --glow-terracotta: 0 0 0 3px rgba(224, 120, 86, 0.1), 0 0 0 1px rgba(224, 120, 86, 0.3);
 
     /* Transitions (kept from original) */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);

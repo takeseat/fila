@@ -94,7 +94,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
             //Shadow
             'shadow-control',
-            'focus:shadow-glow-purple', // Purple glow on focus (DS Spec)
+            'focus:shadow-glow-terracotta', // Purple glow on focus (DS Spec)
 
             // Error state
             error && 'border-border-danger focus:ring-border-danger focus:border-border-danger',

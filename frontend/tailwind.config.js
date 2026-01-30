@@ -57,34 +57,45 @@ export default {
                 'action-link-fg-hover': 'var(--semantic-action-link-fg-hover)',
 
 
-                // Purple Primitive (Primary Brand) - DS Spec
-                purple: {
-                    50: 'var(--base-color-purple-50)',
-                    100: 'var(--base-color-purple-100)',
-                    200: 'var(--base-color-purple-200)',
-                    300: 'var(--base-color-purple-300)',
-                    400: 'var(--base-color-purple-400)',
-                    500: 'var(--base-color-purple-500)',
-                    600: 'var(--base-color-purple-600)',
-                    700: 'var(--base-color-purple-700)',
-                    800: 'var(--base-color-purple-800)',
-                    900: 'var(--base-color-purple-900)',
-                    950: 'var(--base-color-purple-950)',
+                // Brand Colors - Terracotta (Restaurant Optimized)
+                terracotta: {
+                    50: 'var(--base-color-terracotta-50)',
+                    100: 'var(--base-color-terracotta-100)',
+                    200: 'var(--base-color-terracotta-200)',
+                    300: 'var(--base-color-terracotta-300)',
+                    400: 'var(--base-color-terracotta-400)',
+                    500: 'var(--base-color-terracotta-500)',
+                    600: 'var(--base-color-terracotta-600)',
+                    700: 'var(--base-color-terracotta-700)',
+                    800: 'var(--base-color-terracotta-800)',
+                    900: 'var(--base-color-terracotta-900)',
+                    950: 'var(--base-color-terracotta-950)',
                 },
-
-                // Violet Primitive (Secondary) - DS Spec
-                violet: {
-                    50: 'var(--base-color-violet-50)',
-                    100: 'var(--base-color-violet-100)',
-                    200: 'var(--base-color-violet-200)',
-                    300: 'var(--base-color-violet-300)',
-                    400: 'var(--base-color-violet-400)',
-                    500: 'var(--base-color-violet-500)',
-                    600: 'var(--base-color-violet-600)',
-                    700: 'var(--base-color-violet-700)',
-                    800: 'var(--base-color-violet-800)',
-                    900: 'var(--base-color-violet-900)',
-                    950: 'var(--base-color-violet-950)',
+                coral: {
+                    50: 'var(--base-color-coral-50)',
+                    100: 'var(--base-color-coral-100)',
+                    200: 'var(--base-color-coral-200)',
+                    300: 'var(--base-color-coral-300)',
+                    400: 'var(--base-color-coral-400)',
+                    500: 'var(--base-color-coral-500)',
+                    600: 'var(--base-color-coral-600)',
+                    700: 'var(--base-color-coral-700)',
+                    800: 'var(--base-color-coral-800)',
+                    900: 'var(--base-color-coral-900)',
+                    950: 'var(--base-color-coral-950)',
+                },
+                peach: {
+                    50: 'var(--base-color-peach-50)',
+                    100: 'var(--base-color-peach-100)',
+                    200: 'var(--base-color-peach-200)',
+                    300: 'var(--base-color-peach-300)',
+                    400: 'var(--base-color-peach-400)',
+                    500: 'var(--base-color-peach-500)',
+                    600: 'var(--base-color-peach-600)',
+                    700: 'var(--base-color-peach-700)',
+                    800: 'var(--base-color-peach-800)',
+                    900: 'var(--base-color-peach-900)',
+                    950: 'var(--base-color-peach-950)',
                 },
 
                 // Neutral Primitive - DS Spec
@@ -225,12 +236,12 @@ export default {
                 'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
                 'premium': '0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06)',
 
-                // Purple Shadows (DS Spec)
-                'purple-sm': 'var(--shadow-purple-sm)',
-                'purple-md': 'var(--shadow-purple-md)',
-                'purple-lg': 'var(--shadow-purple-lg)',
-                'purple-xl': 'var(--shadow-purple-xl)',
-                'glow-purple': 'var(--glow-purple)',
+                //Terracotta Shadows (DS Spec - Restaurant Brand)
+                'terracotta-sm': 'var(--shadow-terracotta-sm)',
+                'terracotta-md': 'var(--shadow-terracotta-md)',
+                'terracotta-lg': 'var(--shadow-terracotta-lg)',
+                'terracotta-xl': 'var(--shadow-terracotta-xl)',
+                'glow-terracotta': 'var(--glow-terracotta)',
             },
 
             backdropBlur: {
