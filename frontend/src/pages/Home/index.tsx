@@ -7,6 +7,7 @@ import { usePlan } from '../../hooks/usePlan';
 import { useAuth } from '../../hooks/useAuth';
 import { Icon } from '@/design-system/icons/Icon';
 import { Button } from '../../components/ui/Button';
+import { Card } from '../../components/ui/Card';
 import { PageShell, PageContent } from '../../components/mobile/PageShell';
 import { MobilePageHeader } from '../../components/mobile/MobilePageHeader';
 
@@ -112,23 +113,25 @@ export const Home: React.FC = () => {
                     {/* LAYER 2: Journey Direction (Always Visible) */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Queue Card */}
-                        <div
+                        <Card
+                            variant="interactive"
                             onClick={handleQueueClick}
-                            className="group relative bg-bg-surface border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-primary-500 transition-all cursor-pointer overflow-hidden"
+                            className="group relative overflow-hidden h-full"
+                            padding="lg"
                         >
-                            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
                                 <Icon name="users" size={80} tone="inherit" />
                             </div>
 
-                            <div className="relative z-10 flex flex-col h-full justify-between">
+                            <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px]">
                                 <div>
-                                    <div className="flex items-center gap-3 mb-2 text-gray-500 group-hover:text-primary-600 transition-colors">
+                                    <div className="flex items-center gap-3 mb-2 text-text-muted group-hover:text-brand transition-colors">
                                         <Icon name="users" size="lg" tone="inherit" />
                                         <h2 className="text-lg font-medium">{t('layers.journey.queue.title')}</h2>
                                     </div>
                                     <div className="mt-4">
-                                        <p className="text-3xl font-bold text-gray-900">{queueCount}</p>
-                                        <p className="text-sm text-gray-500 mt-1">
+                                        <p className="text-3xl font-bold text-text-primary">{queueCount}</p>
+                                        <p className="text-sm text-text-secondary mt-1">
                                             {queueCount === 0
                                                 ? t('layers.journey.queue.status_empty')
                                                 : t('layers.journey.queue.status_normal', { count: queueCount })}
@@ -137,31 +140,33 @@ export const Home: React.FC = () => {
                                 </div>
 
                                 {/* Visual Indicator of "Action" */}
-                                <div className="mt-6 flex items-center text-primary-600 font-medium text-sm opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
+                                <div className="mt-6 flex items-center text-brand font-medium text-sm opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
                                     {t('layers.journey.queue.cta')} &rarr;
                                 </div>
                             </div>
-                        </div>
+                        </Card>
 
                         {/* Orders Card - Only if enabled */}
                         {canUsePickupOrders && (
-                            <div
+                            <Card
+                                variant="interactive"
                                 onClick={handleOrdersClick}
-                                className="group relative bg-bg-surface border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-blue-500 transition-all cursor-pointer overflow-hidden"
+                                className="group relative overflow-hidden h-full"
+                                padding="lg"
                             >
-                                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
                                     <Icon name="shoppingBag" size={80} tone="inherit" />
                                 </div>
 
-                                <div className="relative z-10 flex flex-col h-full justify-between">
+                                <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px]">
                                     <div>
-                                        <div className="flex items-center gap-3 mb-2 text-gray-500 group-hover:text-blue-600 transition-colors">
+                                        <div className="flex items-center gap-3 mb-2 text-text-muted group-hover:text-brand transition-colors">
                                             <Icon name="shoppingBag" size="lg" tone="inherit" />
                                             <h2 className="text-lg font-medium">{t('layers.journey.orders.title')}</h2>
                                         </div>
                                         <div className="mt-4">
-                                            <p className="text-3xl font-bold text-gray-900">{readyOrdersCount}</p>
-                                            <p className="text-sm text-gray-500 mt-1">
+                                            <p className="text-3xl font-bold text-text-primary">{readyOrdersCount}</p>
+                                            <p className="text-sm text-text-secondary mt-1">
                                                 {readyOrdersCount === 0
                                                     ? t('layers.journey.orders.status_empty')
                                                     : t('layers.journey.orders.status_ready', { count: readyOrdersCount })}
@@ -169,11 +174,11 @@ export const Home: React.FC = () => {
                                         </div>
                                     </div>
 
-                                    <div className="mt-6 flex items-center text-blue-600 font-medium text-sm opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
+                                    <div className="mt-6 flex items-center text-brand font-medium text-sm opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
                                         {t('layers.journey.orders.cta')} &rarr;
                                     </div>
                                 </div>
-                            </div>
+                            </Card>
                         )}
                     </div>
 
