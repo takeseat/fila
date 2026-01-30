@@ -192,7 +192,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                             className={`
                                             flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative
                                             ${isActive
-                                                    ? 'bg-purple-50 text-purple-600 font-semibold dark:bg-purple-950 dark:text-purple-400'
+                                                    ? 'bg-terracotta-50 text-terracotta-700 font-semibold dark:bg-terracotta-950 dark:text-terracotta-400'
                                                     : 'text-text-secondary hover:bg-bg-subtle hover:text-text-primary'
                                                 }
                                         `}

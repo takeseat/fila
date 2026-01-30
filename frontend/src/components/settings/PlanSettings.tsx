@@ -115,9 +115,9 @@ export function PlanSettings() {
                             </div>
 
                             {/* Pickup Orders Feature */}
-                            <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-purple-50 border border-purple-100">
-                                <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-purple-100 flex items-center justify-center">
-                                    <svg className="w-4 h-4 md:w-5 md:h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-terracotta-50 border border-terracotta-100">
+                                <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-terracotta-100 flex items-center justify-center">
+                                    <svg className="w-4 h-4 md:w-5 md:h-5 text-terracotta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                     </svg>
                                 </div>

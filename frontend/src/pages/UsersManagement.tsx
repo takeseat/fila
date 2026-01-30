@@ -61,7 +61,7 @@ export function UsersManagement() {
     const getRoleBadgeColor = (role: string) => {
         switch (role) {
             case 'ADMIN':
-                return 'bg-purple-100 text-purple-800';
+                return 'bg-terracotta-100 text-terracotta-800';
             case 'MANAGER':
                 return 'bg-blue-100 text-blue-800';
             case 'HOSTESS':
