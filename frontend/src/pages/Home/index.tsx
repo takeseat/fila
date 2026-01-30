@@ -5,7 +5,7 @@ import { useDashboardMetrics } from '../../hooks/useDashboardMetrics';
 import { usePickupOrders } from '../../hooks/usePickupOrders';
 import { usePlan } from '../../hooks/usePlan';
 import { useAuth } from '../../hooks/useAuth';
-import { Users, ShoppingBag, AlertTriangle, MessageSquare } from 'lucide-react';
+import { Icon } from '@/design-system/icons/Icon';
 import { Button } from '../../components/ui/Button';
 import { PageShell, PageContent } from '../../components/mobile/PageShell';
 import { MobilePageHeader } from '../../components/mobile/MobilePageHeader';
@@ -81,7 +81,7 @@ export const Home: React.FC = () => {
                         <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
                             <div className="flex items-start gap-4">
                                 <div className="bg-red-100 p-2 rounded-full hidden md:block">
-                                    <AlertTriangle className="w-6 h-6 text-red-600" />
+                                    <Icon name="warning" size="lg" tone="error" />
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-bold text-red-900">{t('trial_expired.title')}</h3>
@@ -102,7 +102,7 @@ export const Home: React.FC = () => {
                                     key={idx}
                                     className="bg-amber-50 border border-amber-200 rounded-lg p-4 flex items-center gap-3 text-amber-800"
                                 >
-                                    <AlertTriangle className="flex-shrink-0 w-5 h-5" />
+                                    <Icon name="warning" size="md" tone="warning" />
                                     <span className="font-medium text-sm">{alert.message}</span>
                                 </div>
                             ))}
@@ -117,13 +117,13 @@ export const Home: React.FC = () => {
                             className="group relative bg-bg-surface border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-primary-500 transition-all cursor-pointer overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                                <Users size={80} />
+                                <Icon name="users" size={80} tone="inherit" />
                             </div>
 
                             <div className="relative z-10 flex flex-col h-full justify-between">
                                 <div>
                                     <div className="flex items-center gap-3 mb-2 text-gray-500 group-hover:text-primary-600 transition-colors">
-                                        <Users className="w-6 h-6" />
+                                        <Icon name="users" size="lg" tone="inherit" />
                                         <h2 className="text-lg font-medium">{t('layers.journey.queue.title')}</h2>
                                     </div>
                                     <div className="mt-4">
@@ -150,13 +150,13 @@ export const Home: React.FC = () => {
                                 className="group relative bg-bg-surface border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md hover:border-blue-500 transition-all cursor-pointer overflow-hidden"
                             >
                                 <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
-                                    <ShoppingBag size={80} />
+                                    <Icon name="shoppingBag" size={80} tone="inherit" />
                                 </div>
 
                                 <div className="relative z-10 flex flex-col h-full justify-between">
                                     <div>
                                         <div className="flex items-center gap-3 mb-2 text-gray-500 group-hover:text-blue-600 transition-colors">
-                                            <ShoppingBag className="w-6 h-6" />
+                                            <Icon name="shoppingBag" size="lg" tone="inherit" />
                                             <h2 className="text-lg font-medium">{t('layers.journey.orders.title')}</h2>
                                         </div>
                                         <div className="mt-4">
@@ -181,7 +181,7 @@ export const Home: React.FC = () => {
                     <div className="bg-gradient-to-r from-gray-50 to-white border border-gray-100 rounded-lg p-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
                             <div className="bg-primary-50 p-2 rounded-full text-primary-600">
-                                <MessageSquare className="w-5 h-5" />
+                                <Icon name="message" size="md" tone="brand" />
                             </div>
                             <span className="text-gray-700 font-medium text-sm">
                                 {t('layers.communication.nps_question')}

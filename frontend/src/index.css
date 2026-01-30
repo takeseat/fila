@@ -197,6 +197,16 @@
     --semantic-text-inverse: var(--base-color-neutral-0);
     --semantic-text-danger: var(--base-color-red-500);
 
+    /* Icon System - Text Colors (for Icon component tone mapping) */
+    --text-primary: var(--base-color-neutral-900);
+    --text-secondary: var(--base-color-neutral-600);
+    --text-tertiary: var(--base-color-neutral-500);
+    --text-brand: var(--base-color-terracotta-600);
+    --text-success: var(--base-color-green-600);
+    --text-warning: var(--base-color-amber-600);
+    --text-error: var(--base-color-red-600);
+    --text-info: var(--base-color-sky-600);
+
     /* Semantic - Border Colors */
     --semantic-border-default: var(--base-color-neutral-200);
     --semantic-border-muted: var(--base-color-neutral-100);
@@ -321,6 +331,16 @@
     --semantic-text-secondary: var(--base-color-neutral-400);
     --semantic-text-muted: var(--base-color-neutral-500);
     --semantic-text-inverse: var(--base-color-neutral-950);
+
+    /* Icon System - Text Colors (Dark Mode) */
+    --text-primary: var(--base-color-neutral-50);
+    --text-secondary: var(--base-color-neutral-400);
+    --text-tertiary: var(--base-color-neutral-500);
+    --text-brand: var(--base-color-terracotta-400);
+    --text-success: var(--base-color-green-400);
+    --text-warning: var(--base-color-amber-400);
+    --text-error: var(--base-color-red-400);
+    --text-info: var(--base-color-sky-400);
 
     /* Border Colors */
     --semantic-border-default: var(--base-color-neutral-700);

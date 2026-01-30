@@ -1,5 +1,5 @@
 import { useImpersonation } from '../contexts/ImpersonationContext';
-import { X, Shield } from 'lucide-react';
+import { Icon } from '@/design-system/icons/Icon';
 
 export function ImpersonationBanner() {
     const { isImpersonating, impersonationData, exitImpersonation } = useImpersonation();
@@ -26,7 +26,7 @@ export function ImpersonationBanner() {
             }}
         >
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <Shield size={20} />
+                <Icon name="shield" size="md" tone="inherit" ariaLabel="Support mode" />
                 <div>
                     <div style={{ fontWeight: '600', fontSize: '0.875rem' }}>
                         Support Mode Active
@@ -60,7 +60,7 @@ export function ImpersonationBanner() {
                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.2)';
                 }}
             >
-                <X size={16} />
+                <Icon name="close" size="sm" tone="inherit" />
                 Exit Support Mode
             </button>
         </div>
