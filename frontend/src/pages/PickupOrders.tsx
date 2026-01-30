@@ -6,7 +6,7 @@ import { Button, Input, EmptyState } from '../components/ui';
 import CreatePickupOrderModal from '../components/pickup-orders/CreatePickupOrderModal';
 import { PageShell, PageContent } from '../components/mobile/PageShell';
 import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
-import { KPICard } from '../components/pickup-orders/KPICard';
+import { KPICard } from '../components/ui/KPICard';
 import { OrderCard } from '../components/pickup-orders/OrderCard';
 import { FilterChips } from '../components/pickup-orders/FilterChips';
 import { Icon } from '../design-system/icons/Icon';

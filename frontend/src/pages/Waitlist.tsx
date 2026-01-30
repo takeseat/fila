@@ -5,6 +5,7 @@ import api from '../lib/api';
 import { usePlan } from '../hooks/usePlan';
 import { Button, Input, EmptyState, Spinner } from '../components/ui';
 import { Modal } from '../components/ui/Modal';
+import { KPICard } from '../components/ui/KPICard';
 import { WaitlistCard } from '../components/waitlist/WaitlistCard';
 import { Icon } from '../design-system/icons/Icon';
 import { PageShell, PageContent } from '../components/mobile/PageShell';
@@ -338,55 +339,36 @@ export function Waitlist() {
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div className="bg-bg-surface border border-border-default rounded-card shadow-card p-3 md:p-5">
-                        <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-2 md:gap-3">
-                            <div className="w-8 h-8 md:w-12 md:h-12 bg-warning-100 rounded-lg md:rounded-xl flex items-center justify-center">
-                                <Icon name="users" className="w-4 h-4 md:w-6 md:h-6 text-warning-600" />
-                            </div>
-                            <div>
-                                <p className="text-xs md:text-sm font-medium text-text-secondary truncate">{t('stats.inQueue')}</p>
-                                <p className="text-xl md:text-3xl font-bold text-text-primary">{activeEntries.length}</p>
-                            </div>
-                        </div>
-                    </div>
+                <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-3">
+                    <KPICard
+                        icon={
+                            <Icon name="users" className="w-4 h-4 md:w-6 md:h-6 text-warning-600" />
+                        }
+                        value={activeEntries.length}
+                        label={t('stats.inQueue')}
+                        iconVariant="warning"
+                    />
 
                     {/* Hidden on mobile to save space, or moved to bottom if critical */}
-                    <div className="hidden md:block bg-bg-surface border border-border-default rounded-card shadow-card p-5">
-                        <div className="flex items-center gap-3">
-                            <div className="w-12 h-12 bg-success-100 rounded-xl flex items-center justify-center">
+                    <div className="hidden md:block">
+                        <KPICard
+                            icon={
                                 <Icon name="check" className="w-6 h-6 text-success-600" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-medium text-text-secondary">{t('stats.servedToday')}</p>
-                                <p className="text-3xl font-bold text-text-primary">
-                                    {metrics?.servedToday ?? 0}
-                                </p>
-                            </div>
-                        </div>
+                            }
+                            value={metrics?.servedToday ?? 0}
+                            label={t('stats.servedToday')}
+                            iconVariant="success"
+                        />
                     </div>
 
-                    <div className="bg-bg-surface border border-border-default rounded-card shadow-card p-3 md:p-5">
-                        <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-2 md:gap-3">
-                            <div className="w-8 h-8 md:w-12 md:h-12 bg-primary-100 rounded-lg md:rounded-xl flex items-center justify-center">
-                                <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6 text-primary-600" />
-                            </div>
-                            <div>
-                                <p className="text-xs md:text-sm font-medium text-text-secondary truncate">
-                                    {t('stats.avgWaitTime')}
-                                </p>
-                                <div className="flex items-center justify-center md:justify-start gap-1 md:gap-2">
-                                    <p className="text-xl md:text-3xl font-bold text-text-primary">
-                                        {metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}
-                                        <span className="text-sm md:text-lg ml-1 font-normal text-text-secondary">min</span>
-                                    </p>
-                                    {metrics?.isFallbackUsed && (
-                                        <span title="Estimado" className="cursor-help w-2 h-2 rounded-full bg-light-300"></span>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <KPICard
+                        icon={
+                            <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6 text-primary-600" />
+                        }
+                        value={`${metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min`}
+                        label={t('stats.avgWaitTime')}
+                        iconVariant="primary"
+                    />
                 </div>
 
                 {/* Filters */}
