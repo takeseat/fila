@@ -9,6 +9,7 @@ import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
 import { KPICard } from '../components/pickup-orders/KPICard';
 import { OrderCard } from '../components/pickup-orders/OrderCard';
 import { FilterChips } from '../components/pickup-orders/FilterChips';
+import { Icon } from '../design-system/icons/Icon';
 
 export default function PickupOrders() {
     const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'called' | 'completed'>('pending');
@@ -120,9 +121,7 @@ export default function PickupOrders() {
                 subtitle="Chame clientes e finalize retiradas"
                 actions={
                     <Button onClick={() => setShowCreateModal(true)} size="sm" className="gap-2">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
+                        <Icon name="add" size="sm" />
                         Adicionar
                     </Button>
                 }
@@ -136,9 +135,7 @@ export default function PickupOrders() {
                         <p className="text-text-secondary">Chame clientes e finalize retiradas</p>
                     </div>
                     <Button onClick={() => setShowCreateModal(true)} size="lg" className="gap-2">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
+                        <Icon name="add" size="sm" />
                         Novo Pedido
                     </Button>
                 </div>
@@ -147,9 +144,7 @@ export default function PickupOrders() {
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-3">
                     <KPICard
                         icon={
-                            <svg className="w-4 h-4 md:w-6 md:h-6 text-warning-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                            </svg>
+                            <Icon name="layers" className="w-4 h-4 md:w-6 md:h-6 text-warning-600" />
                         }
                         value={metrics.ready}
                         label="Prontos"
@@ -157,9 +152,7 @@ export default function PickupOrders() {
                     />
                     <KPICard
                         icon={
-                            <svg className="w-4 h-4 md:w-6 md:h-6 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6 text-primary-600" />
                         }
                         value={`${metrics.avgWait} min`}
                         label="Tempo médio"
@@ -167,9 +160,7 @@ export default function PickupOrders() {
                     />
                     <KPICard
                         icon={
-                            <svg className="w-4 h-4 md:w-6 md:h-6 text-success-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
+                            <Icon name="notify" className="w-4 h-4 md:w-6 md:h-6 text-success-600" />
                         }
                         value={metrics.called}
                         label="Chamados"
@@ -188,9 +179,7 @@ export default function PickupOrders() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         leftIcon={
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
+                            <Icon name="search" size="sm" />
                         }
                     />
                 </div>
@@ -200,9 +189,7 @@ export default function PickupOrders() {
                     <div className="bg-bg-surface border border-border-default rounded-card shadow-card">
                         <EmptyState
                             icon={
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-full h-full">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                </svg>
+                                <Icon name="layers" className="w-full h-full text-text-secondary" />
                             }
                             title="Nenhum pedido encontrado"
                             description={searchTerm || activeFilter !== 'all'

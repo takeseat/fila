@@ -1,4 +1,5 @@
 import { Button, Progress, Badge, Card } from '../ui';
+import { Icon } from '../../design-system/icons/Icon';
 
 interface OrderCardProps {
     order: {
@@ -58,6 +59,13 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
         timerClass = 'text-status-warning-fg font-bold';
     }
 
+    // Map timer class to tone
+    const getTimerTone = () => {
+        if (!isCompleted && minutesWaiting > 30) return 'error';
+        if (!isCompleted && minutesWaiting > 15) return 'warning';
+        return 'primary';
+    };
+
     return (
         <Card padding="md" className={`hover:shadow-xl transition-all duration-200 relative overflow-hidden ${borderClass}`}>
             {/* Header */}
@@ -72,9 +80,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             {order.customerName}
                         </h3>
                         <p className="text-sm text-text-secondary flex items-center gap-2">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                            </svg>
+                            <Icon name="smartphone" size="sm" />
                             {order.customerPhone}
                         </p>
                     </div>
@@ -86,10 +92,8 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
             <div className="grid grid-cols-2 gap-3 mb-4">
                 <div className="bg-bg-subtle rounded-control p-3">
                     <p className="text-xs text-text-secondary mb-1">Código</p>
-                    <p className="text-lg font-semibold text-text-primary flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-                        </svg>
+                    <p className="text-lg font-semibold text-text-primary flex items-center gap-2">
+                        <Icon name="hash" size="sm" />
                         {order.orderCode}
                     </p>
                 </div>
@@ -99,9 +103,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                     <div className="bg-bg-subtle rounded-control p-3">
                         <p className="text-xs text-text-secondary mb-1">Tempo aguardando</p>
                         <p className={`text-lg font-semibold flex items-center gap-2 ${timerClass}`}>
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <Icon name="waitTime" size="sm" tone={getTimerTone()} />
                             <span>{minutesWaiting} min</span>
                         </p>
                     </div>
@@ -133,9 +135,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             className="flex-1"
                             size="sm"
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
+                            <Icon name="check" size="sm" className="mr-2" />
                             Marcar Pronto
                         </Button>
                         <Button
@@ -145,9 +145,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             size="sm"
                             className="px-2"
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
+                            <Icon name="notify" size="sm" />
                         </Button>
                     </>
                 )}
@@ -161,9 +159,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             variant="secondary"
                             size="sm"
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
+                            <Icon name="notify" size="sm" className={order.whatsappSent ? 'mr-2' : ''} />
                             {order.whatsappSent ? 'Chamar Novamente' : 'Chamar'}
                         </Button>
                         <Button
@@ -173,9 +169,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             className="flex-1"
                             size="sm"
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
+                            <Icon name="check" size="sm" className="mr-2" />
                             Entregar
                         </Button>
                         <Button
@@ -188,9 +182,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             variant="ghost"
                             size="sm"
                         >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <Icon name="close" size="sm" />
                         </Button>
                     </>
                 )}
