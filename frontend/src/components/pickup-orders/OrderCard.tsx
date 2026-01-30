@@ -80,7 +80,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                             {order.customerName}
                         </h3>
                         <p className="text-sm text-text-secondary flex items-center gap-2">
-                            <Icon name="smartphone" size="sm" />
+                            <Icon name="smartphone" size="sm" tone="secondary" />
                             {order.customerPhone}
                         </p>
                     </div>
@@ -93,7 +93,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
                 <div className="bg-bg-subtle rounded-control p-3">
                     <p className="text-xs text-text-secondary mb-1">Código</p>
                     <p className="text-lg font-semibold text-text-primary flex items-center gap-2">
-                        <Icon name="hash" size="sm" />
+                        <Icon name="hash" size="sm" tone="secondary" />
                         {order.orderCode}
                     </p>
                 </div>

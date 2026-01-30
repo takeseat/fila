@@ -342,7 +342,7 @@ export function Waitlist() {
                 <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-3">
                     <KPICard
                         icon={
-                            <Icon name="users" className="w-4 h-4 md:w-6 md:h-6 text-warning-600" />
+                            <Icon name="users" className="w-4 h-4 md:w-6 md:h-6" tone="inherit" />
                         }
                         value={activeEntries.length}
                         label={t('stats.inQueue')}
@@ -353,7 +353,7 @@ export function Waitlist() {
                     <div className="hidden md:block">
                         <KPICard
                             icon={
-                                <Icon name="check" className="w-6 h-6 text-success-600" />
+                                <Icon name="check" className="w-6 h-6" tone="inherit" />
                             }
                             value={metrics?.servedToday ?? 0}
                             label={t('stats.servedToday')}
@@ -363,7 +363,7 @@ export function Waitlist() {
 
                     <KPICard
                         icon={
-                            <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6 text-primary-600" />
+                            <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6" tone="inherit" />
                         }
                         value={`${metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min`}
                         label={t('stats.avgWaitTime')}

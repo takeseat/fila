@@ -23,10 +23,10 @@ export function KPICard({ icon, value, label, iconVariant = 'primary' }: KPICard
     // Icon background colors using semantic tokens
     const iconBgClasses = {
         primary: 'bg-action-primary-bg/10 text-action-primary-bg',
-        success: 'bg-status-success-bg text-status-success-fg',
-        warning: 'bg-status-warning-bg text-status-warning-fg',
-        danger: 'bg-status-danger-bg text-status-danger-fg',
-        info: 'bg-status-info-bg text-status-info-fg',
+        success: 'bg-status-success-bg/10 text-text-success',
+        warning: 'bg-status-warning-bg/10 text-text-warning',
+        danger: 'bg-status-danger-bg/10 text-text-error',
+        info: 'bg-status-info-bg/10 text-text-info',
     };
 
     return (

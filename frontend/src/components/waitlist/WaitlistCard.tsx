@@ -204,7 +204,7 @@ export function WaitlistCard({
                             {entry.customerName}
                         </h3>
                         <p className="text-sm text-text-secondary flex items-center gap-2">
-                            <Icon name="smartphone" size="sm" />
+                            <Icon name="smartphone" size="sm" tone="secondary" />
                             {entry.customerPhone}
                         </p>
                     </div>
@@ -217,7 +217,7 @@ export function WaitlistCard({
                 <div className="bg-bg-subtle rounded-lg p-3">
                     <p className="text-xs text-text-secondary mb-1">{t('entry.partySize')}</p>
                     <p className="text-lg font-semibold text-text-primary flex items-center gap-2">
-                        <Icon name="users" size="sm" />
+                        <Icon name="users" size="sm" tone="secondary" />
                         {entry.partySize}
                     </p>
                 </div>
@@ -226,7 +226,7 @@ export function WaitlistCard({
                         {entry.status === 'CALLED' ? t('entry.calledSince') : t('entry.timeInQueue')}
                     </p>
                     <p className={`text-lg font-semibold flex items-center gap-2 ${timerClass}`}>
-                        <Icon name="waitTime" size="sm" className={timerClass} />
+                        <Icon name="waitTime" size="sm" tone={alertStatus === 'waiting' ? 'warning' : alertStatus === 'called' ? 'error' : 'secondary'} />
                         <span>{elapsedString}</span>
                     </p>
                 </div>

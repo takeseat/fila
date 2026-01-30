@@ -141,108 +141,109 @@ export default function PickupOrders() {
                 </div>
 
                 {/* KPI Cards */}
-                <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-3">
-                    <KPICard
-                        icon={
-                            <Icon name="layers" className="w-4 h-4 md:w-6 md:h-6 text-warning-600" />
-                        }
-                        value={metrics.ready}
-                        label="Prontos"
-                        iconVariant="warning"
-                    />
-                    <KPICard
-                        icon={
-                            <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6 text-primary-600" />
-                        }
-                        value={`${metrics.avgWait} min`}
-                        label="Tempo médio"
-                        iconVariant="primary"
-                    />
-                    <KPICard
-                        icon={
-                            <Icon name="notify" className="w-4 h-4 md:w-6 md:h-6 text-success-600" />
-                        }
-                        value={metrics.called}
-                        label="Chamados"
-                        iconVariant="success"
-                    />
-                </div>
-
-                {/* Filters */}
-                <div className="space-y-3">
-                    <FilterChips
-                        activeFilter={activeFilter}
-                        onFilterChange={setActiveFilter}
-                    />
-                    <Input
-                        placeholder="Buscar por código ou nome..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        leftIcon={
-                            <Icon name="search" size="sm" />
-                        }
-                    />
-                </div>
-
-                {/* Orders List */}
-                {filteredOrders.length === 0 ? (
-                    <div className="bg-bg-surface border border-border-default rounded-card shadow-card">
-                        <EmptyState
-                            icon={
-                                <Icon name="layers" className="w-full h-full text-text-secondary" />
-                            }
-                            title="Nenhum pedido encontrado"
-                            description={searchTerm || activeFilter !== 'all'
-                                ? "Tente ajustar os filtros para ver mais resultados"
-                                : "Crie seu primeiro pedido para começar"
-                            }
-                            action={
-                                (searchTerm || activeFilter !== 'all') ? (
-                                    <Button onClick={() => { setSearchTerm(''); setActiveFilter('all'); }} variant="outline">
-                                        Limpar Filtros
-                                    </Button>
-                                ) : (
-                                    <Button onClick={() => setShowCreateModal(true)}>
-                                        Novo Pedido
-                                    </Button>
-                                )
-                            }
-                        />
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        {filteredOrders.map((order) => (
-                            <OrderCard
-                                key={order.id}
-                                order={{
-                                    id: order.id,
-                                    orderCode: order.orderCode,
-                                    customerName: order.customerName || 'Cliente',
-                                    customerPhone: order.customerPhoneE164,
-                                    status: order.status,
-                                    createdAt: order.createdAt,
-                                    whatsappSent: !!order.lastWhatsAppNotifiedAt,
-                                }}
-                                onMarkReady={() => handleMarkReady(order.id)}
-                                onCall={() => handleCall(order.id)}
-                                onPickedUp={() => handlePickedUp(order.id)}
-                                onNotPickedUp={() => handleNotPickedUp(order.id)}
-                                isLoading={changeStatus.isPending || resendWhatsApp.isPending}
-                            />
-                        ))}
-                    </div>
-                )}
-            </PageContent>
-
-            {showCreateModal && (
-                <CreatePickupOrderModal
-                    onClose={() => setShowCreateModal(false)}
-                    onSuccess={() => {
-                        setShowCreateModal(false);
-                        refetch();
-                    }}
+                <KPICard
+                    icon={
+                        <Icon name="layers" className="w-4 h-4 md:w-6 md:h-6" tone="inherit" />
+                    }
+                    value={metrics.ready}
+                    label="Prontos"
+                    iconVariant="warning"
                 />
+                <KPICard
+                    icon={
+                        <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6" tone="inherit" />
+                    }
+                    value={`${metrics.avgWait} min`}
+                    label="Tempo médio"
+                    iconVariant="primary"
+                />
+                <KPICard
+                    icon={
+                        <Icon name="notify" className="w-4 h-4 md:w-6 md:h-6" tone="inherit" />
+                    }
+                    value={metrics.called}
+                    label="Chamados"
+                    iconVariant="success"
+                />
+            </div>
+
+            {/* Filters */}
+            <div className="space-y-3">
+                <FilterChips
+                    activeFilter={activeFilter}
+                    onFilterChange={setActiveFilter}
+                />
+                <Input
+                    placeholder="Buscar por código ou nome..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    leftIcon={
+                        <Icon name="search" size="sm" />
+                    }
+                />
+            </div>
+
+            {/* Orders List */}
+            {filteredOrders.length === 0 ? (
+                <div className="bg-bg-surface border border-border-default rounded-card shadow-card">
+                    <EmptyState
+                        icon={
+                            <Icon name="layers" className="w-full h-full text-text-secondary" />
+                        }
+                        title="Nenhum pedido encontrado"
+                        description={searchTerm || activeFilter !== 'all'
+                            ? "Tente ajustar os filtros para ver mais resultados"
+                            : "Crie seu primeiro pedido para começar"
+                        }
+                        action={
+                            (searchTerm || activeFilter !== 'all') ? (
+                                <Button onClick={() => { setSearchTerm(''); setActiveFilter('all'); }} variant="outline">
+                                    Limpar Filtros
+                                </Button>
+                            ) : (
+                                <Button onClick={() => setShowCreateModal(true)}>
+                                    Novo Pedido
+                                </Button>
+                            )
+                        }
+                    />
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {filteredOrders.map((order) => (
+                        <OrderCard
+                            key={order.id}
+                            order={{
+                                id: order.id,
+                                orderCode: order.orderCode,
+                                customerName: order.customerName || 'Cliente',
+                                customerPhone: order.customerPhoneE164,
+                                status: order.status,
+                                createdAt: order.createdAt,
+                                whatsappSent: !!order.lastWhatsAppNotifiedAt,
+                            }}
+                            onMarkReady={() => handleMarkReady(order.id)}
+                            onCall={() => handleCall(order.id)}
+                            onPickedUp={() => handlePickedUp(order.id)}
+                            onNotPickedUp={() => handleNotPickedUp(order.id)}
+                            isLoading={changeStatus.isPending || resendWhatsApp.isPending}
+                        />
+                    ))}
+                </div>
             )}
-        </PageShell>
+        </PageContent>
+
+            {
+        showCreateModal && (
+            <CreatePickupOrderModal
+                onClose={() => setShowCreateModal(false)}
+                onSuccess={() => {
+                    setShowCreateModal(false);
+                    refetch();
+                }}
+            />
+        )
+    }
+        </PageShell >
     );
 }
