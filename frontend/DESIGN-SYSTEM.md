@@ -1,8 +1,8 @@
 # Design System
 
-> A modern, scalable design system built on semantic tokens, inspired by Stripe's best practices with a warm terracotta aesthetic for restaurant software.
+> A modern, scalable design system built on semantic tokens, inspired by Stripe's best practices with a sophisticated indigo aesthetic for restaurant software.
 
-**Version:** 1.0.0  
+**Version:** 2.0.0  
 **Last updated:** January 2026
 
 ---
@@ -25,13 +25,13 @@
 
 ### Overview
 
-This design system provides a consistent, accessible, and scalable visual language for all our restaurant management applications and products. Inspired by Stripe's clarity and elegance with a distinctive terracotta accent that evokes warmth, appetite, and hospitality, our system prioritizes:
+This design system provides a consistent, accessible, and scalable visual language for all our restaurant management applications and products. Inspired by Stripe's clarity and elegance with a distinctive indigo accent that evokes trust, professionalism, and modern sophistication, our system prioritizes:
 
 - **Clarity**: Direct, unambiguous communication
 - **Consistency**: Unified experiences across all touchpoints
 - **Efficiency**: Tools that accelerate development
 - **Accessibility**: Inclusive products by design
-- **Warmth**: Terracotta touches that create inviting, appetizing experiences
+- **Trust**: Indigo touches that create professional, reliable experiences
 
 ### How to Use This Document
 
@@ -44,7 +44,7 @@ This document serves as the complete reference for designers, developers, and pr
 
 ---
 
-## 🧡 Design Principles
+## 🎨 Design Principles
 
 ### 1. Clarity Above All
 
@@ -96,15 +96,15 @@ Accessibility is not optional. Every component is designed to work for all users
 - Screen reader friendly
 - Testing with diverse users
 
-### 6. Warm and Inviting
+### 6. Professional and Trustworthy
 
-Terracotta accents create a welcoming, appetizing atmosphere that resonates with the restaurant industry. We use warm tones thoughtfully to evoke comfort and quality.
+Indigo accents create a trustworthy, professional atmosphere that resonates with modern business. We use sophisticated tones thoughtfully to evoke reliability and quality.
 
 **Practices:**
-- Terracotta for primary actions and brand moments
-- Warm neutrals for backgrounds
-- Coral accents for interactive elements
-- Balance with cream and peach tones
+- Indigo for primary actions and brand moments
+- Cool neutrals for backgrounds
+- Violet accents for interactive elements
+- Balance with slate and lavender tones
 
 ---
 
@@ -127,65 +127,65 @@ Primitive → Semantic → Component
 
 #### Base Colors
 
-**Neutral**
+**Neutral (Slate)**
 ```
 neutral-0:   #FFFFFF (pure white)
-neutral-50:  #FAFAF9
-neutral-100: #F5F5F4
-neutral-200: #E7E5E4
-neutral-300: #D6D3D1
-neutral-400: #A8A29E
-neutral-500: #78716C
-neutral-600: #57534E
-neutral-700: #44403C
-neutral-800: #292524
-neutral-900: #1C1917
-neutral-950: #0C0A09
+neutral-50:  #F8FAFC
+neutral-100: #F1F5F9
+neutral-200: #E2E8F0
+neutral-300: #CBD5E1
+neutral-400: #94A3B8
+neutral-500: #64748B
+neutral-600: #475569
+neutral-700: #334155
+neutral-800: #1E293B
+neutral-900: #0F172A
+neutral-950: #020617
 ```
 
-**Terracotta (Primary Brand)**
+**Indigo (Primary Brand)**
 ```
-terracotta-50:  #FEF7F3
-terracotta-100: #FDEDE3
-terracotta-200: #FBD9C7
-terracotta-300: #F8BFA0
-terracotta-400: #F49A6B
-terracotta-500: #E07856 (primary brand)
-terracotta-600: #D4663F
-terracotta-700: #B35333
-terracotta-800: #8F4530
-terracotta-900: #743C2B
-terracotta-950: #3E1D16
-```
-
-**Coral (Secondary/Accent)**
-```
-coral-50:  #FFF5F3
-coral-100: #FFE9E5
-coral-200: #FFD7CF
-coral-300: #FFB8AB
-coral-400: #FF8E7A
-coral-500: #F86B54
-coral-600: #E5492F
-coral-700: #C13821
-coral-800: #A0311F
-coral-900: #842F21
-coral-950: #481509
+indigo-50:  #EEF2FF
+indigo-100: #E0E7FF
+indigo-200: #C7D2FE
+indigo-300: #A5B4FC
+indigo-400: #818CF8
+indigo-500: #6366F1 (primary brand)
+indigo-600: #4F46E5 (primary hover)
+indigo-700: #4338CA (primary active)
+indigo-800: #3730A3
+indigo-900: #312E81
+indigo-950: #1E1B4B
 ```
 
-**Peach (Light Accent)**
+**Violet (Secondary/Accent)**
 ```
-peach-50:  #FFF9F5
-peach-100: #FFF1E8
-peach-200: #FFE2D1
-peach-300: #FFCBAF
-peach-400: #FFAA81
-peach-500: #FF8A5B
-peach-600: #F06A3A
-peach-700: #D85328
-peach-800: #B04423
-peach-900: #8F3A20
-peach-950: #4D1C0D
+violet-50:  #F5F3FF
+violet-100: #EDE9FE
+violet-200: #DDD6FE
+violet-300: #C4B5FD
+violet-400: #A78BFA
+violet-500: #8B5CF6
+violet-600: #7C3AED
+violet-700: #6D28D9
+violet-800: #5B21B6
+violet-900: #4C1D95
+violet-950: #2E1065
+```
+
+**Purple (Light Accent)**
+```
+purple-50:  #FAF5FF
+purple-100: #F3E8FF
+purple-200: #E9D5FF
+purple-300: #D8B4FE
+purple-400: #C084FC
+purple-500: #A855F7
+purple-600: #9333EA
+purple-700: #7E22CE
+purple-800: #6B21A8
+purple-900: #581C87
+purple-950: #3B0764
 ```
 
 **Green (Success)**
@@ -325,10 +325,10 @@ shadow-lg:  0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.
 shadow-xl:  0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)
 shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25)
 
-shadow-terracotta-sm:  0 1px 3px 0 rgba(224, 120, 86, 0.2)
-shadow-terracotta-md:  0 4px 6px -1px rgba(224, 120, 86, 0.2), 0 2px 4px -2px rgba(224, 120, 86, 0.15)
-shadow-terracotta-lg:  0 10px 15px -3px rgba(224, 120, 86, 0.2), 0 4px 6px -4px rgba(224, 120, 86, 0.15)
-shadow-terracotta-xl:  0 20px 25px -5px rgba(224, 120, 86, 0.25), 0 8px 10px -6px rgba(224, 120, 86, 0.2)
+shadow-indigo-sm:  0 1px 3px 0 rgba(99, 102, 241, 0.2)
+shadow-indigo-md:  0 4px 6px -1px rgba(99, 102, 241, 0.2), 0 2px 4px -2px rgba(99, 102, 241, 0.15)
+shadow-indigo-lg:  0 10px 15px -3px rgba(99, 102, 241, 0.2), 0 4px 6px -4px rgba(99, 102, 241, 0.15)
+shadow-indigo-xl:  0 20px 25px -5px rgba(99, 102, 241, 0.25), 0 8px 10px -6px rgba(99, 102, 241, 0.2)
 ```
 
 ### Semantic Tokens
@@ -343,10 +343,11 @@ bg-tertiary:      neutral-100    // Tertiary background
 bg-elevated:      neutral-0      // Elevated cards, modals
 bg-overlay:       rgba(0,0,0,0.5) // Modal backdrop
 
-bg-brand:         terracotta-500     // Brand backgrounds
-bg-brand-subtle:  terracotta-50      // Subtle brand backgrounds
-bg-brand-light:   terracotta-100     // Light brand backgrounds
-bg-brand-hover:   terracotta-700     // Brand hover state
+bg-brand:         indigo-500     // Brand backgrounds
+bg-brand-subtle:  indigo-50      // Subtle brand backgrounds (EEF2FF)
+bg-brand-light:   indigo-100     // Light brand backgrounds
+bg-brand-hover:   indigo-600     // Brand hover state (4F46E5)
+bg-brand-active:  indigo-700     // Brand active state (4338CA)
 
 bg-success:       green-50       // Success feedback
 bg-warning:       amber-50       // Warning feedback
@@ -362,10 +363,11 @@ bg-tertiary:      neutral-800
 bg-elevated:      neutral-900
 bg-overlay:       rgba(0,0,0,0.7)
 
-bg-brand:         terracotta-500
-bg-brand-subtle:  terracotta-950
-bg-brand-light:   terracotta-900
-bg-brand-hover:   terracotta-500
+bg-brand:         indigo-500
+bg-brand-subtle:  indigo-950
+bg-brand-light:   indigo-900
+bg-brand-hover:   indigo-600
+bg-brand-active:  indigo-700
 
 bg-success:       green-950
 bg-warning:       amber-950
@@ -383,14 +385,14 @@ text-tertiary:    neutral-500    // Tertiary text
 text-disabled:    neutral-400    // Disabled text
 text-inverse:     neutral-0      // Text on dark backgrounds
 
-text-brand:       terracotta-500     // Brand text
-text-brand-light: terracotta-500     // Lighter brand text
+text-brand:       indigo-500     // Brand text
+text-brand-hover: indigo-600     // Brand text hover
 text-success:     green-700      // Success text
 text-warning:     amber-700      // Warning text
 text-error:       red-700        // Error text
 text-info:        sky-700        // Info text
-text-link:        terracotta-500     // Links
-text-link-hover:  terracotta-700     // Link hover state
+text-link:        indigo-500     // Links
+text-link-hover:  indigo-600     // Link hover state
 ```
 
 **Dark Mode**
@@ -401,14 +403,14 @@ text-tertiary:    neutral-500
 text-disabled:    neutral-600
 text-inverse:     neutral-950
 
-text-brand:       terracotta-400
-text-brand-light: terracotta-300
+text-brand:       indigo-400
+text-brand-hover: indigo-300
 text-success:     green-400
 text-warning:     amber-300
 text-error:       red-400
 text-info:        sky-400
-text-link:        terracotta-400
-text-link-hover:  terracotta-300
+text-link:        indigo-400
+text-link-hover:  indigo-300
 ```
 
 #### Border Colors
@@ -418,9 +420,9 @@ text-link-hover:  terracotta-300
 border-default:   neutral-200    // Default borders
 border-subtle:    neutral-100    // Subtle borders
 border-strong:    neutral-300    // Emphasized borders
-border-brand:     terracotta-500     // Brand borders
+border-brand:     indigo-500     // Brand borders
 border-error:     red-300        // Error borders
-border-focus:     terracotta-500     // Focus rings
+border-focus:     indigo-500     // Focus rings
 ```
 
 **Dark Mode**
@@ -428,18 +430,18 @@ border-focus:     terracotta-500     // Focus rings
 border-default:   neutral-700
 border-subtle:    neutral-800
 border-strong:    neutral-600
-border-brand:     terracotta-500
+border-brand:     indigo-500
 border-error:     red-700
-border-focus:     terracotta-500
+border-focus:     indigo-500
 ```
 
 #### Interactive Colors
 
 **Light Mode**
 ```
-interactive-primary:         terracotta-500
-interactive-primary-hover:   terracotta-700
-interactive-primary-active:  terracotta-800
+interactive-primary:         indigo-500
+interactive-primary-hover:   indigo-600    // 4F46E5
+interactive-primary-active:  indigo-700    // 4338CA
 interactive-primary-disabled: neutral-300
 
 interactive-secondary:       neutral-0
@@ -448,15 +450,15 @@ interactive-secondary-active: neutral-100
 interactive-secondary-disabled: neutral-200
 
 interactive-tertiary:        transparent
-interactive-tertiary-hover:  terracotta-50
-interactive-tertiary-active: terracotta-100
+interactive-tertiary-hover:  indigo-50     // EEF2FF
+interactive-tertiary-active: indigo-100
 ```
 
 **Dark Mode**
 ```
-interactive-primary:         terracotta-500
-interactive-primary-hover:   terracotta-500
-interactive-primary-active:  terracotta-700
+interactive-primary:         indigo-500
+interactive-primary-hover:   indigo-600
+interactive-primary-active:  indigo-700
 interactive-primary-disabled: neutral-700
 
 interactive-secondary:       neutral-800
@@ -465,8 +467,8 @@ interactive-secondary-active: neutral-600
 interactive-secondary-disabled: neutral-800
 
 interactive-tertiary:        transparent
-interactive-tertiary-hover:  terracotta-950
-interactive-tertiary-active: terracotta-900
+interactive-tertiary-hover:  indigo-950
+interactive-tertiary-active: indigo-900
 ```
 
 ### Component Tokens
@@ -476,13 +478,13 @@ interactive-tertiary-active: terracotta-900
 **Primary Button**
 ```
 button-primary-bg:           interactive-primary
-button-primary-bg-hover:     interactive-primary-hover
-button-primary-bg-active:    interactive-primary-active
+button-primary-bg-hover:     interactive-primary-hover     // 4F46E5
+button-primary-bg-active:    interactive-primary-active    // 4338CA
 button-primary-bg-disabled:  interactive-primary-disabled
 button-primary-text:         text-inverse
 button-primary-border:       interactive-primary
-button-primary-shadow:       shadow-terracotta-sm
-button-primary-shadow-hover: shadow-terracotta-md
+button-primary-shadow:       shadow-indigo-sm
+button-primary-shadow-hover: shadow-indigo-md
 button-primary-radius:       radius-md
 button-primary-padding-x:    spacing-4
 button-primary-padding-y:    spacing-2
@@ -535,8 +537,8 @@ input-padding-x:         spacing-3
 input-padding-y:         spacing-2
 input-height:            40px
 input-font-size:         text-base
-input-shadow-focus:      0 0 0 3px rgba(224, 120, 86, 0.1)
-input-glow-focus:        0 0 0 1px terracotta-500
+input-shadow-focus:      0 0 0 3px rgba(99, 102, 241, 0.1)
+input-glow-focus:        0 0 0 1px indigo-500
 ```
 
 #### Card Tokens
@@ -548,7 +550,7 @@ card-radius:         radius-lg
 card-padding:        spacing-6
 card-shadow:         shadow-md
 card-shadow-hover:   shadow-lg
-card-shadow-featured: shadow-terracotta-md
+card-shadow-featured: shadow-indigo-md
 ```
 
 #### Modal Tokens
@@ -577,19 +579,20 @@ Our palette is carefully constructed to:
 - Create clear visual hierarchy
 - Convey consistent meaning
 
-#### Terracotta as Primary
+#### Indigo as Primary
 
-Terracotta is our signature color, used to:
+Indigo is our signature color, used to:
 - **Guide Action**: Primary buttons and CTAs
 - **Show Focus**: Interactive element states
 - **Highlight Premium**: Featured content and upgrades
-- **Add Delight**: Subtle accents and micro-interactions
+- **Build Trust**: Professional, reliable brand moments
 
 **Usage Guidelines:**
-- Use terracotta-500 for primary actions
-- Reserve terracotta-500/700 for hover/active states
-- Apply terracotta-50/100 for subtle backgrounds
-- Use terracotta shadows for elevated interactive elements
+- Use indigo-500 (#6366F1) for primary actions
+- Reserve indigo-600 (#4F46E5) for hover states
+- Use indigo-700 (#4338CA) for active states
+- Apply indigo-50 (#EEF2FF) for subtle backgrounds
+- Use indigo shadows for elevated interactive elements
 
 #### Dark Mode
 
@@ -602,7 +605,7 @@ Dark mode isn't simply inverted light mode. Special considerations:
 
 **Increased Saturation**
 - Colors need more saturation to maintain vibrancy
-- Terracotta, green, and red are more vibrant in dark mode
+- Indigo, green, and red are more vibrant in dark mode
 
 **Elevation Through Luminosity**
 - Elevated surfaces are lighter, not darker
@@ -626,35 +629,35 @@ Dark mode isn't simply inverted light mode. Special considerations:
 - Green for success and positive actions
 - Red for errors and destructive actions
 - Amber for warnings and caution
-- Terracotta for brand and neutral importance
+- Indigo for brand and neutral importance
 
 #### Restaurant Industry Color Psychology
 
-Our terracotta palette was specifically chosen for restaurant software:
+Our indigo palette was specifically chosen for restaurant software:
 
-**Why Terracotta Works for Restaurants:**
-- **Appetite Stimulation**: Warm orange-red tones are proven to increase appetite and encourage ordering
-- **Warmth & Hospitality**: Evokes the welcoming atmosphere of quality dining establishments
-- **Earthiness & Quality**: Suggests natural, fresh ingredients and artisanal preparation
-- **Modern Sophistication**: Contemporary twist on traditional restaurant colors
-- **Versatility**: Works across all restaurant types (fine dining, casual, fast-casual, delivery)
+**Why Indigo Works for Restaurants:**
+- **Trust & Professionalism**: Deep blue-purple tones convey reliability and expertise
+- **Modern Sophistication**: Contemporary, tech-forward aesthetic
+- **Calming Influence**: Cool tones create focused, efficient environments
+- **Premium Perception**: Associated with quality, premium services
+- **Universal Appeal**: Works across all restaurant types and cultures
 
 **Practical Applications:**
 ```
-"Order Now" buttons:        terracotta-500 (maximum conversion)
-Featured menu items:        terracotta-50 background
-Daily specials badge:       terracotta-100 with terracotta-700 text
-Reservation confirmations:  terracotta-50 with green success icon
-Active table status:        terracotta border-left
-Popular dish indicator:     terracotta-400 star icon
-Add-on suggestions:         coral-50 background (secondary warmth)
+"Reserve Table" buttons:     indigo-500 (trust & conversion)
+Featured menu items:         indigo-50 background (#EEF2FF)
+Premium tier badge:          indigo-100 with indigo-700 text
+Booking confirmations:       indigo-50 with green success icon
+Active table status:         indigo border-left
+Pro/Enterprise features:     indigo-400 icon
+Analytics highlights:        violet-50 background (secondary sophistication)
 ```
 
-**Avoiding Color Pitfalls:**
-- ❌ Blue (suppresses appetite, used by competitors)
-- ✅ Terracotta (stimulates appetite, differentiates brand)
-- ❌ Cool grays alone (sterile, institutional)
-- ✅ Warm neutrals with terracotta accents (inviting, professional)
+**Color Strategy:**
+- ✅ Indigo (builds trust, professional brand)
+- ✅ Cool slate neutrals (clean, modern interface)
+- ❌ Over-saturation (maintains professionalism)
+- ✅ Subtle brand presence (lets content shine)
 
 ### Typography
 
@@ -819,9 +822,9 @@ We create depth through shadows:
 4: Toast       - shadow-xl    // Notifications, toasts
 ```
 
-**Terracotta Shadows**
-Use terracotta-tinted shadows for:
-- Primary buttons (shadow-terracotta-sm → shadow-terracotta-md on hover)
+**Indigo Shadows**
+Use indigo-tinted shadows for:
+- Primary buttons (shadow-indigo-sm → shadow-indigo-md on hover)
 - Featured cards
 - Premium content indicators
 - Active/selected states
@@ -836,8 +839,8 @@ Shadows in dark mode are more subtle:
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   
-  --shadow-terracotta-sm: 0 1px 3px 0 rgba(224, 120, 86, 0.3);
-  --shadow-terracotta-md: 0 4px 6px -1px rgba(224, 120, 86, 0.3);
+  --shadow-indigo-sm: 0 1px 3px 0 rgba(99, 102, 241, 0.3);
+  --shadow-indigo-md: 0 4px 6px -1px rgba(99, 102, 241, 0.3);
 }
 ```
 
@@ -878,37 +881,37 @@ ease-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55)
 }
 ```
 
-#### Terracotta Glow Effect
+#### Indigo Glow Effect
 
-For special interactive moments that evoke warmth and appetite:
+For special interactive moments that evoke trust and professionalism:
 
 ```css
-.terracotta-glow {
+.indigo-glow {
   transition: box-shadow 200ms ease-out;
 }
 
-.terracotta-glow:hover {
+.indigo-glow:hover {
   box-shadow: 
-    0 0 0 1px rgba(224, 120, 86, 0.3),
-    0 4px 12px rgba(224, 120, 86, 0.25),
-    0 8px 24px rgba(224, 120, 86, 0.15);
+    0 0 0 1px rgba(99, 102, 241, 0.3),
+    0 4px 12px rgba(99, 102, 241, 0.25),
+    0 8px 24px rgba(99, 102, 241, 0.15);
 }
 
-/* For prominent CTAs like "Order Now" or "Reserve Table" */
-.terracotta-glow-strong {
+/* For prominent CTAs like "Reserve" or "Upgrade" */
+.indigo-glow-strong {
   box-shadow: 
-    0 0 0 1px rgba(224, 120, 86, 0.4),
-    0 6px 16px rgba(224, 120, 86, 0.3),
-    0 12px 32px rgba(224, 120, 86, 0.2);
+    0 0 0 1px rgba(99, 102, 241, 0.4),
+    0 6px 16px rgba(99, 102, 241, 0.3),
+    0 12px 32px rgba(99, 102, 241, 0.2);
 }
 ```
 
 **Restaurant Use Cases:**
-- Primary order/reservation buttons
-- Featured menu item cards on hover
-- "Chef's Special" or "Popular" badges
-- Premium/add-on upsell options
-- Active table indicators in POS systems
+- Primary reservation/booking buttons
+- Premium tier upgrade cards on hover
+- "Pro Feature" or "Enterprise" badges
+- Active analytics dashboard cards
+- Interactive report visualizations
 
 ---
 
@@ -916,38 +919,38 @@ For special interactive moments that evoke warmth and appetite:
 
 ### Button
 
-Buttons are primary action elements. They exist in three main variants, with terracotta as the defining characteristic.
+Buttons are primary action elements. They exist in three main variants, with indigo as the defining characteristic.
 
 #### Variants
 
-**Primary (Terracotta)**
+**Primary (Indigo)**
 - Primary action on the screen
 - Maximum one per visual context
 - High contrast, maximum emphasis
-- Terracotta background with white text
-- Terracotta shadow on hover
-- **Restaurant use**: "Order Now", "Reserve Table", "Add to Cart", "Checkout"
+- Indigo background with white text
+- Indigo shadow on hover
+- **Restaurant use**: "Reserve Table", "Upgrade Plan", "Export Report", "Save Changes"
 
 **Secondary**
 - Alternative actions
 - Multiple can coexist
 - Outline with subtle background
-- Terracotta border and text
-- **Restaurant use**: "View Menu", "Modify Order", "See Details", "Filter"
+- Indigo border and text
+- **Restaurant use**: "View Details", "Manage Settings", "Filter", "Sort"
 
 **Tertiary/Ghost**
 - Lower priority actions
 - Text/icon only
 - Used in navigation, secondary actions
-- Terracotta text on transparent background
-- **Restaurant use**: "Cancel", "Edit", "Remove Item", "Back"
+- Indigo text on transparent background
+- **Restaurant use**: "Cancel", "Edit", "Back", "Skip"
 
 **Destructive**
 - Permanent/dangerous actions
 - Delete, remove, cancel orders
 - Always requires confirmation
 - Red variant
-- **Restaurant use**: "Delete Menu Item", "Cancel Reservation", "Void Order"
+- **Restaurant use**: "Delete Menu Item", "Cancel Reservation", "Remove User"
 
 #### Sizes
 
@@ -960,10 +963,10 @@ Large:  48px height - CTAs, landing pages
 #### States
 
 ```
-Default:  Base appearance
-Hover:    Darker terracotta + elevated shadow
-Active:   Even darker, pressed appearance
-Focus:    Terracotta focus ring (outline)
+Default:  Base appearance (indigo-500)
+Hover:    Darker indigo-600 (#4F46E5) + elevated shadow
+Active:   Even darker indigo-700 (#4338CA), pressed appearance
+Focus:    Indigo focus ring (outline)
 Disabled: Reduced opacity, no interaction
 Loading:  Spinner, dimmed text
 ```
@@ -992,64 +995,62 @@ interface ButtonProps {
 }
 
 // Usage
-<Button variant="primary" size="md" icon={<Plus />}>
-  Add to Order
-</Button>
-
-<Button variant="primary" size="lg" icon={<Calendar />}>
+<Button variant="primary" size="md" icon={<Calendar />}>
   Reserve Table
 </Button>
 
-<Button variant="secondary" size="md" icon={<Eye />}>
-  View Menu
+<Button variant="primary" size="lg" icon={<CreditCard />}>
+  Upgrade to Pro
+</Button>
+
+<Button variant="secondary" size="md" icon={<Download />}>
+  Export Data
 </Button>
 ```
 
 #### Restaurant-Specific Examples
 
 ```typescript
-// Order/Checkout Flow
+// Reservation/Booking Flow
 <Button variant="primary" size="lg" fullWidth>
-  Place Order - $45.99
+  Confirm Reservation
 </Button>
 
-// Menu Item Card
-<Button variant="secondary" size="sm" icon={<Plus />}>
-  Add to Cart
+// Premium Features
+<Button variant="primary" size="md" icon={<Zap />}>
+  Upgrade to Pro
 </Button>
 
-// Table Reservation
-<Button variant="primary" size="md" icon={<Calendar />}>
-  Book for 4 Guests
+// Table Management
+<Button variant="secondary" size="sm" icon={<Check />}>
+  Mark Complete
 </Button>
 
-// Modifier Selection
+// Analytics Export
+<Button variant="secondary" size="md" icon={<Download />}>
+  Download Report
+</Button>
+
+// Settings Actions
 <Button variant="tertiary" size="sm">
-  Extra Cheese (+$2.00)
-</Button>
-
-// POS Quick Actions
-<Button variant="secondary" size="md" icon={<Printer />}>
-  Print Receipt
+  Advanced Settings
 </Button>
 ```
 
 #### Usage Guidelines
 
 ✅ **Do**
-- Use clear action verbs ("Order Now", "Reserve", "Add", "Checkout")
+- Use clear action verbs ("Reserve", "Upgrade", "Export", "Save")
 - One primary button per screen/section
-- Provide visual feedback for loading states (processing orders)
+- Provide visual feedback for loading states
 - Keep labels short (1-3 words)
-- Use terracotta shadows for elevation and emphasis
-- Show prices in CTAs when applicable ("Checkout - $45.99")
+- Use indigo shadows for elevation and emphasis
 
 ❌ **Don't**
 - Use generic labels like "Submit" or "OK"
 - Have multiple primary buttons competing
-- Disable buttons without explanation (show why minimum order isn't met)
-- Use icons without labels (except universal actions like X, +, -)
-- Hide important costs until last second
+- Disable buttons without explanation
+- Use icons without labels (except universal actions)
 
 ### Input
 
@@ -1091,21 +1092,21 @@ Inputs collect user information in a structured way.
 ```
 Empty:    Placeholder visible
 Filled:   Value present
-Focus:    Terracotta border + subtle glow
+Focus:    Indigo border + subtle glow
 Error:    Red border + error message
 Disabled: Grayed out, not editable
 ReadOnly: Visible but not editable
 ```
 
 **Focus State Enhancement:**
-Terracotta inputs get a subtle glow effect:
+Indigo inputs get a subtle glow effect:
 
 ```css
 input:focus {
-  border-color: var(--terracotta-500);
+  border-color: var(--indigo-500);
   box-shadow: 
-    0 0 0 3px rgba(224, 120, 86, 0.1),
-    0 0 0 1px rgba(224, 120, 86, 0.3);
+    0 0 0 3px rgba(99, 102, 241, 0.1),
+    0 0 0 1px rgba(99, 102, 241, 0.3);
 }
 ```
 
@@ -1161,14 +1162,14 @@ Cards group related information in discrete containers.
 **Interactive Card**
 - Clickable/Hoverable
 - Hover state with elevation
-- Terracotta accent on hover
+- Indigo accent on hover
 - Cursor pointer
 
 **Featured Card**
 - Visual highlight
-- Terracotta border or gradient
+- Indigo border or gradient
 - Used for premium features
-- Enhanced terracotta shadow
+- Enhanced indigo shadow
 
 #### Anatomy
 
@@ -1195,18 +1196,18 @@ Comfortable: spacing-6 (24px)
 Spacious:    spacing-8 (32px)
 ```
 
-#### Terracotta Accents
+#### Indigo Accents
 
-**Subtle Terracotta Highlight:**
+**Subtle Indigo Highlight:**
 ```css
 .card-featured {
-  border: 1px solid var(--terracotta-200);
-  box-shadow: var(--shadow-terracotta-sm);
+  border: 1px solid var(--indigo-200);
+  box-shadow: var(--shadow-indigo-sm);
 }
 
 .card-interactive:hover {
-  border-color: var(--terracotta-300);
-  box-shadow: var(--shadow-terracotta-md);
+  border-color: var(--indigo-300);
+  box-shadow: var(--shadow-indigo-md);
   transform: translateY(-2px);
   transition: all 200ms ease-out;
 }
@@ -1219,7 +1220,7 @@ Spacious:    spacing-8 (32px)
 - Use consistent elevation
 - Maintain clear hierarchy within card
 - Provide contextual actions
-- Use terracotta borders for featured content
+- Use indigo borders for featured content
 
 ❌ **Don't**
 - Nest cards (cards within cards)
@@ -1276,19 +1277,19 @@ Modals require user attention for critical tasks.
 - Click on X
 - Cancel/submit action
 
-#### Terracotta Enhancement
+#### Indigo Enhancement
 
-Modal headers can feature subtle terracotta accents:
+Modal headers can feature subtle indigo accents:
 
 ```css
 .modal-header {
-  border-bottom: 2px solid var(--terracotta-100);
+  border-bottom: 2px solid var(--indigo-100);
 }
 
 .modal-overlay {
   background: linear-gradient(
     to bottom,
-    rgba(224, 120, 86, 0.05),
+    rgba(99, 102, 241, 0.05),
     rgba(0, 0, 0, 0.5)
   );
 }
@@ -1336,7 +1337,7 @@ Success:  Green, completed, active
 Warning:  Amber, pending, attention
 Error:    Red, failed, critical
 Info:     Sky, new, notification
-Terracotta:   Premium, featured, brand
+Indigo:   Premium, featured, brand
 ```
 
 #### Sizes
@@ -1363,14 +1364,14 @@ Large:  text-base, px-3, py-1.5
 - Border only
 - Most discreet
 
-**Terracotta Badge**
+**Indigo Badge**
 Special variant for premium/featured content:
 
 ```css
-.badge-terracotta {
-  background: linear-gradient(135deg, var(--terracotta-500), var(--coral-600));
+.badge-indigo {
+  background: linear-gradient(135deg, var(--indigo-500), var(--violet-600));
   color: white;
-  box-shadow: var(--shadow-terracotta-sm);
+  box-shadow: var(--shadow-indigo-sm);
 }
 ```
 
@@ -1378,26 +1379,26 @@ Special variant for premium/featured content:
 
 ```typescript
 interface BadgeProps {
-  variant?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'terracotta'
+  variant?: 'default' | 'success' | 'warning' | 'error' | 'info' | 'indigo'
   size?: 'sm' | 'md' | 'lg'
   style?: 'solid' | 'subtle' | 'outline'
   children: ReactNode
 }
 
 // Usage
-<Badge variant="terracotta" size="sm" style="solid">
-  Chef's Special
+<Badge variant="indigo" size="sm" style="solid">
+  Pro Feature
 </Badge>
 
-<Badge variant="terracotta" size="sm" style="subtle">
-  Popular
+<Badge variant="indigo" size="sm" style="subtle">
+  Premium
 </Badge>
 
 // Restaurant-specific examples
-<Badge variant="success" size="sm">Available</Badge>
-<Badge variant="warning" size="sm">Low Stock</Badge>
-<Badge variant="default" size="xs" style="outline">🌱 Vegan</Badge>
-<Badge variant="default" size="xs" style="outline">🌶️ Spicy</Badge>
+<Badge variant="success" size="sm">Active</Badge>
+<Badge variant="warning" size="sm">Pending Review</Badge>
+<Badge variant="indigo" size="xs" style="outline">⭐ Featured</Badge>
+<Badge variant="indigo" size="xs" style="outline">👑 Enterprise</Badge>
 ```
 
 ### Toast / Notification
@@ -1419,7 +1420,7 @@ Toasts provide temporary feedback about actions.
 **Info Toast**
 - General information
 - Auto-dismiss after 6s
-- Terracotta with info icon
+- Indigo with info icon
 
 **Warning Toast**
 - Attention needed
@@ -1451,15 +1452,15 @@ bottom-center: Quick confirmations
 - New ones push old ones down
 - Oldest auto-dismiss first
 
-#### Terracotta Toast Variant
+#### Indigo Toast Variant
 
 For brand-related notifications:
 
 ```css
 .toast-info {
-  border-left: 3px solid var(--terracotta-500);
+  border-left: 3px solid var(--indigo-500);
   background: var(--bg-elevated);
-  box-shadow: var(--shadow-terracotta-md);
+  box-shadow: var(--shadow-indigo-md);
 }
 ```
 
@@ -1522,24 +1523,24 @@ Spacious:    py-4  // 16px vertical padding
 ```
 Default:  bg-primary
 Hover:    bg-secondary (subtle highlight)
-Selected: bg-brand-subtle (terracotta-50)
-Focus:    Terracotta focus ring
+Selected: bg-brand-subtle (indigo-50: #EEF2FF)
+Focus:    Indigo focus ring
 ```
 
-#### Terracotta Accents
+#### Indigo Accents
 
 ```css
 .table-header {
-  border-bottom: 2px solid var(--terracotta-100);
+  border-bottom: 2px solid var(--indigo-100);
 }
 
 .table-row:hover {
-  background: var(--terracotta-50);
+  background: var(--indigo-50);
 }
 
 .table-row.selected {
-  background: var(--terracotta-100);
-  border-left: 3px solid var(--terracotta-500);
+  background: var(--indigo-100);
+  border-left: 3px solid var(--indigo-500);
 }
 ```
 
@@ -1562,7 +1563,7 @@ Focus:    Terracotta focus ring
 - Use mono font for numbers
 - Highlight headers
 - Provide loading states
-- Use terracotta to indicate selected rows
+- Use indigo to indicate selected rows
 
 ❌ **Don't**
 - Too many columns (>8 on desktop)
@@ -1603,7 +1604,7 @@ Focus:    Terracotta focus ring
 #### Validation
 
 **Required Fields**
-- Indicate with terracotta asterisk (*)
+- Indicate with indigo asterisk (*)
 - Or mark optional fields
 - Be consistent
 
@@ -1619,7 +1620,7 @@ Focus:    Terracotta focus ring
 
 **Progress Indicator**
 - Show total steps
-- Indicate current step with terracotta
+- Indicate current step with indigo
 - Allow navigation to completed steps
 
 **Step Behavior**
@@ -1638,7 +1639,7 @@ Focus:    Terracotta focus ring
 └─────────────────────────────────┘
 ```
 
-- Submit (terracotta) always on right
+- Submit (indigo) always on right
 - Cancel/Back on left
 - Primary action highlighted
 
@@ -1656,12 +1657,12 @@ Focus:    Terracotta focus ring
 **Behavior**
 - Sticky or fixed
 - Collapses on mobile (hamburger)
-- Active item with terracotta underline
+- Active item with indigo underline
 
 ```css
 .nav-link.active {
-  border-bottom: 2px solid var(--terracotta-500);
-  color: var(--terracotta-500);
+  border-bottom: 2px solid var(--indigo-500);
+  color: var(--indigo-500);
 }
 ```
 
@@ -1688,9 +1689,9 @@ Focus:    Terracotta focus ring
 **Active Item:**
 ```css
 .sidebar-item.active {
-  background: var(--terracotta-50);
-  border-left: 3px solid var(--terracotta-500);
-  color: var(--terracotta-700);
+  background: var(--indigo-50);
+  border-left: 3px solid var(--indigo-500);
+  color: var(--indigo-700);
 }
 ```
 
@@ -1703,7 +1704,7 @@ Home / Products / Electronics / Laptops
 - Maximum 4-5 levels
 - Last item not a link
 - Consistent separator (/ or >)
-- Terracotta for current page
+- Indigo for current page
 
 #### Tabs
 
@@ -1719,18 +1720,18 @@ Home / Products / Electronics / Laptops
 ```
 
 **States**
-- Active: Terracotta bottom border, terracotta text
-- Hover: Subtle terracotta background
+- Active: Indigo bottom border, indigo text
+- Hover: Subtle indigo background (#EEF2FF)
 - Disabled: Grayed out
 
 ```css
 .tab.active {
-  border-bottom: 2px solid var(--terracotta-500);
-  color: var(--terracotta-500);
+  border-bottom: 2px solid var(--indigo-500);
+  color: var(--indigo-500);
 }
 
 .tab:hover:not(.active) {
-  background: var(--terracotta-50);
+  background: var(--indigo-50);
 }
 ```
 
@@ -1742,25 +1743,25 @@ Home / Products / Electronics / Laptops
 - Animated placeholders
 - Same dimensions as final content
 - Doesn't block navigation
-- Subtle terracotta shimmer
+- Subtle indigo shimmer
 
 **Spinners**
-- Inline: Small, in buttons (terracotta)
+- Inline: Small, in buttons (indigo)
 - Full page: Center of viewport
 - With text: "Loading data..."
 
 **Progress Bars**
-- Determinate: Known progress (terracotta fill)
+- Determinate: Known progress (indigo fill)
 - Indeterminate: Unknown duration
 - With percentage: "45% complete"
 
 ```css
 .progress-bar {
-  background: var(--terracotta-100);
+  background: var(--indigo-100);
 }
 
 .progress-fill {
-  background: linear-gradient(90deg, var(--terracotta-500), var(--coral-600));
+  background: linear-gradient(90deg, var(--indigo-500), var(--violet-600));
 }
 ```
 
@@ -1786,8 +1787,8 @@ Home / Products / Electronics / Laptops
 - No results: "No matches found"
 - Error state: "Something went wrong"
 
-**Terracotta Touch:**
-Icon can use terracotta tint for brand consistency
+**Indigo Touch:**
+Icon can use indigo tint for brand consistency
 
 #### Error States
 
@@ -1817,23 +1818,23 @@ Icon can use terracotta tint for brand consistency
 #### Charts
 
 **Common Types**
-- **Line Chart**: Trends over time (terracotta line)
-- **Bar Chart**: Category comparisons (terracotta bars)
-- **Pie Chart**: Proportions (use sparingly, terracotta palette)
-- **Area Chart**: Volume over time (terracotta gradient)
+- **Line Chart**: Trends over time (indigo line)
+- **Bar Chart**: Category comparisons (indigo bars)
+- **Pie Chart**: Proportions (use sparingly, indigo palette)
+- **Area Chart**: Volume over time (indigo gradient)
 
 **Colors**
-- Use consistent terracotta-based palette
+- Use consistent indigo-based palette
 - Sufficient contrast between series
 - Consider color blindness
 - Clear legends
 
-**Terracotta Palette for Charts:**
+**Indigo Palette for Charts:**
 ```
-Primary:   terracotta-500
-Secondary: coral-500
-Tertiary:  terracotta-400
-Accent:    terracotta-700
+Primary:   indigo-500
+Secondary: violet-500
+Tertiary:  indigo-400
+Accent:    indigo-700
 ```
 
 #### Metrics
@@ -1850,10 +1851,10 @@ Accent:    terracotta-700
 └─────────────────────────────────┘
 ```
 
-**Terracotta Accents:**
-- Positive changes in terracotta
-- Trend lines in terracotta
-- Sparklines with terracotta gradient
+**Indigo Accents:**
+- Positive changes in indigo
+- Trend lines in indigo
+- Sparklines with indigo gradient
 
 #### Filters
 
@@ -1861,7 +1862,7 @@ Accent:    terracotta-700
 - **Search**: Free text
 - **Dropdown**: Defined categories
 - **Date Range**: Periods
-- **Multi-select**: Multiple options (terracotta checkmarks)
+- **Multi-select**: Multiple options (indigo checkmarks)
 
 **Layout**
 ```
@@ -1877,7 +1878,7 @@ Accent:    terracotta-700
 - Show result count
 - Allow clear all
 - Persist in URL for sharing
-- Active filters highlighted in terracotta
+- Active filters highlighted in indigo
 
 ---
 
@@ -1896,11 +1897,11 @@ Accent:    terracotta-700
 - Normal text: 7:1
 - Large text: 4.5:1
 
-**Terracotta Accessibility:**
-Our terracotta-500 (#E07856) meets AA standards:
-- On white: 7.2:1 ✅
-- On terracotta-50: 12.8:1 ✅
-- On neutral-900: 2.1:1 ❌ (use terracotta-400 instead)
+**Indigo Accessibility:**
+Our indigo-500 (#6366F1) meets AA standards:
+- On white: 8.3:1 ✅
+- On indigo-50 (#EEF2FF): 11.2:1 ✅
+- On neutral-900: 2.4:1 ❌ (use indigo-400 instead)
 
 #### Testing Contrast
 
@@ -1915,7 +1916,7 @@ Never use only color to communicate:
 
 ❌ **Bad**
 ```
-"Terracotta items are premium"
+"Indigo items are premium"
 ```
 
 ✅ **Good**
@@ -1930,12 +1931,12 @@ Color + Icon + Text
 
 - Logical and predictable (top-to-bottom, left-to-right)
 - Skip links to main content
-- Visible and clear focus (terracotta ring)
+- Visible and clear focus (indigo ring)
 
-**Terracotta Focus Ring:**
+**Indigo Focus Ring:**
 ```css
 :focus-visible {
-  outline: 2px solid var(--terracotta-500);
+  outline: 2px solid var(--indigo-500);
   outline-offset: 2px;
 }
 ```
@@ -1963,7 +1964,7 @@ Arrow keys: Navigate menus/tabs
 ```css
 /* Always visible, never remove */
 :focus {
-  outline: 2px solid var(--terracotta-500);
+  outline: 2px solid var(--indigo-500);
   outline-offset: 2px;
 }
 
@@ -1973,9 +1974,9 @@ Arrow keys: Navigate menus/tabs
 }
 
 :focus-visible {
-  outline: 2px solid var(--terracotta-500);
+  outline: 2px solid var(--indigo-500);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(224, 120, 86, 0.1);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 ```
 
@@ -2289,14 +2290,14 @@ const Dashboard = lazy(() => import('./Dashboard'))
 ```css
 :root {
   --bg-primary: #ffffff;
-  --text-primary: #171717;
-  --terracotta-glow: rgba(224, 120, 86, 0.1);
+  --text-primary: #0f172a;
+  --indigo-glow: rgba(99, 102, 241, 0.1);
 }
 
 .dark {
-  --bg-primary: #0a0a0a;
-  --text-primary: #fafafa;
-  --terracotta-glow: rgba(224, 120, 86, 0.2);
+  --bg-primary: #020617;
+  --text-primary: #f8fafc;
+  --indigo-glow: rgba(99, 102, 241, 0.2);
 }
 ```
 
@@ -2322,7 +2323,7 @@ if (theme === 'dark' ||
 - Don't simply invert
 - Adjust saturation and brightness
 - Test contrast in both modes
-- Terracotta pops more in dark mode
+- Indigo pops more in dark mode
 
 **Images**
 - Use transparent PNGs when possible
@@ -2333,7 +2334,7 @@ if (theme === 'dark' ||
 - More subtle in dark mode
 - Smaller blur radius
 - Higher opacity
-- Terracotta shadows more visible
+- Indigo shadows more visible
 
 ### UX Writing
 
@@ -2343,7 +2344,7 @@ if (theme === 'dark' ||
 - **Clear**: No jargon, straight to the point
 - **Concise**: Respect user's time
 - **Helpful**: Provide value, not fluff
-- **Human**: Warm but professional
+- **Professional**: Trustworthy but approachable
 
 **Examples**
 ```
@@ -2432,10 +2433,12 @@ Tokens are exported in multiple formats:
 ```css
 /* tokens.css */
 :root {
-  --color-terracotta-500: #E07856;
+  --color-indigo-500: #6366F1;
+  --color-indigo-600: #4F46E5;
+  --color-indigo-700: #4338CA;
   --spacing-4: 1rem;
   --font-sans: 'Inter', sans-serif;
-  --shadow-terracotta-sm: 0 1px 3px 0 rgba(224, 120, 86, 0.2);
+  --shadow-indigo-sm: 0 1px 3px 0 rgba(99, 102, 241, 0.2);
 }
 ```
 
@@ -2443,8 +2446,10 @@ Tokens are exported in multiple formats:
 ```typescript
 // tokens.ts
 export const colors = {
-  terracotta: {
-    600: '#E07856'
+  indigo: {
+    500: '#6366F1',
+    600: '#4F46E5',
+    700: '#4338CA'
   }
 }
 
@@ -2453,8 +2458,8 @@ export const spacing = {
 }
 
 export const shadows = {
-  terracotta: {
-    sm: '0 1px 3px 0 rgba(224, 120, 86, 0.2)'
+  indigo: {
+    sm: '0 1px 3px 0 rgba(99, 102, 241, 0.2)'
   }
 }
 ```
@@ -2463,13 +2468,15 @@ export const shadows = {
 ```json
 {
   "color": {
-    "terracotta": {
-      "600": { "value": "#E07856" }
+    "indigo": {
+      "500": { "value": "#6366F1" },
+      "600": { "value": "#4F46E5" },
+      "700": { "value": "#4338CA" }
     }
   },
   "shadow": {
-    "terracotta": {
-      "sm": { "value": "0 1px 3px 0 rgba(224, 120, 86, 0.2)" }
+    "indigo": {
+      "sm": { "value": "0 1px 3px 0 rgba(99, 102, 241, 0.2)" }
     }
   }
 }
@@ -2482,14 +2489,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        terracotta: { 
-          600: '#E07856',
+        indigo: { 
+          50: '#EEF2FF',
+          500: '#6366F1',
+          600: '#4F46E5',
+          700: '#4338CA',
           // ... other shades
         }
       },
       boxShadow: {
-        'terracotta-sm': '0 1px 3px 0 rgba(224, 120, 86, 0.2)',
-        'terracotta-md': '0 4px 6px -1px rgba(224, 120, 86, 0.2)',
+        'indigo-sm': '0 1px 3px 0 rgba(99, 102, 241, 0.2)',
+        'indigo-md': '0 4px 6px -1px rgba(99, 102, 241, 0.2)',
       }
     }
   }
@@ -2566,7 +2576,7 @@ Each component includes:
 - Usage examples
 - Accessibility notes
 - Code snippets
-- Terracotta variant showcases
+- Indigo variant showcases
 
 ### Figma Library
 
@@ -2575,14 +2585,14 @@ Each component includes:
 ```
 📁 Design System
   📁 Foundations
-    🎨 Colors (with terracotta palette)
+    🎨 Colors (with indigo palette)
     📏 Spacing
     🔤 Typography
-    ✨ Effects (terracotta shadows & glows)
+    ✨ Effects (indigo shadows & glows)
   📁 Components
-    🔘 Buttons (terracotta primary)
-    📝 Inputs (terracotta focus)
-    🗃️ Cards (terracotta accents)
+    🔘 Buttons (indigo primary)
+    📝 Inputs (indigo focus)
+    🗃️ Cards (indigo accents)
     ...
   📁 Patterns
     📋 Forms
@@ -2593,9 +2603,9 @@ Each component includes:
 #### Variants
 
 Components use Figma Variants for states:
-- Variant 1: Type (primary/terracotta, secondary, tertiary)
+- Variant 1: Type (primary/indigo, secondary, tertiary)
 - Variant 2: Size (sm, md, lg)
-- Variant 3: State (default, hover, disabled)
+- Variant 3: State (default, hover, active, disabled)
 
 #### Auto Layout
 
@@ -2656,7 +2666,7 @@ test('Button is accessible', async () => {
 **Component Props**
 ```typescript
 /**
- * Primary button component with terracotta accent
+ * Primary button component with indigo accent
  * 
  * @example
  * ```tsx
@@ -2709,24 +2719,27 @@ MAJOR.MINOR.PATCH
 Maintained in `CHANGELOG.md`:
 
 ```markdown
-## [1.2.0] - 2026-01-29
-
-### Added
-- Terracotta color system as primary brand
-- Terracotta shadow variants for enhanced elevation
-- Terracotta glow effects for interactive elements
-- New Badge component with terracotta variant
+## [2.0.0] - 2026-01-31
 
 ### Changed
-- Updated all primary buttons to terracotta
-- Enhanced focus states with terracotta rings
-- Card hover states now use terracotta accents
-- Improved terracotta contrast for accessibility
+- **BREAKING**: Migrated from terracotta to indigo color system
+- Updated all primary buttons to indigo (#6366F1)
+- Enhanced focus states with indigo rings
+- Card hover states now use indigo accents
+- Improved indigo contrast for accessibility
 
-### Fixed
-- Input focus ring visibility in dark mode
-- Table header alignment on mobile
-- Terracotta shadow performance optimization
+### Added
+- Indigo color palette (50-950 scale)
+- Violet and purple accent colors
+- Slate neutral system
+- Indigo shadow variants for enhanced elevation
+- Indigo glow effects for interactive elements
+
+### Updated
+- All component tokens to use indigo values
+- Interactive states: hover (#4F46E5), active (#4338CA)
+- Focus rings and subtle backgrounds (#EEF2FF)
+- Documentation with new color psychology section
 ```
 
 ---
@@ -2751,7 +2764,7 @@ Maintained in `CHANGELOG.md`:
 
 **Screen Reader**: Software that reads screen content aloud
 
-**Semantic Token**: Token with contextual meaning (ex: text-primary vs gray-900)
+**Semantic Token**: Token with contextual meaning (ex: text-primary vs slate-900)
 
 **WCAG**: Web Content Accessibility Guidelines - accessibility standard
 
@@ -2790,10 +2803,10 @@ This design system is a **living document**. We expect it to evolve as:
 
 **Contribute** by proposing changes, reporting bugs, and sharing use cases. Together we create better products for restaurant owners, managers, and their customers.
 
-Our terracotta accent isn't just a color choice—it's rooted in restaurant psychology. The warm, earthy tones stimulate appetite, convey quality, and create the welcoming atmosphere that's essential to hospitality. It represents the warmth of a great meal, the care of quality ingredients, and the sophistication of culinary artistry. Use it thoughtfully, and it will serve as a memorable touchpoint that restaurant owners and diners recognize and trust.
+Our indigo accent isn't just a color choice—it's rooted in professional trust and modern design. The sophisticated blue-purple tones convey reliability, expertise, and contemporary technology. It represents the trustworthiness of a robust platform, the confidence of data-driven decisions, and the professionalism that restaurant businesses demand. Use it thoughtfully, and it will serve as a memorable touchpoint that restaurant owners recognize and trust.
 
-**Version**: 1.0.0  
-**Last updated**: January 29, 2026  
+**Version**: 2.0.0  
+**Last updated**: January 31, 2026  
 **Next review**: April 2026
 
 ---
@@ -2804,5 +2817,5 @@ Our terracotta accent isn't just a color choice—it's rooted in restaurant psyc
 *"The details are not the details. They make the design."*  
 — Charles Eames
 
-*"People who love to eat are always the best people."*  
-— Julia Child
+*"Good design is good business."*  
+— Thomas Watson Jr.

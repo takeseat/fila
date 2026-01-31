@@ -357,7 +357,7 @@ export function Customers() {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-light-200">
+                                <tbody className="divide-y divide-border-default">
                                     {customers.map((customer) => (
                                         <tr key={customer.id} className="hover:bg-bg-subtle transition-colors">
                                             <td className="px-6 py-4">

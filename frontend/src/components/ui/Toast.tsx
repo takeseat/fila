@@ -18,9 +18,9 @@ export function Toast({ message, type, onClose, duration = 3000 }: ToastProps) {
     }, [duration, onClose]);
 
     const bgColor = {
-        success: 'bg-green-500',
-        error: 'bg-red-500',
-        info: 'bg-blue-500',
+        success: 'bg-green-600', // Solid success
+        error: 'bg-red-600',     // Solid error
+        info: 'bg-blue-600',     // Solid info
     }[type];
 
     const iconName = {

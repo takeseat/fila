@@ -10,7 +10,7 @@ export interface BadgeProps {
     /**
      * Status variant (DS Section 6.8)
      */
-    variant?: 'neutral' | 'success' | 'warning' | 'danger' | 'info';
+    variant?: 'neutral' | 'brand' | 'success' | 'warning' | 'danger' | 'info';
 
     /**
      * Size variant
@@ -41,6 +41,7 @@ export function Badge({
     // Variant styles using ONLY semantic tokens
     const variantStyles = {
         neutral: 'bg-bg-sunken text-text-secondary',
+        brand: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300', // Indigo/Brand variant
         success: 'bg-status-success-bg text-status-success-fg',
         warning: 'bg-status-warning-bg text-status-warning-fg',
         danger: 'bg-status-danger-bg text-status-danger-fg',

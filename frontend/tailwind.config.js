@@ -10,92 +10,104 @@ export default {
             // Semantic colors mapped to CSS variables
             colors: {
                 // Background colors (semantic tokens)
+                'bg-primary': 'var(--bg-primary)',
+                'bg-secondary': 'var(--bg-secondary)',
+                'bg-tertiary': 'var(--bg-tertiary)',
+                'bg-elevated': 'var(--bg-elevated)',
+                'bg-overlay': 'var(--bg-overlay)',
                 'bg-canvas': 'var(--semantic-bg-canvas)',
                 'bg-surface': 'var(--semantic-bg-surface)',
                 'bg-subtle': 'var(--semantic-bg-subtle)',
                 'bg-sunken': 'var(--semantic-bg-sunken)',
 
+                'bg-brand': 'var(--bg-brand)',
+                'bg-brand-subtle': 'var(--bg-brand-subtle)',
+                'bg-brand-light': 'var(--bg-brand-light)',
+                'bg-brand-hover': 'var(--bg-brand-hover)',
+                'bg-brand-active': 'var(--bg-brand-active)',
+
+                'bg-success': 'var(--bg-success)',
+                'bg-warning': 'var(--bg-warning)',
+                'bg-error': 'var(--bg-error)',
+                'bg-info': 'var(--bg-info)',
+
                 // Text colors (semantic tokens)
-                'text-primary': 'var(--semantic-text-primary)',
-                'text-secondary': 'var(--semantic-text-secondary)',
+                'text-primary': 'var(--text-primary)',
+                'text-secondary': 'var(--text-secondary)',
                 'text-muted': 'var(--semantic-text-muted)',
-                'text-inverse': 'var(--semantic-text-inverse)',
-                'text-danger': 'var(--semantic-text-danger)',
+                'text-tertiary': 'var(--text-tertiary)',
+                'text-disabled': 'var(--text-disabled)',
+                'text-inverse': 'var(--text-inverse)',
+
+                'text-brand': 'var(--text-brand)',
+                'text-brand-hover': 'var(--text-brand-hover)',
+                'text-success': 'var(--text-success)',
+                'text-warning': 'var(--text-warning)',
+                'text-error': 'var(--text-error)',
+                'text-info': 'var(--text-info)',
+                'text-link': 'var(--text-link)',
+                'text-link-hover': 'var(--text-link-hover)',
 
                 // Border colors (semantic tokens)
-                'border-default': 'var(--semantic-border-default)',
+                'border-default': 'var(--border-default)',
+                'border-subtle': 'var(--border-subtle)',
                 'border-muted': 'var(--semantic-border-muted)',
-                'border-strong': 'var(--semantic-border-strong)',
-                'border-focus': 'var(--semantic-border-focus)',
-                'border-danger': 'var(--semantic-border-danger)',
+                'border-strong': 'var(--border-strong)',
+                'border-brand': 'var(--border-brand)',
+                'border-error': 'var(--border-error)',
+                'border-focus': 'var(--border-focus)',
 
-                // Action colors - Primary (semantic tokens)
-                'action-primary-bg': 'var(--semantic-action-primary-bg)',
-                'action-primary-bg-hover': 'var(--semantic-action-primary-bg-hover)',
-                'action-primary-bg-active': 'var(--semantic-action-primary-bg-active)',
-                'action-primary-fg': 'var(--semantic-action-primary-fg)',
+                // Interactive colors
+                'interactive-primary': 'var(--interactive-primary)',
+                'interactive-primary-hover': 'var(--interactive-primary-hover)',
+                'interactive-primary-active': 'var(--interactive-primary-active)',
+                'interactive-primary-disabled': 'var(--interactive-primary-disabled)',
 
-                // Action colors - Secondary (semantic tokens)
-                'action-secondary-bg': 'var(--semantic-action-secondary-bg)',
-                'action-secondary-bg-hover': 'var(--semantic-action-secondary-bg-hover)',
-                'action-secondary-bg-active': 'var(--semantic-action-secondary-bg-active)',
-                'action-secondary-fg': 'var(--semantic-action-secondary-fg)',
-                'action-secondary-border': 'var(--semantic-action-secondary-border)',
+                'interactive-secondary': 'var(--interactive-secondary)',
+                'interactive-secondary-hover': 'var(--interactive-secondary-hover)',
+                'interactive-secondary-active': 'var(--interactive-secondary-active)',
+                'interactive-secondary-disabled': 'var(--interactive-secondary-disabled)',
 
-                // Action colors - Ghost (semantic tokens)
-                'action-ghost-bg': 'var(--semantic-action-ghost-bg)',
-                'action-ghost-bg-hover': 'var(--semantic-action-ghost-bg-hover)',
-                'action-ghost-fg': 'var(--semantic-action-ghost-fg)',
-
-                // Action colors - Danger (semantic tokens)
-                'action-danger-bg': 'var(--semantic-action-danger-bg)',
-                'action-danger-bg-hover': 'var(--semantic-action-danger-bg-hover)',
-                'action-danger-fg': 'var(--semantic-action-danger-fg)',
-
-                // Action colors - Link (semantic tokens)
-                'action-link-fg': 'var(--semantic-action-link-fg)',
-                'action-link-fg-hover': 'var(--semantic-action-link-fg-hover)',
-
-
-                // Brand Colors - Terracotta (Restaurant Optimized)
-                terracotta: {
-                    50: 'var(--base-color-terracotta-50)',
-                    100: 'var(--base-color-terracotta-100)',
-                    200: 'var(--base-color-terracotta-200)',
-                    300: 'var(--base-color-terracotta-300)',
-                    400: 'var(--base-color-terracotta-400)',
-                    500: 'var(--base-color-terracotta-500)',
-                    600: 'var(--base-color-terracotta-600)',
-                    700: 'var(--base-color-terracotta-700)',
-                    800: 'var(--base-color-terracotta-800)',
-                    900: 'var(--base-color-terracotta-900)',
-                    950: 'var(--base-color-terracotta-950)',
+                // Brand Colors - Indigo (Primary)
+                indigo: {
+                    50: 'var(--base-color-indigo-50)',
+                    100: 'var(--base-color-indigo-100)',
+                    200: 'var(--base-color-indigo-200)',
+                    300: 'var(--base-color-indigo-300)',
+                    400: 'var(--base-color-indigo-400)',
+                    500: 'var(--base-color-indigo-500)',
+                    600: 'var(--base-color-indigo-600)',
+                    700: 'var(--base-color-indigo-700)',
+                    800: 'var(--base-color-indigo-800)',
+                    900: 'var(--base-color-indigo-900)',
+                    950: 'var(--base-color-indigo-950)',
                 },
-                coral: {
-                    50: 'var(--base-color-coral-50)',
-                    100: 'var(--base-color-coral-100)',
-                    200: 'var(--base-color-coral-200)',
-                    300: 'var(--base-color-coral-300)',
-                    400: 'var(--base-color-coral-400)',
-                    500: 'var(--base-color-coral-500)',
-                    600: 'var(--base-color-coral-600)',
-                    700: 'var(--base-color-coral-700)',
-                    800: 'var(--base-color-coral-800)',
-                    900: 'var(--base-color-coral-900)',
-                    950: 'var(--base-color-coral-950)',
+                // Accent Colors
+                violet: {
+                    50: 'var(--base-color-violet-50)',
+                    100: 'var(--base-color-violet-100)',
+                    200: 'var(--base-color-violet-200)',
+                    300: 'var(--base-color-violet-300)',
+                    400: 'var(--base-color-violet-400)',
+                    500: 'var(--base-color-violet-500)',
+                    600: 'var(--base-color-violet-600)',
+                    700: 'var(--base-color-violet-700)',
+                    800: 'var(--base-color-violet-800)',
+                    900: 'var(--base-color-violet-900)',
+                    950: 'var(--base-color-violet-950)',
                 },
-                peach: {
-                    50: 'var(--base-color-peach-50)',
-                    100: 'var(--base-color-peach-100)',
-                    200: 'var(--base-color-peach-200)',
-                    300: 'var(--base-color-peach-300)',
-                    400: 'var(--base-color-peach-400)',
-                    500: 'var(--base-color-peach-500)',
-                    600: 'var(--base-color-peach-600)',
-                    700: 'var(--base-color-peach-700)',
-                    800: 'var(--base-color-peach-800)',
-                    900: 'var(--base-color-peach-900)',
-                    950: 'var(--base-color-peach-950)',
+                purple: {
+                    50: 'var(--base-color-purple-50)',
+                    100: 'var(--base-color-purple-100)',
+                    200: 'var(--base-color-purple-200)',
+                    300: 'var(--base-color-purple-300)',
+                    400: 'var(--base-color-purple-400)',
+                    500: 'var(--base-color-purple-500)',
+                    600: 'var(--base-color-purple-600)',
+                    700: 'var(--base-color-purple-700)',
+                    800: 'var(--base-color-purple-800)',
+                    900: 'var(--base-color-purple-900)',
+                    950: 'var(--base-color-purple-950)',
                 },
 
                 // Neutral Primitive - DS Spec
@@ -113,145 +125,83 @@ export default {
                     900: 'var(--base-color-neutral-900)',
                     950: 'var(--base-color-neutral-950)',
                 },
-
-                // Status colors (semantic tokens)
-                'status-success-bg': 'var(--semantic-status-success-bg)',
-                'status-success-fg': 'var(--semantic-status-success-fg)',
-                'status-warning-bg': 'var(--semantic-status-warning-bg)',
-                'status-warning-fg': 'var(--semantic-status-warning-fg)',
-                'status-danger-bg': 'var(--semantic-status-danger-bg)',
-                'status-danger-fg': 'var(--semantic-status-danger-fg)',
-                'status-info-bg': 'var(--semantic-status-info-bg)',
-                'status-info-fg': 'var(--semantic-status-info-fg)',
-
-                // Legacy colors for compatibility (will be replaced gradually)
-                dark: {
-                    900: '#0E0E10',
-                    800: '#1A1A1E',
-                    700: '#2A2A2E',
-                    600: '#3A3A3E',
-                    500: 'var(--semantic-text-muted)',
-                },
-                light: {
-                    50: '#FAFAFA',
-                    100: '#F5F5F7',
-                    200: '#E8E8ED',
-                    300: '#D1D1D6',
-                },
-                primary: {
-                    50: '#EEF2FF',
-                    100: '#E0E7FF',
-                    200: '#C7D2FE',
-                    300: '#A5B4FC',
-                    400: '#818CF8',
-                    500: 'var(--semantic-action-primary-bg)',
-                    600: 'var(--semantic-action-primary-bg-hover)',
-                    700: 'var(--semantic-action-primary-bg-active)',
-                    800: '#312E81',
-                    900: '#1E1B4B',
-                },
-                success: {
-                    50: '#F0FDF4',
-                    100: '#DCFCE7',
-                    500: 'var(--semantic-status-success-bg)',
-                    600: '#22C55E',
-                    700: '#16A34A',
-                },
-                warning: {
-                    50: '#FEFCE8',
-                    100: '#FEF9C3',
-                    500: 'var(--semantic-status-warning-bg)',
-                    600: '#EAB308',
-                },
-                danger: {
-                    50: '#FEF2F2',
-                    100: '#FEE2E2',
-                    500: 'var(--semantic-status-danger-bg)',
-                    600: '#DC2626',
-                    700: '#B91C1C',
-                },
             },
 
             // Semantic spacing
             spacing: {
-                'space-xs': 'var(--semantic-space-xs)',   // 8px
-                'space-sm': 'var(--semantic-space-sm)',   // 12px
-                'space-md': 'var(--semantic-space-md)',   // 16px
-                'space-lg': 'var(--semantic-space-lg)',   // 24px
-                'space-xl': 'var(--semantic-space-xl)',   // 32px
+                'space-1': 'var(--base-spacing-1)',   // 4px
+                'space-2': 'var(--base-spacing-2)',   // 8px
+                'space-3': 'var(--base-spacing-3)',   // 12px
+                'space-4': 'var(--base-spacing-4)',   // 16px
+                'space-5': 'var(--base-spacing-5)',   // 20px
+                'space-6': 'var(--base-spacing-6)',   // 24px
+                'space-8': 'var(--base-spacing-8)',   // 32px
+                'space-10': 'var(--base-spacing-10)', // 40px
+                'space-12': 'var(--base-spacing-12)', // 48px
+                'space-16': 'var(--base-spacing-16)', // 64px
+                'space-20': 'var(--base-spacing-20)', // 80px
 
-                // Legacy spacing (kept for compatibility)
-                '18': '4.5rem',
-                '88': '22rem',
-                '128': '32rem',
+                // Legacy spacing aliases (to be migrated)
+                'space-xs': 'var(--base-spacing-2)',
+                'space-sm': 'var(--base-spacing-3)',
+                'space-md': 'var(--base-spacing-4)',
+                'space-lg': 'var(--base-spacing-6)',
+                'space-xl': 'var(--base-spacing-8)',
             },
 
             fontFamily: {
                 sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-                display: ['Lexend', 'Inter', 'sans-serif'],
+                mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                display: ['Inter', 'sans-serif'], // Changed from Lexend to Inter for consistency
             },
 
             fontSize: {
-                'xs': ['0.75rem', { lineHeight: '1rem' }],
-                'sm': ['0.875rem', { lineHeight: '1.25rem' }],
-                'base': ['1rem', { lineHeight: '1.5rem' }],
-                'lg': ['1.125rem', { lineHeight: '1.75rem' }],
-                'xl': ['1.25rem', { lineHeight: '1.75rem' }],
-                '2xl': ['1.5rem', { lineHeight: '2rem' }],
-                '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
-                '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+                'xs': ['var(--base-font-size-xs)', { lineHeight: '16px' }],
+                'sm': ['var(--base-font-size-sm)', { lineHeight: '20px' }],
+                'base': ['var(--base-font-size-base)', { lineHeight: '24px' }],
+                'lg': ['var(--base-font-size-lg)', { lineHeight: '28px' }],
+                'xl': ['var(--base-font-size-xl)', { lineHeight: '28px' }],
+                '2xl': ['var(--base-font-size-2xl)', { lineHeight: '32px' }],
+                '3xl': ['var(--base-font-size-3xl)', { lineHeight: '36px' }],
+                '4xl': ['var(--base-font-size-4xl)', { lineHeight: '40px' }],
+                '5xl': ['var(--base-font-size-5xl)', { lineHeight: '48px' }],
+                '6xl': ['var(--base-font-size-6xl)', { lineHeight: '60px' }],
+                '7xl': ['var(--base-font-size-7xl)', { lineHeight: '72px' }],
             },
 
             // Semantic border radius
             borderRadius: {
-                'control': 'var(--semantic-shape-radius-control)',
-                'card': 'var(--semantic-shape-radius-card)',
-                'modal': 'var(--semantic-shape-radius-modal)',
-                'pill': 'var(--semantic-shape-radius-pill)',
+                'sm': 'var(--radius-sm)',
+                'md': 'var(--radius-md)',
+                'lg': 'var(--radius-lg)',
+                'xl': 'var(--radius-xl)',
+                'full': 'var(--radius-full)',
 
-                // Legacy radius (kept for compatibility)
-                'sm': '0.375rem',
-                'DEFAULT': '0.5rem',
-                'md': '0.75rem',
-                'lg': '1rem',
-                'xl': '1.25rem',
-                '2xl': '1.5rem',
-                '3xl': '2rem',
+                // Aliases
+                'DEFAULT': 'var(--radius-md)',
             },
 
             // Semantic box shadows
             boxShadow: {
-                'control': 'var(--semantic-shape-shadow-control)',
-                'card': 'var(--semantic-shape-shadow-card)',
-                'modal': 'var(--semantic-shape-shadow-modal)',
+                'sm': 'var(--shadow-sm)',
+                'md': 'var(--shadow-md)',
+                'lg': 'var(--shadow-lg)',
+                'xl': 'var(--shadow-xl)',
+                '2xl': 'var(--shadow-2xl)',
 
-                // Legacy shadows (kept for compatibility)
-                'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-                'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
-                'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
-                'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1)',
-                'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
-                '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
-                'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
-                'premium': '0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.06)',
+                // Indigo Shadows (DS Spec - Restaurant Brand)
+                'indigo-sm': 'var(--shadow-indigo-sm)',
+                'indigo-md': 'var(--shadow-indigo-md)',
+                'indigo-lg': 'var(--shadow-indigo-lg)',
+                'indigo-xl': 'var(--shadow-indigo-xl)',
 
-                //Terracotta Shadows (DS Spec - Restaurant Brand)
-                'terracotta-sm': 'var(--shadow-terracotta-sm)',
-                'terracotta-md': 'var(--shadow-terracotta-md)',
-                'terracotta-lg': 'var(--shadow-terracotta-lg)',
-                'terracotta-xl': 'var(--shadow-terracotta-xl)',
-                'glow-terracotta': 'var(--glow-terracotta)',
+                'DEFAULT': 'var(--shadow-sm)',
             },
 
-            backdropBlur: {
-                'xs': '2px',
-                'sm': '4px',
-                'md': '8px',
-                'lg': '12px',
-                'xl': '16px',
-                '2xl': '24px',
-                '3xl': '40px',
+            transitionDuration: {
+                'fast': '150ms',
+                'base': '200ms',
+                'slow': '300ms',
             },
 
             animation: {
@@ -261,9 +211,6 @@ export default {
                 'slide-in-right': 'slideInRight 0.3s ease-out',
                 'slide-in-left': 'slideInLeft 0.3s ease-out',
                 'scale-in': 'scaleIn 0.2s ease-out',
-                'bounce-in': 'bounceIn 0.5s ease-out',
-                'spin-slow': 'spin 3s linear infinite',
-                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             },
 
             keyframes: {
@@ -289,12 +236,6 @@ export default {
                 },
                 scaleIn: {
                     '0%': { transform: 'scale(0.95)', opacity: '0' },
-                    '100%': { transform: 'scale(1)', opacity: '1' },
-                },
-                bounceIn: {
-                    '0%': { transform: 'scale(0.3)', opacity: '0' },
-                    '50%': { transform: 'scale(1.05)' },
-                    '70%': { transform: 'scale(0.9)' },
                     '100%': { transform: 'scale(1)', opacity: '1' },
                 },
             },

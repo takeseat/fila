@@ -67,10 +67,10 @@ export function Alert({
 
     // Variant-specific styles using semantic tokens
     const variantStyles = {
-        info: 'bg-status-info-bg/10 text-status-info-bg border-status-info-bg/30',
-        success: 'bg-status-success-bg/10 text-status-success-bg border-status-success-bg/30',
-        warning: 'bg-status-warning-bg/10 text-status-warning-bg border-status-warning-bg/30',
-        danger: 'bg-status-danger-bg/10 text-status-danger-bg border-status-danger-bg/30',
+        info: 'bg-bg-info text-text-info border-border-default', // Simplified to use configured tokens, assuming border-info exists or using default
+        success: 'bg-bg-success text-text-success border-border-success',
+        warning: 'bg-bg-warning text-text-warning border-border-warning',
+        danger: 'bg-bg-error text-text-error border-border-error',
     };
 
     return (

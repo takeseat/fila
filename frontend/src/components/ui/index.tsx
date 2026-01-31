@@ -1,51 +1,7 @@
-import React, { ButtonHTMLAttributes } from 'react';
-import { Icon } from '@/design-system/icons/Icon';
+import React from 'react';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'outline';
-    size?: 'sm' | 'md' | 'lg';
-    isLoading?: boolean;
-}
 
-export function Button({
-    children,
-    variant = 'primary',
-    size = 'md',
-    isLoading = false,
-    className = '',
-    disabled,
-    ...props
-}: ButtonProps) {
-    const baseClasses = 'inline-flex items-center justify-center font-medium rounded-xl transition-smooth focus-ring disabled:opacity-50 disabled:cursor-not-allowed';
-
-    const variantClasses = {
-        primary: 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 shadow-md hover:shadow-lg',
-        secondary: 'bg-bg-subtle text-text-primary hover:bg-bg-sunken active:bg-light-300',
-        ghost: 'bg-transparent text-text-primary hover:bg-bg-subtle active:bg-bg-sunken',
-        outline: 'bg-transparent border-2 border-border-default text-text-primary hover:bg-bg-subtle hover:border-light-400',
-        danger: 'bg-danger-500 text-white hover:bg-danger-600 active:bg-danger-700 shadow-md hover:shadow-lg',
-        success: 'bg-success-500 text-white hover:bg-success-600 active:bg-success-700 shadow-md hover:shadow-lg',
-    };
-
-    const sizeClasses = {
-        sm: 'px-3 py-1.5 text-sm gap-1.5',
-        md: 'px-4 py-2.5 text-base gap-2',
-        lg: 'px-6 py-3.5 text-lg gap-2.5',
-    };
-
-    return (
-        <button
-            className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
-            disabled={disabled || isLoading}
-            {...props}
-        >
-            {isLoading && (
-                <Icon name="loading" size="sm" className="animate-spin" tone="inherit" />
-            )}
-            {children}
-        </button>
-    );
-}
+export { Button } from './Button';
 
 
 // Progress Bar Component
@@ -69,10 +25,10 @@ export function Progress({
     const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
 
     const variantClasses = {
-        primary: 'bg-primary-500',
-        success: 'bg-success-500',
-        warning: 'bg-warning-500',
-        danger: 'bg-danger-500',
+        primary: 'bg-brand',
+        success: 'bg-success',
+        warning: 'bg-warning',
+        danger: 'bg-error',
     };
 
     const sizeClasses = {
@@ -98,47 +54,8 @@ export function Progress({
     );
 }
 
-// Toast Notification Component
-interface ToastProps {
-    message: string;
-    variant?: 'success' | 'error' | 'warning' | 'info';
-    onClose?: () => void;
-}
 
-export function Toast({ message, variant = 'info', onClose }: ToastProps) {
-    const variantStyles = {
-        success: 'bg-success-50 border-success-200 text-success-800',
-        error: 'bg-danger-50 border-danger-200 text-danger-800',
-        warning: 'bg-warning-50 border-warning-200 text-warning-800',
-        info: 'bg-primary-50 border-primary-200 text-primary-800',
-    };
-
-    const icons = {
-        success: <Icon name="success" size="md" tone="success" />,
-        error: <Icon name="error" size="md" tone="error" />,
-        warning: <Icon name="warning" size="md" tone="warning" />,
-        info: <Icon name="info" size="md" tone="info" />,
-    };
-
-    return (
-        <div className={`
-      flex items-center gap-3 p-4 rounded-xl border shadow-lg
-      ${variantStyles[variant]}
-      animate-slide-in-right
-    `}>
-            {icons[variant]}
-            <p className="flex-1 text-sm font-medium">{message}</p>
-            {onClose && (
-                <button
-                    onClick={onClose}
-                    className="text-current opacity-70 hover:opacity-100 transition-opacity"
-                >
-                    <Icon name="close" size="sm" tone="inherit" />
-                </button>
-            )}
-        </div>
-    );
-}
+export { Toast } from './Toast';
 
 // Divider Component
 interface DividerProps {
@@ -213,8 +130,8 @@ export function Spinner({ size = 'md', variant = 'primary', className = '' }: Sp
     };
 
     const variantClasses = {
-        primary: 'border-primary-600',
-        white: 'border-white',
+        primary: 'border-brand',
+        white: 'border-text-inverse',
     };
 
     return (
@@ -235,7 +152,7 @@ interface TableProps {
 export function Table({ children, className = '' }: TableProps) {
     return (
         <div className={`overflow-x-auto ${className}`}>
-            <table className="min-w-full divide-y divide-light-200">
+            <table className="min-w-full divide-y divide-border-default">
                 {children}
             </table>
         </div>

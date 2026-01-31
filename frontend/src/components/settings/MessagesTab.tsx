@@ -283,10 +283,10 @@ export function MessagesTab() {
 
             {/* Pickup Orders Section */}
             <Card className="overflow-hidden">
-                <div className="p-6 border-b border-gray-100 bg-terracotta-50/50">
+                <div className="p-6 border-b border-gray-100 bg-indigo-50/50">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 bg-terracotta-100 rounded-lg">
-                            <svg className="w-6 h-6 text-terracotta-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="p-2 bg-indigo-100 rounded-lg">
+                            <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                             </svg>
                         </div>
@@ -403,9 +403,9 @@ export function MessagesTab() {
                             </div>
 
                             <div className="space-y-6">
-                                <div className="bg-terracotta-50 p-4 rounded-lg border border-terracotta-100">
-                                    <h4 className="font-medium text-terracotta-900 mb-2">{t('orderMessages.variables.title')}</h4>
-                                    <ul className="text-sm text-terracotta-800 space-y-2">
+                                <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
+                                    <h4 className="font-medium text-indigo-900 mb-2">{t('orderMessages.variables.title')}</h4>
+                                    <ul className="text-sm text-indigo-800 space-y-2">
                                         <li><code>{`{{customer_name}}`}</code>: {t('orderMessages.variables.customerName')}</li>
                                         <li><code>{`{{order_code}}`}</code>: {t('orderMessages.variables.orderCode')}</li>
                                         <li><code>{`{{business_name}}`}</code>: {t('orderMessages.variables.businessName')}</li>

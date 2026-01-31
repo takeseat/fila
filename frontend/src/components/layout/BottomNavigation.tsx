@@ -49,7 +49,7 @@ export function BottomNavigation() {
     ];
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-bg-surface border-t border-gray-200 lg:hidden z-50 safe-area-bottom">
+        <nav className="fixed bottom-0 left-0 right-0 bg-bg-surface border-t border-border-default lg:hidden z-50 safe-area-bottom">
             <div className="flex items-center justify-around h-16">
                 {navItems.map((item) => {
                     const isActive = location.pathname === item.path;
@@ -58,14 +58,14 @@ export function BottomNavigation() {
                             key={item.path}
                             to={item.path}
                             className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${isActive
-                                ? 'text-primary-600'
-                                : 'text-gray-500 active:text-gray-700'
+                                ? 'text-indigo-600'
+                                : 'text-text-secondary active:text-text-primary'
                                 }`}
                         >
                             <span className={`transition-transform ${isActive ? 'scale-110' : ''}`}>
                                 {item.icon}
                             </span>
-                            <span className={`text-xs mt-1 font-medium ${isActive ? 'text-primary-600' : 'text-gray-600'}`}>
+                            <span className={`text-xs mt-1 font-medium ${isActive ? 'text-indigo-600' : 'text-text-secondary'}`}>
                                 {item.label}
                             </span>
                         </Link>

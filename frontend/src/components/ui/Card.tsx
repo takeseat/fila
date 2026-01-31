@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import clsx from 'clsx';
 
-export interface CardProps {
+export interface CardProps extends HTMLAttributes<HTMLDivElement> {
     /**
      * Card header title
      */
@@ -13,11 +13,6 @@ export interface CardProps {
     subtitle?: string;
 
     /**
-     * Card body content
-     */
-    children: ReactNode;
-
-    /**
      * Card footer content
      */
     footer?: ReactNode;
@@ -26,11 +21,6 @@ export interface CardProps {
      * Header action (e.g., button, menu)
      */
     headerAction?: ReactNode;
-
-    /**
-     * Additional class names
-     */
-    className?: string;
 
     /**
      * Padding size
@@ -64,7 +54,8 @@ export function Card({
     headerAction,
     className = '',
     padding = 'md',
-    variant = 'default',  // New variant support
+    variant = 'default',
+    ...props
 }: CardProps) {
     // Padding classes
     const paddingClasses = {
@@ -78,13 +69,14 @@ export function Card({
     const variantStyles = {
         default: '',
         interactive: clsx(
-            'cursor-pointer hover:shadow-lg transition-all duration-200 hover:border-terracotta-300 hover:shadow-terracotta-md dark:hover:border-terracotta-700',
+            'cursor-pointer hover:shadow-lg transition-all duration-200 hover:border-indigo-300 hover:shadow-indigo-md dark:hover:border-indigo-700',
         ),
-        featured: 'border-terracotta-200 shadow-terracotta-sm dark:border-terracotta-800',
+        featured: 'border-indigo-200 shadow-indigo-sm dark:border-indigo-800',
     };
 
     return (
         <div
+            {...props}
             className={clsx(
                 // Base styles using semantic tokens
                 'bg-bg-surface',

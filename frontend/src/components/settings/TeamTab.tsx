@@ -85,7 +85,7 @@ export function TeamTab() {
     const getRoleBadgeColor = (role: string) => {
         switch (role) {
             case 'ADMIN':
-                return 'bg-terracotta-100 text-terracotta-800';
+                return 'bg-indigo-100 text-indigo-800';
             case 'MANAGER':
                 return 'bg-blue-100 text-blue-800';
             case 'HOSTESS':

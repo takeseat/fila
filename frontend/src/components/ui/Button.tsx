@@ -5,7 +5,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     /**
      * Button variant - defines visual style (DS Section 6.1)
      */
-    variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'link';
+    variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'link' | 'outline' | 'success';
 
     /**
      * Button size - sm: 32px, md: 40px, lg: 48px (DS Section 6.1)
@@ -69,7 +69,7 @@ export function Button({
         primary: clsx(
             'bg-action-primary-bg text-action-primary-fg',
             'hover:bg-action-primary-bg-hover active:bg-action-primary-bg-active',
-            'hover:shadow-terracotta-md', // Purple shadow on hover (DS Spec)
+            'hover:shadow-indigo-md', // Indigo shadow on hover (DS Spec)
             'focus:ring-action-primary-bg/20'
         ),
         secondary: clsx(
@@ -82,6 +82,11 @@ export function Button({
             'hover:bg-action-ghost-bg-hover',
             'focus:ring-action-ghost-fg/20'
         ),
+        success: clsx(
+            'bg-status-success-bg text-status-success-fg',
+            'hover:brightness-90',
+            'focus:ring-status-success-bg/20'
+        ),
         danger: clsx(
             'bg-action-danger-bg text-action-danger-fg',
             'hover:bg-action-danger-bg-hover',
@@ -91,6 +96,11 @@ export function Button({
             'bg-transparent text-action-link-fg h-auto px-0',
             'hover:text-action-link-fg-hover underline-offset-4 hover:underline',
             'focus:ring-action-link-fg/20'
+        ),
+        outline: clsx(
+            'bg-transparent border border-border-default text-text-primary',
+            'hover:bg-bg-subtle active:bg-bg-sunken',
+            'focus:ring-border-default/20'
         ),
     };
 
