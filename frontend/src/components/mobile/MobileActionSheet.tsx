@@ -17,7 +17,7 @@ export function MobileActionSheet({ isOpen, onClose, title, children }: MobileAc
             <ModalBackdrop onClick={onClose} className="lg:hidden" />
 
             {/* Sheet */}
-            <div className="fixed bottom-0 left-0 right-0 bg-bg-surface rounded-t-modal z-50 lg:hidden animate-slide-up safe-area-bottom">
+            <div className="fixed bottom-0 left-0 right-0 bg-bg-surface rounded-t-modal z-[1000] lg:hidden animate-slide-up safe-area-bottom">
                 {/* Handle */}
                 <div className="flex justify-center pt-3 pb-2">
                     <div className="w-12 h-1 bg-gray-300 rounded-full" />

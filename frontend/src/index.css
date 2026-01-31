@@ -261,8 +261,6 @@
     --bg-overlay: rgba(0, 0, 0, 0.7);
     --bg-tertiary: var(--base-color-neutral-800);
     --bg-elevated: var(--base-color-neutral-900);
-    --bg-overlay: rgba(0, 0, 0, 0.7);
-
     --bg-brand: var(--base-color-indigo-500);
     --bg-brand-subtle: var(--base-color-indigo-950);
     --bg-brand-light: var(--base-color-indigo-900);
@@ -1004,4 +1002,21 @@
 
 .animate-scale-in {
   animation: scale-in 0.2s ease-out;
+}
+
+@layer components {
+  .ds-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-overlay);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 999;
+    pointer-events: auto;
+  }
+
+  .ds-modal-content {
+    position: relative;
+    z-index: 1000;
+  }
 }

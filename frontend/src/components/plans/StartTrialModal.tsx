@@ -70,7 +70,7 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-50" onClose={onClose}>
+            <Dialog as="div" className="relative" onClose={onClose}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -83,7 +83,7 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
                     <ModalBackdrop />
                 </Transition.Child>
 
-                <div className="fixed inset-0 overflow-y-auto">
+                <div className="fixed inset-0 overflow-y-auto z-[1000]">
                     <div className="flex min-h-full items-center justify-center p-4 text-center">
                         <Transition.Child
                             as={Fragment}
