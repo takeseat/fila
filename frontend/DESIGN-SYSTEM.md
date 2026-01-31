@@ -313,6 +313,11 @@ radius-lg:   12px  (0.75rem)
 radius-xl:   16px  (1rem)
 radius-2xl:  24px  (1.5rem)
 radius-full: 9999px
+
+> **WARNING**: Never use hardcoded numbers (e.g. `rounded-[8px]`) or generic spacing utilities for components.
+> - **Buttons**: MUST use `radius-md` (8px).
+> - **Cards**: MUST use `radius-lg` (12px).
+> - **Modals**: MUST use `radius-xl` (16px).
 ```
 
 #### Shadows

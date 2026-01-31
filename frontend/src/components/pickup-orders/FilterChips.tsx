@@ -18,7 +18,7 @@ export function FilterChips({ activeFilter, onFilterChange }: FilterChipsProps) 
                     key={filter.id}
                     onClick={() => onFilterChange(filter.id)}
                     className={`
-                        flex-shrink-0 px-4 py-2 rounded-full font-medium text-sm
+                        flex-shrink-0 px-4 py-2 rounded-pill font-medium text-sm
                         transition-all duration-200
                         ${activeFilter === filter.id
                             ? 'bg-primary-500 text-white shadow-md'

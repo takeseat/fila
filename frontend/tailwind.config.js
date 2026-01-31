@@ -204,6 +204,12 @@ export default {
                 'xl': 'var(--radius-xl)',
                 'full': 'var(--radius-full)',
 
+                // Semantic Aliases
+                'control': 'var(--semantic-shape-radius-control)',
+                'card': 'var(--semantic-shape-radius-card)',
+                'modal': 'var(--semantic-shape-radius-modal)',
+                'pill': 'var(--semantic-shape-radius-pill)',
+
                 // Aliases
                 'DEFAULT': 'var(--radius-md)',
             },
