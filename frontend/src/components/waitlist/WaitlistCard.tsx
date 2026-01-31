@@ -60,7 +60,7 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
             </Button>
 
             {isOpen && (
-                <div className="absolute right-0 top-full mt-1 bg-bg-surface border border-border-default rounded-lg shadow-lg z-50 min-w-[160px] py-1">
+                <div className="absolute right-0 top-full mt-1 bg-bg-surface border border-border-subtle rounded-lg shadow-md z-[1000] min-w-[160px] py-1">
                     <button
                         onClick={handleCancel}
                         className="w-full px-4 py-2 text-left text-sm text-danger-600 hover:bg-danger-50 flex items-center gap-2 transition-colors"
@@ -246,7 +246,7 @@ export function WaitlistCard({
     return (
         <Card
             padding="md"
-            className={`hover:shadow-xl transition-all duration-200 relative overflow-hidden ${cardBorderClass}`}
+            className={`hover:shadow-xl transition-all duration-200 relative ${cardBorderClass}`}
         >
             {badgeContent}
 
