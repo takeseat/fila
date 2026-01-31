@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { format } from 'date-fns';
 import { Card, Button, Badge, Progress } from '../ui';
@@ -14,6 +14,64 @@ interface WaitlistEntry {
     updatedAt: string;
     calledAt?: string;
     notes?: string;
+}
+
+// Overflow Menu Component for secondary/destructive actions
+interface OverflowMenuProps {
+    onCancel: () => void;
+    cancelLabel?: string;
+    isLoading?: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    t: any;
+}
+
+function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps) {
+    const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    // Close menu when clicking outside
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleCancel = () => {
+        if (window.confirm(t('actions.cancelConfirm', 'Deseja realmente cancelar este atendimento?'))) {
+            onCancel();
+        }
+        setIsOpen(false);
+    };
+
+    return (
+        <div ref={menuRef} className="relative">
+            <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => setIsOpen(!isOpen)}
+                className="px-2"
+                disabled={isLoading}
+            >
+                <Icon name="more" size="sm" />
+            </Button>
+
+            {isOpen && (
+                <div className="absolute right-0 top-full mt-1 bg-bg-surface border border-border-default rounded-lg shadow-lg z-50 min-w-[160px] py-1">
+                    <button
+                        onClick={handleCancel}
+                        className="w-full px-4 py-2 text-left text-sm text-danger-600 hover:bg-danger-50 flex items-center gap-2 transition-colors"
+                    >
+                        <Icon name="close" size="sm" tone="error" />
+                        {cancelLabel || t('actions.cancel')}
+                    </button>
+                </div>
+            )}
+        </div>
+    );
 }
 
 interface WaitlistCardProps {
@@ -257,12 +315,12 @@ export function WaitlistCard({
             )}
 
             {/* Action Buttons */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
                 {entry.status === 'WAITING' && (
                     <>
                         <Button
                             size="sm"
-                            variant="outline"
+                            variant="primary"
                             onClick={() => onCall(entry.id)}
                             className="flex-1"
                             isLoading={isActionLoading.call}
@@ -280,14 +338,12 @@ export function WaitlistCard({
                             <Icon name="check" size="sm" className="mr-2" />
                             {t('actions.seat')}
                         </Button>
-                        <Button
-                            size="sm"
-                            variant="danger"
-                            onClick={() => onCancel(entry.id)}
+                        {/* Overflow Menu */}
+                        <OverflowMenu
+                            onCancel={() => onCancel(entry.id)}
                             isLoading={isActionLoading.cancel}
-                        >
-                            <Icon name="close" size="sm" />
-                        </Button>
+                            t={t}
+                        />
                     </>
                 )}
                 {entry.status === 'CALLED' && (
@@ -302,20 +358,17 @@ export function WaitlistCard({
                             <Icon name="check" size="sm" className="mr-2" />
                             {t('actions.seat')}
                         </Button>
-                        <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => {
-                                if (window.confirm('Deseja realmente marcar este cliente como faltoso?')) {
+                        {/* Overflow Menu */}
+                        <OverflowMenu
+                            onCancel={() => {
+                                if (window.confirm(t('actions.noShowConfirm', 'Deseja realmente marcar este cliente como faltoso?'))) {
                                     onNoShow(entry.id);
                                 }
                             }}
-                            className="flex-1 border-gray-300 text-gray-600 hover:bg-gray-50"
+                            cancelLabel={t('actions.noShow')}
                             isLoading={isActionLoading.noShow}
-                        >
-                            <Icon name="close" size="sm" className="mr-2" />
-                            {t('actions.noShow')}
-                        </Button>
+                            t={t}
+                        />
                     </>
                 )}
             </div>
