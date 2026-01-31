@@ -450,8 +450,8 @@ export function MessagesTab() {
                 </div>
             </div>
 
-            {/* Actions Footer */}
-            <div className="flex items-center justify-end gap-4 sticky bottom-8 bg-elevated/80 backdrop-blur-md p-4 mt-12 radius-xl border border-default shadow-lg z-20">
+            {/* Page Actions */}
+            <div className="flex items-center justify-end gap-4 mt-8">
                 {successMessage && (
                     <span className="text-sm text-success font-medium flex items-center gap-2">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -464,7 +464,6 @@ export function MessagesTab() {
                     type="submit"
                     variant="primary"
                     disabled={mutation.isPending}
-                    className="w-full sm:w-auto min-w-[120px]"
                 >
                     {mutation.isPending ? 'Salvando...' : 'Salvar'}
                 </Button>

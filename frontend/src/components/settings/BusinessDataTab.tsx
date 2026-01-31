@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import api from '../../lib/api';
 import { COUNTRIES, getStatesByCountryCode } from '../../data/countriesExtended';
 import { applyCnpjMask, applyCepMask } from '../../utils/maskUtils';
+import { Button } from '../ui';
 
 type BusinessData = {
     name: string;
@@ -291,13 +292,13 @@ export function BusinessDataTab() {
                         {successMessage}
                     </span>
                 )}
-                <button
+                <Button
                     type="submit"
+                    variant="primary"
                     disabled={mutation.isPending}
-                    className="px-6 py-2 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-100 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                     {mutation.isPending ? t('business.actions.saving') : t('business.actions.save')}
-                </button>
+                </Button>
             </div>
         </form>
     );
