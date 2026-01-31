@@ -63,7 +63,7 @@
             }
         },
         "actions": {
-            "save": "Salvar Alterações",
+            "save": "Salvar",
             "saving": "Salvando..."
         },
         "messages": {
@@ -136,7 +136,7 @@
         "required": "Este campo é obrigatório"
     },
     "actions": {
-        "save": "Salvar Alterações",
+        "save": "Salvar",
         "saving": "Salvando..."
     },
     "messages": {

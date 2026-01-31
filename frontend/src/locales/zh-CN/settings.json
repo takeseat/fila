@@ -36,7 +36,7 @@
         "required": "This field is required"
     },
     "actions": {
-        "save": "保存更改",
+        "save": "保存",
         "saving": "保存中..."
     },
     "messages": {
@@ -103,7 +103,7 @@
             }
         },
         "actions": {
-            "save": "Save Changes",
+            "save": "Save",
             "saving": "Saving..."
         },
         "messages": {
