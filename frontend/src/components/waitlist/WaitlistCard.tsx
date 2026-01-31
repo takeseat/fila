@@ -196,7 +196,7 @@ export function WaitlistCard({
             <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-3">
                     {/* Position Badge */}
-                    <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center text-white font-bold shadow-md">
+                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center text-white font-bold shadow-md">
                         {index + 1}
                     </div>
                     <div>

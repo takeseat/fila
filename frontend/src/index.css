@@ -584,7 +584,7 @@
 
     /* Semantic - Shape (Radius) */
     --semantic-shape-radius-control: var(--base-radius-md);
-    --semantic-shape-radius-card: var(--base-radius-md);
+    --semantic-shape-radius-card: var(--base-radius-lg);
     --semantic-shape-radius-modal: var(--base-radius-lg);
     --semantic-shape-radius-pill: var(--base-radius-full);
 

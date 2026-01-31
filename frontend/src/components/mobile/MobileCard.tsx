@@ -17,7 +17,7 @@ export function MobileCard({ children, onClick, className = '', alert }: MobileC
         <div
             onClick={onClick}
             className={`
-                bg-bg-surface rounded-lg shadow-sm border border-gray-200 p-4
+                bg-bg-surface rounded-card shadow-sm border border-gray-200 p-4
                 ${onClick ? 'active:bg-gray-50 cursor-pointer' : ''}
                 ${alert ? alertClasses[alert] : ''}
                 transition-colors
