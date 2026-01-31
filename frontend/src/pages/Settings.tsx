@@ -74,31 +74,27 @@ export function Settings() {
         <PageShell>
             <MobilePageHeader title={t('title')} subtitle={t('subtitle')} />
 
-            <PageContent className="p-4">
-                <div className="max-w-5xl mx-auto p-4 md:p-0">
-                    <div className="bg-bg-surface rounded-xl shadow-sm border border-border-default overflow-hidden">
-                        {/* Header (Desktop only) */}
-                        <div className="hidden md:block p-6 border-b border-border-default">
-                            <h1 className="text-2xl font-bold text-text-primary">{t('title')}</h1>
-                            <p className="text-sm text-text-secondary mt-1">{t('subtitle')}</p>
-                        </div>
+            <PageContent className="max-w-screen-xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 animate-fade-in">
+                {/* Desktop Header (Hidden on Mobile) */}
+                <div className="hidden lg:block">
+                    <h1 className="text-3xl font-bold text-text-primary mb-2">{t('title')}</h1>
+                    <p className="text-text-secondary">{t('subtitle')}</p>
+                </div>
 
-                        {/* Tab Navigation */}
-                        <TabNavigation
-                            activeTab={activeTab}
-                            onTabChange={(tabId) => setActiveTab(tabId as any)}
-                            tabs={tabs}
-                        />
+                {/* Tab Navigation */}
+                <TabNavigation
+                    activeTab={activeTab}
+                    onTabChange={(tabId) => setActiveTab(tabId as any)}
+                    tabs={tabs}
+                />
 
-                        {/* Tab Content */}
-                        <div className="p-4 md:p-6">
-                            {activeTab === 'business' && <BusinessDataTab />}
-                            {activeTab === 'plan' && <PlanSettings />}
-                            {activeTab === 'parameters' && <ParametersTab />}
-                            {activeTab === 'team' && <TeamTab />}
-                            {activeTab === 'messages' && <MessagesTab />}
-                        </div>
-                    </div>
+                {/* Tab Content */}
+                <div className="space-y-6">
+                    {activeTab === 'business' && <BusinessDataTab />}
+                    {activeTab === 'plan' && <PlanSettings />}
+                    {activeTab === 'parameters' && <ParametersTab />}
+                    {activeTab === 'team' && <TeamTab />}
+                    {activeTab === 'messages' && <MessagesTab />}
                 </div>
             </PageContent>
         </PageShell>
