@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { ModalBackdrop } from '../ui/ModalBackdrop';
 import { Dialog, Transition } from '@headlessui/react';
 import { useTranslation } from 'react-i18next';
 import { PlanComparison } from './PlanComparison';
@@ -61,7 +62,7 @@ export function UpgradePlanModal({ isOpen, onClose, onUpgrade }: UpgradePlanModa
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black/25 backdrop-blur-sm" />
+                        <ModalBackdrop />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">

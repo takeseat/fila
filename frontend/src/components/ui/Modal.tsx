@@ -1,5 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import clsx from 'clsx';
+import { ModalBackdrop } from './ModalBackdrop';
 
 export interface ModalProps {
     /**
@@ -112,25 +114,29 @@ export function Modal({
         }
     };
 
+    // Base styles for the button
+    const closeButtonStyles = "ml-4 text-text-secondary hover:text-text-primary transition-colors p-1 hover:bg-bg-subtle rounded-control";
+
     return createPortal(
         <div
             className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 animate-fade-in"
             onClick={handleBackdropClick}
         >
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-text-primary/50 backdrop-blur-sm" />
+            <ModalBackdrop />
 
             {/* Modal */}
             <div
-                className={`
-          relative w-full ${sizeClasses[size]}
-          bg-bg-surface
-          rounded-modal
-          shadow-modal
-          flex flex-col
-          animate-scale-in
-          ${size === 'fullscreenMobile' ? 'h-full md:h-auto' : ''}
-        `}
+                className={clsx(
+                    "relative w-full",
+                    sizeClasses[size],
+                    "bg-bg-surface",
+                    "rounded-modal",
+                    "shadow-modal",
+                    "flex flex-col",
+                    "animate-scale-in",
+                    { 'h-full md:h-auto': size === 'fullscreenMobile' }
+                )}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-title"
@@ -145,7 +151,7 @@ export function Modal({
                     </h2>
                     <button
                         onClick={onClose}
-                        className="ml-4 text-text-secondary hover:text-text-primary transition-colors p-1 hover:bg-bg-subtle rounded-control"
+                        className={closeButtonStyles}
                         aria-label="Close modal"
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

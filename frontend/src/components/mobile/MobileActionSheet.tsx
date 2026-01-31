@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { ModalBackdrop } from '../ui/ModalBackdrop';
 
 interface MobileActionSheetProps {
     isOpen: boolean;
@@ -13,10 +14,7 @@ export function MobileActionSheet({ isOpen, onClose, title, children }: MobileAc
     return (
         <>
             {/* Overlay */}
-            <div
-                className="fixed inset-0 bg-black/50 z-50 lg:hidden"
-                onClick={onClose}
-            />
+            <ModalBackdrop onClick={onClose} className="lg:hidden" />
 
             {/* Sheet */}
             <div className="fixed bottom-0 left-0 right-0 bg-bg-surface rounded-t-modal z-50 lg:hidden animate-slide-up safe-area-bottom">

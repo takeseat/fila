@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { ModalBackdrop } from '../ui/ModalBackdrop';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
 import { LanguageSelector } from '../LanguageSelector';
@@ -23,10 +24,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
     return (
         <>
             {/* Overlay */}
-            <div
-                className="lg:hidden fixed inset-0 bg-black/50 z-40"
-                onClick={onClose}
-            />
+            <ModalBackdrop onClick={onClose} className="lg:hidden" />
 
             {/* Drawer */}
             <div className="lg:hidden fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-bg-surface z-50 shadow-2xl animate-slide-in-right">

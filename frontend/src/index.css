@@ -258,6 +258,7 @@
     /* Backgrounds */
     --bg-primary: var(--base-color-neutral-950);
     --bg-secondary: var(--base-color-neutral-900);
+    --bg-overlay: rgba(0, 0, 0, 0.7);
     --bg-tertiary: var(--base-color-neutral-800);
     --bg-elevated: var(--base-color-neutral-900);
     --bg-overlay: rgba(0, 0, 0, 0.7);
