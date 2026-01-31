@@ -1020,3 +1020,15 @@
     z-index: 1000;
   }
 }
+@layer components {
+  .ds-btn__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+  }
+  .ds-btn__icon svg {
+    stroke: currentColor;
+    fill: none;
+  }
+}

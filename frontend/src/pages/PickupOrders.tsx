@@ -120,8 +120,7 @@ export default function PickupOrders() {
                 title="Pedidos para Retirada"
                 subtitle="Chame clientes e finalize retiradas"
                 actions={
-                    <Button onClick={() => setShowCreateModal(true)} size="sm" className="gap-2">
-                        <Icon name="add" size="sm" />
+                    <Button onClick={() => setShowCreateModal(true)} size="sm" leftIcon={<Icon name="add" size="sm" />}>
                         Adicionar
                     </Button>
                 }
@@ -134,8 +133,7 @@ export default function PickupOrders() {
                         <h1 className="text-3xl font-bold text-text-primary mb-2">Pedidos para Retirada</h1>
                         <p className="text-text-secondary">Chame clientes e finalize retiradas</p>
                     </div>
-                    <Button onClick={() => setShowCreateModal(true)} size="lg" className="gap-2">
-                        <Icon name="add" size="sm" />
+                    <Button onClick={() => setShowCreateModal(true)} size="lg" leftIcon={<Icon name="add" size="sm" />}>
                         Novo Pedido
                     </Button>
                 </div>

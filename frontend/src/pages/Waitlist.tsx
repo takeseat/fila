@@ -318,8 +318,7 @@ export function Waitlist() {
                 title={t('title')}
                 subtitle={t('subtitle')}
                 actions={
-                    <Button onClick={handleOpenModal} size="sm" className="gap-2">
-                        <Icon name="add" size="sm" />
+                    <Button onClick={handleOpenModal} size="sm" leftIcon={<Icon name="add" size="sm" />}>
                         {t('actions.add', 'Adicionar')}
                     </Button>
                 }
@@ -332,8 +331,7 @@ export function Waitlist() {
                         <h1 className="text-3xl font-bold text-text-primary mb-2">{t('title')}</h1>
                         <p className="text-text-secondary">{t('subtitle')}</p>
                     </div>
-                    <Button onClick={handleOpenModal} size="lg" className="gap-2">
-                        <Icon name="add" size="sm" />
+                    <Button onClick={handleOpenModal} size="lg" leftIcon={<Icon name="add" size="sm" />}>
                         {t('actions.addToQueue')}
                     </Button>
                 </div>

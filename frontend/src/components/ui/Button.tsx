@@ -115,6 +115,7 @@ export function Button({
                 baseStyles,
                 sizeStyles[size],
                 variantStyles[variant],
+                'ds-btn',
                 className
             )}
             disabled={disabled || isLoading}
@@ -128,9 +129,9 @@ export function Button({
                 </>
             ) : (
                 <>
-                    {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
+                    {leftIcon && <span className="ds-btn__icon flex-shrink-0">{leftIcon}</span>}
                     {children}
-                    {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
+                    {rightIcon && <span className="ds-btn__icon flex-shrink-0">{rightIcon}</span>}
                 </>
             )}
         </button>
