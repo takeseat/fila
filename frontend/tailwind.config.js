@@ -10,21 +10,21 @@ export default {
             // Semantic colors mapped to CSS variables
             colors: {
                 // Background colors (semantic tokens)
-                'bg-primary': 'var(--bg-primary)',
-                'bg-secondary': 'var(--bg-secondary)',
-                'bg-tertiary': 'var(--bg-tertiary)',
-                'bg-elevated': 'var(--bg-elevated)',
+                'bg-primary': 'var(--semantic-bg-canvas)',
+                'bg-secondary': 'var(--semantic-bg-subtle)',
+                'bg-tertiary': 'var(--semantic-bg-sunken)',
+                'bg-elevated': 'var(--semantic-bg-surface)',
                 'bg-overlay': 'var(--bg-overlay)',
                 'bg-canvas': 'var(--semantic-bg-canvas)',
                 'bg-surface': 'var(--semantic-bg-surface)',
                 'bg-subtle': 'var(--semantic-bg-subtle)',
                 'bg-sunken': 'var(--semantic-bg-sunken)',
 
-                'bg-brand': 'var(--bg-brand)',
-                'bg-brand-subtle': 'var(--bg-brand-subtle)',
-                'bg-brand-light': 'var(--bg-brand-light)',
-                'bg-brand-hover': 'var(--bg-brand-hover)',
-                'bg-brand-active': 'var(--bg-brand-active)',
+                'bg-brand': 'var(--semantic-action-primary-bg)',
+                'bg-brand-subtle': 'var(--base-color-indigo-100)',
+                'bg-brand-light': 'var(--base-color-indigo-50)',
+                'bg-brand-hover': 'var(--semantic-action-primary-bg-hover)',
+                'bg-brand-active': 'var(--semantic-action-primary-bg-active)',
 
                 'bg-success': 'var(--bg-success)',
                 'bg-warning': 'var(--bg-warning)',
@@ -39,8 +39,8 @@ export default {
                 'text-disabled': 'var(--text-disabled)',
                 'text-inverse': 'var(--text-inverse)',
 
-                'text-brand': 'var(--text-brand)',
-                'text-brand-hover': 'var(--text-brand-hover)',
+                'text-brand': 'var(--semantic-action-primary-bg)',
+                'text-brand-hover': 'var(--semantic-action-primary-bg-hover)',
                 'text-success': 'var(--text-success)',
                 'text-warning': 'var(--text-warning)',
                 'text-error': 'var(--text-error)',
@@ -53,7 +53,7 @@ export default {
                 'border-subtle': 'var(--border-subtle)',
                 'border-muted': 'var(--semantic-border-muted)',
                 'border-strong': 'var(--border-strong)',
-                'border-brand': 'var(--border-brand)',
+                'border-brand': 'var(--semantic-action-primary-bg)',
                 'border-error': 'var(--border-error)',
                 'border-focus': 'var(--border-focus)',
 
@@ -62,6 +62,33 @@ export default {
                 'interactive-primary-hover': 'var(--interactive-primary-hover)',
                 'interactive-primary-active': 'var(--interactive-primary-active)',
                 'interactive-primary-disabled': 'var(--interactive-primary-disabled)',
+
+                // Action Colors - Primary (Semantic)
+                'action-primary-bg': 'var(--semantic-action-primary-bg)',
+                'action-primary-bg-hover': 'var(--semantic-action-primary-bg-hover)',
+                'action-primary-bg-active': 'var(--semantic-action-primary-bg-active)',
+                'action-primary-fg': 'var(--semantic-action-primary-fg)',
+
+                // Action Colors - Secondary (Semantic)
+                'action-secondary-bg': 'var(--semantic-action-secondary-bg)',
+                'action-secondary-bg-hover': 'var(--semantic-action-secondary-bg-hover)',
+                'action-secondary-bg-active': 'var(--semantic-action-secondary-bg-active)',
+                'action-secondary-fg': 'var(--semantic-action-secondary-fg)',
+                'action-secondary-border': 'var(--semantic-action-secondary-border)',
+
+                // Action Colors - Ghost (Semantic)
+                'action-ghost-bg': 'var(--semantic-action-ghost-bg)',
+                'action-ghost-bg-hover': 'var(--semantic-action-ghost-bg-hover)',
+                'action-ghost-fg': 'var(--semantic-action-ghost-fg)',
+
+                // Action Colors - Danger (Semantic)
+                'action-danger-bg': 'var(--semantic-action-danger-bg)',
+                'action-danger-bg-hover': 'var(--semantic-action-danger-bg-hover)',
+                'action-danger-fg': 'var(--semantic-action-danger-fg)',
+
+                // Action Colors - Link (Semantic)
+                'action-link-fg': 'var(--semantic-action-link-fg)',
+                'action-link-fg-hover': 'var(--semantic-action-link-fg-hover)',
 
                 'interactive-secondary': 'var(--interactive-secondary)',
                 'interactive-secondary-hover': 'var(--interactive-secondary-hover)',
