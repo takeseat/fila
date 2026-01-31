@@ -9,6 +9,7 @@ import { PlanSettings } from '../components/settings/PlanSettings';
 import { MessagesTab } from '../components/settings/MessagesTab';
 import { PageShell, PageContent } from '../components/mobile/PageShell';
 import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
+import { Card } from '../components/ui';
 
 export function Settings() {
     const { t } = useTranslation('settings');
@@ -89,13 +90,13 @@ export function Settings() {
                 />
 
                 {/* Tab Content */}
-                <div className="space-y-6">
+                <Card padding="lg">
                     {activeTab === 'business' && <BusinessDataTab />}
                     {activeTab === 'plan' && <PlanSettings />}
                     {activeTab === 'parameters' && <ParametersTab />}
                     {activeTab === 'team' && <TeamTab />}
                     {activeTab === 'messages' && <MessagesTab />}
-                </div>
+                </Card>
             </PageContent>
         </PageShell>
     );
