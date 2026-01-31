@@ -140,286 +140,323 @@ export function MessagesTab() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 animate-fade-in">
-            {/* Fila de Espera Section */}
-            <Card className="overflow-hidden">
-                <div className="p-6 border-b border-gray-100 bg-green-50/50">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-green-100 rounded-lg">
-                            {/* Generic Queue Icon */}
-                            <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-semibold text-gray-900">Fila de Espera</h2>
-                            <p className="text-sm text-gray-500">Configure as mensagens automáticas da fila.</p>
-                        </div>
-                    </div>
-                </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="max-w-7xl mx-auto px-4 sm:px-8 py-8 animate-fade-in text-left">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
-                <div className="p-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* Message Types */}
-                        <div className="space-y-6">
-                            <h3 className="text-lg font-medium text-gray-900 border-b pb-2">Templates de Mensagem</h3>
+                {/* Main Content: Templates */}
+                <div className="lg:col-span-2 space-y-8">
+
+                    {/* Fila de Espera Section */}
+                    <Card className="flex flex-col shadow-md border-default radius-lg overflow-hidden">
+                        <div className="p-6 border-b border-default bg-elevated">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-brand-subtle rounded-lg">
+                                    <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 className="text-xl font-medium text-text-primary">Fila de Espera</h2>
+                                    <p className="text-sm text-text-secondary">Configure as mensagens automáticas da fila.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="p-6 space-y-8">
+                            <h3 className="text-lg font-medium text-text-primary border-b border-default pb-4">Templates de Mensagem</h3>
 
                             {/* Welcome Message */}
-                            <div className="space-y-3">
-                                <div className="flex items-center space-x-2">
+                            <div className="space-y-4">
+                                <div className="flex items-center space-x-3">
                                     <input
                                         type="checkbox"
                                         id="sendWelcome"
                                         {...register('sendWelcome')}
-                                        className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
                                     />
-                                    <label htmlFor="sendWelcome" className="font-medium text-gray-800">
+                                    <label htmlFor="sendWelcome" className="text-base font-medium text-text-primary flex items-center">
                                         Boas-vindas
-                                        {sendWelcome && <span className="text-red-500 ml-1">*</span>}
+                                        {sendWelcome && <span className="text-error ml-1">*</span>}
                                     </label>
                                 </div>
                                 <textarea
                                     {...register('welcomeText', { required: sendWelcome })}
                                     rows={3}
                                     placeholder={DEFAULTS.welcomeText}
-                                    className={`w-full px-3 py-2 border ${errors.welcomeText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
+                                    className={`w-full px-3 py-2 bg-primary border ${errors.welcomeText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
                                 />
-                                {errors.welcomeText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
-                                <div className="flex justify-between items-center">
-                                    <p className="text-xs text-gray-400">Enviado quando o cliente entra na fila.</p>
-                                    <button
+                                {errors.welcomeText && <span className="text-xs text-error block">Este campo é obrigatório.</span>}
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                    <p className="text-sm text-text-tertiary italic">Enviado quando o cliente entra na fila.</p>
+                                    <Button
                                         type="button"
+                                        variant="ghost"
+                                        size="sm"
                                         onClick={() => setValue('welcomeText', DEFAULTS.welcomeText)}
-                                        className="text-xs text-primary-600 hover:text-primary-700 font-medium"
+                                        className="text-text-brand hover:bg-brand-subtle"
                                     >
                                         Restaurar padrão
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
 
                             {/* Position Message */}
-                            <div className="space-y-3">
-                                <div className="flex items-center space-x-2">
+                            <div className="space-y-4 border-t border-subtle pt-6">
+                                <div className="flex items-center space-x-3">
                                     <input
                                         type="checkbox"
                                         id="sendPositionUpdates"
                                         {...register('sendPositionUpdates')}
-                                        className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
                                     />
-                                    <label htmlFor="sendPositionUpdates" className="font-medium text-gray-800">
+                                    <label htmlFor="sendPositionUpdates" className="text-base font-medium text-text-primary flex items-center">
                                         Atualização de Posição
-                                        {sendPositionUpdates && <span className="text-red-500 ml-1">*</span>}
+                                        {sendPositionUpdates && <span className="text-error ml-1">*</span>}
                                     </label>
                                 </div>
                                 <textarea
                                     {...register('positionUpdateText', { required: sendPositionUpdates })}
                                     rows={3}
                                     placeholder={DEFAULTS.positionUpdateText}
-                                    className={`w-full px-3 py-2 border ${errors.positionUpdateText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
+                                    className={`w-full px-3 py-2 bg-primary border ${errors.positionUpdateText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
                                 />
-                                {errors.positionUpdateText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
-                                <div className="flex justify-between items-center">
-                                    <p className="text-xs text-gray-400">Enviado quando a fila anda.</p>
-                                    <button
+                                {errors.positionUpdateText && <span className="text-xs text-error block">Este campo é obrigatório.</span>}
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                    <p className="text-sm text-text-tertiary italic">Enviado quando a fila anda.</p>
+                                    <Button
                                         type="button"
+                                        variant="ghost"
+                                        size="sm"
                                         onClick={() => setValue('positionUpdateText', DEFAULTS.positionUpdateText)}
-                                        className="text-xs text-primary-600 hover:text-primary-700 font-medium"
+                                        className="text-text-brand hover:bg-brand-subtle"
                                     >
                                         Restaurar padrão
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
 
                             {/* Turn Message */}
-                            <div className="space-y-3">
-                                <div className="flex items-center space-x-2">
+                            <div className="space-y-4 border-t border-subtle pt-6">
+                                <div className="flex items-center space-x-3">
                                     <input
                                         type="checkbox"
                                         id="sendTurnMessage"
                                         {...register('sendTurnMessage')}
-                                        className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
                                     />
-                                    <label htmlFor="sendTurnMessage" className="font-medium text-gray-800">
+                                    <label htmlFor="sendTurnMessage" className="text-base font-medium text-text-primary flex items-center">
                                         Sua Vez
-                                        {sendTurnMessage && <span className="text-red-500 ml-1">*</span>}
+                                        {sendTurnMessage && <span className="text-error ml-1">*</span>}
                                     </label>
                                 </div>
                                 <textarea
                                     {...register('yourTurnText', { required: sendTurnMessage })}
                                     rows={3}
                                     placeholder={DEFAULTS.yourTurnText}
-                                    className={`w-full px-3 py-2 border ${errors.yourTurnText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
+                                    className={`w-full px-3 py-2 bg-primary border ${errors.yourTurnText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
                                 />
-                                {errors.yourTurnText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
-                                <div className="flex justify-between items-center">
-                                    <p className="text-xs text-gray-400">Enviado quando você chama o cliente.</p>
-                                    <button
+                                {errors.yourTurnText && <span className="text-xs text-error block">Este campo é obrigatório.</span>}
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                    <p className="text-sm text-text-tertiary italic">Enviado quando você chama o cliente.</p>
+                                    <Button
                                         type="button"
+                                        variant="ghost"
+                                        size="sm"
                                         onClick={() => setValue('yourTurnText', DEFAULTS.yourTurnText)}
-                                        className="text-xs text-primary-600 hover:text-primary-700 font-medium"
+                                        className="text-text-brand hover:bg-brand-subtle"
                                     >
                                         Restaurar padrão
-                                    </button>
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+
+                    {/* Pickup Orders Section */}
+                    <Card className="flex flex-col shadow-md border-default radius-lg overflow-hidden">
+                        <div className="p-6 border-b border-default bg-elevated">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-brand-subtle rounded-lg">
+                                    <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 className="text-xl font-medium text-text-primary">Pedidos (Retirada)</h2>
+                                    <p className="text-sm text-text-secondary">Gerencie módulo de pedidos e notificações de retirada.</p>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Placeholders Help */}
-                        <div className="space-y-6">
-                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                                <h4 className="font-medium text-blue-900 mb-2">Variáveis Disponíveis</h4>
-                                <ul className="text-sm text-blue-800 space-y-2">
-                                    <li><code>{`{{customer_name}}`}</code>: Nome do cliente</li>
-                                    <li><code>{`{{party_size}}`}</code>: Tamanho do grupo (número de pessoas)</li>
-                                    <li><code>{`{{position}}`}</code>: Posição na fila (Ex: 1)</li>
-                                    <li><code>{`{{business_name}}`}</code>: Nome do restaurante</li>
-                                    <li><code>{`{{eta_minutes}}`}</code>: Tempo estimado de espera (minutos)</li>
-                                </ul>
+                        <div className="p-6 space-y-8">
+                            <h3 className="text-lg font-medium text-text-primary border-b border-default pb-4">{t('orderMessages.title')}</h3>
+
+                            {/* Order Created */}
+                            <div className="space-y-4">
+                                <div className="flex items-center space-x-3">
+                                    <input
+                                        type="checkbox"
+                                        id="sendOrderCreated"
+                                        {...register('sendOrderCreated')}
+                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
+                                    />
+                                    <label htmlFor="sendOrderCreated" className="text-base font-medium text-text-primary flex items-center">
+                                        {t('orderMessages.created.label')}
+                                        {sendOrderCreated && <span className="text-error ml-1">*</span>}
+                                    </label>
+                                </div>
+                                <textarea
+                                    {...register('orderCreatedText', { required: sendOrderCreated })}
+                                    rows={3}
+                                    placeholder={DEFAULTS.orderCreatedText}
+                                    className={`w-full px-3 py-2 bg-primary border ${errors.orderCreatedText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
+                                />
+                                {errors.orderCreatedText && <span className="text-xs text-error block">{t('orderMessages.errors.required')}</span>}
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                    <p className="text-sm text-text-tertiary italic">{t('orderMessages.created.help')}</p>
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setValue('orderCreatedText', DEFAULTS.orderCreatedText)}
+                                        className="text-text-brand hover:bg-brand-subtle"
+                                    >
+                                        Restaurar padrão
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Order Ready */}
+                            <div className="space-y-4 border-t border-subtle pt-6">
+                                <div className="flex items-center space-x-3">
+                                    <input
+                                        type="checkbox"
+                                        id="sendOrderReady"
+                                        {...register('sendOrderReady')}
+                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
+                                    />
+                                    <label htmlFor="sendOrderReady" className="text-base font-medium text-text-primary flex items-center">
+                                        {t('orderMessages.ready.label')}
+                                        {sendOrderReady && <span className="text-error ml-1">*</span>}
+                                    </label>
+                                </div>
+                                <textarea
+                                    {...register('orderReadyText', { required: sendOrderReady })}
+                                    rows={3}
+                                    placeholder={DEFAULTS.orderReadyText}
+                                    className={`w-full px-3 py-2 bg-primary border ${errors.orderReadyText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
+                                />
+                                {errors.orderReadyText && <span className="text-xs text-error block">{t('orderMessages.errors.required')}</span>}
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                    <p className="text-sm text-text-tertiary italic">{t('orderMessages.ready.help')}</p>
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setValue('orderReadyText', DEFAULTS.orderReadyText)}
+                                        className="text-text-brand hover:bg-brand-subtle"
+                                    >
+                                        Restaurar padrão
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Not Picked Up */}
+                            <div className="space-y-4 border-t border-subtle pt-6">
+                                <div className="flex items-center space-x-3">
+                                    <input
+                                        type="checkbox"
+                                        id="sendOrderNotPickedUp"
+                                        {...register('sendOrderNotPickedUp')}
+                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
+                                    />
+                                    <label htmlFor="sendOrderNotPickedUp" className="text-base font-medium text-text-primary flex items-center">
+                                        {t('orderMessages.notPickedUp.label')}
+                                        {sendOrderNotPickedUp && <span className="text-error ml-1">*</span>}
+                                    </label>
+                                </div>
+                                <textarea
+                                    {...register('orderNotPickedUpText', { required: sendOrderNotPickedUp })}
+                                    rows={3}
+                                    placeholder={DEFAULTS.orderNotPickedUpText}
+                                    className={`w-full px-3 py-2 bg-primary border ${errors.orderNotPickedUpText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
+                                />
+                                {errors.orderNotPickedUpText && <span className="text-xs text-error block">{t('orderMessages.errors.required')}</span>}
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                                    <p className="text-sm text-text-tertiary italic">{t('orderMessages.notPickedUp.help')}</p>
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => setValue('orderNotPickedUpText', DEFAULTS.orderNotPickedUpText)}
+                                        className="text-text-brand hover:bg-brand-subtle"
+                                    >
+                                        Restaurar padrão
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </Card>
                 </div>
-            </Card>
 
-            {/* Pickup Orders Section */}
-            <Card className="overflow-hidden">
-                <div className="p-6 border-b border-gray-100 bg-indigo-50/50">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 bg-indigo-100 rounded-lg">
-                            <svg className="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                {/* Sticky Right Sidebar: Variables */}
+                <div className="lg:col-span-1">
+                    <div className="sticky top-24 space-y-6">
+                        <Card className="shadow-md border-brand-subtle bg-elevated radius-lg">
+                            <div className="p-6 border-b border-default bg-brand-subtle/30">
+                                <h4 className="flex items-center gap-2 font-medium text-text-primary">
+                                    <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Variáveis Disponíveis
+                                </h4>
+                            </div>
+                            <div className="p-6">
+                                <p className="text-sm text-text-secondary mb-6">
+                                    Use estas variáveis nos seus templates para personalizar as mensagens automaticamente.
+                                </p>
+                                <div className="space-y-6">
+                                    <div>
+                                        <h5 className="text-xs font-bold text-text-tertiary uppercase tracking-wider mb-4">Fila de Espera</h5>
+                                        <div className="flex flex-wrap gap-2">
+                                            {['{{customer_name}}', '{{party_size}}', '{{position}}', '{{business_name}}', '{{eta_minutes}}'].map(v => (
+                                                <code key={v} className="px-2 py-1 bg-secondary border border-subtle rounded-md text-xs font-mono text-text-brand">{v}</code>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="border-t border-subtle pt-6">
+                                        <h5 className="text-xs font-bold text-text-tertiary uppercase tracking-wider mb-4">Pedidos / Outros</h5>
+                                        <div className="flex flex-wrap gap-2">
+                                            {['{{order_code}}', '{{business_name}}'].map(v => (
+                                                <code key={v} className="px-2 py-1 bg-secondary border border-subtle rounded-md text-xs font-mono text-text-brand">{v}</code>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+
+                        {/* Status Tip */}
+                        <div className="bg-info/10 border border-info-subtle p-4 rounded-lg flex gap-3 items-start">
+                            <svg className="w-5 h-5 text-info flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.674a1 1 0 00.996-1.09L14.535 7H9.462l-.799 8.91a1 1 0 00.996 1.09H9.663z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 7V5a1 1 0 011-1h0a1 1 0 011 1v2" />
                             </svg>
-                        </div>
-                        <div>
-                            <h2 className="text-xl font-semibold text-gray-900">Pedidos (Retirada)</h2>
-                            <p className="text-sm text-gray-500">Gerencie módulo de pedidos e notificações de retirada.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="p-6">
-                    <div className="space-y-8">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="space-y-6">
-                                <h3 className="text-lg font-medium text-gray-900 border-b pb-2">{t('orderMessages.title')}</h3>
-
-                                {/* Order Created */}
-                                <div className="space-y-3">
-                                    <div className="flex items-center space-x-2">
-                                        <input
-                                            type="checkbox"
-                                            id="sendOrderCreated"
-                                            {...register('sendOrderCreated')}
-                                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                                        />
-                                        <label htmlFor="sendOrderCreated" className="font-medium text-gray-800">
-                                            {t('orderMessages.created.label')}
-                                            {sendOrderCreated && <span className="text-red-500 ml-1">*</span>}
-                                        </label>
-                                    </div>
-                                    <textarea
-                                        {...register('orderCreatedText', { required: sendOrderCreated })}
-                                        rows={3}
-                                        placeholder={DEFAULTS.orderCreatedText}
-                                        className={`w-full px-3 py-2 border ${errors.orderCreatedText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
-                                    />
-                                    {errors.orderCreatedText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
-                                    <div className="flex justify-between items-center">
-                                        <p className="text-xs text-gray-400">{t('orderMessages.created.help')}</p>
-                                        <button
-                                            type="button"
-                                            onClick={() => setValue('orderCreatedText', DEFAULTS.orderCreatedText)}
-                                            className="text-xs text-primary-600 hover:text-primary-700 font-medium"
-                                        >
-                                            Restaurar padrão
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Order Ready */}
-                                <div className="space-y-3">
-                                    <div className="flex items-center space-x-2">
-                                        <input
-                                            type="checkbox"
-                                            id="sendOrderReady"
-                                            {...register('sendOrderReady')}
-                                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                                        />
-                                        <label htmlFor="sendOrderReady" className="font-medium text-gray-800">
-                                            {t('orderMessages.ready.label')}
-                                            {sendOrderReady && <span className="text-red-500 ml-1">*</span>}
-                                        </label>
-                                    </div>
-                                    <textarea
-                                        {...register('orderReadyText', { required: sendOrderReady })}
-                                        rows={3}
-                                        placeholder={DEFAULTS.orderReadyText}
-                                        className={`w-full px-3 py-2 border ${errors.orderReadyText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
-                                    />
-                                    {errors.orderReadyText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
-                                    <div className="flex justify-between items-center">
-                                        <p className="text-xs text-gray-400">{t('orderMessages.ready.help')}</p>
-                                        <button
-                                            type="button"
-                                            onClick={() => setValue('orderReadyText', DEFAULTS.orderReadyText)}
-                                            className="text-xs text-primary-600 hover:text-primary-700 font-medium"
-                                        >
-                                            Restaurar padrão
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {/* Not Picked Up */}
-                                <div className="space-y-3">
-                                    <div className="flex items-center space-x-2">
-                                        <input
-                                            type="checkbox"
-                                            id="sendOrderNotPickedUp"
-                                            {...register('sendOrderNotPickedUp')}
-                                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                                        />
-                                        <label htmlFor="sendOrderNotPickedUp" className="font-medium text-gray-800">
-                                            {t('orderMessages.notPickedUp.label')}
-                                            {sendOrderNotPickedUp && <span className="text-red-500 ml-1">*</span>}
-                                        </label>
-                                    </div>
-                                    <textarea
-                                        {...register('orderNotPickedUpText', { required: sendOrderNotPickedUp })}
-                                        rows={3}
-                                        placeholder={DEFAULTS.orderNotPickedUpText}
-                                        className={`w-full px-3 py-2 border ${errors.orderNotPickedUpText ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-1 focus:ring-primary-500 outline-none text-sm`}
-                                    />
-                                    {errors.orderNotPickedUpText && <span className="text-xs text-red-500 block mt-1">Este campo é obrigatório.</span>}
-                                    <div className="flex justify-between items-center">
-                                        <p className="text-xs text-gray-400">{t('orderMessages.notPickedUp.help')}</p>
-                                        <button
-                                            type="button"
-                                            onClick={() => setValue('orderNotPickedUpText', DEFAULTS.orderNotPickedUpText)}
-                                            className="text-xs text-primary-600 hover:text-primary-700 font-medium"
-                                        >
-                                            Restaurar padrão
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-                                    <h4 className="font-medium text-indigo-900 mb-2">{t('orderMessages.variables.title')}</h4>
-                                    <ul className="text-sm text-indigo-800 space-y-2">
-                                        <li><code>{`{{customer_name}}`}</code>: {t('orderMessages.variables.customerName')}</li>
-                                        <li><code>{`{{order_code}}`}</code>: {t('orderMessages.variables.orderCode')}</li>
-                                        <li><code>{`{{business_name}}`}</code>: {t('orderMessages.variables.businessName')}</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <p className="text-xs text-text-info leading-relaxed">
+                                <strong>Dica:</strong> Certifique-se de que os templates sejam claros e cordiais para melhorar a experiência do cliente.
+                            </p>
                         </div>
                     </div>
                 </div>
-            </Card>
+            </div>
 
-            <div className="flex items-center justify-end gap-4 sticky bottom-6 bg-bg-surface p-4 rounded-xl border border-gray-100 shadow-lg z-10">
+            {/* Actions Footer */}
+            <div className="flex items-center justify-end gap-4 sticky bottom-8 bg-elevated/80 backdrop-blur-md p-4 mt-12 radius-xl border border-default shadow-lg z-20">
                 {successMessage && (
-                    <span className="text-sm text-green-600 font-medium animate-pulse">
+                    <span className="text-sm text-success font-medium flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
                         {successMessage}
                     </span>
                 )}
@@ -427,7 +464,7 @@ export function MessagesTab() {
                     type="submit"
                     variant="primary"
                     disabled={mutation.isPending}
-                    className="w-full md:w-auto"
+                    className="w-full sm:w-auto min-w-[120px]"
                 >
                     {mutation.isPending ? 'Salvando...' : 'Salvar'}
                 </Button>
@@ -435,3 +472,4 @@ export function MessagesTab() {
         </form>
     );
 }
+
