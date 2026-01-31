@@ -25,6 +25,7 @@ import { impersonationMiddleware } from './middleware/impersonation.middleware';
 import { checkSubscriptionAccess } from './middleware/subscription';
 import { WhatsAppWebhookController } from './controllers/whatsapp-webhook.controller';
 import { ZApiWebhookController } from './controllers/zapi-webhook.controller';
+import { authenticate } from './middleware/auth';
 
 const whatsappWebhookController = new WhatsAppWebhookController();
 
@@ -57,27 +58,6 @@ app.get('/health', (_req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// API Routes
-app.use('/auth', authRoutes);
-app.use('/billing', billingRoutes); // No subscription check needed (allowed in middleware)
-app.use('/onboarding', onboardingRouter); // No subscription check during onboarding
-
-// Apply subscription middleware to all routes below
-app.use(checkSubscriptionAccess);
-
-app.use('/waitlist', waitlistRoutes);
-app.use('/customers', customersRoutes);
-app.use('/restaurants', restaurantRoutes);
-app.use('/users', usersRoutes);
-app.use('/users-management', usersManagementRouter);
-app.use('/dashboard', dashboardRouter);
-app.use('/reports', reportsRouter);
-app.use('/whatsapp-settings', whatsappSettingsRouter);
-app.use('/pickup-orders', pickupOrdersRoutes);
-
-// Admin routes (SYSADMIN only)
-app.use('/admin', adminRoutes);
-
 // Webhook (Public)
 app.get('/whatsapp-webhook', whatsappWebhookController.verify.bind(whatsappWebhookController));
 app.post('/whatsapp-webhook', whatsappWebhookController.handleWebhook.bind(whatsappWebhookController));
@@ -90,6 +70,31 @@ app.post('/webhooks/zapi/on-message-received', zapiController.onMessageReceived.
 app.post('/webhooks/zapi/on-disconnect', zapiController.onDisconnect.bind(zapiController));
 app.post('/webhooks/zapi/on-connect', zapiController.onConnect.bind(zapiController));
 app.post('/webhooks/zapi/on-presence', zapiController.onPresence.bind(zapiController));
+
+// API Routes
+app.use('/auth', authRoutes);
+
+// --- PROTECTED ROUTES (Authentication Required) ---
+app.use(authenticate);
+
+app.use('/billing', billingRoutes);
+app.use('/onboarding', onboardingRouter);
+app.use('/users', usersRoutes);
+
+// --- ACCESS CONTROLLED ROUTES (Subscription Required) ---
+app.use(checkSubscriptionAccess);
+
+app.use('/waitlist', waitlistRoutes);
+app.use('/customers', customersRoutes);
+app.use('/restaurants', restaurantRoutes);
+app.use('/users-management', usersManagementRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/reports', reportsRouter);
+app.use('/whatsapp-settings', whatsappSettingsRouter);
+app.use('/pickup-orders', pickupOrdersRoutes);
+
+// Admin routes (SYSADMIN only)
+app.use('/admin', adminRoutes);
 
 // Error handler (must be last)
 app.use(errorHandler);
