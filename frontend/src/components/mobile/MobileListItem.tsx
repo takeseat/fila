@@ -24,7 +24,7 @@ export function MobileListItem({
             onClick={onClick}
             className={`
                 flex items-center gap-3 p-4 bg-bg-surface border-b border-gray-100
-                ${onClick ? 'active:bg-gray-50 cursor-pointer' : ''}
+                ${onClick ? 'active:bg-bg-subtle cursor-pointer' : ''}
                 transition-colors
                 ${className}
             `}
@@ -37,13 +37,13 @@ export function MobileListItem({
 
             <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-sm font-semibold text-gray-900 truncate">
+                    <h3 className="text-sm font-semibold text-text-primary truncate">
                         {title}
                     </h3>
                     {badge}
                 </div>
                 {subtitle && (
-                    <p className="text-xs text-gray-500 truncate">
+                    <p className="text-xs text-text-tertiary truncate">
                         {subtitle}
                     </p>
                 )}

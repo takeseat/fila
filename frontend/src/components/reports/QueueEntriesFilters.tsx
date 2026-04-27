@@ -53,30 +53,30 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
 
     return (
         <div className="bg-bg-surface rounded-xl shadow-sm border p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">{t('reports:filters.title')}</h3>
+            <h3 className="text-lg font-semibold text-text-primary">{t('reports:filters.title')}</h3>
 
             {/* Date Range */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('reports:filters.dateInitial')}
                     </label>
                     <input
                         type="date"
                         value={from}
                         onChange={(e) => setFrom(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border border-border-default rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('reports:filters.dateFinal')}
                     </label>
                     <input
                         type="date"
                         value={to}
                         onChange={(e) => setTo(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border border-border-default rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
             </div>
@@ -85,25 +85,25 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
             <div className="flex flex-wrap gap-2">
                 <button
                     onClick={() => { setFrom(getDefaultTo()); setTo(getDefaultTo()); }}
-                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                    className="px-3 py-1 text-sm bg-bg-subtle hover:bg-bg-sunken rounded-lg transition-colors"
                 >
                     {t('reports:filters.today')}
                 </button>
                 <button
                     onClick={() => { setFrom(getDefaultFrom(7)); setTo(getDefaultTo()); }}
-                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                    className="px-3 py-1 text-sm bg-bg-subtle hover:bg-bg-sunken rounded-lg transition-colors"
                 >
                     {t('reports:filters.last7Days')}
                 </button>
                 <button
                     onClick={() => { setFrom(getDefaultFrom(30)); setTo(getDefaultTo()); }}
-                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                    className="px-3 py-1 text-sm bg-bg-subtle hover:bg-bg-sunken rounded-lg transition-colors"
                 >
                     {t('reports:filters.last30Days')}
                 </button>
                 <button
                     onClick={() => { setFrom(getDefaultFrom(90)); setTo(getDefaultTo()); }}
-                    className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                    className="px-3 py-1 text-sm bg-bg-subtle hover:bg-bg-sunken rounded-lg transition-colors"
                 >
                     {t('reports:filters.last90Days')}
                 </button>
@@ -111,7 +111,7 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
 
             {/* Status Filter */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-text-secondary mb-2">
                     {t('reports:filters.status')}
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -121,7 +121,7 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
                             onClick={() => toggleStatus(status)}
                             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${statuses.includes(status)
                                 ? 'bg-blue-600 text-white'
-                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                : 'bg-bg-subtle text-text-secondary hover:bg-bg-sunken'
                                 }`}
                         >
                             {t(`waitlist:status.${status}`)}
@@ -132,7 +132,7 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
 
             {/* Client Search */}
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-text-secondary mb-1">
                     {t('reports:filters.searchClient')}
                 </label>
                 <input
@@ -140,14 +140,14 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
                     value={clientSearch}
                     onChange={(e) => setClientSearch(e.target.value)}
                     placeholder={t('reports:filters.searchPlaceholder')}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-border-default rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
             </div>
 
             {/* Party Size Range */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('reports:filters.minPeople')}
                     </label>
                     <input
@@ -156,11 +156,11 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
                         value={partySizeMin}
                         onChange={(e) => setPartySizeMin(e.target.value ? parseInt(e.target.value) : '')}
                         placeholder="Ex: 1"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border border-border-default rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('reports:filters.maxPeople')}
                     </label>
                     <input
@@ -169,7 +169,7 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
                         value={partySizeMax}
                         onChange={(e) => setPartySizeMax(e.target.value ? parseInt(e.target.value) : '')}
                         placeholder="Ex: 10"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-3 py-2 border border-border-default rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                 </div>
             </div>
@@ -184,7 +184,7 @@ export function QueueEntriesFilters({ onFiltersChange }: QueueEntriesFiltersProp
                 </button>
                 <button
                     onClick={handleClear}
-                    className="px-4 py-2 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="px-4 py-2 border border-border-default rounded-lg font-medium text-text-secondary hover:bg-bg-subtle transition-colors duration-150 transition-colors"
                 >
                     {t('reports:filters.clear')}
                 </button>

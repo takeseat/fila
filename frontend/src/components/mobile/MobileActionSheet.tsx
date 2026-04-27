@@ -20,13 +20,13 @@ export function MobileActionSheet({ isOpen, onClose, title, children }: MobileAc
             <div className="fixed bottom-0 left-0 right-0 bg-bg-surface rounded-t-modal z-[1000] lg:hidden animate-slide-up safe-area-bottom">
                 {/* Handle */}
                 <div className="flex justify-center pt-3 pb-2">
-                    <div className="w-12 h-1 bg-gray-300 rounded-full" />
+                    <div className="w-12 h-1 bg-bg-sunken rounded-full" />
                 </div>
 
                 {/* Title */}
                 {title && (
-                    <div className="px-4 pb-3 border-b border-gray-200">
-                        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+                    <div className="px-4 pb-3 border-b border-border-default">
+                        <h3 className="text-lg font-semibold text-text-primary">{title}</h3>
                     </div>
                 )}
 
@@ -55,7 +55,7 @@ export function ActionSheetButton({
     disabled = false
 }: ActionSheetButtonProps) {
     const variantClasses = {
-        default: 'text-gray-700 hover:bg-gray-100',
+        default: 'text-text-secondary hover:bg-bg-subtle',
         danger: 'text-red-600 hover:bg-red-50',
         success: 'text-green-600 hover:bg-green-50',
     };

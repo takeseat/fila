@@ -22,8 +22,8 @@ export function FunnelChart({ data }: FunnelChartProps) {
     const maxValue = Math.max(...funnelData.map(d => d.value));
 
     return (
-        <div className="bg-bg-surface rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('reports:charts.conversionFunnel')}</h3>
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-border-default p-6">
+            <h3 className="text-lg font-semibold text-text-primary mb-4">{t('reports:charts.conversionFunnel')}</h3>
 
             {/* Visual Funnel */}
             <div className="space-y-3 mb-6">
@@ -36,17 +36,17 @@ export function FunnelChart({ data }: FunnelChartProps) {
                     return (
                         <div key={item.stage}>
                             <div className="flex items-center justify-between mb-1">
-                                <span className="text-sm font-medium text-gray-700">{item.stage}</span>
+                                <span className="text-sm font-medium text-text-secondary">{item.stage}</span>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-sm font-bold text-gray-900">{item.value}</span>
+                                    <span className="text-sm font-bold text-text-primary">{item.value}</span>
                                     {index > 0 && (
-                                        <span className="text-xs text-gray-500">
+                                        <span className="text-xs text-text-tertiary">
                                             ({conversionRate.toFixed(1)}%)
                                         </span>
                                     )}
                                 </div>
                             </div>
-                            <div className="w-full bg-gray-100 rounded-full h-8 relative overflow-hidden">
+                            <div className="w-full bg-bg-subtle rounded-full h-8 relative overflow-hidden">
                                 <div
                                     className="h-full rounded-full transition-all duration-500 flex items-center justify-end pr-3"
                                     style={{
@@ -67,15 +67,15 @@ export function FunnelChart({ data }: FunnelChartProps) {
             </div>
 
             {/* Conversion Metrics */}
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border-default">
                 <div>
-                    <p className="text-xs text-gray-500">{t('reports:charts.conversionRate')}</p>
-                    <p className="text-lg font-bold text-gray-900">
+                    <p className="text-xs text-text-tertiary">{t('reports:charts.conversionRate')}</p>
+                    <p className="text-lg font-bold text-text-primary">
                         {data.entered > 0 ? ((data.seated / data.entered) * 100).toFixed(1) : 0}%
                     </p>
                 </div>
                 <div>
-                    <p className="text-xs text-gray-500">{t('reports:charts.lossRate')}</p>
+                    <p className="text-xs text-text-tertiary">{t('reports:charts.lossRate')}</p>
                     <p className="text-lg font-bold text-red-600">
                         {data.entered > 0 ? ((data.lost / data.entered) * 100).toFixed(1) : 0}%
                     </p>

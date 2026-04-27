@@ -8,7 +8,7 @@ interface AuthLayoutProps {
 
 export function AuthLayout({ children, branding }: AuthLayoutProps) {
     return (
-        <div className="min-h-screen bg-gray-50 flex">
+        <div className="min-h-screen bg-bg-subtle flex">
             {/* Left side - Branding (hidden on mobile) */}
             <div className="hidden lg:flex lg:w-1/2 bg-bg-surface">
                 {branding}

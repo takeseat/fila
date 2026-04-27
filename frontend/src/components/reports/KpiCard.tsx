@@ -34,15 +34,15 @@ export function KpiCard({ title, value, format = 'number', subtitle, icon, trend
     };
 
     return (
-        <div className="bg-bg-surface rounded-card shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+        <div className="bg-bg-surface rounded-card shadow-sm border border-border-default p-6 hover:shadow-md transition-shadow">
             <div className="flex items-start justify-between">
                 <div className="flex-1">
-                    <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
-                    <p className="text-3xl font-bold text-gray-900 mb-1">
+                    <p className="text-sm font-medium text-text-secondary mb-1">{title}</p>
+                    <p className="text-3xl font-bold text-text-primary mb-1">
                         {formatValue(value, format)}
                     </p>
                     {subtitle && (
-                        <p className="text-xs text-gray-500">{subtitle}</p>
+                        <p className="text-xs text-text-tertiary">{subtitle}</p>
                     )}
                     {trend && (
                         <div className={`flex items-center gap-1 mt-2 text-sm ${trend.direction === 'up' ? 'text-green-600' : 'text-red-600'
@@ -53,7 +53,7 @@ export function KpiCard({ title, value, format = 'number', subtitle, icon, trend
                     )}
                 </div>
                 {icon && (
-                    <div className="text-gray-400">
+                    <div className="text-text-tertiary">
                         {icon}
                     </div>
                 )}

@@ -104,7 +104,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Order Code */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         Código do Pedido *
                     </label>
                     <input
@@ -145,7 +145,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
                             </p>
                         )}
                         {!isLookingUp && !customerFound && customerPhone.length >= (countryCode === 'BR' ? 10 : 6) && (
-                            <p className="text-xs text-gray-500 flex items-center gap-1">
+                            <p className="text-xs text-text-tertiary flex items-center gap-1">
                                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                 </svg>
@@ -157,7 +157,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
 
                 {/* Customer Name */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         Nome do Cliente
                     </label>
                     <input
@@ -171,7 +171,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
 
                 {/* Notes */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         Observações
                     </label>
                     <textarea
@@ -190,7 +190,7 @@ export default function CreatePickupOrderModal({ onClose, onSuccess }: CreatePic
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+                        className="px-4 py-2 text-text-secondary hover:bg-bg-subtle rounded-lg"
                     >
                         Cancelar
                     </button>

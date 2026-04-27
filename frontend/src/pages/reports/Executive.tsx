@@ -36,8 +36,8 @@ export function ExecutiveReport() {
     return (
         <div className="max-w-7xl mx-auto p-6 space-y-6">
             <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('reports:executive.title')}</h1>
-                <p className="text-gray-600">{t('reports:executive.subtitle')}</p>
+                <h1 className="text-3xl font-bold text-text-primary mb-2">{t('reports:executive.title')}</h1>
+                <p className="text-text-secondary">{t('reports:executive.subtitle')}</p>
             </div>
 
             <ReportFilters onFiltersChange={setFilters} />

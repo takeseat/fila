@@ -15,7 +15,7 @@ export const Home: React.FC = () => {
     const { t } = useTranslation(['home', 'nav']);
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { canUsePickupOrders } = usePlan();
+    const { canUsePickupOrders, trialStatus } = usePlan();
 
     // Data Fetching
     // We use staleTime: 0 so data is always fresh when mounting/focusing Home
@@ -72,13 +72,13 @@ export const Home: React.FC = () => {
                 <div className="max-w-5xl mx-auto space-y-8">
                     {/* Header / Greeting (Hidden on mobile as it is in header) */}
                     <div className="hidden lg:block">
-                        <h1 className="text-2xl font-semibold text-gray-900">
+                        <h1 className="text-2xl font-semibold text-text-primary">
                             {t('greeting', { name: user?.name?.split(' ')[0] })}
                         </h1>
                     </div>
 
                     {/* Trial Expiration Banner */}
-                    {canUsePickupOrders === false && usePlan().trialStatus === 'EXPIRED' && (
+                    {canUsePickupOrders === false && trialStatus === 'EXPIRED' && (
                         <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
                             <div className="flex items-start gap-4">
                                 <div className="bg-red-100 p-2 rounded-full hidden md:block">
@@ -188,14 +188,14 @@ export const Home: React.FC = () => {
                             <div className="bg-primary-50 p-2 rounded-full text-primary-600">
                                 <Icon name="message" size="md" tone="brand" />
                             </div>
-                            <span className="text-gray-700 font-medium text-sm">
+                            <span className="text-text-secondary font-medium text-sm">
                                 {t('layers.communication.nps_question')}
                             </span>
                         </div>
                         {/* Placeholder for future interactivity */}
                         <div className="flex gap-1">
                             {[1, 2, 3, 4, 5].map((star) => (
-                                <button key={star} className="text-gray-300 hover:text-yellow-400 transition-colors">
+                                <button key={star} className="text-text-muted hover:text-yellow-400 transition-colors">
                                     ★
                                 </button>
                             ))}

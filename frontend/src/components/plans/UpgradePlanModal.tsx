@@ -79,11 +79,11 @@ export function UpgradePlanModal({ isOpen, onClose, onUpgrade }: UpgradePlanModa
                                 <Dialog.Panel className="w-full max-w-5xl transform overflow-hidden rounded-modal bg-bg-surface p-8 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="h3"
-                                        className="text-2xl font-bold leading-6 text-gray-900 text-center mb-2"
+                                        className="text-2xl font-bold leading-6 text-text-primary text-center mb-2"
                                     >
                                         {t('upgrade.modalTitle')}
                                     </Dialog.Title>
-                                    <div className="mt-2 text-center text-gray-500 mb-8 max-w-2xl mx-auto">
+                                    <div className="mt-2 text-center text-text-tertiary mb-8 max-w-2xl mx-auto">
                                         <p>{t('upgrade.modalDescription')}</p>
                                     </div>
 
@@ -99,7 +99,7 @@ export function UpgradePlanModal({ isOpen, onClose, onUpgrade }: UpgradePlanModa
                                     <div className="mt-8 text-center">
                                         <button
                                             type="button"
-                                            className="text-sm text-gray-500 hover:text-gray-700 underline"
+                                            className="text-sm text-text-tertiary hover:text-text-secondary underline"
                                             onClick={onClose}
                                         >
                                             {t('upgrade.maybeLater')}

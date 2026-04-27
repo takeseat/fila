@@ -107,7 +107,7 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
 
                 {/* Name */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('fields.name')} <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -116,13 +116,13 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder={t('placeholders.name')}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-border-default focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-4"
                     />
                 </div>
 
                 {/* Email */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('fields.email')} <span className="text-red-600">*</span>
                     </label>
                     <input
@@ -131,14 +131,14 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder={t('placeholders.email')}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-border-default focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-4"
                     />
                 </div>
 
                 {/* Password (only for new users or if changing) */}
                 {!isEditing && (
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-text-secondary mb-1">
                             {t('fields.password')} <span className="text-red-600">*</span>
                         </label>
                         <input
@@ -148,21 +148,21 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                             placeholder={t('placeholders.password')}
                             required={!isEditing}
                             minLength={6}
-                            className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-4"
+                            className="w-full px-4 py-2.5 rounded-xl border-2 border-border-default focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-text-primary placeholder:text-text-tertiary focus:outline-none focus:ring-4"
                         />
                     </div>
                 )}
 
                 {/* Role */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('fields.role')} <span className="text-red-600">*</span>
                     </label>
                     <select
                         value={formData.role}
                         onChange={(e) => setFormData({ ...formData, role: e.target.value as any })}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-border-default focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-text-primary focus:outline-none focus:ring-4"
                     >
                         <option value="ADMIN">{t('roles.ADMIN')}</option>
                         <option value="MANAGER">{t('roles.MANAGER')}</option>
@@ -172,14 +172,14 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
 
                 {/* Language */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-text-secondary mb-1">
                         {t('fields.language')} <span className="text-red-600">*</span>
                     </label>
                     <select
                         value={formData.language}
                         onChange={(e) => setFormData({ ...formData, language: e.target.value })}
                         required
-                        className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-300 focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-gray-900 focus:outline-none focus:ring-4"
+                        className="w-full px-4 py-2.5 rounded-xl border-2 border-border-default focus:border-primary-500 focus:ring-primary-500/20 bg-bg-surface text-text-primary focus:outline-none focus:ring-4"
                     >
                         {AVAILABLE_LANGUAGES.map((lang) => (
                             <option key={lang.code} value={lang.code}>
@@ -197,9 +197,9 @@ export function UserForm({ user, isOpen, onClose, onSubmit }: UserFormProps) {
                             id="isActive"
                             checked={formData.isActive}
                             onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                            className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-border-default rounded"
                         />
-                        <label htmlFor="isActive" className="ml-2 block text-sm text-gray-900">
+                        <label htmlFor="isActive" className="ml-2 block text-sm text-text-primary">
                             {t('status.active')}
                         </label>
                     </div>

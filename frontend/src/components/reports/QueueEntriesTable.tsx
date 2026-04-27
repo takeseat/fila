@@ -42,7 +42,7 @@ export function QueueEntriesTable({ data, sortBy, sortOrder, onSort }: QueueEntr
 
     return (
         <div className="bg-bg-surface rounded-xl shadow-sm border border-border-default overflow-hidden">
-            <div className="overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto">
                 <table className="min-w-full divide-y divide-border-default">
                     <thead className="bg-bg-subtle">
                         <tr>
@@ -107,6 +107,40 @@ export function QueueEntriesTable({ data, sortBy, sortOrder, onSort }: QueueEntr
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile List View */}
+            <div className="md:hidden flex flex-col divide-y divide-border-default">
+                {data.map((row) => (
+                    <div key={row.id} className="p-4 flex flex-col gap-3 hover:bg-bg-subtle transition-colors">
+                        <div className="flex items-start justify-between gap-2">
+                            <div>
+                                <div className="text-sm font-medium text-text-primary">{row.customerName}</div>
+                                <div className="text-xs text-text-tertiary">{row.customerPhone}</div>
+                            </div>
+                            <StatusBadge status={row.status} />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-y-2 gap-x-4 mt-2">
+                            <div className="flex flex-col">
+                                <span className="text-[10px] uppercase font-semibold text-text-muted">Entrada</span>
+                                <span className="text-sm text-text-secondary">{formatTime(row.createdAt)}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-[10px] uppercase font-semibold text-text-muted">Pessoas</span>
+                                <span className="text-sm text-text-secondary">{row.partySize}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-[10px] uppercase font-semibold text-text-muted">T. Espera</span>
+                                <span className="text-sm text-text-secondary">{row.timeToSeat !== null ? `${row.timeToSeat} min` : '—'}</span>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="text-[10px] uppercase font-semibold text-text-muted">Data</span>
+                                <span className="text-sm text-text-secondary">{formatDate(row.queueDate)}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );

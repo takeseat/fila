@@ -79,10 +79,10 @@ export function QueueEntriesReport() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-3xl font-bold text-text-primary mb-2">
                         {t('reports:queueEntries.title')}
                     </h1>
-                    <p className="text-gray-600">
+                    <p className="text-text-secondary">
                         {t('reports:queueEntries.subtitle')}
                     </p>
                 </div>
@@ -92,7 +92,7 @@ export function QueueEntriesReport() {
                 <div className="flex items-center gap-2">
                     <button
                         onClick={() => handleExport('csv')}
-                        className="group flex items-center gap-2 px-4 py-2 bg-bg-surface border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
+                        className="group flex items-center gap-2 px-4 py-2 bg-bg-surface border border-border-default text-text-secondary rounded-lg hover:bg-bg-subtle transition-colors duration-150 hover:border-border-default font-medium transition-all shadow-sm text-sm"
                         title={t('reports:queueEntries.exportCsv')}
                     >
                         <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,7 +102,7 @@ export function QueueEntriesReport() {
                     </button>
                     <button
                         onClick={() => handleExport('pdf')}
-                        className="group flex items-center gap-2 px-4 py-2 bg-bg-surface border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:border-gray-300 font-medium transition-all shadow-sm text-sm"
+                        className="group flex items-center gap-2 px-4 py-2 bg-bg-surface border border-border-default text-text-secondary rounded-lg hover:bg-bg-subtle transition-colors duration-150 hover:border-border-default font-medium transition-all shadow-sm text-sm"
                         title={t('reports:queueEntries.exportPdf')}
                     >
                         <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -137,12 +137,12 @@ export function QueueEntriesReport() {
             {data && !isLoading && (
                 <>
                     {data.data.length === 0 ? (
-                        <div className="bg-gray-50 border border-gray-200 rounded-xl p-12 text-center">
-                            <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="bg-bg-subtle border border-border-default rounded-xl p-12 text-center">
+                            <svg className="w-16 h-16 text-text-tertiary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
-                            <p className="text-gray-600 font-medium">{t('reports:queueEntries.noRecordsFound')}</p>
-                            <p className="text-gray-500 text-sm mt-1">
+                            <p className="text-text-secondary font-normal">{t('reports:queueEntries.noRecordsFound')}</p>
+                            <p className="text-text-tertiary text-sm mt-1">
                                 {t('reports:queueEntries.adjustFilters')}
                             </p>
                         </div>
@@ -158,13 +158,13 @@ export function QueueEntriesReport() {
                             {/* Pagination */}
                             <div className="flex items-center justify-between bg-bg-surface rounded-xl shadow-sm border p-4">
                                 <div className="flex items-center gap-4">
-                                    <span className="text-sm text-gray-600">
+                                    <span className="text-sm text-text-secondary">
                                         {t('reports:queueEntries.showing', { from: ((data.page - 1) * data.pageSize) + 1, to: Math.min(data.page * data.pageSize, data.total), total: data.total })}
                                     </span>
                                     <select
                                         value={filters.pageSize}
                                         onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-                                        className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        className="px-3 py-1.5 border border-border-default rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                     >
                                         <option value={25}>25 {t('reports:queueEntries.perPage')}</option>
                                         <option value={50}>50 {t('reports:queueEntries.perPage')}</option>
@@ -176,17 +176,17 @@ export function QueueEntriesReport() {
                                     <button
                                         onClick={() => handlePageChange(data.page - 1)}
                                         disabled={data.page === 1}
-                                        className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="px-3 py-1.5 border border-border-default rounded-lg text-sm font-normal text-text-secondary hover:bg-bg-subtle transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
                                         {t('reports:queueEntries.previous')}
                                     </button>
-                                    <span className="px-4 py-1.5 text-sm text-gray-700">
+                                    <span className="px-4 py-1.5 text-sm text-text-secondary">
                                         {t('reports:queueEntries.pageOf', { current: data.page, total: data.totalPages })}
                                     </span>
                                     <button
                                         onClick={() => handlePageChange(data.page + 1)}
                                         disabled={data.page === data.totalPages}
-                                        className="px-3 py-1.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                        className="px-3 py-1.5 border border-border-default rounded-lg text-sm font-normal text-text-secondary hover:bg-bg-subtle transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
                                         {t('reports:queueEntries.next')}
                                     </button>

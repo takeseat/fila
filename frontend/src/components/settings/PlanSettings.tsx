@@ -36,14 +36,14 @@ export function PlanSettings() {
                 <div className="p-4 md:p-6">
                     <div className="flex flex-col gap-4 md:gap-6 pb-6 md:pb-8 border-b border-gray-100">
                         <div>
-                            <p className="text-xs md:text-sm font-medium text-gray-500 mb-1">{t('settings.currentPlan', { defaultValue: 'Plano Atual' })}</p>
+                            <p className="text-xs md:text-sm font-medium text-text-tertiary mb-1">{t('settings.currentPlan', { defaultValue: 'Plano Atual' })}</p>
                             <div className="flex items-center gap-2 md:gap-3 flex-wrap">
-                                <h2 className="text-xl md:text-3xl font-bold text-gray-900">
+                                <h2 className="text-xl md:text-3xl font-bold text-text-primary">
                                     {t('pro.title', { defaultValue: 'PRO' })}
                                 </h2>
                                 {getStatusBadge()}
                             </div>
-                            <p className="mt-2 text-sm md:text-base text-gray-600">
+                            <p className="mt-2 text-sm md:text-base text-text-secondary">
                                 {t('pro.description', { defaultValue: 'Acesso completo a todas as funcionalidades' })}
                             </p>
                             {isTrialing && (
@@ -60,9 +60,9 @@ export function PlanSettings() {
 
                         <div className="flex flex-col md:items-end gap-3">
                             <div className="md:text-right">
-                                <p className="text-xl md:text-2xl font-bold text-gray-900">
+                                <p className="text-xl md:text-2xl font-bold text-text-primary">
                                     {t('pro.price', { defaultValue: 'R$ 99' })}
-                                    <span className="text-xs md:text-sm font-normal text-gray-500">{t('pro.period', { defaultValue: '/mês' })}</span>
+                                    <span className="text-xs md:text-sm font-normal text-text-tertiary">{t('pro.period', { defaultValue: '/mês' })}</span>
                                 </p>
                             </div>
 
@@ -81,7 +81,7 @@ export function PlanSettings() {
                     </div>
 
                     <div className="pt-6 md:pt-8">
-                        <h3 className="text-base md:text-lg font-medium text-gray-900 mb-4 md:mb-6">{t('settings.featuresTitle', { defaultValue: 'Funcionalidades Incluídas' })}</h3>
+                        <h3 className="text-base md:text-lg font-medium text-text-primary mb-4 md:mb-6">{t('settings.featuresTitle', { defaultValue: 'Funcionalidades Incluídas' })}</h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
                             {/* Waitlist Feature */}
@@ -92,8 +92,8 @@ export function PlanSettings() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p className="text-sm md:text-base font-semibold text-gray-900">{t('features.waitlist', { defaultValue: 'Gerenciamento de Fila' })}</p>
-                                    <p className="text-xs md:text-sm text-gray-500 mt-1">
+                                    <p className="text-sm md:text-base font-semibold text-text-primary">{t('features.waitlist', { defaultValue: 'Gerenciamento de Fila' })}</p>
+                                    <p className="text-xs md:text-sm text-text-tertiary mt-1">
                                         {t('features.included', { defaultValue: 'Incluído' })}
                                     </p>
                                 </div>
@@ -107,8 +107,8 @@ export function PlanSettings() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p className="text-sm md:text-base font-semibold text-gray-900">{t('features.whatsapp', { defaultValue: 'WhatsApp' })}</p>
-                                    <p className="text-xs md:text-sm text-gray-500 mt-1">
+                                    <p className="text-sm md:text-base font-semibold text-text-primary">{t('features.whatsapp', { defaultValue: 'WhatsApp' })}</p>
+                                    <p className="text-xs md:text-sm text-text-tertiary mt-1">
                                         {t('features.included', { defaultValue: 'Incluído' })}
                                     </p>
                                 </div>
@@ -122,8 +122,8 @@ export function PlanSettings() {
                                     </svg>
                                 </div>
                                 <div>
-                                    <p className="text-sm md:text-base font-semibold text-gray-900">{t('features.pickupOrders', { defaultValue: 'Pedidos para Retirar' })}</p>
-                                    <p className="text-xs md:text-sm text-gray-500 mt-1">
+                                    <p className="text-sm md:text-base font-semibold text-text-primary">{t('features.pickupOrders', { defaultValue: 'Pedidos para Retirar' })}</p>
+                                    <p className="text-xs md:text-sm text-text-tertiary mt-1">
                                         {t('features.included', { defaultValue: 'Incluído' })}
                                     </p>
                                 </div>

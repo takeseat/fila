@@ -58,17 +58,17 @@ export function Login() {
                         e.currentTarget.parentElement?.appendChild(textLogo);
                     }}
                 />
-                <p className="text-sm text-gray-200">{t('branding.headline')}</p>
+                <p className="text-sm text-text-muted">{t('branding.headline')}</p>
             </div>
 
             {/* Auth Card */}
             <div className="bg-bg-surface rounded-2xl shadow-xl p-8 sm:p-10">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-3xl font-bold text-text-primary mb-2">
                         {t('login.title')}
                     </h1>
-                    <p className="text-gray-600">
+                    <p className="text-text-secondary">
                         {t('login.subtitle')}
                     </p>
                 </div>
@@ -101,10 +101,10 @@ export function Login() {
                     />
 
                     <div className="flex items-center justify-between text-sm">
-                        <label className="flex items-center gap-2 text-gray-700 cursor-pointer">
+                        <label className="flex items-center gap-2 text-text-secondary cursor-pointer">
                             <input
                                 type="checkbox"
-                                className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                                className="rounded border-border-default text-primary-600 focus:ring-primary-500"
                             />
                             <span>{t('login.rememberMe')}</span>
                         </label>
@@ -125,7 +125,7 @@ export function Login() {
 
                 {/* Toggle to Sign Up */}
                 <div className="mt-8 text-center">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-text-secondary">
                         {t('login.noAccount')}{' '}
                         <Link
                             to="/register"
@@ -218,8 +218,8 @@ export function Register() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('signup.checkEmail')}</h2>
-                        <p className="text-gray-600">
+                        <h2 className="text-2xl font-bold text-text-primary mb-2">{t('signup.checkEmail')}</h2>
+                        <p className="text-text-secondary">
                             {t('signup.verificationSent', { email: formData.userEmail })}
                             <br />{t('signup.spamCheck')}
                         </p>
@@ -256,15 +256,15 @@ export function Register() {
                         e.currentTarget.parentElement?.appendChild(textLogo);
                     }}
                 />
-                <p className="text-sm text-gray-200">{t('branding.headline')}</p>
+                <p className="text-sm text-text-muted">{t('branding.headline')}</p>
             </div>
 
             <div className="bg-bg-surface rounded-2xl shadow-xl p-8 sm:p-10">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-3xl font-bold text-text-primary mb-2">
                         {t('signup.title')}
                     </h1>
-                    <p className="text-gray-600">
+                    <p className="text-text-secondary">
                         {t('signup.subtitle')}
                     </p>
                 </div>
@@ -299,7 +299,7 @@ export function Register() {
                         {loading ? 'Sending...' : t('signup.button') || 'Sign Up'}
                     </Button>
 
-                    <div className="mt-6 text-center text-sm text-gray-600">
+                    <div className="mt-6 text-center text-sm text-text-secondary">
                         {t('signup.hasAccount')}{' '}
                         <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500">
                             {t('signup.signIn')}

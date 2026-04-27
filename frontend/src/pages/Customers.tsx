@@ -493,7 +493,7 @@ export function Customers() {
                             id="whatsappOptIn"
                             checked={formData.whatsappOptIn}
                             onChange={(e) => setFormData({ ...formData, whatsappOptIn: e.target.checked })}
-                            className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+                            className="w-4 h-4 text-primary-600 border-border-default rounded focus:ring-primary-500"
                         />
                         <label htmlFor="whatsappOptIn" className="text-sm text-text-primary">
                             {t('form.whatsappOptIn')}

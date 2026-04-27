@@ -26,7 +26,7 @@ export function OrderCard({ order, onMarkReady, onCall, onPickedUp, onNotPickedU
 
     // Determine progress bar color based on time
     let progressVariant: 'success' | 'warning' | 'danger' = 'success';
-    let progressValue = Math.min((minutesWaiting / 30) * 100, 100);
+    const progressValue = Math.min((minutesWaiting / 30) * 100, 100);
 
     if (minutesWaiting > 30) {
         progressVariant = 'danger';

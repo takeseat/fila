@@ -44,22 +44,23 @@ export function validatePasswordStrength(password: string, email?: string): Pass
     }
 
     // Uppercase letter check
-    let hasUpper = /[A-Z]/.test(password);
+    const hasUpper = /[A-Z]/.test(password);
     if (hasUpper) score++;
     else feedback.push('uppercase');
 
     // Lowercase letter check
-    let hasLower = /[a-z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
     if (hasLower) score++;
     else feedback.push('lowercase');
 
     // Number check
-    let hasNumber = /\d/.test(password);
+    const hasNumber = /\d/.test(password);
     if (hasNumber) score++;
     else feedback.push('number');
 
     // Special character check
-    let hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+    // eslint-disable-next-line no-useless-escape
+    const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
     if (hasSpecial) score++;
     else feedback.push('special');
 

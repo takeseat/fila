@@ -19,8 +19,8 @@ export function FlowReport() {
     return (
         <div className="max-w-7xl mx-auto p-6 space-y-6">
             <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('reports:flow.title')}</h1>
-                <p className="text-gray-600">{t('reports:flow.subtitle')}</p>
+                <h1 className="text-3xl font-bold text-text-primary mb-2">{t('reports:flow.title')}</h1>
+                <p className="text-text-secondary">{t('reports:flow.subtitle')}</p>
             </div>
 
             <ReportFilters onFiltersChange={setFilters} />

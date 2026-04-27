@@ -25,7 +25,7 @@ export function BrandingSection({ className = '' }: BrandingSectionProps) {
                         // Fallback to text logo if image not found
                         e.currentTarget.style.display = 'none';
                         const textLogo = document.createElement('div');
-                        textLogo.className = 'text-3xl font-bold text-gray-900';
+                        textLogo.className = 'text-3xl font-bold text-text-primary';
                         textLogo.textContent = 'TakeSeat';
                         e.currentTarget.parentElement?.appendChild(textLogo);
                     }}
@@ -33,12 +33,12 @@ export function BrandingSection({ className = '' }: BrandingSectionProps) {
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl xl:text-5xl font-bold text-gray-900 leading-tight mb-6">
+            <h1 className="text-4xl xl:text-5xl font-bold text-text-primary leading-tight mb-6">
                 {t('branding.headline')}
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+            <p className="text-xl text-text-secondary mb-12 leading-relaxed">
                 {t('branding.subheadline')}
             </p>
 
@@ -59,7 +59,7 @@ export function BrandingSection({ className = '' }: BrandingSectionProps) {
                                 d="M5 13l4 4L19 7"
                             />
                         </svg>
-                        <span className="text-lg text-gray-700">{benefit}</span>
+                        <span className="text-lg text-text-secondary">{benefit}</span>
                     </li>
                 ))}
             </ul>

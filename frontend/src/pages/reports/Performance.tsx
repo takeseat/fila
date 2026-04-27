@@ -21,10 +21,10 @@ export function PerformanceReport() {
         <div className="max-w-7xl mx-auto p-6 space-y-6">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl font-bold text-text-primary mb-2">
                     {t('reports:performance.title')}
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-text-secondary">
                     {t('reports:performance.subtitle')}
                 </p>
             </div>
@@ -59,7 +59,7 @@ export function PerformanceReport() {
                             value={data.kpis.groups_total}
                             format="number"
                             icon={
-                                <Icon name="users" size="xl" className="text-gray-400" />
+                                <Icon name="users" size="xl" className="text-text-tertiary" />
                             }
                         />
                         <KpiCard
@@ -68,7 +68,7 @@ export function PerformanceReport() {
                             format="number"
                             subtitle={`${data.kpis.groups_total > 0 ? ((data.kpis.groups_seated / data.kpis.groups_total) * 100).toFixed(1) : 0}% ${t('reports:performance.kpis.ofTotal')}`}
                             icon={
-                                <Icon name="check" size="xl" className="text-gray-400" />
+                                <Icon name="check" size="xl" className="text-text-tertiary" />
                             }
                         />
                         <KpiCard
@@ -77,7 +77,7 @@ export function PerformanceReport() {
                             format="percentage"
                             subtitle={`${data.kpis.groups_lost} ${t('reports:performance.kpis.groupsLost')}`}
                             icon={
-                                <Icon name="close" size="xl" className="text-gray-400" />
+                                <Icon name="close" size="xl" className="text-text-tertiary" />
                             }
                         />
                         <KpiCard
@@ -86,7 +86,7 @@ export function PerformanceReport() {
                             format="number"
                             subtitle={t('reports:performance.kpis.maxInQueue')}
                             icon={
-                                <Icon name="trendingUp" size="xl" className="text-gray-400" />
+                                <Icon name="trendingUp" size="xl" className="text-text-tertiary" />
                             }
                         />
                     </div>
@@ -119,7 +119,7 @@ export function PerformanceReport() {
                     </div>
 
                     {/* Metadata */}
-                    <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-600">
+                    <div className="bg-bg-subtle rounded-xl p-4 text-sm text-text-secondary">
                         <p>
                             <strong>{t('reports:performance.kpis.period')}:</strong> {filters.from} {t('reports:performance.kpis.until')} {filters.to} •
                             <strong className="ml-2">{t('reports:performance.kpis.aggregation')}:</strong> {data.metadata.bucket_size === 'hour' ? t('reports:performance.kpis.perHour') : t('reports:performance.kpis.perDay')}

@@ -97,24 +97,24 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
                             <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-bg-surface p-8 text-left align-middle shadow-xl transition-all">
                                 <Dialog.Title
                                     as="h3"
-                                    className="text-2xl font-bold leading-6 text-gray-900 mb-2"
+                                    className="text-2xl font-bold leading-6 text-text-primary mb-2"
                                 >
                                     {t('plans:trial.completeProfileTitle') || 'Complete Profile'}
                                 </Dialog.Title>
-                                <p className="text-gray-500 mb-6">
+                                <p className="text-text-tertiary mb-6">
                                     {t('plans:trial.completeProfileDesc') || 'To start your free trial, we need a few more details about your business.'}
                                 </p>
 
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                                     {/* CNPJ */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                                        <label className="block text-sm font-medium text-text-secondary mb-1">
                                             {t('settings:business.fields.taxId.label') || 'CNPJ'}
                                         </label>
                                         <input
                                             type="text"
                                             {...register('cnpj', { required: true })}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 outline-none"
+                                            className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 outline-none"
                                             placeholder="00.000.000/0000-00"
                                             onChange={(e) => {
                                                 e.target.value = applyCnpjMask(e.target.value);
@@ -127,24 +127,24 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
                                     {/* Address Line + Number */}
                                     <div className="grid grid-cols-3 gap-4">
                                         <div className="col-span-2">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            <label className="block text-sm font-medium text-text-secondary mb-1">
                                                 {t('settings:business.fields.addressLine.label')}
                                             </label>
                                             <input
                                                 type="text"
                                                 {...register('addressLine', { required: true })}
-                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 outline-none"
+                                                className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 outline-none"
                                             />
                                             {errors.addressLine && <span className="text-xs text-red-500">{t('settings:validation.required')}</span>}
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            <label className="block text-sm font-medium text-text-secondary mb-1">
                                                 {t('settings:business.fields.addressNumber.label')}
                                             </label>
                                             <input
                                                 type="text"
                                                 {...register('addressNumber', { required: true })}
-                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 outline-none"
+                                                className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 outline-none"
                                             />
                                             {errors.addressNumber && <span className="text-xs text-red-500">{t('settings:validation.required')}</span>}
                                         </div>
@@ -153,7 +153,7 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
                                     {/* Neighborhood + CEP */}
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            <label className="block text-sm font-medium text-text-secondary mb-1">
                                                 {t('settings:business.fields.addressComplement.label') || 'Neighborhood'}
                                             </label>
                                             {/* Note: Using 'neighborhood' as per original requirement, but mapped to complement/address2 if schema matches. 
@@ -167,18 +167,18 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
                                             <input
                                                 type="text"
                                                 {...register('neighborhood')} // This might need mapping to addressComplement?
-                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 outline-none"
+                                                className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 outline-none"
                                                 placeholder={t('settings:business.fields.addressComplement.placeholder')}
                                             />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            <label className="block text-sm font-medium text-text-secondary mb-1">
                                                 {t('settings:business.fields.postalCode.label')}
                                             </label>
                                             <input
                                                 type="text"
                                                 {...register('postalCode', { required: true })}
-                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 outline-none"
+                                                className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 outline-none"
                                                 onChange={(e) => {
                                                     e.target.value = applyCepMask(e.target.value);
                                                     register('postalCode').onChange(e);
@@ -191,23 +191,23 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
                                     {/* City + State */}
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            <label className="block text-sm font-medium text-text-secondary mb-1">
                                                 {t('settings:business.fields.city.label')}
                                             </label>
                                             <input
                                                 type="text"
                                                 {...register('city', { required: true })}
-                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 outline-none"
+                                                className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 outline-none"
                                             />
                                             {errors.city && <span className="text-xs text-red-500">{t('settings:validation.required')}</span>}
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            <label className="block text-sm font-medium text-text-secondary mb-1">
                                                 {t('settings:business.fields.state.label')}
                                             </label>
                                             <select
                                                 {...register('stateCode', { required: true })}
-                                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary-500 outline-none"
+                                                className="w-full px-4 py-2 rounded-lg border border-border-default focus:ring-2 focus:ring-primary-500 outline-none"
                                             >
                                                 <option value="">{t('settings:business.fields.state.placeholder')}</option>
                                                 {states.map(state => (
@@ -224,7 +224,7 @@ export function StartTrialModal({ isOpen, onClose, onSuccess }: StartTrialModalP
                                         <button
                                             type="button"
                                             onClick={onClose}
-                                            className="px-4 py-2 text-gray-700 font-medium hover:bg-gray-50 rounded-lg transition-colors"
+                                            className="px-4 py-2 text-text-secondary font-medium hover:bg-bg-subtle transition-colors duration-150 rounded-lg transition-colors"
                                         >
                                             {t('settings:common.cancel') || 'Cancel'}
                                         </button>

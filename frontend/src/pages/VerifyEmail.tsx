@@ -147,8 +147,8 @@ export default function VerifyEmail() {
                 {status === 'form' && (
                     <div>
                         <div className="mb-6">
-                            <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('verifyEmail.title', { ns: 'auth' })}</h1>
-                            <p className="text-gray-600">
+                            <h1 className="text-2xl font-bold text-text-primary mb-2">{t('verifyEmail.title', { ns: 'auth' })}</h1>
+                            <p className="text-text-secondary">
                                 {t('verifyEmail.emailVerified', { ns: 'auth' })} <strong>{email}</strong>
                             </p>
                         </div>
@@ -176,7 +176,7 @@ export default function VerifyEmail() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                <label className="block text-sm font-normal text-text-tertiary mb-2">
                                     {t('signup.password', { ns: 'auth' })} <span className="text-red-600">*</span>
                                 </label>
                                 <div className="relative">
@@ -193,7 +193,7 @@ export default function VerifyEmail() {
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-gray-600"
+                                        className="absolute inset-y-0 right-0 px-3 flex items-center text-text-tertiary hover:text-text-primary transition-colors"
                                     >
                                         <span className="text-xs">{showPassword ? t('hide', { ns: 'common' }) : t('show', { ns: 'common' })}</span>
                                     </button>
@@ -202,7 +202,7 @@ export default function VerifyEmail() {
                                 {formData.password && (
                                     <div className="mt-3">
                                         <div className="flex items-center gap-2 mb-2">
-                                            <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                            <div className="flex-1 h-2 bg-bg-sunken rounded-full overflow-hidden">
                                                 <div
                                                     className={`h-full transition-all duration-300 ${getPasswordStrengthColor(passwordStrength.score)}`}
                                                     style={{ width: `${(passwordStrength.score / 4) * 100}%` }}
@@ -213,7 +213,7 @@ export default function VerifyEmail() {
                                             </span>
                                         </div>
                                         {passwordStrength.feedback.length > 0 && (
-                                            <div className="text-xs text-gray-600">
+                                            <div className="text-xs text-text-secondary">
                                                 <ul className="space-y-0.5">
                                                     {passwordStrength.feedback.map((reqKey, idx) => (
                                                         <li key={idx} className="flex items-center gap-1">
@@ -247,7 +247,7 @@ export default function VerifyEmail() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">{t('verifyEmail.failedTitle', { ns: 'auth' })}</h2>
+                        <h2 className="text-2xl font-bold text-text-primary mb-2">{t('verifyEmail.failedTitle', { ns: 'auth' })}</h2>
                         <p className="text-red-500 mb-6">{message}</p>
                         <Button
                             onClick={() => navigate('/login')}

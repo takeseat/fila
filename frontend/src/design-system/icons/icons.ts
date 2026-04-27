@@ -5,6 +5,7 @@
  * All icon usage in the app must go through the Icon wrapper component.
  */
 
+// eslint-disable-next-line no-restricted-imports
 import {
     // Navigation
     Home,

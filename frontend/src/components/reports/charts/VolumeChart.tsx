@@ -15,7 +15,7 @@ export function VolumeChart({ data }: VolumeChartProps) {
 
     if (!data || data.length === 0) {
         return (
-            <div className="h-80 flex items-center justify-center text-gray-500">
+            <div className="h-80 flex items-center justify-center text-text-tertiary">
                 {t('reports:common.noData')}
             </div>
         );
@@ -29,8 +29,8 @@ export function VolumeChart({ data }: VolumeChartProps) {
     }));
 
     return (
-        <div className="bg-bg-surface rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('reports:charts.queueVolume')}</h3>
+        <div className="bg-bg-surface rounded-xl shadow-sm border border-border-default p-6">
+            <h3 className="text-lg font-semibold text-text-primary mb-4">{t('reports:charts.queueVolume')}</h3>
             <ResponsiveContainer width="100%" height={320}>
                 <BarChart data={formattedData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />

@@ -107,7 +107,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <div className={clsx('w-full', className)}>
                 {/* Label */}
                 {label && (
-                    <label className="block mb-2 text-sm font-medium text-text-primary">
+                    <label className="block mb-2 text-sm font-normal text-text-tertiary">
                         {label}
                         {required && <span className="ml-1 text-text-danger">*</span>}
                     </label>
