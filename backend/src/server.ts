@@ -33,13 +33,12 @@ export const app = express();
 const httpServer = createServer(app);
 
 // Middleware
-// CORS - allow multiple origins (main portal and admin portal)
-const allowedOrigins = env.CORS_ORIGIN.split(',').map(origin => origin.trim());
+// CORS - Bulletproof configuration to isolate issues
 const corsOptions = {
-    origin: allowedOrigins,
+    origin: true, // Reflete dinamicamente a origin solicitante
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Impersonation-Token', 'X-Requested-With'],
+    // Removido allowedHeaders para não bloquear headers customizados ou de tracking do browser
 };
 
 app.use(cors(corsOptions));
