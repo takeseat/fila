@@ -31,7 +31,7 @@ export function QueuePerformance() {
         queryFn: async () => {
             const startStr = format(startDate, 'yyyy-MM-dd');
             const endStr = format(endDate, 'yyyy-MM-dd');
-            const { data } = await api.get(`/reports/waitlist-performance?startDate=${startStr}&endDate=${endStr}`);
+            const { data } = await api.get(`/reports/waitlist-performance?from=${startStr}&to=${endStr}`);
             return data;
         }
     });
