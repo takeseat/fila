@@ -7,18 +7,11 @@ let io: Server;
 export function initializeWebSocket(httpServer: HttpServer): Server {
     const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
         .split(',')
-        .map(origin => origin.trim().replace(/\/$/, ''));
+        .map(origin => origin.trim());
 
     io = new Server(httpServer, {
         cors: {
-            origin: function (origin, callback) {
-                if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
-                    callback(null, true);
-                } else {
-                    console.warn(`⚠️ [WS CORS] Origem bloqueada: ${origin}. Adicione na CORS_ORIGIN.`);
-                    callback(null, false);
-                }
-            },
+            origin: allowedOrigins,
             methods: ['GET', 'POST'],
             credentials: true,
         },

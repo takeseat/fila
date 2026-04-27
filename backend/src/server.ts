@@ -34,19 +34,12 @@ const httpServer = createServer(app);
 
 // Middleware
 // CORS - allow multiple origins (main portal and admin portal)
-const allowedOrigins = env.CORS_ORIGIN.split(',').map(origin => origin.trim().replace(/\/$/, ''));
+const allowedOrigins = env.CORS_ORIGIN.split(',').map(origin => origin.trim());
 const corsOptions = {
-    origin: function (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
-        if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes('*')) {
-            callback(null, true);
-        } else {
-            console.warn(`⚠️ [CORS] Origem bloqueada: ${origin}. Adicione esta URL na variável CORS_ORIGIN do seu backend.`);
-            callback(null, false);
-        }
-    },
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    // allowedHeaders removido: o pacote cors espelhará os headers solicitados via Access-Control-Request-Headers automaticamente
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Impersonation-Token', 'X-Requested-With'],
 };
 
 app.use(cors(corsOptions));
