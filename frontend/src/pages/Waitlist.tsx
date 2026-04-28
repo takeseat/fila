@@ -463,19 +463,22 @@ export function Waitlist() {
                 <div>
                     <h2 className="text-xl font-semibold text-text-primary mb-4">{t('activeQueue')}</h2>
                     {activeEntries.length === 0 ? (
-                        <div className="bg-bg-surface border border-border-default rounded-card shadow-card">
-                            <EmptyState
-                                icon={
-                                    <Icon name="users" className="w-full h-full text-text-secondary" />
-                                }
-                                title={t('empty.title')}
-                                description={t('empty.description')}
-                                action={
-                                    <Button onClick={handleOpenModal}>
-                                        {t('empty.action')}
-                                    </Button>
-                                }
-                            />
+                        <div className="bg-bg-surface border-2 border-dashed border-border-default rounded-card p-12 text-center shadow-sm">
+                            <div className="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <Icon name="users" className="w-8 h-8 text-primary-600" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-text-primary mb-2">{t('empty.title')}</h3>
+                            <p className="text-text-secondary max-w-md mx-auto mb-8">
+                                {t('empty.description')}
+                            </p>
+                            <Button 
+                                onClick={handleOpenModal} 
+                                size="lg" 
+                                className="w-full sm:w-auto shadow-md hover:shadow-lg transition-shadow"
+                                leftIcon={<Icon name="add" size="sm" />}
+                            >
+                                {t('empty.action')}
+                            </Button>
                         </div>
                     ) : filteredActiveEntries.length === 0 ? (
                         <div className="bg-bg-surface border border-border-default rounded-card shadow-card">

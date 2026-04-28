@@ -8,20 +8,14 @@ import { useAuth } from './hooks/useAuth';
 import { Layout } from './components/layout/Layout';
 import { ImpersonationBanner } from './components/ImpersonationBanner';
 import { GlobalListeners } from './components/GlobalListeners';
-import { Home } from './pages/Home';
 import { Login, Register } from './pages/Auth';
 import VerifyEmail from './pages/VerifyEmail';
 import { Waitlist } from './pages/Waitlist';
-import { Customers } from './pages/Customers';
 import { Settings } from './pages/Settings';
 import { ProfileSettings } from './pages/Settings/Profile';
-import { PerformanceReport } from './pages/reports/Performance';
-import { ExecutiveReport } from './pages/reports/Executive';
-import { FlowReport } from './pages/reports/Flow';
-import { QueueEntriesReport } from './pages/reports/QueueEntriesReport';
+import { QueuePerformance } from './pages/reports/QueuePerformance';
 import { ImpersonatePage } from './pages/ImpersonatePage';
 import { OnboardingWizard } from './pages/OnboardingWizard';
-import PickupOrders from './pages/PickupOrders';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -116,16 +110,8 @@ function App() {
                                     />
                                     <Route path="/impersonate" element={<ImpersonatePage />} />
 
-                                    {/* Home Page (Always the starting point) */}
-                                    <Route
-                                        path="/"
-                                        element={
-                                            <PrivateRoute mobileShell>
-                                                <Home />
-                                            </PrivateRoute>
-                                        }
-                                    />
-
+                                    {/* Rota inicial agora é sempre a Fila */}
+                                    <Route path="/" element={<Navigate to="/waitlist" replace />} />
 
                                     <Route
                                         path="/waitlist"
@@ -136,65 +122,14 @@ function App() {
                                         }
                                     />
 
-
-                                    <Route
-                                        path="/customers"
-                                        element={
-                                            <PrivateRoute>
-                                                <Customers />
-                                            </PrivateRoute>
-                                        }
-                                    />
-
-                                    <Route
-                                        path="/pickup-orders"
-                                        element={
-                                            <PrivateRoute mobileShell>
-                                                <PickupOrders />
-                                            </PrivateRoute>
-                                        }
-                                    />
-
-                                    <Route
-                                        path="/reports/performance"
-                                        element={
-                                            <PrivateRoute>
-                                                <PerformanceReport />
-                                            </PrivateRoute>
-                                        }
-                                    />
-
-                                    <Route
-                                        path="/reports/executive"
-                                        element={
-                                            <PrivateRoute>
-                                                <ExecutiveReport />
-                                            </PrivateRoute>
-                                        }
-                                    />
-
-                                    <Route
-                                        path="/reports/flow"
-                                        element={
-                                            <PrivateRoute>
-                                                <FlowReport />
-                                            </PrivateRoute>
-                                        }
-                                    />
-
-                                    <Route
-                                        path="/reports/queue-entries"
-                                        element={
-                                            <PrivateRoute>
-                                                <QueueEntriesReport />
-                                            </PrivateRoute>
-                                        }
-                                    />
-
-                                    {/* Redirect /reports to /reports/performance */}
+                                    {/* Relatório Matador Único */}
                                     <Route
                                         path="/reports"
-                                        element={<Navigate to="/reports/performance" replace />}
+                                        element={
+                                            <PrivateRoute>
+                                                <QueuePerformance />
+                                            </PrivateRoute>
+                                        }
                                     />
 
                                     <Route
