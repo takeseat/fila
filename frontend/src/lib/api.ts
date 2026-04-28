@@ -18,9 +18,9 @@ api.interceptors.request.use((config) => {
         }
     }
 
-    // Add locale header for backend i18n
-    const locale = localStorage.getItem('i18nextLng') || 'en';
-    config.headers['Accept-Language'] = locale;
+    // Browser already sends Accept-Language natively. 
+    // Do not set it manually here otherwise it triggers API Gateway CORS block
+    // until the new terraform rules are applied.
 
     return config;
 });
