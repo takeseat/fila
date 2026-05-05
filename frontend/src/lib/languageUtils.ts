@@ -1,54 +1,43 @@
 /**
  * Language Utilities
- * 
+ *
  * Centralized utilities for language management.
  * Single source of truth for supported languages and language resolution logic.
+ *
+ * MVP supported languages: en, pt-BR, es
  */
 
 export const SUPPORTED_LANGUAGES = [
     'en',
     'pt-BR',
     'es',
-    'it',
-    'fr',
-    'zh-CN',
-    'ja',
-    'ru',
-    'pl',
-    'ar',
 ] as const;
 
 export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number];
 
 /**
- * Normalize language code to supported format
- * Maps common variants to our supported languages
- * 
+ * Normalize language code to supported format.
+ * Maps common browser variants to our supported languages.
+ *
  * Examples:
  * - 'pt' → 'pt-BR'
- * - 'zh' → 'zh-CN'
+ * - 'pt-PT' → 'pt-BR'
  * - 'en-US' → 'en'
+ * - 'es-MX' → 'es'
+ * - anything else → 'en' (fallback)
  */
 export function normalizeLanguage(lang: string | undefined | null): SupportedLanguage {
     if (!lang) return 'en';
 
     const normalized = lang.toLowerCase().trim();
 
-    // Direct match
-    if (SUPPORTED_LANGUAGES.includes(normalized as SupportedLanguage)) {
-        return normalized as SupportedLanguage;
-    }
+    // Direct match (case-insensitive)
+    const direct = SUPPORTED_LANGUAGES.find(l => l.toLowerCase() === normalized);
+    if (direct) return direct;
 
     // Map common variants
     if (normalized.startsWith('pt')) return 'pt-BR';
-    if (normalized.startsWith('zh')) return 'zh-CN';
     if (normalized.startsWith('es')) return 'es';
-    if (normalized.startsWith('it')) return 'it';
-    if (normalized.startsWith('fr')) return 'fr';
-    if (normalized.startsWith('ja')) return 'ja';
-    if (normalized.startsWith('ru')) return 'ru';
-    if (normalized.startsWith('pl')) return 'pl';
-    if (normalized.startsWith('ar')) return 'ar';
     if (normalized.startsWith('en')) return 'en';
 
     // Fallback
@@ -65,18 +54,18 @@ export function isSupported(lang: string | undefined | null): boolean {
 }
 
 /**
- * Check if language uses Right-to-Left layout
+ * Check if language uses Right-to-Left layout.
+ * None of the MVP languages are RTL.
  */
-export function isRTL(lang: string | undefined | null): boolean {
-    if (!lang) return false;
-    return normalizeLanguage(lang) === 'ar';
+export function isRTL(_lang: string | undefined | null): boolean {
+    return false;
 }
 
 /**
  * Resolve language with correct priority
- * 
+ *
  * Priority:
- * 1. User's language (when logged in) - FONTE DA VERDADE
+ * 1. User's language (when logged in) — source of truth
  * 2. Stored language (localStorage)
  * 3. Browser language
  * 4. Fallback to English

@@ -6,6 +6,10 @@ export interface Language {
     dir: 'ltr' | 'rtl';
 }
 
+/**
+ * MVP supported languages.
+ * To add a language: add here AND add locale files AND register in i18n.ts.
+ */
 export const AVAILABLE_LANGUAGES: Language[] = [
     {
         code: 'en',
@@ -27,55 +31,6 @@ export const AVAILABLE_LANGUAGES: Language[] = [
         nativeName: 'Español',
         flag: '🇪🇸',
         dir: 'ltr',
-    },
-    {
-        code: 'it',
-        name: 'Italian',
-        nativeName: 'Italiano',
-        flag: '🇮🇹',
-        dir: 'ltr',
-    },
-    {
-        code: 'fr',
-        name: 'French',
-        nativeName: 'Français',
-        flag: '🇫🇷',
-        dir: 'ltr',
-    },
-    {
-        code: 'zh-CN',
-        name: 'Chinese (Simplified)',
-        nativeName: '简体中文',
-        flag: '🇨🇳',
-        dir: 'ltr',
-    },
-    {
-        code: 'ja',
-        name: 'Japanese',
-        nativeName: '日本語',
-        flag: '🇯🇵',
-        dir: 'ltr',
-    },
-    {
-        code: 'ru',
-        name: 'Russian',
-        nativeName: 'Русский',
-        flag: '🇷🇺',
-        dir: 'ltr',
-    },
-    {
-        code: 'pl',
-        name: 'Polish',
-        nativeName: 'Polski',
-        flag: '🇵🇱',
-        dir: 'ltr',
-    },
-    {
-        code: 'ar',
-        name: 'Arabic',
-        nativeName: 'العربية',
-        flag: '🇸🇦',
-        dir: 'rtl',
     },
 ];
 

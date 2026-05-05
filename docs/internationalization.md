@@ -9,18 +9,10 @@ TakeSeat is designed to be multi-language ready, supporting global deployments.
 ## Structure
 Locale files are located in `frontend/src/locales/{lang}/{namespace}.json`.
 
-Supported Languages:
+Supported Languages (MVP):
 - `en` (English - Source)
 - `pt-BR` (Portuguese Brazil)
 - `es` (Spanish)
-- `fr` (French)
-- `it` (Italian)
-- `de` (German)
-- `ar` (Arabic)
-- `ja` (Japanese)
-- `zh-CN` (Simplified Chinese)
-- `ru` (Russian)
-- `pl` (Polish)
 
 ## Namespaces
 Translations are split into logical chunks to avoid massive JSON files:
