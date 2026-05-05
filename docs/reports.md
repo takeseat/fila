@@ -1,31 +1,23 @@
 # Reports & Analytics
 
-The Reporting module provides insights into restaurant performance and queue efficiency.
+The reporting module provides a single focused view into queue performance.
 
-## 1. Waitlist Performance
-Focuses on operational metrics.
-- **KPIs**:
-    - Average Wait Time.
-    - Throughput (Guests/Hour).
-    - Abandonment Rate (Hit Rate).
-- **Charts**:
-    - Daily Volume vs Wait Time.
-    - Seated vs Cancelled pie chart.
+## Queue Performance (`/reports`)
 
-## 2. Executive Summary
-High-level overview for owners.
-- **KPIs**: Total Guests, Total Parties, Average Party Size.
-- **Trend**: Weekly growth/decline in visits.
+The only analytics screen in the MVP. Covers the last 7 days.
 
-## 3. Flow Analysis
-Detailed breakdown of the customer journey.
-- **Stages**:
-    - Added -> Called (Wait Time)
-    - Called -> Seated (Response Time)
-    - Called -> No Show (Loss)
+### KPIs
+- **Total Served** — number of groups/customers seated in the period.
+- **Average Wait Time** — mean time from queue entry to being called.
+
+### Chart
+- **Wait Time vs Volume per Day** — dual-axis line chart showing daily wait time (in minutes) and total served groups.
+
+### No data state
+If no queue entries exist for the period, the chart displays a friendly empty state.
 
 ## Technical Implementation
-- **Data Source**: Calculated on-the-fly via efficient SQL/Prisma aggregations on `waitlist_entries` table.
-- **Performance**:
-    - DB Indexes on `[restaurantId, createdAt]` and `[restaurantId, status]` ensure fast queries.
-    - Frontend uses `@tanstack/react-query` for caching and loading states.
+- **Endpoint:** `GET /reports/waitlist-performance?from=YYYY-MM-DD&to=YYYY-MM-DD`
+- **Authentication:** JWT required.
+- **Data source:** Calculated via Prisma aggregations on `waitlist_entries` table.
+- **DB indexes:** `[restaurantId, createdAt]` and `[restaurantId, status]` ensure fast queries.

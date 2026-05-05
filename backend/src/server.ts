@@ -10,16 +10,13 @@ import authRoutes from './routes/auth.routes';
 import waitlistRoutes from './routes/waitlist.routes';
 import {
     reportsRouter,
-    dashboardRouter,
     usersManagementRouter,
     onboardingRouter,
 } from './routes/index';
-import customersRoutes from './routes/customers.routes';
 import restaurantRoutes from './routes/restaurants.routes';
 import usersRoutes from './routes/users.routes';
 import whatsappSettingsRouter from './routes/whatsapp-settings.routes';
 import adminRoutes from './routes/admin.routes';
-import pickupOrdersRoutes from './routes/pickup-orders.routes';
 import billingRoutes from './routes/billing.routes';
 import { impersonationMiddleware } from './middleware/impersonation.middleware';
 import { checkSubscriptionAccess } from './middleware/subscription';
@@ -84,13 +81,10 @@ app.use('/users', usersRoutes);
 app.use(checkSubscriptionAccess);
 
 app.use('/waitlist', waitlistRoutes);
-app.use('/customers', customersRoutes);
 app.use('/restaurants', restaurantRoutes);
 app.use('/users-management', usersManagementRouter);
-app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
 app.use('/whatsapp-settings', whatsappSettingsRouter);
-app.use('/pickup-orders', pickupOrdersRoutes);
 
 // Admin routes (SYSADMIN only)
 app.use('/admin', adminRoutes);

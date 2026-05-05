@@ -25,8 +25,7 @@ graph TD
 ### 1. Frontend Web
 *   **Tecnologia:** React, Vite (provável), TypeScript.
 *   **Responsabilidade:**
-    *   Interface do Operador (Admin Dashboard).
-    *   Interface Pública do Cliente (Status da Fila).
+    *   Interface do Operador — Fila, Relatório de Desempenho, Configurações.
     *   Gestão de estado da UI e comunicação via REST com o Backend.
 *   **O que NÃO faz:**
     *   Regras de negócio críticas (ex: cálculo de posição oficial).
@@ -37,7 +36,7 @@ graph TD
 *   **Responsabilidade:**
     *   Expor endpoints REST seguros.
     *   Autenticação (JWT) e Autorização.
-    *   Lógica de domínio (Fila, Clientes, Restaurantes).
+    *   Lógica de domínio (Fila, Restaurantes).
     *   Validações de entrada.
 *   **Dependências:**
     *   `prisma`: ORM para acesso ao banco.
@@ -71,6 +70,6 @@ graph TD
 O código backend é organizado em serviços por domínio:
 
 *   **WaitlistService:** Core do negócio. Adicionar, Chamar, Sentar, Cancelar.
-*   **CustomersService:** CRUD de clientes, busca por telefone, histórico.
+*   **CustomersService:** Identificação e lookup de clientes por telefone (usado internamente pelo WaitlistService).
 *   **WhatsAppService:** Orquestração de notificações.
 *   **AuthService:** Login, Refresh Token.
