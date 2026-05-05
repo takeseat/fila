@@ -5,7 +5,6 @@ import api from '../lib/api';
 import { usePlan } from '../hooks/usePlan';
 import { Button, Input, EmptyState, Spinner } from '../components/ui';
 import { Modal } from '../components/ui/Modal';
-import { KPICard } from '../components/ui/KPICard';
 import { WaitlistCard } from '../components/waitlist/WaitlistCard';
 import { Icon } from '../design-system/icons/Icon';
 import { PageShell, PageContent } from '../components/mobile/PageShell';
@@ -15,8 +14,10 @@ import { DEFAULT_COUNTRY, getCountryByCode } from '../data/countries';
 import { buildFullPhone } from '../utils/phoneUtils';
 
 export function Waitlist() {
-    const { t } = useTranslation(['waitlist', 'plans']);
+    const { t } = useTranslation(['waitlist', 'plans', 'common']);
     const { canUseWhatsApp } = usePlan();
+    
+    // Modal & Form State
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         country: DEFAULT_COUNTRY,
@@ -26,16 +27,17 @@ export function Waitlist() {
         notes: '',
         whatsappOptIn: false,
     });
+    
+    // Lookup State
     const [customerFound, setCustomerFound] = useState<any>(null);
     const [isLookingUp, setIsLookingUp] = useState(false);
-    const [filters, setFilters] = useState({
-        phone: '',
-        name: '',
-        partySize: null as number | null, // null = all sizes
-    });
-    const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+    
+    // Universal Search State
+    const [searchQuery, setSearchQuery] = useState('');
+    
     const queryClient = useQueryClient();
 
+    // Data Fetching
     const { data: waitlist = [], isLoading } = useQuery({
         queryKey: ['waitlist'],
         queryFn: async () => {
@@ -52,7 +54,6 @@ export function Waitlist() {
         },
     });
 
-    // Fetch business data to get default country
     const { data: businessData } = useQuery({
         queryKey: ['business-data'],
         queryFn: async () => {
@@ -61,7 +62,6 @@ export function Waitlist() {
         },
     });
 
-    // Fetch WhatsApp settings to determine if opt-in should be shown
     const { data: whatsappSettings } = useQuery({
         queryKey: ['whatsapp-settings'],
         queryFn: async () => {
@@ -69,16 +69,17 @@ export function Waitlist() {
             return data;
         },
         retry: false,
-        // Remove staleTime to ensure we always get fresh config on mount/validations
     });
 
+    const { data: settings } = useQuery({
+        queryKey: ['settings'],
+        queryFn: async () => {
+            const response = await api.get('/restaurants/settings');
+            return response.data;
+        }
+    });
 
-
-
-
-
-
-    // Debounced customer lookup
+    // Customer Lookup
     const lookupCustomer = useCallback(
         async (fullPhone: string, signal?: AbortSignal) => {
             if (!fullPhone) {
@@ -90,21 +91,16 @@ export function Waitlist() {
             try {
                 const { data } = await api.get(`/customers?fullPhone=${encodeURIComponent(fullPhone)}`, { signal });
 
-                // Backend returns { success: true, data: customer | null }
                 if (data.success && data.data) {
                     setCustomerFound(data.data);
-
-                    // Auto-fill form with customer data
                     setFormData(prev => ({
                         ...prev,
                         customerName: data.data.name || '',
                         notes: data.data.notes || '',
-                        // Use existing preference if available, otherwise default to true if enabled
                         whatsappOptIn: data.data.whatsappOptIn ?? !!whatsappSettings?.isEnabled,
                     }));
                 } else {
                     setCustomerFound(null);
-                    // Clear fields and default opt-in
                     setFormData(prev => ({
                         ...prev,
                         customerName: '',
@@ -113,36 +109,26 @@ export function Waitlist() {
                     }));
                 }
             } catch (error: any) {
-                // If aborted, do nothing
-                if (error.name === 'CanceledError' || error.message === 'canceled') {
-                    return;
-                }
-                // Customer not found or other error
+                if (error.name === 'CanceledError' || error.message === 'canceled') return;
                 setCustomerFound(null);
-                setFormData(prev => ({
-                    ...prev,
-                    customerName: '',
-                    notes: '',
-                }));
+                setFormData(prev => ({ ...prev, customerName: '', notes: '' }));
             } finally {
                 setIsLookingUp(false);
             }
         },
-        []
+        [whatsappSettings?.isEnabled]
     );
 
-    // Debounce timer for customer lookup
+    // Auto-lookup when typing phone in modal
     useEffect(() => {
         const controller = new AbortController();
-        const signal = controller.signal;
-
         const timer = setTimeout(() => {
             const minLength = formData.country.code === 'BR' ? 10 : 6;
             const digitsOnly = formData.phone.replace(/\D/g, '');
 
             if (digitsOnly.length >= minLength) {
                 const fullPhone = buildFullPhone(formData.country.ddi, formData.phone);
-                lookupCustomer(fullPhone, signal);
+                lookupCustomer(fullPhone, controller.signal);
             } else {
                 setCustomerFound(null);
             }
@@ -154,42 +140,50 @@ export function Waitlist() {
         };
     }, [formData.phone, formData.country, lookupCustomer]);
 
-    // Handle opening modal with business country pre-selected
-    const handleOpenModal = () => {
-        // Pre-select business country if available
-        if (businessData?.countryCode) {
-            const businessCountry = getCountryByCode(businessData.countryCode);
-            if (businessCountry) {
-                // Force WhatsApp opt-in to true by default if enabled
-                setFormData(prev => ({ ...prev, country: businessCountry, whatsappOptIn: !!whatsappSettings?.isEnabled }));
+    const handleOpenModal = (initialNameOrPhone?: string) => {
+        let defaultName = '';
+        let defaultPhone = '';
+        
+        if (initialNameOrPhone) {
+            // Check if it looks like a phone number (digits) or a name
+            const isPhone = /^\d+$/.test(initialNameOrPhone.replace(/\D/g, ''));
+            if (isPhone) {
+                defaultPhone = initialNameOrPhone.replace(/\D/g, '');
+            } else {
+                defaultName = initialNameOrPhone;
             }
-        } else {
-            setFormData(prev => ({ ...prev, whatsappOptIn: !!whatsappSettings?.isEnabled }));
         }
+
+        const resetCountry = businessData?.countryCode
+            ? getCountryByCode(businessData.countryCode) || DEFAULT_COUNTRY
+            : DEFAULT_COUNTRY;
+            
+        setFormData({ 
+            country: resetCountry, 
+            phone: defaultPhone, 
+            customerName: defaultName, 
+            partySize: 2, 
+            notes: '', 
+            whatsappOptIn: !!whatsappSettings?.isEnabled 
+        });
+        
         setIsModalOpen(true);
     };
 
+    // Mutations
     const createMutation = useMutation({
-        mutationFn: async (data: any) => {
-            await api.post('/waitlist', data);
-        },
+        mutationFn: async (data: any) => await api.post('/waitlist', data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
             queryClient.invalidateQueries({ queryKey: ['metrics'] });
             setIsModalOpen(false);
-            // Reset to business country or default
-            const resetCountry = businessData?.countryCode
-                ? getCountryByCode(businessData.countryCode) || DEFAULT_COUNTRY
-                : DEFAULT_COUNTRY;
-            setFormData({ country: resetCountry, phone: '', customerName: '', partySize: 2, notes: '', whatsappOptIn: false });
+            setSearchQuery(''); // clear search after add
             setCustomerFound(null);
         },
     });
 
     const callMutation = useMutation({
-        mutationFn: async (id: string) => {
-            await api.patch(`/waitlist/${id}/call`);
-        },
+        mutationFn: async (id: string) => await api.patch(`/waitlist/${id}/call`),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
             queryClient.invalidateQueries({ queryKey: ['metrics'] });
@@ -197,9 +191,7 @@ export function Waitlist() {
     });
 
     const seatMutation = useMutation({
-        mutationFn: async (id: string) => {
-            await api.patch(`/waitlist/${id}/seat`);
-        },
+        mutationFn: async (id: string) => await api.patch(`/waitlist/${id}/seat`),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
             queryClient.invalidateQueries({ queryKey: ['metrics'] });
@@ -207,9 +199,7 @@ export function Waitlist() {
     });
 
     const cancelMutation = useMutation({
-        mutationFn: async (id: string) => {
-            await api.patch(`/waitlist/${id}/cancel`);
-        },
+        mutationFn: async (id: string) => await api.patch(`/waitlist/${id}/cancel`),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
             queryClient.invalidateQueries({ queryKey: ['metrics'] });
@@ -217,9 +207,7 @@ export function Waitlist() {
     });
 
     const noShowMutation = useMutation({
-        mutationFn: async (id: string) => {
-            await api.patch(`/waitlist/${id}/no-show`);
-        },
+        mutationFn: async (id: string) => await api.patch(`/waitlist/${id}/no-show`),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
             queryClient.invalidateQueries({ queryKey: ['metrics'] });
@@ -228,8 +216,6 @@ export function Waitlist() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
-        // Build payload with country fields
         const payload = {
             customerName: formData.customerName,
             customerCountryCode: formData.country.code,
@@ -237,68 +223,39 @@ export function Waitlist() {
             customerPhone: formData.phone,
             partySize: formData.partySize,
             notes: formData.notes,
-            // Force opt-in if system is enabled for it
             whatsappOptIn: canUseWhatsApp ? (whatsappSettings?.isEnabled ? true : false) : false,
         };
-
         createMutation.mutate(payload);
     };
 
-    // Fetch restaurant settings for alerts
-    const { data: settings } = useQuery({
-        queryKey: ['settings'],
-        queryFn: async () => {
-            const response = await api.get('/restaurants/settings');
-            return response.data;
-        }
-    });
-
-    // Current time state for forcing re-renders every 1s for real-time progress
+    // Current time state
     const [currentTime, setCurrentTime] = useState(new Date());
-
     useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 1000); // Check every 1s
+        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
 
-    // Filter active entries (not seated, cancelled, or no-show)
-    const activeEntries = waitlist.filter((e: any) =>
-        e.status === 'WAITING' || e.status === 'CALLED'
-    );
-
-    // Apply user filters
+    // Filter Logic
+    const activeEntries = waitlist.filter((e: any) => e.status === 'WAITING' || e.status === 'CALLED');
+    
     const filteredActiveEntries = activeEntries.filter((entry: any) => {
-        // Phone filter (partial match)
-        if (filters.phone && !entry.customerPhone.includes(filters.phone)) {
-            return false;
-        }
-
-        // Name filter (case-insensitive partial match)
-        if (filters.name && !entry.customerName.toLowerCase().includes(filters.name.toLowerCase())) {
-            return false;
-        }
-
-        // Party size filter
-        if (filters.partySize !== null) {
-            if (filters.partySize === 5) {
-                // 5+ means 5 or more
-                if (entry.partySize < 5) {
-                    return false;
-                }
-            } else {
-                // Exact match for 1, 2, 3, 4
-                if (entry.partySize !== filters.partySize) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        if (!searchQuery) return true;
+        const query = searchQuery.toLowerCase();
+        return (
+            entry.customerName.toLowerCase().includes(query) || 
+            entry.customerPhone.includes(query)
+        );
     });
 
-    // Check if any filter is active
-    const hasActiveFilters = filters.phone || filters.name || filters.partySize !== null;
-
+    const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            // If pressing enter on search, and no results, open modal with query
+            if (filteredActiveEntries.length === 0) {
+                handleOpenModal(searchQuery);
+            }
+        }
+    };
 
     if (isLoading) {
         return (
@@ -315,185 +272,66 @@ export function Waitlist() {
         <PageShell>
             {/* Mobile Header */}
             <MobilePageHeader
-                title={t('title')}
-                subtitle={t('subtitle')}
+                title="Fila de Espera"
                 actions={
-                    <Button onClick={handleOpenModal} size="sm" leftIcon={<Icon name="add" size="sm" />}>
-                        {t('actions.add', 'Adicionar')}
+                    <Button onClick={() => handleOpenModal()} size="sm" leftIcon={<Icon name="add" size="sm" />}>
+                        Adicionar
                     </Button>
                 }
             />
 
-            <PageContent className="p-4 space-y-6 animate-fade-in">
-                {/* Desktop Header (Hidden on Mobile) */}
-                <div className="hidden lg:flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <PageContent className="p-4 sm:p-6 lg:p-8 space-y-6 animate-fade-in max-w-5xl mx-auto">
+                
+                {/* 1. HEADER */}
+                <div className="hidden md:flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
                     <div>
-                        <h1 className="text-3xl font-bold text-text-primary mb-2">{t('title')}</h1>
-                        <p className="text-text-secondary">{t('subtitle')}</p>
+                        <h1 className="text-3xl font-bold text-text-primary">Fila de Espera</h1>
+                        <p className="text-text-secondary mt-1">
+                            Hoje: <span className="font-medium text-text-primary">{metrics?.servedToday ?? 0} atendidos</span> • Tempo médio: <span className="font-medium text-text-primary">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min</span>
+                        </p>
                     </div>
-                    <Button onClick={handleOpenModal} size="lg" leftIcon={<Icon name="add" size="sm" />}>
-                        {t('actions.addToQueue')}
+                    <Button onClick={() => handleOpenModal()} size="lg" className="shadow-sm" leftIcon={<Icon name="add" size="sm" />}>
+                        + Adicionar
                     </Button>
                 </div>
 
-                {/* Stats Cards */}
-                <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 md:grid md:grid-cols-3">
-                    <KPICard
-                        icon={
-                            <Icon name="users" className="w-4 h-4 md:w-6 md:h-6" tone="inherit" />
-                        }
-                        value={activeEntries.length}
-                        label={t('stats.inQueue')}
-                        iconVariant="warning"
+                {/* 2. CAMPO PRINCIPAL DE BUSCA/ADICIONAR */}
+                <div className="relative">
+                    <Input
+                        placeholder="Buscar ou adicionar cliente..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={handleSearchKeyDown}
+                        leftIcon={<Icon name="search" size="md" className="text-text-muted" />}
+                        className="w-full text-lg shadow-sm"
+                        autoComplete="off"
                     />
-
-                    {/* Hidden on mobile to save space, or moved to bottom if critical */}
-                    <div className="hidden md:block">
-                        <KPICard
-                            icon={
-                                <Icon name="check" className="w-6 h-6" tone="inherit" />
-                            }
-                            value={metrics?.servedToday ?? 0}
-                            label={t('stats.servedToday')}
-                            iconVariant="success"
-                        />
-                    </div>
-
-                    <KPICard
-                        icon={
-                            <Icon name="waitTime" className="w-4 h-4 md:w-6 md:h-6" tone="inherit" />
-                        }
-                        value={`${metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min`}
-                        label={t('stats.avgWaitTime')}
-                        iconVariant="primary"
-                    />
-                </div>
-
-                {/* Filters */}
-                <div className="bg-bg-surface border border-border-default rounded-card shadow-card p-4">
-                    {/* Mobile Toggle */}
-                    <div className="md:hidden flex justify-between items-center mb-0">
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setIsFiltersOpen(!isFiltersOpen)}
-                            className="w-full justify-between"
-                        >
-                            <span className="flex items-center gap-2">
-                                <Icon name="filter" size="sm" />
-                                {t('filters.title', 'Filtros')}
-                            </span>
-                            <Icon name="chevronDown" className={`w-5 h-5 transition-transform ${isFiltersOpen ? 'rotate-180' : ''}`} />
-                        </Button>
-                    </div>
-
-                    <div className={`${isFiltersOpen ? 'block mt-4' : 'hidden'} md:block`}>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            {/* Phone filter */}
-                            <Input
-                                placeholder={t('filters.phoneSearch')}
-                                value={filters.phone}
-                                onChange={(e) => setFilters({ ...filters, phone: e.target.value })}
-                                inputMode="tel"
-                                leftIcon={
-                                    <Icon name="search" size="sm" />
-                                }
-                            />
-
-                            {/* Name filter */}
-                            <Input
-                                placeholder={t('filters.nameSearch')}
-                                value={filters.name}
-                                onChange={(e) => setFilters({ ...filters, name: e.target.value })}
-                                leftIcon={
-                                    <Icon name="user" size="sm" />
-                                }
-                            />
-
-                            {/* Party size filter */}
-                            <div className="flex flex-col gap-2">
-                                <label className="text-xs font-medium text-text-secondary">{t('filters.partySizeLabel')}</label>
-                                <div className="flex flex-wrap gap-2">
-                                    <Button
-                                        variant={filters.partySize === null ? 'primary' : 'outline'}
-                                        size="sm"
-                                        onClick={() => setFilters({ ...filters, partySize: null })}
-                                    >
-                                        {t('filters.all')}
-                                    </Button>
-                                    {[1, 2, 3, 4].map(size => (
-                                        <Button
-                                            key={size}
-                                            variant={filters.partySize === size ? 'primary' : 'outline'}
-                                            size="sm"
-                                            onClick={() => setFilters({ ...filters, partySize: size })}
-                                        >
-                                            {size}
-                                        </Button>
-                                    ))}
-                                    <Button
-                                        variant={filters.partySize === 5 ? 'primary' : 'outline'}
-                                        size="sm"
-                                        onClick={() => setFilters({ ...filters, partySize: 5 })}
-                                    >
-                                        5+
-                                    </Button>
-                                </div>
-                            </div>
+                    
+                    {/* Botão rápido para adicionar o que foi digitado caso não encontre */}
+                    {searchQuery && filteredActiveEntries.length === 0 && (
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                            <Button size="sm" variant="primary" onClick={() => handleOpenModal(searchQuery)}>
+                                + Adicionar "{searchQuery}"
+                            </Button>
                         </div>
-
-                        {/* Clear filters button */}
-                        {hasActiveFilters && (
-                            <div className="mt-3 flex justify-end">
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setFilters({ phone: '', name: '', partySize: null })}
-                                    className="gap-2"
-                                >
-                                    <Icon name="close" size="sm" />
-                                    {t('filters.clearFilters')}
-                                </Button>
-                            </div>
-                        )}
-                    </div>
+                    )}
                 </div>
 
-                {/* Active Queue */}
+                {/* 3. LISTA */}
                 <div>
-                    <h2 className="text-xl font-semibold text-text-primary mb-4">{t('activeQueue')}</h2>
+                    <h2 className="text-lg font-semibold text-text-primary mb-4">Fila Ativa</h2>
+                    
+                    {/* 4. ESTADO VAZIO */}
                     {activeEntries.length === 0 ? (
-                        <div className="bg-bg-surface border-2 border-dashed border-border-default rounded-card p-12 text-center shadow-sm">
-                            <div className="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <Icon name="users" className="w-8 h-8 text-primary-600" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-text-primary mb-2">{t('empty.title')}</h3>
-                            <p className="text-text-secondary max-w-md mx-auto mb-8">
-                                {t('empty.description')}
-                            </p>
-                            <Button 
-                                onClick={handleOpenModal} 
-                                size="lg" 
-                                className="w-full sm:w-auto shadow-md hover:shadow-lg transition-shadow"
-                                leftIcon={<Icon name="add" size="sm" />}
-                            >
-                                {t('empty.action')}
+                        <div className="py-16 text-center">
+                            <p className="text-lg font-medium text-text-secondary">Comece adicionando um cliente à fila</p>
+                            <Button variant="ghost" onClick={() => handleOpenModal()} className="mt-4 text-primary-600">
+                                + Adicionar agora
                             </Button>
                         </div>
                     ) : filteredActiveEntries.length === 0 ? (
-                        <div className="bg-bg-surface border border-border-default rounded-card shadow-card">
-                            <EmptyState
-                                icon={
-                                    <Icon name="search" className="w-full h-full text-text-secondary" />
-                                }
-                                title={t('filters.noResults.title')}
-                                description={t('filters.noResults.description')}
-                                action={
-                                    <Button onClick={() => setFilters({ phone: '', name: '', partySize: null })} variant="outline">
-                                        {t('filters.clearFilters')}
-                                    </Button>
-                                }
-                            />
+                        <div className="py-12 text-center text-text-secondary">
+                            Nenhum cliente encontrado com "{searchQuery}"
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -509,24 +347,13 @@ export function Waitlist() {
                                     onSeat={(id: string) => seatMutation.mutate(id)}
                                     onCancel={(id: string) => cancelMutation.mutate(id)}
                                     onNoShow={(id: string) => noShowMutation.mutate(id)}
-                                    isActionLoading={{
-                                        call: callMutation.isPending && callMutation.variables === entry.id, // Only show loading for the specific item if possible, but mutation variables might not be accessible this way easily in v5 without separate state or context.
-                                        // Simplified loading state for now, or check mutation cache. 
-                                        // Actually `callMutation.variables` is not directly available in simple `useMutation` hook result in TanStack Query v4/v5 usually unless captured.
-                                        // For now let's just pass the global pending state, or better, we can't easily distinguish WHICH item is loading without extra state.
-                                        // Optimization: We could wrap each card in a memo or component that handles its own mutation or just accept that all spinner might show if we pass simple boolean. 
-                                        // However, `WaitlistCard` has `isLoading` prop for specific actions.
-                                        // Let's pass simple booleans for now, if the user triggers action on one card, it might show loading on all? No, that's bad.
-                                        // Let's use `variables` if available or just ignore for MVP refactor.
-                                        // Actually, let's keep it simple.
-                                    }}
                                 />
                             ))}
                         </div>
                     )}
                 </div>
 
-
+                {/* MODAL DE ADICIONAR */}
                 <Modal
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
@@ -551,19 +378,9 @@ export function Waitlist() {
                                 </p>
                             )}
                             {!isLookingUp && customerFound && (
-                                <p className="text-xs text-success-600 flex items-center gap-1">
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                    </svg>
+                                <p className="text-xs text-status-success flex items-center gap-1">
+                                    <Icon name="check" size="sm" />
                                     {t('form.customerFound', { name: customerFound.name })}
-                                </p>
-                            )}
-                            {!isLookingUp && !customerFound && formData.phone.length >= (formData.country.code === 'BR' ? 10 : 6) && (
-                                <p className="text-xs text-text-secondary flex items-center gap-1">
-                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                                    </svg>
-                                    {t('form.newCustomer')}
                                 </p>
                             )}
                         </div>
@@ -574,11 +391,7 @@ export function Waitlist() {
                             onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                             required
                             placeholder={t('form.fullName')}
-                            leftIcon={
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                </svg>
-                            }
+                            leftIcon={<Icon name="user" size="sm" />}
                         />
 
                         <div className="grid grid-cols-2 gap-4">
@@ -591,11 +404,7 @@ export function Waitlist() {
                                 value={formData.partySize}
                                 onChange={(e) => setFormData({ ...formData, partySize: parseInt(e.target.value) || 1 })}
                                 required
-                                leftIcon={
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                }
+                                leftIcon={<Icon name="users" size="sm" />}
                             />
                         </div>
 
@@ -604,11 +413,7 @@ export function Waitlist() {
                             value={formData.notes}
                             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                             placeholder={t('form.notesPlaceholder')}
-                            leftIcon={
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                </svg>
-                            }
+                            leftIcon={<Icon name="info" size="sm" />}
                         />
 
                         <div className="flex gap-3 pt-2">
@@ -618,19 +423,19 @@ export function Waitlist() {
                                 className="flex-1"
                                 onClick={() => setIsModalOpen(false)}
                             >
-                                {t('common:actions.cancel')}
+                                Cancelar
                             </Button>
                             <Button
                                 type="submit"
                                 className="flex-1"
                                 isLoading={createMutation.isPending}
                             >
-                                {t('actions.add', 'Adicionar')}
+                                Adicionar
                             </Button>
                         </div>
                     </form>
                 </Modal>
             </PageContent>
-        </PageShell >
+        </PageShell>
     );
 }
