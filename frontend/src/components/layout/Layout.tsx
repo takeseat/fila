@@ -11,9 +11,10 @@ interface LayoutProps {
     pageTitle?: string;
     simple?: boolean;
     mobileShell?: boolean;
+    headerActions?: ReactNode;
 }
 
-export function Layout({ children, pageTitle, simple = false, mobileShell = false }: LayoutProps) {
+export function Layout({ children, pageTitle, simple = false, mobileShell = false, headerActions }: LayoutProps) {
     const { t } = useTranslation(['nav', 'common']);
     const location = useLocation();
     const navigate = useNavigate();
@@ -96,8 +97,19 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                             </nav>
                         </div>
 
-                        {/* Right: Avatar */}
+                        {/* Right: Actions + Avatar */}
                         <div className="flex items-center gap-3" ref={dropdownRef}>
+                            {/* Header Actions */}
+                            <div className="hidden lg:flex items-center gap-3 mr-4">
+                                <button 
+                                    className="p-2 text-slate-400 hover:text-indigo-600 transition-colors"
+                                    title="Histórico"
+                                >
+                                    <Icon name="history" size="sm" />
+                                </button>
+                                <div id="header-actions"></div>
+                            </div>
+
                             {/* Avatar / User Dropdown */}
                             <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}

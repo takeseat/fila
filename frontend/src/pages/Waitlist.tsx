@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
@@ -303,27 +304,30 @@ export function Waitlist() {
                     {/* 1. HEADER */}
                     <div className="hidden md:flex items-center justify-between gap-8 mb-4">
                         <div className="space-y-1">
-                            <h1 className="text-5xl font-black tracking-tighter text-slate-900 font-display">Sequência da Fila</h1>
+                            <h1 className="text-4xl font-black tracking-tight text-slate-900 font-display">Sequência da Fila</h1>
                             <p className="text-slate-500 font-medium text-sm">Gerencie o fluxo de clientes com precisão.</p>
                         </div>
-                        {activeEntries.length > 0 && (
-                            <Button 
-                                onClick={() => handleOpenModal()} 
-                                size="lg" 
-                                className="bg-indigo-600 text-white shadow-2xl shadow-indigo-600/30 px-10 py-7 rounded-[2rem] hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all font-display uppercase tracking-[0.2em] text-xs font-black"
-                                leftIcon={<Icon name="add" size="sm" />}
-                            >
-                                Novo Cliente
-                            </Button>
-                        )}
                     </div>
+
+                    {/* Portal for Header Actions */}
+                    {document.getElementById('header-actions') && createPortal(
+                        <Button 
+                            onClick={() => handleOpenModal()} 
+                            size="md" 
+                            className="bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 px-6 rounded-xl hover:bg-indigo-700 transition-all font-bold text-sm"
+                            leftIcon={<Icon name="add" size="sm" />}
+                        >
+                            Adicionar Cliente
+                        </Button>,
+                        document.getElementById('header-actions')!
+                    )}
 
                     {/* 2. FILTERS & SEARCH - Neumorphic Style */}
                     {activeEntries.length > 0 && (
                         <section className="space-y-6">
                             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                                 <div className="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm w-full md:w-auto">
-                                    <span className="text-[10px] font-black text-indigo-900/40 uppercase tracking-widest whitespace-nowrap font-display">Pessoas:</span>
+                                    <span className="text-[10px] font-black text-indigo-900/40 uppercase tracking-widest whitespace-nowrap font-display">Filtrar pessoas:</span>
                                     <div className="flex gap-2">
                                         {['all', 1, 2, 3, 4, '5+'].map((size) => (
                                             <button
@@ -347,7 +351,7 @@ export function Waitlist() {
                                     </span>
                                     <input
                                         type="text"
-                                        placeholder="Buscar na fila..."
+                                        placeholder="Buscar por nome..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         className="block w-full pl-11 pr-4 py-4 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 transition-all shadow-xl shadow-slate-200/40 font-medium"
