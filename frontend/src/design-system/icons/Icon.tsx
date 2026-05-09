@@ -81,7 +81,7 @@ const TONE_MAP: Record<IconTone, string> = {
 export const Icon: React.FC<IconProps> = ({
     name,
     size = 'md',
-    tone = 'secondary',
+    tone = 'inherit',
     strokeWidth = 2,
     ariaLabel,
     className,
