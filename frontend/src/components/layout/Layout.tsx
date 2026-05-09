@@ -96,22 +96,8 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                             </nav>
                         </div>
 
-                        {/* Right: Add Button + Avatar */}
+                        {/* Right: Avatar */}
                         <div className="flex items-center gap-3" ref={dropdownRef}>
-                            {/* "Adicionar Cliente" button — shown only on waitlist page */}
-                            {location.pathname === '/waitlist' && (
-                                <button
-                                    onClick={() => {
-                                        // Dispatch a custom event so Waitlist.tsx can open its modal
-                                        window.dispatchEvent(new CustomEvent('openAddCustomerModal'));
-                                    }}
-                                    className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all"
-                                >
-                                    <Icon name="add" size="xs" className="text-white" />
-                                    Adicionar Cliente
-                                </button>
-                            )}
-
                             {/* Avatar / User Dropdown */}
                             <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}

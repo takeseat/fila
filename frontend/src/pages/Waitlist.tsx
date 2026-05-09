@@ -286,11 +286,11 @@ export function Waitlist() {
             {/* Mobile Header */}
             <MobilePageHeader
                 title="Sequência da Fila"
-                actions={
+                actions={activeEntries.length > 0 ? (
                     <Button onClick={() => handleOpenModal()} size="sm" leftIcon={<Icon name="add" size="sm" />} className="bg-indigo-600 text-white rounded-xl shadow-lg shadow-indigo-600/20">
                         Adicionar
                     </Button>
-                }
+                ) : null}
             />
 
             <PageContent className="min-h-screen bg-[#fcf9f8] relative overflow-hidden">
@@ -306,52 +306,56 @@ export function Waitlist() {
                             <h1 className="text-5xl font-black tracking-tighter text-slate-900 font-display">Sequência da Fila</h1>
                             <p className="text-slate-500 font-medium text-sm">Gerencie o fluxo de clientes com precisão.</p>
                         </div>
-                        <Button 
-                            onClick={() => handleOpenModal()} 
-                            size="lg" 
-                            className="bg-indigo-600 text-white shadow-2xl shadow-indigo-600/30 px-10 py-7 rounded-[2rem] hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all font-display uppercase tracking-[0.2em] text-xs font-black"
-                            leftIcon={<Icon name="add" size="sm" />}
-                        >
-                            Novo Cliente
-                        </Button>
+                        {activeEntries.length > 0 && (
+                            <Button 
+                                onClick={() => handleOpenModal()} 
+                                size="lg" 
+                                className="bg-indigo-600 text-white shadow-2xl shadow-indigo-600/30 px-10 py-7 rounded-[2rem] hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all font-display uppercase tracking-[0.2em] text-xs font-black"
+                                leftIcon={<Icon name="add" size="sm" />}
+                            >
+                                Novo Cliente
+                            </Button>
+                        )}
                     </div>
 
                     {/* 2. FILTERS & SEARCH - Neumorphic Style */}
-                    <section className="space-y-6">
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                            <div className="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm w-full md:w-auto">
-                                <span className="text-[10px] font-black text-indigo-900/40 uppercase tracking-widest whitespace-nowrap font-display">Pessoas:</span>
-                                <div className="flex gap-2">
-                                    {['all', 1, 2, 3, 4, '5+'].map((size) => (
-                                        <button
-                                            key={size}
-                                            onClick={() => setPartySizeFilter(size as any)}
-                                            className={`h-10 min-w-[48px] px-4 flex items-center justify-center rounded-2xl text-xs font-bold transition-all border ${
-                                                partySizeFilter === size 
-                                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/30 scale-105' 
-                                                : 'bg-white/80 border-indigo-100 text-slate-500 hover:border-indigo-400 hover:text-indigo-600'
-                                            }`}
-                                        >
-                                            {size === 'all' ? 'Todos' : size}
-                                        </button>
-                                    ))}
+                    {activeEntries.length > 0 && (
+                        <section className="space-y-6">
+                            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                                <div className="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm w-full md:w-auto">
+                                    <span className="text-[10px] font-black text-indigo-900/40 uppercase tracking-widest whitespace-nowrap font-display">Pessoas:</span>
+                                    <div className="flex gap-2">
+                                        {['all', 1, 2, 3, 4, '5+'].map((size) => (
+                                            <button
+                                                key={size}
+                                                onClick={() => setPartySizeFilter(size as any)}
+                                                className={`h-10 min-w-[48px] px-4 flex items-center justify-center rounded-2xl text-xs font-bold transition-all border ${
+                                                    partySizeFilter === size 
+                                                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/30 scale-105' 
+                                                    : 'bg-white/80 border-indigo-100 text-slate-500 hover:border-indigo-400 hover:text-indigo-600'
+                                                }`}
+                                            >
+                                                {size === 'all' ? 'Todos' : size}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="relative w-full md:max-w-xs group">
+                                    <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
+                                        <Icon name="search" size="sm" />
+                                    </span>
+                                    <input
+                                        type="text"
+                                        placeholder="Buscar na fila..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="block w-full pl-11 pr-4 py-4 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 transition-all shadow-xl shadow-slate-200/40 font-medium"
+                                    />
                                 </div>
                             </div>
-
-                            <div className="relative w-full md:max-w-xs group">
-                                <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
-                                    <Icon name="search" size="sm" />
-                                </span>
-                                <input
-                                    type="text"
-                                    placeholder="Buscar na fila..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="block w-full pl-11 pr-4 py-4 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 transition-all shadow-xl shadow-slate-200/40 font-medium"
-                                />
-                            </div>
-                        </div>
-                    </section>
+                        </section>
+                    )}
 
                     {/* 3. QUEUE LIST */}
                     <section className="space-y-8">
@@ -453,49 +457,51 @@ export function Waitlist() {
                     </section>
 
                     {/* 4. INSIGHTS BENTO GRID — Stitch Screen 1 style */}
-                    <section className="grid grid-cols-1 gap-4 md:grid-cols-3 pt-6 border-t border-slate-100">
-                        {/* Card 1: Espera Média */}
-                        <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center gap-2 text-slate-500">
-                                    <Icon name="waitTime" size="sm" tone="info" />
-                                    <span className="text-xs font-bold uppercase tracking-wider">Espera Média</span>
+                    {activeEntries.length > 0 && (
+                        <section className="grid grid-cols-1 gap-4 md:grid-cols-3 pt-6 border-t border-slate-100">
+                            {/* Card 1: Espera Média */}
+                            <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-2 text-slate-500">
+                                        <Icon name="waitTime" size="sm" tone="info" />
+                                        <span className="text-xs font-bold uppercase tracking-wider">Espera Média</span>
+                                    </div>
+                                    <div className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                        <Icon name="trendingDown" size="xs" tone="inherit" />
+                                        <span className="text-[10px] font-bold">2min</span>
+                                    </div>
                                 </div>
-                                <div className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full flex items-center gap-1">
-                                    <Icon name="trendingDown" size="xs" tone="inherit" />
-                                    <span className="text-[10px] font-bold">2min</span>
+                                <div className="flex items-baseline gap-1">
+                                    <p className="text-5xl font-black text-indigo-600">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}</p>
+                                    <p className="text-2xl font-bold text-slate-400">min</p>
+                                </div>
+                                <p className="text-xs text-slate-400 mt-2">Em relação à última hora</p>
+                            </div>
+
+                            {/* Card 2: Fluxo Atual */}
+                            <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+                                <div className="flex items-center gap-2 mb-4 text-slate-500">
+                                    <Icon name="activity" size="sm" tone="info" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">Fluxo Atual</span>
+                                </div>
+                                <p className="text-5xl font-black text-slate-900">Alta</p>
+                                <div className="flex items-center gap-1.5 mt-3 text-slate-500">
+                                    <Icon name="waitTime" size="xs" tone="secondary" />
+                                    <p className="text-xs font-medium">Pico esperado para às 20:30</p>
                                 </div>
                             </div>
-                            <div className="flex items-baseline gap-1">
-                                <p className="text-5xl font-black text-indigo-600">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}</p>
-                                <p className="text-2xl font-bold text-slate-400">min</p>
-                            </div>
-                            <p className="text-xs text-slate-400 mt-2">Em relação à última hora</p>
-                        </div>
 
-                        {/* Card 2: Fluxo Atual */}
-                        <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
-                            <div className="flex items-center gap-2 mb-4 text-slate-500">
-                                <Icon name="activity" size="sm" tone="info" />
-                                <span className="text-xs font-bold uppercase tracking-wider">Fluxo Atual</span>
+                            {/* Card 3: Total na Fila */}
+                            <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+                                <div className="flex items-center gap-2 mb-4 text-slate-500">
+                                    <Icon name="users" size="sm" tone="info" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">Total na Fila</span>
+                                </div>
+                                <p className="text-5xl font-black text-slate-900">{activeEntries.length}</p>
+                                <p className="text-xs text-slate-500 mt-3 font-medium">Pessoas aguardando atendimento</p>
                             </div>
-                            <p className="text-5xl font-black text-slate-900">Alta</p>
-                            <div className="flex items-center gap-1.5 mt-3 text-slate-500">
-                                <Icon name="waitTime" size="xs" tone="secondary" />
-                                <p className="text-xs font-medium">Pico esperado para às 20:30</p>
-                            </div>
-                        </div>
-
-                        {/* Card 3: Total na Fila */}
-                        <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
-                            <div className="flex items-center gap-2 mb-4 text-slate-500">
-                                <Icon name="users" size="sm" tone="info" />
-                                <span className="text-xs font-bold uppercase tracking-wider">Total na Fila</span>
-                            </div>
-                            <p className="text-5xl font-black text-slate-900">{activeEntries.length}</p>
-                            <p className="text-xs text-slate-500 mt-3 font-medium">Pessoas aguardando atendimento</p>
-                        </div>
-                    </section>
+                        </section>
+                    )}
 
                     {/* Footer Nav removed as per design (handled by Layout) */}
                 </div>
