@@ -779,6 +779,20 @@
     @apply transition-shadow duration-300 hover:shadow-glow;
   }
 
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+
   /* Badge styles */
   .badge-dot {
     @apply relative;

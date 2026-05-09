@@ -274,7 +274,7 @@ export function Waitlist() {
         <PageShell>
             {/* Mobile Header */}
             <MobilePageHeader
-                title="Fila de Espera"
+                title="Sequência da Fila"
                 actions={
                     <Button onClick={() => handleOpenModal()} size="sm" leftIcon={<Icon name="add" size="sm" />}>
                         Adicionar
@@ -287,7 +287,7 @@ export function Waitlist() {
                 {/* 1. HEADER REFINADO */}
                 <div className="hidden md:flex flex-col md:flex-row md:items-start justify-between gap-8 mb-4">
                     <div className="space-y-2">
-                        <h1 className="text-4xl font-extrabold tracking-tight text-text-primary">Fila de Espera</h1>
+                        <h1 className="text-4xl font-extrabold tracking-tight text-text-primary font-display">Sequência da Fila</h1>
                         <div className="flex items-center gap-4">
                             <p className="text-text-muted font-medium text-sm">
                                 Hoje: <span className="text-text-secondary">{metrics?.servedToday ?? 0} atendidos</span> • Tempo médio: <span className="text-text-secondary">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min</span>
@@ -356,19 +356,53 @@ export function Waitlist() {
                     </div>
                     
                     {activeEntries.length === 0 ? (
-                        <div className="py-32 text-center max-w-lg mx-auto space-y-8">
-                            <div className="bg-bg-subtle w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 opacity-40">
-                                <Icon name="users" size="lg" className="text-text-tertiary scale-150" />
+                        <div className="py-20 flex flex-col items-center justify-center text-center animate-fade-in">
+                            {/* Enhanced Illustration Group */}
+                            <div className="relative mb-12 animate-float">
+                                <div className="relative flex items-center justify-center">
+                                    {/* Large Glow Orbs */}
+                                    <div className="absolute w-64 h-64 bg-primary-500/10 rounded-full blur-[60px]"></div>
+                                    
+                                    {/* Central Graphic */}
+                                    <div className="relative bg-bg-surface p-8 rounded-full border border-border-subtle shadow-xl">
+                                        <div className="bg-primary-50 p-6 rounded-full shadow-inner">
+                                            <span className="material-symbols-outlined text-[64px] text-primary-600" style={{ fontVariationSettings: "'wght' 300, 'FILL' 1" }}>
+                                                groups_3
+                                            </span>
+                                        </div>
+                                        
+                                        {/* Floating orbiting elements */}
+                                        <div className="absolute -top-2 -right-2 bg-violet-500 text-white p-3 rounded-2xl shadow-xl border-2 border-white transform rotate-12">
+                                            <span className="material-symbols-outlined text-base">celebration</span>
+                                        </div>
+                                        <div className="absolute bottom-2 -left-4 bg-primary-600 text-white p-2 rounded-xl shadow-lg border-2 border-white -rotate-12">
+                                            <span className="material-symbols-outlined text-sm">rocket_launch</span>
+                                        </div>
+                                        <div className="absolute -bottom-2 right-8 bg-bg-subtle border border-border-subtle p-2 rounded-full shadow-md">
+                                            <span className="material-symbols-outlined text-text-tertiary text-xs">auto_awesome</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="space-y-3">
-                                <p className="text-2xl font-bold text-text-primary">Sua fila está livre</p>
-                                <p className="text-text-muted text-base leading-relaxed">
-                                    Não há ninguém esperando no momento. Que tal adicionar um novo cliente para testar o sistema?
+
+                            {/* Welcoming Content */}
+                            <div className="max-w-xl mx-auto space-y-4 mb-10">
+                                <h2 className="text-3xl font-bold text-text-primary tracking-tight">Bem-vindo ao TakeSeat!</h2>
+                                <p className="text-text-secondary text-lg leading-relaxed">
+                                    Sua jornada para um atendimento impecável começa agora. Nossa fila está pronta para transformar a espera dos seus clientes em uma experiência incrível.
                                 </p>
                             </div>
-                            <Button variant="primary" onClick={() => handleOpenModal()} className="px-10 py-4 rounded-2xl shadow-lg">
-                                + Adicionar Primeiro Cliente
-                            </Button>
+
+                            {/* Focal Point Primary CTA */}
+                            <button 
+                                onClick={() => handleOpenModal()}
+                                className="group relative bg-primary-600 text-white hover:bg-primary-700 font-bold px-10 py-5 rounded-2xl flex items-center gap-4 transition-all shadow-xl shadow-primary-500/20 hover:shadow-primary-500/30 active:scale-95 overflow-hidden"
+                            >
+                                <span className="material-symbols-outlined text-2xl relative z-10" style={{ fontVariationSettings: "'FILL' 1" }}>
+                                    person_add
+                                </span>
+                                <span className="text-lg relative z-10">Adicionar Primeiro Cliente</span>
+                            </button>
                         </div>
                     ) : filteredActiveEntries.length === 0 ? (
                         <div className="py-20 text-center text-text-muted font-medium bg-bg-subtle/50 border border-dashed border-border-subtle rounded-[2rem]">

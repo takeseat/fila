@@ -179,7 +179,7 @@ export default {
             fontFamily: {
                 sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
                 mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-                display: ['Inter', 'sans-serif'], // Changed from Lexend to Inter for consistency
+                display: ['Geist', 'Inter', 'sans-serif'],
             },
 
             fontSize: {
