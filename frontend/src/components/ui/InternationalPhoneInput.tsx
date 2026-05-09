@@ -54,22 +54,23 @@ export function InternationalPhoneInput({
     return (
         <div className={`w-full ${className}`}>
             {label && (
-                <label className="block text-sm font-medium text-text-primary mb-2">
+                <label className="block text-sm font-bold text-slate-700 mb-2">
                     {label}
-                    {required && <span className="text-danger-600 ml-1">*</span>}
+                    {required && <span className="text-red-500 ml-1">*</span>}
                 </label>
             )}
-            <div className="flex gap-0 relative">
-                <div className="w-[72px] flex-shrink-0 z-10">
+            <div className="flex gap-4">
+                <div className="w-[140px] flex-shrink-0">
                     <CountrySelect
                         value={countryCode}
                         onChange={handleCountryChange}
                         compact={true}
                         required={required}
+                        showPhoneIcon={true}
                         className="h-full"
                     />
                 </div>
-                <div className="flex-1 -ml-px z-0">
+                <div className="flex-1">
                     <Input
                         value={displayValue}
                         onChange={handlePhoneChange}
@@ -77,8 +78,7 @@ export function InternationalPhoneInput({
                         required={required}
                         disabled={disabled}
                         error={error}
-                        className="rounded-l-none border-l-0 focus:z-10 relative"
-                    // Note: We don't pass label here as it's handled above
+                        className="h-full rounded-xl border-slate-200"
                     />
                 </div>
             </div>

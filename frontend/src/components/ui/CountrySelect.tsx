@@ -9,6 +9,7 @@ interface CountrySelectProps {
     required?: boolean;
     className?: string;
     compact?: boolean;
+    showPhoneIcon?: boolean;
 }
 
 export function CountrySelect({
@@ -18,7 +19,8 @@ export function CountrySelect({
     required = false,
     className = '',
     compact = false,
-    showDdi = true
+    showDdi = true,
+    showPhoneIcon = false
 }: CountrySelectProps & { showDdi?: boolean }) {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState('');
@@ -67,41 +69,25 @@ export function CountrySelect({
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
-                className={`w-full flex items-center justify-between gap-2 px-4 py-3 bg-bg-surface border-2 border-border-default hover:border-primary-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${compact ? 'justify-center rounded-l-xl rounded-r-none border-r-0' : 'rounded-xl'}`}
+                className={`w-full flex items-center justify-between gap-2 px-4 py-3 bg-white border border-slate-200 hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-400 transition-all rounded-xl shadow-sm ${compact ? 'min-w-[120px]' : ''}`}
             >
-                {compact ? (
-                    <div className="flex items-center gap-1">
-                        <span className="text-xl leading-none">{selectedCountry.flag}</span>
-                        <Icon 
-                            name="chevronDown" 
-                            size="xs" 
-                            tone="secondary" 
-                            className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
-                        />
-                    </div>
-                ) : (
-                    <>
-                        <div className="flex items-center gap-3">
-                            <span className="text-2xl">{selectedCountry.flag}</span>
-                            <div className="text-left">
-                                <div className="text-sm font-medium text-text-primary">
-                                    {selectedCountry.name}
-                                </div>
-                                {showDdi && (
-                                    <div className="text-xs text-text-secondary">
-                                        {selectedCountry.ddi}
-                                    </div>
-                                )}
-                            </div>
+                <div className="flex items-center gap-2">
+                    {showPhoneIcon && (
+                        <div className="text-slate-400 mr-1">
+                            <Icon name="phone" size="sm" />
                         </div>
-                        <Icon 
-                            name="chevronDown" 
-                            size="sm" 
-                            tone="secondary" 
-                            className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
-                        />
-                    </>
-                )}
+                    )}
+                    <span className="text-lg leading-none">{selectedCountry.flag}</span>
+                    {showDdi && (
+                        <span className="text-sm font-medium text-slate-700">{selectedCountry.ddi}</span>
+                    )}
+                </div>
+                <Icon 
+                    name="chevronDown" 
+                    size="xs" 
+                    tone="secondary" 
+                    className={`transition-transform duration-200 text-slate-400 ${isOpen ? 'rotate-180' : ''}`} 
+                />
             </button>
 
             {/* Dropdown */}

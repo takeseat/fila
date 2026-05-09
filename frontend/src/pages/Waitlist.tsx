@@ -510,7 +510,7 @@ export function Waitlist() {
                 <Modal
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    title="Novo Cliente na Fila"
+                    title="Adicionar à Fila"
                 >
                     <form onSubmit={handleSubmit} className="p-2 space-y-6">
                         <div className="space-y-2">
@@ -543,12 +543,12 @@ export function Waitlist() {
                             value={formData.customerName}
                             onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                             required
-                            placeholder="Ex: João Silva"
-                            leftIcon={<Icon name="user" size="sm" />}
+                            placeholder="Nome completo"
+                            leftIcon={<Icon name="user" size="sm" className="text-slate-400" />}
                             className="h-12 rounded-xl"
                         />
 
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1">
                             <Input
                                 label="Pessoas"
                                 type="number"
@@ -558,35 +558,36 @@ export function Waitlist() {
                                 value={formData.partySize}
                                 onChange={(e) => setFormData({ ...formData, partySize: parseInt(e.target.value) || 1 })}
                                 required
-                                leftIcon={<Icon name="users" size="sm" />}
+                                leftIcon={<Icon name="users" size="sm" className="text-slate-400" />}
                                 className="h-12 rounded-xl"
                             />
                         </div>
 
                         <Input
-                            label="Observações (Opcional)"
+                            label="Observações"
                             value={formData.notes}
                             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                            placeholder="Ex: Mesa externa, aniversário..."
-                            leftIcon={<Icon name="info" size="sm" />}
+                            placeholder="Ex: Mesa na janela, cadeira de bebê..."
+                            leftIcon={<Icon name="info" size="sm" className="text-slate-400" />}
                             className="h-12 rounded-xl"
                         />
 
                         <div className="flex gap-4 pt-4">
                             <Button
                                 type="button"
-                                variant="ghost"
-                                className="flex-1 rounded-xl h-12"
+                                variant="secondary"
+                                className="flex-1 rounded-xl h-12 border-slate-200"
                                 onClick={() => setIsModalOpen(false)}
                             >
                                 Cancelar
                             </Button>
                             <Button
                                 type="submit"
-                                className="flex-2 bg-indigo-600 text-white rounded-xl h-12 shadow-md shadow-indigo-600/20 hover:bg-indigo-700"
+                                variant="primary"
+                                className="flex-1 rounded-xl h-12 shadow-lg shadow-indigo-600/20"
                                 isLoading={createMutation.isPending}
                             >
-                                Adicionar à Fila
+                                Adicionar
                             </Button>
                         </div>
                     </form>
