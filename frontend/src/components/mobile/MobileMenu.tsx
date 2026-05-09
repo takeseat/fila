@@ -55,7 +55,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         </div>
                         {/* Restaurant name */}
                         <div className="flex items-center gap-2 px-3 py-2 bg-bg-subtle rounded-lg">
-                            <Icon name="home" size="xs" tone="muted" />
+                            <Icon name="home" size="xs" tone="secondary" />
                             <p className="text-xs font-medium text-text-secondary truncate">{restaurant?.name}</p>
                         </div>
                     </div>

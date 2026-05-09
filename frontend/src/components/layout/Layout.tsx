@@ -96,7 +96,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                     {/* Seção 2 - Contexto (Restaurante) */}
                                     <div className="px-4 py-3 border-b border-border-default bg-bg-subtle">
                                         <div className="flex items-center gap-2">
-                                            <Icon name="home" size="xs" tone="muted" />
+                                            <Icon name="home" size="xs" tone="secondary" />
                                             <p className="text-xs font-medium text-text-secondary truncate">{restaurant?.name}</p>
                                         </div>
                                     </div>

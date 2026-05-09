@@ -244,7 +244,7 @@ export default function VerifyEmail() {
                 {status === 'error' && (
                     <div className="text-center">
                         <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                            <Icon name="close" size="md" tone="danger" />
+                            <Icon name="close" size="md" tone="error" />
                         </div>
                         <h2 className="text-2xl font-bold text-text-primary mb-2">{t('verifyEmail.failedTitle', { ns: 'auth' })}</h2>
                         <p className="text-red-500 mb-6">{message}</p>

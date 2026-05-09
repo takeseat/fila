@@ -111,7 +111,7 @@ export function MessagesTab() {
                 <Card title="Mensagens" subtitle="Gerencie as notificações automáticas">
                     <div className="p-8 text-center">
                         <div className="mx-auto w-16 h-16 bg-bg-subtle rounded-full flex items-center justify-center mb-4">
-                            <Icon name="lock" size="md" tone="muted" />
+                            <Icon name="lock" size="md" tone="secondary" />
                         </div>
                         <h3 className="text-lg font-bold text-text-primary mb-2">Recurso Profissional</h3>
                         <p className="text-text-tertiary max-w-md mx-auto mb-6">

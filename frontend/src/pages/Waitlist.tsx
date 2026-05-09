@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import api from '../lib/api';
 import { usePlan } from '../hooks/usePlan';
-import { Button, Input, EmptyState, Spinner } from '../components/ui';
+import { Button, Input, Spinner } from '../components/ui';
 import { Modal } from '../components/ui/Modal';
 import { WaitlistCard } from '../components/waitlist/WaitlistCard';
 import { Icon } from '../design-system/icons/Icon';
@@ -260,17 +260,8 @@ export function Waitlist() {
 
     const [firstEntry, ...remainingEntries] = filteredActiveEntries;
 
-    const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            // If pressing enter on search, and no results, open modal with query
-            if (filteredActiveEntries.length === 0) {
-                handleOpenModal(searchQuery);
-            }
-        }
-    };
 
-    const [showMetrics, setShowMetrics] = useState(false);
+    const [_showMetrics, _setShowMetrics] = useState(false);
 
     if (isLoading) {
         return (

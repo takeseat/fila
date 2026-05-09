@@ -101,7 +101,7 @@ export function PlanSettings() {
                             {/* WhatsApp Feature */}
                             <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-green-50 border border-green-100">
                                 <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-100 flex items-center justify-center">
-                                    <Icon name="messages" size="sm" tone="success" />
+                                    <Icon name="message" size="sm" tone="success" />
                                 </div>
                                 <div>
                                     <p className="text-sm md:text-base font-semibold text-text-primary">{t('features.whatsapp', { defaultValue: 'WhatsApp' })}</p>

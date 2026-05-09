@@ -43,11 +43,11 @@ export function PlanComparison({
                         <span className="text-text-secondary">{t('features.waitlist')}</span>
                     </li>
                     <li className="flex items-center gap-3 opacity-50">
-                        <Icon name="close" size="xs" tone="muted" />
+                        <Icon name="close" size="xs" tone="secondary" />
                         <span className="text-text-tertiary">{t('features.whatsapp')}</span>
                     </li>
                     <li className="flex items-center gap-3 opacity-50">
-                        <Icon name="close" size="xs" tone="muted" />
+                        <Icon name="close" size="xs" tone="secondary" />
                         <span className="text-text-tertiary">{t('features.pickupOrders')}</span>
                     </li>
                 </ul>

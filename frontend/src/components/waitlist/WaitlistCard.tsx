@@ -102,12 +102,12 @@ export function WaitlistCard({
     index,
     variant = 'highlight',
     metrics,
-    settings,
+    settings: _settings,
     currentTime,
     onCall,
     onSeat,
     onCancel,
-    onNoShow,
+    onNoShow: _onNoShow,
     isActionLoading = {},
 }: WaitlistCardProps) {
     const { t } = useTranslation('waitlist');
@@ -121,7 +121,7 @@ export function WaitlistCard({
         .slice(0, 2);
 
     // Metrics Calculation
-    const { elapsedString, progress, etaString, variant: progressVariant } = useMemo(() => {
+    const { elapsedString } = useMemo(() => {
         const now = currentTime.getTime();
         const start = new Date(entry.createdAt).getTime();
         const elapsedSeconds = Math.max(0, (now - start) / 1000);

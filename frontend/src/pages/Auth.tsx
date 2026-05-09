@@ -214,7 +214,7 @@ export function Register() {
                 <div className="bg-bg-surface rounded-2xl shadow-xl p-8 sm:p-10 text-center">
                     <div className="mb-6">
                         <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                            <Icon name="messages" size="md" tone="success" />
+                            <Icon name="message" size="md" tone="success" />
                         </div>
                         <h2 className="text-2xl font-bold text-text-primary mb-2">{t('signup.checkEmail')}</h2>
                         <p className="text-text-secondary">

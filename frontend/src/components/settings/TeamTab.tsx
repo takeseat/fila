@@ -233,7 +233,7 @@ export function TeamTab() {
                                                     title={user.isActive ? t('status.deactivate') : t('status.activate')}
                                                 >
                                                     {user.isActive ? (
-                                                        <Icon name="block" size="sm" />
+                                                        <Icon name="lock" size="sm" />
                                                     ) : (
                                                         <Icon name="check" size="sm" />
                                                     )}
@@ -243,7 +243,7 @@ export function TeamTab() {
                                                     className="p-2 text-danger-600 hover:bg-danger-50 rounded-lg transition-colors"
                                                     title={t('actions.delete')}
                                                 >
-                                                    <Icon name="trash" size="sm" />
+                                                    <Icon name="delete" size="sm" />
                                                 </button>
                                             </div>
                                         </td>
@@ -287,7 +287,7 @@ export function TeamTab() {
                                         title={user.isActive ? t('status.deactivate') : t('status.activate')}
                                     >
                                         {user.isActive ? (
-                                            <Icon name="block" size="sm" />
+                                            <Icon name="lock" size="sm" />
                                         ) : (
                                             <Icon name="check" size="sm" />
                                         )}
@@ -297,7 +297,7 @@ export function TeamTab() {
                                         className="p-2 text-danger-600 hover:bg-danger-50 rounded-lg transition-colors"
                                         title={t('actions.delete')}
                                     >
-                                        <Icon name="trash" size="sm" />
+                                        <Icon name="delete" size="sm" />
                                     </button>
                                 </div>
                             </div>

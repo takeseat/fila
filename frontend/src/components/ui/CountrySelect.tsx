@@ -75,7 +75,7 @@ export function CountrySelect({
                         <Icon 
                             name="chevronDown" 
                             size="xs" 
-                            tone="muted" 
+                            tone="secondary" 
                             className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
                         />
                     </div>
@@ -97,7 +97,7 @@ export function CountrySelect({
                         <Icon 
                             name="chevronDown" 
                             size="sm" 
-                            tone="muted" 
+                            tone="secondary" 
                             className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
                         />
                     </>
