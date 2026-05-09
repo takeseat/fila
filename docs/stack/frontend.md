@@ -25,3 +25,4 @@ Como a maioria dos usuários (tanto operadores em tablets/celulares quanto clien
 ### Componentização
 *   Uso de componentes reutilizáveis para garantir consistência visual (Botões, Inputs, Cards de Fila).
 *   Isolamento de lógica de UI da lógica de negócio (Custom Hooks).
+*   **Design System:** Veja as diretrizes visuais em [design-system.md](../design-system.md).

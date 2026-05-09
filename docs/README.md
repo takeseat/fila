@@ -9,6 +9,7 @@ Welcome to the technical and functional documentation for the **TakeSeat** Queue
 | **Waitlist** | Queue logic, status workflow, and ETA calculation. | [waitlist.md](./waitlist.md) |
 | **Customers** | Identity, phone lookup, and history tracking. | [customers.md](./customers.md) |
 | **Reports** | Analytics, KPIs, and charts. | [reports.md](./reports.md) |
+| **Design System** | Visual guidelines, colors, and components. | [design-system.md](./design-system.md) |
 
 ## Integrations & Features
 
