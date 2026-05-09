@@ -134,22 +134,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                             <Icon name="users" size="xs" tone="inherit" />
                                             {t('user.profile')}
                                         </Link>
-                                        <Link
-                                            to="/settings"
-                                            onClick={() => setIsDropdownOpen(false)}
-                                            className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"
-                                        >
-                                            <Icon name="settings" size="xs" tone="inherit" />
-                                            {t('menu.settings')}
-                                        </Link>
-                                        <Link
-                                            to="/reports"
-                                            onClick={() => setIsDropdownOpen(false)}
-                                            className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"
-                                        >
-                                            <Icon name="reports" size="xs" tone="inherit" />
-                                            {t('menu.reports')}
-                                        </Link>
+
                                     </div>
 
                                     {/* Seção 4 - Logout */}
