@@ -257,6 +257,8 @@ export function Waitlist() {
         }
     };
 
+    const [showMetrics, setShowMetrics] = useState(false);
+
     if (isLoading) {
         return (
             <div className="flex items-center justify-center py-20">
@@ -280,61 +282,100 @@ export function Waitlist() {
                 }
             />
 
-            <PageContent className="p-4 sm:p-6 lg:p-8 space-y-6 animate-fade-in max-w-5xl mx-auto">
+            <PageContent className="p-6 sm:p-10 lg:p-12 space-y-12 animate-fade-in max-w-6xl mx-auto">
                 
-                {/* 1. HEADER */}
-                <div className="hidden md:flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
-                    <div>
-                        <h1 className="text-3xl font-bold text-text-primary">Fila de Espera</h1>
-                        <p className="text-text-secondary mt-1">
-                            Hoje: <span className="font-medium text-text-primary">{metrics?.servedToday ?? 0} atendidos</span> • Tempo médio: <span className="font-medium text-text-primary">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min</span>
-                        </p>
+                {/* 1. HEADER REFINADO */}
+                <div className="hidden md:flex flex-col md:flex-row md:items-start justify-between gap-8 mb-4">
+                    <div className="space-y-2">
+                        <h1 className="text-4xl font-extrabold tracking-tight text-text-primary">Fila de Espera</h1>
+                        <div className="flex items-center gap-4">
+                            <p className="text-text-muted font-medium text-sm">
+                                Hoje: <span className="text-text-secondary">{metrics?.servedToday ?? 0} atendidos</span> • Tempo médio: <span className="text-text-secondary">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min</span>
+                            </p>
+                            <button 
+                                onClick={() => setShowMetrics(!showMetrics)}
+                                className="text-[10px] font-bold uppercase tracking-widest text-primary-500 hover:text-primary-600 transition-colors flex items-center gap-1"
+                            >
+                                {showMetrics ? 'Ocultar Detalhes' : 'Ver Métricas'}
+                                <Icon name={showMetrics ? 'chevronUp' : 'chevronDown'} size="xs" />
+                            </button>
+                        </div>
                     </div>
-                    <Button onClick={() => handleOpenModal()} size="lg" className="shadow-sm" leftIcon={<Icon name="add" size="sm" />}>
-                        + Adicionar
+                    <Button onClick={() => handleOpenModal()} size="lg" className="shadow-lg shadow-primary-500/10 px-8 py-6 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all" leftIcon={<Icon name="add" size="sm" />}>
+                        + Adicionar Cliente
                     </Button>
                 </div>
 
-                {/* 2. CAMPO PRINCIPAL DE BUSCA/ADICIONAR */}
-                <div className="relative">
+                {/* 1.1 MÉTRICAS COLAPSÁVEIS */}
+                {showMetrics && (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-in-down">
+                        <div className="bg-bg-surface border border-border-subtle rounded-2xl p-6 shadow-sm">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary mb-1">Na Fila Agora</p>
+                            <p className="text-3xl font-bold text-text-primary">{activeEntries.length}</p>
+                        </div>
+                        <div className="bg-bg-surface border border-border-subtle rounded-2xl p-6 shadow-sm">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary mb-1">Atendidos Hoje</p>
+                            <p className="text-3xl font-bold text-text-primary">{metrics?.servedToday ?? 0}</p>
+                        </div>
+                        <div className="bg-bg-surface border border-border-subtle rounded-2xl p-6 shadow-sm">
+                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary mb-1">Tempo de Espera</p>
+                            <p className="text-3xl font-bold text-text-primary">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min</p>
+                        </div>
+                    </div>
+                )}
+
+                {/* 2. CAMPO PRINCIPAL REFINADO */}
+                <div className="relative group max-w-4xl">
                     <Input
-                        placeholder="Buscar ou adicionar cliente..."
+                        placeholder="Buscar cliente por nome ou celular..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onKeyDown={handleSearchKeyDown}
-                        leftIcon={<Icon name="search" size="md" className="text-text-muted" />}
-                        className="w-full text-lg shadow-sm"
+                        leftIcon={<Icon name="search" size="md" className="text-text-tertiary group-focus-within:text-primary-500 transition-colors ml-2" />}
+                        className="w-full text-xl shadow-xl shadow-black/[0.02] border-border-subtle focus:border-primary-400 transition-all rounded-3xl h-16 px-6"
                         autoComplete="off"
                     />
                     
-                    {/* Botão rápido para adicionar o que foi digitado caso não encontre */}
                     {searchQuery && filteredActiveEntries.length === 0 && (
-                        <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                            <Button size="sm" variant="primary" onClick={() => handleOpenModal(searchQuery)}>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                            <Button size="md" variant="primary" onClick={() => handleOpenModal(searchQuery)} className="rounded-xl shadow-md">
                                 + Adicionar "{searchQuery}"
                             </Button>
                         </div>
                     )}
                 </div>
 
-                {/* 3. LISTA */}
-                <div>
-                    <h2 className="text-lg font-semibold text-text-primary mb-4">Fila Ativa</h2>
+                {/* 3. LISTA REFINADA */}
+                <div className="space-y-8">
+                    <div className="flex items-center justify-between border-b border-border-subtle pb-4">
+                        <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-text-tertiary">Gerenciamento de Fila</h2>
+                        <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 bg-primary-500 rounded-full animate-pulse" />
+                            <span className="text-xs font-bold text-text-secondary">{filteredActiveEntries.length} Ativos</span>
+                        </div>
+                    </div>
                     
-                    {/* 4. ESTADO VAZIO */}
                     {activeEntries.length === 0 ? (
-                        <div className="py-16 text-center">
-                            <p className="text-lg font-medium text-text-secondary">Comece adicionando um cliente à fila</p>
-                            <Button variant="ghost" onClick={() => handleOpenModal()} className="mt-4 text-primary-600">
-                                + Adicionar agora
+                        <div className="py-32 text-center max-w-lg mx-auto space-y-8">
+                            <div className="bg-bg-subtle w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 opacity-40">
+                                <Icon name="users" size="lg" className="text-text-tertiary scale-150" />
+                            </div>
+                            <div className="space-y-3">
+                                <p className="text-2xl font-bold text-text-primary">Sua fila está livre</p>
+                                <p className="text-text-muted text-base leading-relaxed">
+                                    Não há ninguém esperando no momento. Que tal adicionar um novo cliente para testar o sistema?
+                                </p>
+                            </div>
+                            <Button variant="primary" onClick={() => handleOpenModal()} className="px-10 py-4 rounded-2xl shadow-lg">
+                                + Adicionar Primeiro Cliente
                             </Button>
                         </div>
                     ) : filteredActiveEntries.length === 0 ? (
-                        <div className="py-12 text-center text-text-secondary">
-                            Nenhum cliente encontrado com "{searchQuery}"
+                        <div className="py-20 text-center text-text-muted font-medium bg-bg-subtle/50 border border-dashed border-border-subtle rounded-[2rem]">
+                            Nenhum resultado para "<span className="text-text-primary">{searchQuery}</span>"
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             {filteredActiveEntries.map((entry: any, index: number) => (
                                 <WaitlistCard
                                     key={entry.id}
@@ -353,13 +394,13 @@ export function Waitlist() {
                     )}
                 </div>
 
-                {/* MODAL DE ADICIONAR */}
+                {/* MODAL DE ADICIONAR REFINADO */}
                 <Modal
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    title={t('form.title')}
+                    title="Novo Cliente na Fila"
                 >
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit} className="p-2 space-y-6">
                         <div className="space-y-2">
                             <InternationalPhoneInput
                                 label={t('form.customerPhone')}
@@ -372,31 +413,32 @@ export function Waitlist() {
                                 required
                             />
                             {isLookingUp && (
-                                <p className="text-xs text-primary-600 flex items-center gap-1">
+                                <p className="text-[10px] font-bold text-primary-500 flex items-center gap-2 px-1">
                                     <Spinner size="sm" />
-                                    {t('form.lookingUp')}
+                                    Buscando cadastro...
                                 </p>
                             )}
                             {!isLookingUp && customerFound && (
-                                <p className="text-xs text-status-success flex items-center gap-1">
-                                    <Icon name="check" size="sm" />
-                                    {t('form.customerFound', { name: customerFound.name })}
+                                <p className="text-[10px] font-bold text-status-success flex items-center gap-2 px-1">
+                                    <Icon name="check" size="xs" />
+                                    Cliente reconhecido: {customerFound.name}
                                 </p>
                             )}
                         </div>
 
                         <Input
-                            label={t('form.customerName')}
+                            label="Nome do Cliente"
                             value={formData.customerName}
                             onChange={(e) => setFormData({ ...formData, customerName: e.target.value })}
                             required
-                            placeholder={t('form.fullName')}
+                            placeholder="Ex: João Silva"
                             leftIcon={<Icon name="user" size="sm" />}
+                            className="h-12 rounded-xl"
                         />
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-6">
                             <Input
-                                label={t('form.partySize')}
+                                label="Pessoas"
                                 type="number"
                                 inputMode="numeric"
                                 min="1"
@@ -405,32 +447,34 @@ export function Waitlist() {
                                 onChange={(e) => setFormData({ ...formData, partySize: parseInt(e.target.value) || 1 })}
                                 required
                                 leftIcon={<Icon name="users" size="sm" />}
+                                className="h-12 rounded-xl"
                             />
                         </div>
 
                         <Input
-                            label={t('form.notes')}
+                            label="Observações (Opcional)"
                             value={formData.notes}
                             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                            placeholder={t('form.notesPlaceholder')}
+                            placeholder="Ex: Mesa externa, aniversário..."
                             leftIcon={<Icon name="info" size="sm" />}
+                            className="h-12 rounded-xl"
                         />
 
-                        <div className="flex gap-3 pt-2">
+                        <div className="flex gap-4 pt-4">
                             <Button
                                 type="button"
                                 variant="ghost"
-                                className="flex-1"
+                                className="flex-1 rounded-xl h-12"
                                 onClick={() => setIsModalOpen(false)}
                             >
                                 Cancelar
                             </Button>
                             <Button
                                 type="submit"
-                                className="flex-1"
+                                className="flex-2 rounded-xl h-12 shadow-md"
                                 isLoading={createMutation.isPending}
                             >
-                                Adicionar
+                                Adicionar à Fila
                             </Button>
                         </div>
                     </form>

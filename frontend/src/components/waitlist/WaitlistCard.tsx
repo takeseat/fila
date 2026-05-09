@@ -245,132 +245,124 @@ export function WaitlistCard({
 
     return (
         <Card
-            padding="md"
-            className={`hover:shadow-xl transition-all duration-200 relative ${cardBorderClass}`}
+            padding="none"
+            className={`group hover:shadow-lg transition-all duration-300 relative border-border-subtle hover:border-primary-200 overflow-hidden rounded-2xl bg-bg-surface ${cardBorderClass}`}
         >
             {badgeContent}
 
-            {/* Header */}
-            <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                    {/* Position Badge */}
-                    <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center text-white font-bold shadow-md">
-                        {index + 1}
+            <div className="p-5 flex flex-col gap-4">
+                {/* Header Section */}
+                <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-4">
+                        {/* Position Avatar - Minimalist */}
+                        <div className="w-10 h-10 rounded-full bg-bg-subtle flex items-center justify-center text-text-secondary font-bold text-sm border border-border-subtle group-hover:bg-primary-50 group-hover:text-primary-600 group-hover:border-primary-100 transition-colors">
+                            {index + 1}
+                        </div>
+                        <div className="space-y-0.5">
+                            <div className="flex items-center gap-2">
+                                <h3 className="text-lg font-semibold text-text-primary tracking-tight">
+                                    {entry.customerName}
+                                </h3>
+                                {index === 0 && entry.status === 'WAITING' && (
+                                    <span className="px-2 py-0.5 bg-primary-50 text-primary-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-primary-100">
+                                        Próximo
+                                    </span>
+                                )}
+                            </div>
+                            <div className="flex items-center gap-3 text-sm font-medium text-text-muted">
+                                <span className="flex items-center gap-1.5">
+                                    <Icon name="users" size="xs" className="opacity-70" />
+                                    {entry.partySize} {t('entry.partySize')}
+                                </span>
+                                <span className="w-1 h-1 bg-border-default rounded-full" />
+                                <span className={`flex items-center gap-1.5 ${timerClass} font-medium`}>
+                                    <Icon name="waitTime" size="xs" className="opacity-70" />
+                                    {elapsedString}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <h3 className="text-lg font-semibold text-text-primary">
-                            {entry.customerName}
-                        </h3>
-                        <p className="text-sm text-text-secondary flex items-center gap-2">
-                            <Icon name="smartphone" size="sm" tone="secondary" />
-                            {entry.customerPhone}
-                        </p>
-                    </div>
+                    {getStatusBadge(entry.status)}
                 </div>
-                {getStatusBadge(entry.status)}
-            </div>
 
-            {/* Info Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="bg-bg-subtle rounded-lg p-3">
-                    <p className="text-xs text-text-secondary mb-1">{t('entry.partySize')}</p>
-                    <p className="text-lg font-semibold text-text-primary flex items-center gap-2">
-                        <Icon name="users" size="sm" tone="secondary" />
-                        {entry.partySize}
-                    </p>
-                </div>
-                <div className="bg-bg-subtle rounded-lg p-3">
-                    <p className="text-xs text-text-secondary mb-1">
-                        {entry.status === 'CALLED' ? t('entry.calledSince') : t('entry.timeInQueue')}
-                    </p>
-                    <p className={`text-lg font-semibold flex items-center gap-2 ${timerClass}`}>
-                        <Icon name="waitTime" size="sm" tone={alertStatus === 'waiting' ? 'warning' : alertStatus === 'called' ? 'error' : 'secondary'} />
-                        <span>{elapsedString}</span>
-                    </p>
-                </div>
-            </div>
-
-            {/* Wait Time Progress (Only relevant if still WAITING) */}
-            {entry.status === 'WAITING' && (
-                <div className="mb-4">
-                    <div className="flex justify-between items-center mb-2">
-                        <span className="text-xs font-medium text-text-secondary">
-                            {t('entry.eta', { time: etaString })}
-                        </span>
-                    </div>
-                    <Progress value={progress} variant={progressVariant as any} size="md" />
-                </div>
-            )}
-
-            {/* For CALLED status, show when they were called */}
-            {entry.status === 'CALLED' && (
-                <div className="mb-4">
-                    <div className="p-3 bg-primary-50 rounded-lg border border-primary-100 flex items-center justify-between">
-                        <span className="text-sm text-primary-700 font-medium">{t('entry.customerCalled')}</span>
-                        <span className="text-xs text-primary-600">
-                            {t('entry.at')} {format(new Date(entry.calledAt || entry.updatedAt), 'HH:mm')}
-                        </span>
-                    </div>
-                </div>
-            )}
-
-            {/* Action Buttons */}
-            <div className="flex gap-2 items-center">
+                {/* Progress Bar - Discrete */}
                 {entry.status === 'WAITING' && (
-                    <>
-                        <Button
-                            size="sm"
-                            variant="primary"
-                            onClick={() => onCall(entry.id)}
-                            className="flex-1"
-                            isLoading={isActionLoading.call}
-                        >
-                            <Icon name="notify" size="sm" className="mr-2" />
-                            {t('actions.call')}
-                        </Button>
-                        <Button
-                            size="sm"
-                            variant="success"
-                            onClick={() => onSeat(entry.id)}
-                            className="flex-1"
-                            isLoading={isActionLoading.seat}
-                        >
-                            <Icon name="check" size="sm" className="mr-2" />
-                            {t('actions.seat')}
-                        </Button>
-                        {/* Overflow Menu */}
-                        <OverflowMenu
-                            onCancel={() => onCancel(entry.id)}
-                            isLoading={isActionLoading.cancel}
-                            t={t}
-                        />
-                    </>
+                    <div className="space-y-1.5">
+                        <div className="flex justify-between items-center px-0.5">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
+                                {t('entry.eta', { time: etaString })}
+                            </span>
+                            <span className="text-[10px] font-bold text-text-tertiary">{Math.round(progress)}%</span>
+                        </div>
+                        <Progress value={progress} variant={progressVariant as any} size="sm" className="bg-bg-subtle" />
+                    </div>
                 )}
+
+                {/* Called Info - Clean */}
                 {entry.status === 'CALLED' && (
-                    <>
-                        <Button
-                            size="sm"
-                            variant="success"
-                            onClick={() => onSeat(entry.id)}
-                            className="flex-1"
-                            isLoading={isActionLoading.seat}
-                        >
-                            <Icon name="check" size="sm" className="mr-2" />
-                            {t('actions.seat')}
-                        </Button>
-                        {/* Overflow Menu */}
-                        <OverflowMenu
-                            onCancel={() => {
-                                if (window.confirm(t('actions.noShowConfirm', 'Deseja realmente marcar este cliente como faltoso?'))) {
-                                    onNoShow(entry.id);
-                                }
-                            }}
-                            cancelLabel={t('actions.noShow')}
-                            isLoading={isActionLoading.noShow}
-                            t={t}
-                        />
-                    </>
+                    <div className="flex items-center justify-between px-3 py-2 bg-indigo-50/50 rounded-lg border border-indigo-100/50">
+                        <span className="text-xs text-indigo-700 font-medium">{t('entry.customerCalled')}</span>
+                        <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-tighter">
+                            {format(new Date(entry.calledAt || entry.updatedAt), 'HH:mm')}
+                        </span>
+                    </div>
                 )}
+
+                {/* Actions Footer */}
+                <div className="flex gap-2 items-center pt-2">
+                    {entry.status === 'WAITING' && (
+                        <>
+                            <Button
+                                size="md"
+                                variant="primary"
+                                onClick={() => onCall(entry.id)}
+                                className="flex-[2] rounded-xl shadow-sm hover:shadow-md transition-all font-semibold text-sm"
+                                isLoading={isActionLoading.call}
+                            >
+                                <Icon name="notify" size="sm" className="mr-2" />
+                                {t('actions.call')}
+                            </Button>
+                            <Button
+                                size="md"
+                                variant="outline"
+                                onClick={() => onSeat(entry.id)}
+                                className="flex-1 rounded-xl border-border-default text-text-secondary hover:bg-bg-subtle hover:text-text-primary transition-all font-medium text-sm"
+                                isLoading={isActionLoading.seat}
+                            >
+                                {t('actions.seat')}
+                            </Button>
+                            <OverflowMenu
+                                onCancel={() => onCancel(entry.id)}
+                                isLoading={isActionLoading.cancel}
+                                t={t}
+                            />
+                        </>
+                    )}
+                    {entry.status === 'CALLED' && (
+                        <>
+                            <Button
+                                size="md"
+                                variant="primary"
+                                onClick={() => onSeat(entry.id)}
+                                className="flex-[3] rounded-xl shadow-sm hover:shadow-md transition-all font-semibold text-sm"
+                                isLoading={isActionLoading.seat}
+                            >
+                                <Icon name="check" size="sm" className="mr-2" />
+                                {t('actions.seat')}
+                            </Button>
+                            <OverflowMenu
+                                onCancel={() => {
+                                    if (window.confirm(t('actions.noShowConfirm', 'Deseja realmente marcar este cliente como faltoso?'))) {
+                                        onNoShow(entry.id);
+                                    }
+                                }}
+                                cancelLabel={t('actions.noShow')}
+                                isLoading={isActionLoading.noShow}
+                                t={t}
+                            />
+                        </>
+                    )}
+                </div>
             </div>
         </Card>
     );

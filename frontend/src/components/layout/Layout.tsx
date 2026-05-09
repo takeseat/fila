@@ -62,9 +62,9 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
                 {/* Desktop Header */}
                 {!simple && (
-                    <header className="hidden lg:flex h-16 bg-bg-surface border-b border-border-default px-6 items-center justify-between z-30">
+                    <header className="hidden lg:flex h-14 bg-bg-surface border-b border-border-subtle px-6 items-center justify-between z-30">
                         <div className="flex items-center gap-4">
-                            <h1 className="text-lg font-semibold text-text-primary">
+                            <h1 className="text-base font-medium text-text-secondary">
                                 {getCurrentPageTitle()}
                             </h1>
                         </div>
@@ -72,7 +72,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                         <div className="flex items-center gap-4 relative" ref={dropdownRef}>
                             <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all focus:outline-none"
+                                className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-xs flex-shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all focus:outline-none"
                                 aria-label="Menu do usuário"
                             >
                                 {user?.name.charAt(0).toUpperCase()}
