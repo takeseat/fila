@@ -1,6 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { MobileMenu } from './MobileMenu';
 import { Button } from '../ui/Button';
+import { Icon } from '../../design-system/icons/Icon';
 
 interface MobilePageHeaderProps {
     title: string;
@@ -32,11 +33,7 @@ export function MobilePageHeader({
                                 variant="ghost"
                                 onClick={() => setIsMenuOpen(true)}
                                 className="p-2 -ml-2 text-text-secondary hover:text-text-primary"
-                                leftIcon={
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                    </svg>
-                                }
+                                leftIcon={<Icon name="menu" size="md" />}
                             />
                         )}
                     </div>

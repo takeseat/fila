@@ -9,6 +9,7 @@ import { Card, Button } from '../ui';
 import { useForm } from 'react-hook-form';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../lib/api';
+import { Icon } from '../../design-system/icons/Icon';
 
 // Reuse types from WhatsAppTab
 type WhatsAppSettings = {
@@ -110,9 +111,7 @@ export function MessagesTab() {
                 <Card title="Mensagens" subtitle="Gerencie as notificações automáticas">
                     <div className="p-8 text-center">
                         <div className="mx-auto w-16 h-16 bg-bg-subtle rounded-full flex items-center justify-center mb-4">
-                            <svg className="w-8 h-8 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
+                            <Icon name="lock" size="md" tone="muted" />
                         </div>
                         <h3 className="text-lg font-bold text-text-primary mb-2">Recurso Profissional</h3>
                         <p className="text-text-tertiary max-w-md mx-auto mb-6">
@@ -151,9 +150,7 @@ export function MessagesTab() {
                         <div className="p-6 border-b border-default bg-elevated">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-brand-subtle rounded-lg">
-                                    <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                                    <Icon name="waitTime" size="md" tone="brand" />
                                 </div>
                                 <div>
                                     <h2 className="text-xl font-medium text-text-primary">Fila de Espera</h2>
@@ -277,9 +274,7 @@ export function MessagesTab() {
                         <div className="p-6 border-b border-default bg-elevated">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-brand-subtle rounded-lg">
-                                    <svg className="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                    </svg>
+                                    <Icon name="shoppingBag" size="md" tone="brand" />
                                 </div>
                                 <div>
                                     <h2 className="text-xl font-medium text-text-primary">Pedidos (Retirada)</h2>
@@ -405,9 +400,7 @@ export function MessagesTab() {
                         <Card className="shadow-md border-brand-subtle bg-elevated radius-lg">
                             <div className="p-6 border-b border-default bg-brand-subtle/30">
                                 <h4 className="flex items-center gap-2 font-medium text-text-primary">
-                                    <svg className="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
+                                    <Icon name="info" size="sm" tone="brand" />
                                     Variáveis Disponíveis
                                 </h4>
                             </div>
@@ -438,10 +431,7 @@ export function MessagesTab() {
 
                         {/* Status Tip */}
                         <div className="bg-info/10 border border-info-subtle p-4 rounded-lg flex gap-3 items-start">
-                            <svg className="w-5 h-5 text-info flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.674a1 1 0 00.996-1.09L14.535 7H9.462l-.799 8.91a1 1 0 00.996 1.09H9.663z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 7V5a1 1 0 011-1h0a1 1 0 011 1v2" />
-                            </svg>
+                            <Icon name="info" size="sm" tone="info" className="mt-0.5" />
                             <p className="text-xs text-text-info leading-relaxed">
                                 <strong>Dica:</strong> Certifique-se de que os templates sejam claros e cordiais para melhorar a experiência do cliente.
                             </p>
@@ -454,9 +444,7 @@ export function MessagesTab() {
             <div className="flex items-center justify-end gap-4 mt-8">
                 {successMessage && (
                     <span className="text-sm text-success font-medium flex items-center gap-2">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
+                        <Icon name="check" size="sm" tone="inherit" />
                         {successMessage}
                     </span>
                 )}

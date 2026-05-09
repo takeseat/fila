@@ -92,7 +92,7 @@ export function QueuePerformance() {
                             </h3>
                             {chartData.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-64 text-text-secondary gap-3">
-                                    <Icon name="chart" className="w-12 h-12 opacity-30" />
+                                    <Icon name="reports" className="w-12 h-12 opacity-30" />
                                     <p className="text-sm">{t('reports:common.noData')}</p>
                                 </div>
                             ) : (

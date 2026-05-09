@@ -44,6 +44,8 @@ export interface ModalProps {
     disableBackdropClose?: boolean;
 }
 
+import { Icon } from '../../design-system/icons/Icon';
+
 /**
  * Modal component following Design System Section 6.6
  * 
@@ -155,9 +157,7 @@ export function Modal({
                         className={closeButtonStyles}
                         aria-label="Close modal"
                     >
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        <Icon name="close" size="md" />
                     </button>
                 </div>
 

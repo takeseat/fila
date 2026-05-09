@@ -1,7 +1,7 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from '../ui';
-import { Icon as DesignIcon } from '../../design-system/icons/Icon';
+import { Button } from '../ui';
+import { Icon } from '../../design-system/icons/Icon';
 
 interface WaitlistEntry {
     id: string;
@@ -54,7 +54,7 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
                 className="px-2"
                 disabled={isLoading}
             >
-                <DesignIcon name="more" size="sm" />
+                <Icon name="more" size="sm" />
             </Button>
 
             {isOpen && (
@@ -63,7 +63,7 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
                         onClick={handleCancel}
                         className="w-full px-4 py-2 text-left text-sm text-text-error hover:bg-bg-error/10 flex items-center gap-2 transition-colors"
                     >
-                        <DesignIcon name="close" size="sm" tone="error" />
+                        <Icon name="close" size="sm" tone="error" />
                         {cancelLabel || t('actions.cancel')}
                     </button>
                 </div>
@@ -212,11 +212,11 @@ export function WaitlistCard({
                     </h3>
                     <div className="flex flex-wrap gap-6 mt-4">
                         <div className="flex items-center gap-2 text-slate-600 text-sm md:text-base font-semibold">
-                            <DesignIcon name="users" size="sm" className="text-amber-600" />
+                            <Icon name="users" size="sm" className="text-amber-600" />
                             {entry.partySize} Pessoas
                         </div>
                         <div className="flex items-center gap-2 text-slate-600 text-sm md:text-base border-l border-amber-100 pl-6 font-semibold">
-                            <DesignIcon name="waitTime" size="sm" className="text-amber-600" />
+                            <Icon name="waitTime" size="sm" className="text-amber-600" />
                             Esperando há {elapsedString}
                         </div>
                     </div>
@@ -230,7 +230,7 @@ export function WaitlistCard({
                     className="flex-1 md:flex-none h-14 px-8 border-2 border-amber-200 bg-white/50 backdrop-blur-md hover:bg-amber-50 hover:border-amber-500 text-amber-700 font-bold transition-all flex items-center justify-center gap-2 rounded-2xl"
                     isLoading={isActionLoading.call}
                 >
-                    <DesignIcon name="notify" size="sm" />
+                    <Icon name="notify" size="sm" />
                     Chamar
                 </Button>
                 <Button
@@ -239,7 +239,7 @@ export function WaitlistCard({
                     className="flex-1 md:flex-none h-14 px-10 bg-amber-600 text-white rounded-2xl font-black shadow-[0_15px_30px_-5px_rgba(217,119,6,0.3)] hover:bg-amber-700 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 font-display uppercase tracking-widest text-xs"
                     isLoading={isActionLoading.seat}
                 >
-                    <DesignIcon name="tableService" size="sm" />
+                    <Icon name="tableService" size="sm" />
                     Sentar
                 </Button>
             </div>

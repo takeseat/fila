@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import api from '../../lib/api';
 import { Button } from '../ui';
+import { Icon } from '../../design-system/icons/Icon';
 
 type SettingsForm = {
     waitingAlertMinutes: number | null;
@@ -74,9 +75,7 @@ export function ParametersTab() {
             {/* Queue Alerts Section */}
             <div className="space-y-6">
                 <div className="flex items-center gap-2 border-b border-border-default pb-2">
-                    <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <Icon name="waitTime" size="sm" tone="primary" />
                     <h3 className="text-lg font-semibold text-text-primary">{t('sections.queueAlerts.title')}</h3>
                 </div>
 
@@ -128,9 +127,7 @@ export function ParametersTab() {
             {/* Average Wait Time Calculation Section */}
             <div className="space-y-6 pt-6 border-t border-border-default">
                 <div className="flex items-center gap-2 border-b border-border-default pb-2">
-                    <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                    <Icon name="waitTime" size="sm" tone="primary" />
                     <h3 className="text-lg font-semibold text-text-primary">{t('sections.avgWaitCalculation.title')}</h3>
                 </div>
 
@@ -178,9 +175,7 @@ export function ParametersTab() {
             {/* Pickup Orders Parameters */}
             <div className="space-y-6 pt-6 border-t border-border-default">
                 <div className="flex items-center gap-2 border-b border-border-default pb-2">
-                    <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
+                    <Icon name="shoppingBag" size="sm" tone="primary" />
                     <h3 className="text-lg font-semibold text-text-primary">{t('pickupParameters.title')}</h3>
                 </div>
 

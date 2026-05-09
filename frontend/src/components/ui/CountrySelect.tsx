@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Country, COUNTRIES, DEFAULT_COUNTRY } from '../../data/countries';
+import { Icon } from '../../design-system/icons/Icon';
 
 interface CountrySelectProps {
     value: string; // countryCode
@@ -71,14 +72,12 @@ export function CountrySelect({
                 {compact ? (
                     <div className="flex items-center gap-1">
                         <span className="text-xl leading-none">{selectedCountry.flag}</span>
-                        <svg
-                            className={`w-3 h-3 text-text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <Icon 
+                            name="chevronDown" 
+                            size="xs" 
+                            tone="muted" 
+                            className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+                        />
                     </div>
                 ) : (
                     <>
@@ -95,14 +94,12 @@ export function CountrySelect({
                                 )}
                             </div>
                         </div>
-                        <svg
-                            className={`w-5 h-5 text-text-muted transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <Icon 
+                            name="chevronDown" 
+                            size="sm" 
+                            tone="muted" 
+                            className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+                        />
                     </>
                 )}
             </button>
@@ -149,9 +146,7 @@ export function CountrySelect({
                                         )}
                                     </div>
                                     {country.code === selectedCountry.code && (
-                                        <svg className="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                        </svg>
+                                        <Icon name="check" size="sm" tone="primary" />
                                     )}
                                 </button>
                             ))

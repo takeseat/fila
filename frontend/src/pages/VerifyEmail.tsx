@@ -7,6 +7,7 @@ import { BrandingSection } from '../components/auth/BrandingSection';
 import { LanguageSelector } from '../components/LanguageSelector';
 import { Button, Input } from '../components/ui';
 import { validatePasswordStrength, getPasswordStrengthLabel, getPasswordStrengthColor, getPasswordStrengthTextColor, PasswordStrength } from '../utils/passwordUtils';
+import { Icon } from '../design-system/icons/Icon';
 
 export default function VerifyEmail() {
     const [searchParams] = useSearchParams();
@@ -243,9 +244,7 @@ export default function VerifyEmail() {
                 {status === 'error' && (
                     <div className="text-center">
                         <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            <Icon name="close" size="md" tone="danger" />
                         </div>
                         <h2 className="text-2xl font-bold text-text-primary mb-2">{t('verifyEmail.failedTitle', { ns: 'auth' })}</h2>
                         <p className="text-red-500 mb-6">{message}</p>

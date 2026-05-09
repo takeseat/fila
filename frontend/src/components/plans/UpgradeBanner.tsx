@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { Icon } from '../../design-system/icons/Icon';
 
 export function UpgradeBanner() {
     const { t } = useTranslation('plans');
@@ -19,7 +20,7 @@ export function UpgradeBanner() {
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <p className="text-sm leading-6 text-white">
                     <strong className="font-semibold">{t('banner.title')}</strong>
-                    <svg viewBox="0 0 2 2" className="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true"><circle cx="1" cy="1" r="1" /></svg>
+                    <span className="mx-2 inline-block h-1 w-1 rounded-full bg-white opacity-50" aria-hidden="true"></span>
                     {t('banner.description')}
                 </p>
                 <Link
@@ -36,9 +37,7 @@ export function UpgradeBanner() {
                     onClick={() => setIsVisible(false)}
                 >
                     <span className="sr-only">Dismiss</span>
-                    <svg className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                    </svg>
+                    <Icon name="close" size="sm" className="text-white" />
                 </button>
             </div>
         </div>

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { usePlan } from '../../hooks/usePlan';
 import { Card, Button, Badge } from '../ui';
 import { useNavigate } from 'react-router-dom';
+import { Icon } from '../../design-system/icons/Icon';
 
 export function PlanSettings() {
     const { t } = useTranslation('plans');
@@ -87,9 +88,7 @@ export function PlanSettings() {
                             {/* Waitlist Feature */}
                             <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-blue-50 border border-blue-100">
                                 <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                                    <svg className="w-4 h-4 md:w-5 md:h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                                    </svg>
+                                    <Icon name="users" size="sm" tone="info" />
                                 </div>
                                 <div>
                                     <p className="text-sm md:text-base font-semibold text-text-primary">{t('features.waitlist', { defaultValue: 'Gerenciamento de Fila' })}</p>
@@ -102,9 +101,7 @@ export function PlanSettings() {
                             {/* WhatsApp Feature */}
                             <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-green-50 border border-green-100">
                                 <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-100 flex items-center justify-center">
-                                    <svg className="w-4 h-4 md:w-5 md:h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                                    </svg>
+                                    <Icon name="messages" size="sm" tone="success" />
                                 </div>
                                 <div>
                                     <p className="text-sm md:text-base font-semibold text-text-primary">{t('features.whatsapp', { defaultValue: 'WhatsApp' })}</p>
@@ -117,9 +114,7 @@ export function PlanSettings() {
                             {/* Pickup Orders Feature */}
                             <div className="flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl bg-indigo-50 border border-indigo-100">
                                 <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <svg className="w-4 h-4 md:w-5 md:h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                    </svg>
+                                    <Icon name="shoppingBag" size="sm" tone="primary" />
                                 </div>
                                 <div>
                                     <p className="text-sm md:text-base font-semibold text-text-primary">{t('features.pickupOrders', { defaultValue: 'Pedidos para Retirar' })}</p>

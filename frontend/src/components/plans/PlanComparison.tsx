@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Icon } from '../../design-system/icons/Icon';
 
 interface PlanComparisonProps {
     onSelectBasic?: () => void;
@@ -38,15 +39,15 @@ export function PlanComparison({
 
                 <ul className="space-y-3 mb-8">
                     <li className="flex items-center gap-3">
-                        <span className="text-green-500">✓</span>
+                        <Icon name="check" size="xs" tone="success" />
                         <span className="text-text-secondary">{t('features.waitlist')}</span>
                     </li>
                     <li className="flex items-center gap-3 opacity-50">
-                        <span className="text-text-tertiary">✕</span>
+                        <Icon name="close" size="xs" tone="muted" />
                         <span className="text-text-tertiary">{t('features.whatsapp')}</span>
                     </li>
                     <li className="flex items-center gap-3 opacity-50">
-                        <span className="text-text-tertiary">✕</span>
+                        <Icon name="close" size="xs" tone="muted" />
                         <span className="text-text-tertiary">{t('features.pickupOrders')}</span>
                     </li>
                 </ul>
@@ -87,15 +88,15 @@ export function PlanComparison({
 
                 <ul className="space-y-3 mb-8">
                     <li className="flex items-center gap-3">
-                        <span className="text-green-500">✓</span>
+                        <Icon name="check" size="xs" tone="success" />
                         <span className="text-text-secondary">{t('features.waitlist')}</span>
                     </li>
                     <li className="flex items-center gap-3">
-                        <span className="text-green-500">✓</span>
+                        <Icon name="check" size="xs" tone="success" />
                         <span className="text-text-primary font-medium">{t('features.whatsapp')}</span>
                     </li>
                     <li className="flex items-center gap-3">
-                        <span className="text-green-500">✓</span>
+                        <Icon name="check" size="xs" tone="success" />
                         <span className="text-text-primary font-medium">{t('features.pickupOrders')}</span>
                     </li>
                 </ul>

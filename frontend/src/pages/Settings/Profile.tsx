@@ -7,6 +7,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { SupportedLanguage } from '../../lib/languageUtils';
 import api from '../../lib/api';
+import { Icon } from '../../design-system/icons/Icon';
 
 interface User {
     id: string;
@@ -63,9 +64,7 @@ export function ProfileSettings() {
                         onClick={() => navigate('/dashboard')}
                         className="text-text-secondary hover:text-text-primary transition-colors mb-4 flex items-center gap-2 text-sm"
                     >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
+                        <Icon name="chevronLeft" size="sm" />
                         Voltar
                     </button>
                     <h1 className="text-3xl font-bold text-text-primary">{t('title')}</h1>
