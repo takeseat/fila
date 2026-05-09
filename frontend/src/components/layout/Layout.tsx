@@ -62,11 +62,16 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
                 {/* Desktop Header */}
                 {!simple && (
-                    <header className="hidden lg:flex h-14 bg-bg-surface border-b border-border-subtle px-6 items-center justify-between z-30">
+                    <header className="hidden lg:flex h-16 bg-bg-surface border-b border-border-subtle px-6 items-center justify-between z-30 shadow-sm">
                         <div className="flex items-center gap-4">
-                            <h1 className="text-base font-medium text-text-secondary">
-                                {getCurrentPageTitle()}
-                            </h1>
+                            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/waitlist')}>
+                                <div className="bg-amber-600 p-2 rounded-xl shadow-lg shadow-amber-600/20 group-hover:scale-110 transition-transform">
+                                    <Icon name="tableService" size="sm" className="text-white" />
+                                </div>
+                                <span className="text-2xl font-black text-slate-900 tracking-tighter font-display">
+                                    Take<span className="text-amber-600">Seat</span>
+                                </span>
+                            </div>
                         </div>
 
                         <div className="flex items-center gap-4 relative" ref={dropdownRef}>

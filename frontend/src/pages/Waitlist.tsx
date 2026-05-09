@@ -34,6 +34,7 @@ export function Waitlist() {
     
     // Universal Search State
     const [searchQuery, setSearchQuery] = useState('');
+    const [partySizeFilter, setPartySizeFilter] = useState<number | 'all' | '5+'>('all');
     
     const queryClient = useQueryClient();
 
@@ -239,13 +240,25 @@ export function Waitlist() {
     const activeEntries = waitlist.filter((e: any) => e.status === 'WAITING' || e.status === 'CALLED');
     
     const filteredActiveEntries = activeEntries.filter((entry: any) => {
-        if (!searchQuery) return true;
-        const query = searchQuery.toLowerCase();
-        return (
-            entry.customerName.toLowerCase().includes(query) || 
-            entry.customerPhone.includes(query)
-        );
+        // Search Filter
+        const matchesSearch = !searchQuery || 
+            entry.customerName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+            entry.customerPhone.includes(searchQuery);
+
+        // Party Size Filter
+        let matchesPartySize = true;
+        if (partySizeFilter !== 'all') {
+            if (partySizeFilter === '5+') {
+                matchesPartySize = entry.partySize >= 5;
+            } else {
+                matchesPartySize = entry.partySize === partySizeFilter;
+            }
+        }
+
+        return matchesSearch && matchesPartySize;
     });
+
+    const [firstEntry, ...remainingEntries] = filteredActiveEntries;
 
     const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -276,156 +289,208 @@ export function Waitlist() {
             <MobilePageHeader
                 title="Sequência da Fila"
                 actions={
-                    <Button onClick={() => handleOpenModal()} size="sm" leftIcon={<Icon name="add" size="sm" />}>
+                    <Button onClick={() => handleOpenModal()} size="sm" leftIcon={<Icon name="add" size="sm" />} className="bg-amber-600 text-white rounded-xl shadow-lg shadow-amber-600/20">
                         Adicionar
                     </Button>
                 }
             />
 
-            <PageContent className="p-6 sm:p-10 lg:p-12 space-y-12 animate-fade-in max-w-6xl mx-auto">
+            <PageContent className="min-h-screen bg-[#fcf9f8] relative overflow-hidden">
+                {/* Background Blobs (Organic Shell) */}
+                <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-amber-400/20 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+                <div className="absolute top-[20%] -left-[10%] w-[30%] h-[30%] bg-orange-300/10 rounded-full blur-[100px] -z-10"></div>
                 
-                {/* 1. HEADER REFINADO */}
-                <div className="hidden md:flex flex-col md:flex-row md:items-start justify-between gap-8 mb-4">
-                    <div className="space-y-2">
-                        <h1 className="text-4xl font-extrabold tracking-tight text-text-primary font-display">Sequência da Fila</h1>
-                        <div className="flex items-center gap-4">
-                            <p className="text-text-muted font-medium text-sm">
-                                Hoje: <span className="text-text-secondary">{metrics?.servedToday ?? 0} atendidos</span> • Tempo médio: <span className="text-text-secondary">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min</span>
-                            </p>
-                            <button 
-                                onClick={() => setShowMetrics(!showMetrics)}
-                                className="text-[10px] font-bold uppercase tracking-widest text-primary-500 hover:text-primary-600 transition-colors flex items-center gap-1"
-                            >
-                                {showMetrics ? 'Ocultar Detalhes' : 'Ver Métricas'}
-                                <Icon name={showMetrics ? 'chevronUp' : 'chevronDown'} size="xs" />
-                            </button>
-                        </div>
-                    </div>
-                    <Button onClick={() => handleOpenModal()} size="lg" className="shadow-lg shadow-primary-500/10 px-8 py-6 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all" leftIcon={<Icon name="add" size="sm" />}>
-                        + Adicionar Cliente
-                    </Button>
-                </div>
-
-                {/* 1.1 MÉTRICAS COLAPSÁVEIS */}
-                {showMetrics && (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-slide-in-down">
-                        <div className="bg-bg-surface border border-border-subtle rounded-2xl p-6 shadow-sm">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary mb-1">Na Fila Agora</p>
-                            <p className="text-3xl font-bold text-text-primary">{activeEntries.length}</p>
-                        </div>
-                        <div className="bg-bg-surface border border-border-subtle rounded-2xl p-6 shadow-sm">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary mb-1">Atendidos Hoje</p>
-                            <p className="text-3xl font-bold text-text-primary">{metrics?.servedToday ?? 0}</p>
-                        </div>
-                        <div className="bg-bg-surface border border-border-subtle rounded-2xl p-6 shadow-sm">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary mb-1">Tempo de Espera</p>
-                            <p className="text-3xl font-bold text-text-primary">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0} min</p>
-                        </div>
-                    </div>
-                )}
-
-                {/* 2. CAMPO PRINCIPAL REFINADO */}
-                <div className="relative group max-w-4xl">
-                    <Input
-                        placeholder="Buscar cliente por nome ou celular..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onKeyDown={handleSearchKeyDown}
-                        leftIcon={<Icon name="search" size="md" className="text-text-tertiary group-focus-within:text-primary-500 transition-colors ml-2" />}
-                        className="w-full text-xl shadow-xl shadow-black/[0.02] border-border-subtle focus:border-primary-400 transition-all rounded-3xl h-16 px-6"
-                        autoComplete="off"
-                    />
+                <div className="p-6 sm:p-10 lg:p-12 space-y-12 animate-fade-in max-w-6xl mx-auto relative z-10">
                     
-                    {searchQuery && filteredActiveEntries.length === 0 && (
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                            <Button size="md" variant="primary" onClick={() => handleOpenModal(searchQuery)} className="rounded-xl shadow-md">
-                                + Adicionar "{searchQuery}"
-                            </Button>
+                    {/* 1. HEADER */}
+                    <div className="hidden md:flex items-center justify-between gap-8 mb-4">
+                        <div className="space-y-1">
+                            <h1 className="text-5xl font-black tracking-tighter text-slate-900 font-display">Sequência da Fila</h1>
+                            <p className="text-slate-500 font-medium text-sm">Gerencie o fluxo de clientes com precisão.</p>
                         </div>
-                    )}
-                </div>
-
-                {/* 3. LISTA REFINADA */}
-                <div className="space-y-8">
-                    <div className="flex items-center justify-between border-b border-border-subtle pb-4">
-                        <h2 className="text-xs font-bold uppercase tracking-[0.2em] text-text-tertiary">Gerenciamento de Fila</h2>
-                        <div className="flex items-center gap-2">
-                            <span className="w-2 h-2 bg-primary-500 rounded-full animate-pulse" />
-                            <span className="text-xs font-bold text-text-secondary">{filteredActiveEntries.length} Ativos</span>
-                        </div>
+                        <Button 
+                            onClick={() => handleOpenModal()} 
+                            size="lg" 
+                            className="bg-amber-600 text-white shadow-2xl shadow-amber-600/30 px-10 py-7 rounded-[2rem] hover:bg-amber-700 hover:scale-[1.02] active:scale-[0.98] transition-all font-display uppercase tracking-[0.2em] text-xs font-black"
+                            leftIcon={<Icon name="add" size="sm" />}
+                        >
+                            Novo Cliente
+                        </Button>
                     </div>
-                    
-                    {activeEntries.length === 0 ? (
-                        <div className="py-20 flex flex-col items-center justify-center text-center animate-fade-in">
-                            {/* Enhanced Illustration Group */}
-                            <div className="relative mb-12 animate-float">
-                                <div className="relative flex items-center justify-center">
-                                    {/* Large Glow Orbs */}
-                                    <div className="absolute w-64 h-64 bg-primary-500/10 rounded-full blur-[60px]"></div>
-                                    
-                                    {/* Central Graphic */}
-                                    <div className="relative bg-bg-surface p-8 rounded-full border border-border-subtle shadow-xl">
-                                        <div className="bg-primary-50 p-6 rounded-full shadow-inner">
-                                            <span className="material-symbols-outlined text-[64px] text-primary-600" style={{ fontVariationSettings: "'wght' 300, 'FILL' 1" }}>
-                                                groups_3
-                                            </span>
-                                        </div>
-                                        
-                                        {/* Floating orbiting elements */}
-                                        <div className="absolute -top-2 -right-2 bg-violet-500 text-white p-3 rounded-2xl shadow-xl border-2 border-white transform rotate-12">
-                                            <span className="material-symbols-outlined text-base">celebration</span>
-                                        </div>
-                                        <div className="absolute bottom-2 -left-4 bg-primary-600 text-white p-2 rounded-xl shadow-lg border-2 border-white -rotate-12">
-                                            <span className="material-symbols-outlined text-sm">rocket_launch</span>
-                                        </div>
-                                        <div className="absolute -bottom-2 right-8 bg-bg-subtle border border-border-subtle p-2 rounded-full shadow-md">
-                                            <span className="material-symbols-outlined text-text-tertiary text-xs">auto_awesome</span>
-                                        </div>
-                                    </div>
+
+                    {/* 2. FILTERS & SEARCH - Neumorphic Style */}
+                    <section className="space-y-6">
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                            <div className="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm w-full md:w-auto">
+                                <span className="text-[10px] font-black text-amber-900/40 uppercase tracking-widest whitespace-nowrap font-display">Pessoas:</span>
+                                <div className="flex gap-2">
+                                    {['all', 1, 2, 3, 4, '5+'].map((size) => (
+                                        <button
+                                            key={size}
+                                            onClick={() => setPartySizeFilter(size as any)}
+                                            className={`h-10 min-w-[48px] px-4 flex items-center justify-center rounded-2xl text-xs font-bold transition-all border ${
+                                                partySizeFilter === size 
+                                                ? 'bg-amber-600 text-white border-amber-600 shadow-lg shadow-amber-600/30 scale-105' 
+                                                : 'bg-white/80 border-amber-100 text-slate-500 hover:border-amber-400 hover:text-amber-600'
+                                            }`}
+                                        >
+                                            {size === 'all' ? 'Todos' : size}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
 
-                            {/* Welcoming Content */}
-                            <div className="max-w-xl mx-auto space-y-4 mb-10">
-                                <h2 className="text-3xl font-bold text-text-primary tracking-tight">Bem-vindo ao TakeSeat!</h2>
-                                <p className="text-text-secondary text-lg leading-relaxed">
-                                    Sua jornada para um atendimento impecável começa agora. Nossa fila está pronta para transformar a espera dos seus clientes em uma experiência incrível.
-                                </p>
-                            </div>
-
-                            {/* Focal Point Primary CTA */}
-                            <button 
-                                onClick={() => handleOpenModal()}
-                                className="group relative bg-primary-600 text-white hover:bg-primary-700 font-bold px-10 py-5 rounded-2xl flex items-center gap-4 transition-all shadow-xl shadow-primary-500/20 hover:shadow-primary-500/30 active:scale-95 overflow-hidden"
-                            >
-                                <span className="material-symbols-outlined text-2xl relative z-10" style={{ fontVariationSettings: "'FILL' 1" }}>
-                                    person_add
+                            <div className="relative w-full md:max-w-xs group">
+                                <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-amber-600 transition-colors">
+                                    <Icon name="search" size="sm" />
                                 </span>
-                                <span className="text-lg relative z-10">Adicionar Primeiro Cliente</span>
-                            </button>
-                        </div>
-                    ) : filteredActiveEntries.length === 0 ? (
-                        <div className="py-20 text-center text-text-muted font-medium bg-bg-subtle/50 border border-dashed border-border-subtle rounded-[2rem]">
-                            Nenhum resultado para "<span className="text-text-primary">{searchQuery}</span>"
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            {filteredActiveEntries.map((entry: any, index: number) => (
-                                <WaitlistCard
-                                    key={entry.id}
-                                    entry={entry}
-                                    index={index}
-                                    metrics={metrics}
-                                    settings={settings}
-                                    currentTime={currentTime}
-                                    onCall={(id: string) => callMutation.mutate(id)}
-                                    onSeat={(id: string) => seatMutation.mutate(id)}
-                                    onCancel={(id: string) => cancelMutation.mutate(id)}
-                                    onNoShow={(id: string) => noShowMutation.mutate(id)}
+                                <input
+                                    type="text"
+                                    placeholder="Buscar na fila..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="block w-full pl-11 pr-4 py-4 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-400 transition-all shadow-xl shadow-slate-200/40 font-medium"
                                 />
-                            ))}
+                            </div>
                         </div>
-                    )}
+                    </section>
+
+                    {/* 3. QUEUE LIST */}
+                    <section className="space-y-8">
+                        {activeEntries.length === 0 ? (
+                            <div className="py-24 flex flex-col items-center justify-center text-center animate-fade-in bg-white/40 backdrop-blur-md rounded-[3rem] border border-white shadow-2xl shadow-amber-500/5">
+                                {/* Enhanced Illustration Group */}
+                                <div className="relative mb-12 animate-float">
+                                    <div className="relative flex items-center justify-center">
+                                        <div className="absolute w-72 h-72 bg-amber-400/20 rounded-full blur-[80px]"></div>
+                                        <div className="relative bg-white p-10 rounded-full border border-amber-100 shadow-[0_20px_50px_rgba(217,119,6,0.15)]">
+                                            <div className="bg-amber-50 p-8 rounded-full shadow-inner">
+                                                <span className="material-symbols-outlined text-[80px] text-amber-600" style={{ fontVariationSettings: "'wght' 300, 'FILL' 1" }}>
+                                                    groups_3
+                                                </span>
+                                            </div>
+                                            <div className="absolute -top-4 -right-4 bg-amber-500 text-white p-4 rounded-[2rem] shadow-2xl border-4 border-white transform rotate-12">
+                                                <span className="material-symbols-outlined text-xl">auto_awesome</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="max-w-md mx-auto space-y-4 mb-10 px-6">
+                                    <h2 className="text-3xl font-black text-slate-900 tracking-tight font-display uppercase tracking-widest">Aguardando</h2>
+                                    <p className="text-slate-500 text-lg leading-relaxed font-medium">
+                                        Sua fila está vazia. Comece a transformar esperas em sorrisos agora mesmo.
+                                    </p>
+                                </div>
+
+                                <button 
+                                    onClick={() => handleOpenModal()}
+                                    className="group relative bg-amber-600 text-white hover:bg-amber-700 font-black px-12 py-6 rounded-3xl flex items-center gap-4 transition-all shadow-2xl shadow-amber-600/40 hover:shadow-amber-600/50 active:scale-95 font-display uppercase tracking-[0.2em] text-sm"
+                                >
+                                    <span className="material-symbols-outlined text-2xl relative z-10" style={{ fontVariationSettings: "'FILL' 1" }}>
+                                        person_add
+                                    </span>
+                                    <span className="relative z-10">Novo Atendimento</span>
+                                </button>
+                            </div>
+                        ) : filteredActiveEntries.length === 0 ? (
+                            <div className="py-20 text-center text-slate-500 font-bold bg-white/30 backdrop-blur-sm border-2 border-dashed border-amber-200/50 rounded-[3rem] font-display uppercase tracking-widest text-xs">
+                                Nenhum cliente encontrado para "<span className="text-amber-600">{searchQuery}</span>"
+                            </div>
+                        ) : (
+                            <div className="space-y-8">
+                                {/* First Item Highlighted */}
+                                {firstEntry && (
+                                    <WaitlistCard
+                                        entry={firstEntry}
+                                        index={waitlist.findIndex((e: any) => e.id === firstEntry.id)}
+                                        variant="highlight"
+                                        metrics={metrics}
+                                        settings={settings}
+                                        currentTime={currentTime}
+                                        onCall={(id: string) => callMutation.mutate(id)}
+                                        onSeat={(id: string) => seatMutation.mutate(id)}
+                                        onCancel={(id: string) => cancelMutation.mutate(id)}
+                                        onNoShow={(id: string) => noShowMutation.mutate(id)}
+                                    />
+                                )}
+
+                                {/* Subsequent Items in a List Style - Glass Container */}
+                                {remainingEntries.length > 0 && (
+                                    <div className="bg-white/50 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-900/5 ring-1 ring-white/20">
+                                        <div className="divide-y divide-amber-100/50">
+                                            {remainingEntries.map((entry: any) => (
+                                                <WaitlistCard
+                                                    key={entry.id}
+                                                    entry={entry}
+                                                    index={waitlist.findIndex((e: any) => e.id === entry.id)}
+                                                    variant="row"
+                                                    metrics={metrics}
+                                                    settings={settings}
+                                                    currentTime={currentTime}
+                                                    onCall={(id: string) => callMutation.mutate(id)}
+                                                    onSeat={(id: string) => seatMutation.mutate(id)}
+                                                    onCancel={(id: string) => cancelMutation.mutate(id)}
+                                                    onNoShow={(id: string) => noShowMutation.mutate(id)}
+                                                />
+                                            ))}
+                                        </div>
+                                        
+                                        {/* Footer Info - Subtly Frosted */}
+                                        <div className="bg-white/30 p-5 flex items-center justify-between border-t border-amber-100/50">
+                                            <p className="text-[10px] text-amber-900/50 font-black uppercase tracking-widest font-display">Mostrando {filteredActiveEntries.length} de {activeEntries.length} ativos</p>
+                                            <button className="text-amber-600 font-black text-[10px] uppercase tracking-widest font-display hover:text-amber-700 transition-all">Ver Fila Completa</button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </section>
+
+                    {/* 4. INSIGHTS BENTO GRID - Glassmorphism */}
+                    <section className="grid grid-cols-1 gap-6 md:grid-cols-3 pt-6 border-t border-amber-100">
+                        <div className="bg-white/60 backdrop-blur-lg border border-white/80 rounded-[2rem] p-8 shadow-xl shadow-slate-900/5 hover:shadow-2xl transition-all group relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+                            <div className="flex items-center justify-between mb-8">
+                                <div className="flex items-center gap-3 text-slate-400 group-hover:text-amber-600 transition-colors">
+                                    <Icon name="waitTime" size="sm" />
+                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] font-display">Espera Média</span>
+                                </div>
+                                <div className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full flex items-center gap-1 border border-emerald-100 shadow-sm">
+                                    <Icon name="trendingDown" size="xs" />
+                                    <span className="text-[10px] font-black font-display">2min</span>
+                                </div>
+                            </div>
+                            <div className="flex items-baseline gap-2">
+                                <p className="text-6xl font-black text-amber-600 tracking-tighter font-display leading-none">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}</p>
+                                <p className="text-xl font-black text-slate-300 font-display">min</p>
+                            </div>
+                            <p className="text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest font-display">Em relação à última hora</p>
+                        </div>
+
+                        <div className="bg-white/60 backdrop-blur-lg border border-white/80 rounded-[2rem] p-8 shadow-xl shadow-slate-900/5 hover:shadow-2xl transition-all group relative overflow-hidden">
+                            <div className="flex items-center gap-3 mb-8 text-slate-400 group-hover:text-amber-600 transition-colors">
+                                <Icon name="activity" size="sm" />
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] font-display">Fluxo Atual</span>
+                            </div>
+                            <p className="text-6xl font-black text-slate-900 tracking-tighter font-display leading-none">Alta</p>
+                            <div className="flex items-center gap-2 mt-4 text-slate-400 bg-slate-50 py-2 px-3 rounded-xl border border-slate-100 w-fit">
+                                <Icon name="waitTime" size="xs" />
+                                <p className="text-[10px] font-black uppercase tracking-widest font-display">Pico às 20:30</p>
+                            </div>
+                        </div>
+
+                        <div className="bg-white/60 backdrop-blur-lg border border-white/80 rounded-[2rem] p-8 shadow-xl shadow-slate-900/5 hover:shadow-2xl transition-all group relative overflow-hidden">
+                            <div className="flex items-center gap-3 mb-8 text-slate-400 group-hover:text-amber-600 transition-colors">
+                                <Icon name="users" size="sm" />
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] font-display">Total na Fila</span>
+                            </div>
+                            <p className="text-6xl font-black text-slate-900 tracking-tighter font-display leading-none">{activeEntries.length}</p>
+                            <p className="text-[10px] font-black text-slate-400 mt-4 uppercase tracking-widest font-display">Clientes aguardando</p>
+                        </div>
+                    </section>
+
+                    {/* Footer Nav removed as per design (handled by Layout) */}
                 </div>
 
                 {/* MODAL DE ADICIONAR REFINADO */}
@@ -447,7 +512,7 @@ export function Waitlist() {
                                 required
                             />
                             {isLookingUp && (
-                                <p className="text-[10px] font-bold text-primary-500 flex items-center gap-2 px-1">
+                                <p className="text-[10px] font-bold text-amber-500 flex items-center gap-2 px-1">
                                     <Spinner size="sm" />
                                     Buscando cadastro...
                                 </p>
@@ -505,7 +570,7 @@ export function Waitlist() {
                             </Button>
                             <Button
                                 type="submit"
-                                className="flex-2 rounded-xl h-12 shadow-md"
+                                className="flex-2 bg-amber-600 text-white rounded-xl h-12 shadow-md shadow-amber-600/20 hover:bg-amber-700"
                                 isLoading={createMutation.isPending}
                             >
                                 Adicionar à Fila

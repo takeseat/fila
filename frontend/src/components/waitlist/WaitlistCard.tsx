@@ -1,8 +1,7 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { format } from 'date-fns';
-import { Card, Button, Badge, Progress } from '../ui';
-import { Icon } from '../../design-system/icons/Icon';
+import { Button, Icon } from '../ui';
+import { Icon as DesignIcon } from '../../design-system/icons/Icon';
 
 interface WaitlistEntry {
     id: string;
@@ -29,7 +28,6 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    // Close menu when clicking outside
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -56,16 +54,16 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
                 className="px-2"
                 disabled={isLoading}
             >
-                <Icon name="more" size="sm" />
+                <DesignIcon name="more" size="sm" />
             </Button>
 
             {isOpen && (
                 <div className="absolute right-0 top-full mt-1 bg-bg-surface border border-border-subtle rounded-lg shadow-md z-[1000] min-w-[160px] py-1">
                     <button
                         onClick={handleCancel}
-                        className="w-full px-4 py-2 text-left text-sm text-danger-600 hover:bg-danger-50 flex items-center gap-2 transition-colors"
+                        className="w-full px-4 py-2 text-left text-sm text-text-error hover:bg-bg-error/10 flex items-center gap-2 transition-colors"
                     >
-                        <Icon name="close" size="sm" tone="error" />
+                        <DesignIcon name="close" size="sm" tone="error" />
                         {cancelLabel || t('actions.cancel')}
                     </button>
                 </div>
@@ -77,6 +75,7 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
 interface WaitlistCardProps {
     entry: WaitlistEntry;
     index: number;
+    variant?: 'highlight' | 'row';
     metrics?: {
         averageWaitSeconds: number;
         isFallbackUsed?: boolean;
@@ -101,6 +100,7 @@ interface WaitlistCardProps {
 export function WaitlistCard({
     entry,
     index,
+    variant = 'highlight',
     metrics,
     settings,
     currentTime,
@@ -112,30 +112,13 @@ export function WaitlistCard({
 }: WaitlistCardProps) {
     const { t } = useTranslation('waitlist');
 
-    // Status Badge Logic
-    const getStatusBadge = (status: string) => {
-        const variants: Record<string, 'warning' | 'info' | 'success' | 'neutral' | 'danger'> = {
-            WAITING: 'warning',
-            CALLED: 'info',
-            SEATED: 'success',
-            CANCELLED: 'neutral',
-            NO_SHOW: 'danger',
-        };
-
-        const labels: Record<string, string> = {
-            WAITING: t('status.WAITING'),
-            CALLED: t('status.CALLED'),
-            SEATED: t('status.SEATED'),
-            CANCELLED: t('status.CANCELLED'),
-            NO_SHOW: t('status.NO_SHOW'),
-        };
-
-        return (
-            <Badge variant={variants[status] || 'neutral'} size="md">
-                {labels[status] || status}
-            </Badge>
-        );
-    };
+    // Initials for Avatar
+    const initials = entry.customerName
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
 
     // Metrics Calculation
     const { elapsedString, progress, etaString, variant: progressVariant } = useMemo(() => {
@@ -143,227 +126,123 @@ export function WaitlistCard({
         const start = new Date(entry.createdAt).getTime();
         const elapsedSeconds = Math.max(0, (now - start) / 1000);
 
-        // Elapsed time formatting (mm:ss)
         const elapsedMinutes = Math.floor(elapsedSeconds / 60);
-        const elapsedRemSeconds = Math.floor(elapsedSeconds % 60);
-        const elapsedString = `${elapsedMinutes.toString().padStart(2, '0')}:${elapsedRemSeconds.toString().padStart(2, '0')}`;
+        const elapsedString = `${elapsedMinutes} min`;
 
-        // If not waiting, just return elapsed logic
         if (entry.status !== 'WAITING') {
             return { elapsedString, progress: 0, etaString: '', variant: 'default' };
         }
 
         const avgWaitSeconds = metrics?.averageWaitSeconds || 0;
-
         let progress = 0;
         let variant: 'success' | 'warning' | 'danger' = 'success';
         let etaString = '';
-        let isOverdue = false;
 
         if (avgWaitSeconds > 0) {
             progress = Math.min((elapsedSeconds / avgWaitSeconds) * 100, 100);
             const remainingSeconds = Math.max(0, avgWaitSeconds - elapsedSeconds);
-
-            if (remainingSeconds === 0) {
-                isOverdue = true;
-                etaString = t('entry.callingAnytime');
-            } else {
-                const remMin = Math.floor(remainingSeconds / 60);
-                const remSec = Math.floor(remainingSeconds % 60);
-                etaString = `~ ${remMin.toString().padStart(2, '0')}:${remSec.toString().padStart(2, '0')}`;
-            }
-        } else {
-            etaString = t('entry.calculating');
+            const remMin = Math.floor(remainingSeconds / 60);
+            etaString = `${remMin} min`;
         }
 
         if (progress > 75) variant = 'warning';
-        if (progress >= 100 || isOverdue) variant = 'danger';
+        if (progress >= 100) variant = 'danger';
 
         return { elapsedString, progress, etaString, variant };
-    }, [entry.createdAt, entry.status, metrics?.averageWaitSeconds, currentTime, t]);
+    }, [entry.createdAt, entry.status, metrics?.averageWaitSeconds, currentTime]);
 
-    // Alert Status Logic
-    const alertStatus = useMemo(() => {
-        if (!settings) return null;
-        const now = currentTime.getTime();
-
-        if (entry.status === 'WAITING' && settings.waitingAlertMinutes) {
-            const createdAt = new Date(entry.createdAt).getTime();
-            const waitingMinutes = (now - createdAt) / 60000;
-            if (waitingMinutes >= settings.waitingAlertMinutes) {
-                return 'waiting';
-            }
-        }
-
-        if (entry.status === 'CALLED' && settings.calledAlertMinutes && entry.calledAt) {
-            const calledAt = new Date(entry.calledAt).getTime();
-            const calledMinutes = (now - calledAt) / 60000;
-            if (calledMinutes >= settings.calledAlertMinutes) {
-                return 'called';
-            }
-        }
-
-        return null;
-    }, [entry.status, entry.createdAt, entry.calledAt, settings, currentTime]);
-
-    // Styles based on alert status
-    let cardBorderClass = '';
-    let timerClass = 'text-text-primary';
-    let badgeContent = null;
-
-    if (alertStatus === 'waiting') {
-        cardBorderClass = 'border-l-4 border-l-warning-500 bg-warning-50/10';
-        timerClass = 'text-warning-700 font-bold';
-        badgeContent = (
-            <div className="absolute top-0 right-0 p-2 flex items-center gap-1">
-                <span className="flex h-3 w-3 relative mr-1">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-warning-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-warning-500"></span>
-                </span>
-                <span className="bg-warning-100 text-warning-700 text-xs px-2 py-0.5 rounded-full font-medium border border-warning-200">
-                    <Icon name="warning" size="xs" className="mr-1 inline" />
-                    {t('entry.delay')}
-                </span>
-            </div>
-        );
-    } else if (alertStatus === 'called') {
-        cardBorderClass = 'border-l-4 border-l-danger-500 bg-danger-50/10';
-        timerClass = 'text-danger-700 font-bold';
-        badgeContent = (
-            <div className="absolute top-0 right-0 p-2 flex items-center gap-1">
-                <span className="flex h-3 w-3 relative mr-1">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-danger-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-danger-500"></span>
-                </span>
-                <span className="bg-danger-100 text-danger-700 text-xs px-2 py-0.5 rounded-full font-medium border border-danger-200">
-                    <Icon name="notify" size="xs" className="mr-1 inline" />
-                    {t('entry.delaySeating')}
-                </span>
+    if (variant === 'row') {
+        return (
+            <div className="p-4 sm:p-6 flex items-center justify-between hover:bg-white/50 transition-colors group backdrop-blur-sm">
+                <div className="flex items-center gap-4 sm:gap-6">
+                    <span className="text-xs font-bold text-amber-900/40 w-6 text-center">{index + 1}</span>
+                    <div className="w-10 h-10 rounded-full bg-white border border-amber-100 flex items-center justify-center text-amber-700 font-bold text-xs shadow-sm">
+                        {initials}
+                    </div>
+                    <div>
+                        <h4 className="text-sm font-bold text-slate-900 font-display">
+                            {entry.customerName} 
+                            <span className="text-[10px] font-normal text-slate-400 ml-2">
+                                {entry.customerPhone.slice(-4).padStart(entry.customerPhone.length, '*')}
+                            </span>
+                        </h4>
+                        <span className="text-xs text-slate-500">
+                            Mesa p/ {entry.partySize} • {entry.status === 'CALLED' ? 'Chamado' : 'Aguardando'}
+                        </span>
+                    </div>
+                </div>
+                <div className="flex items-center gap-8">
+                    <div className="hidden sm:block text-right">
+                        <p className="text-[10px] font-bold text-amber-900/40 uppercase tracking-wider">Espera</p>
+                        <p className="text-sm font-semibold text-slate-900 font-display">{elapsedString}</p>
+                    </div>
+                    <OverflowMenu
+                        onCancel={() => onCancel(entry.id)}
+                        isLoading={isActionLoading.cancel}
+                        t={t}
+                    />
+                </div>
             </div>
         );
     }
 
+    // Highlight Variant - Neumorphic + Glass
     return (
-        <Card
-            padding="none"
-            className={`group hover:shadow-lg transition-all duration-300 relative border-border-subtle hover:border-primary-200 overflow-hidden rounded-2xl bg-bg-surface ${cardBorderClass}`}
-        >
-            {badgeContent}
+        <div className="bg-white/70 backdrop-blur-2xl border border-white/50 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row justify-between items-center shadow-[0_20px_50px_-12px_rgba(217,119,6,0.15)] relative overflow-hidden group transition-all transform hover:scale-[1.01] ring-1 ring-white/20">
+            {/* Soft Ambient Glow */}
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl"></div>
+            
+            {/* Status Badge - Neumorphic */}
+            <div className="absolute top-0 right-0">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white bg-amber-600 px-6 py-3 rounded-bl-3xl shadow-lg shadow-amber-600/20 font-display">
+                    Próximo da Fila
+                </span>
+            </div>
 
-            <div className="p-5 flex flex-col gap-4">
-                {/* Header Section */}
-                <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-4">
-                        {/* Position Avatar - Minimalist */}
-                        <div className="w-10 h-10 rounded-full bg-bg-subtle flex items-center justify-center text-text-secondary font-bold text-sm border border-border-subtle group-hover:bg-primary-50 group-hover:text-primary-600 group-hover:border-primary-100 transition-colors">
-                            {index + 1}
-                        </div>
-                        <div className="space-y-0.5">
-                            <div className="flex items-center gap-2">
-                                <h3 className="text-lg font-semibold text-text-primary tracking-tight">
-                                    {entry.customerName}
-                                </h3>
-                                {index === 0 && entry.status === 'WAITING' && (
-                                    <span className="px-2 py-0.5 bg-primary-50 text-primary-600 text-[10px] font-bold uppercase tracking-wider rounded-full border border-primary-100">
-                                        Próximo
-                                    </span>
-                                )}
-                            </div>
-                            <div className="flex items-center gap-3 text-sm font-medium text-text-muted">
-                                <span className="flex items-center gap-1.5">
-                                    <Icon name="users" size="xs" className="opacity-70" />
-                                    {entry.partySize} {t('entry.partySize')}
-                                </span>
-                                <span className="w-1 h-1 bg-border-default rounded-full" />
-                                <span className={`flex items-center gap-1.5 ${timerClass} font-medium`}>
-                                    <Icon name="waitTime" size="xs" className="opacity-70" />
-                                    {elapsedString}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    {getStatusBadge(entry.status)}
+            <div className="flex items-center gap-8 w-full md:w-auto mb-8 md:mb-0 pl-2 z-10">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-amber-600 text-white border-4 border-white/80 flex items-center justify-center text-2xl md:text-3xl font-bold shrink-0 shadow-[0_10px_25px_-5px_rgba(217,119,6,0.4)]">
+                    {initials}
                 </div>
-
-                {/* Progress Bar - Discrete */}
-                {entry.status === 'WAITING' && (
-                    <div className="space-y-1.5">
-                        <div className="flex justify-between items-center px-0.5">
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-text-tertiary">
-                                {t('entry.eta', { time: etaString })}
-                            </span>
-                            <span className="text-[10px] font-bold text-text-tertiary">{Math.round(progress)}%</span>
-                        </div>
-                        <Progress value={progress} variant={progressVariant as any} size="sm" className="bg-bg-subtle" />
-                    </div>
-                )}
-
-                {/* Called Info - Clean */}
-                {entry.status === 'CALLED' && (
-                    <div className="flex items-center justify-between px-3 py-2 bg-indigo-50/50 rounded-lg border border-indigo-100/50">
-                        <span className="text-xs text-indigo-700 font-medium">{t('entry.customerCalled')}</span>
-                        <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-tighter">
-                            {format(new Date(entry.calledAt || entry.updatedAt), 'HH:mm')}
+                <div>
+                    <h3 className="text-xl md:text-3xl font-black text-slate-900 leading-tight font-display tracking-tight">
+                        {entry.customerName} 
+                        <span className="text-xs font-normal text-slate-400 ml-3">
+                            {entry.customerPhone.slice(-4).padStart(entry.customerPhone.length, '*')}
                         </span>
+                    </h3>
+                    <div className="flex flex-wrap gap-6 mt-4">
+                        <div className="flex items-center gap-2 text-slate-600 text-sm md:text-base font-semibold">
+                            <DesignIcon name="users" size="sm" className="text-amber-600" />
+                            {entry.partySize} Pessoas
+                        </div>
+                        <div className="flex items-center gap-2 text-slate-600 text-sm md:text-base border-l border-amber-100 pl-6 font-semibold">
+                            <DesignIcon name="waitTime" size="sm" className="text-amber-600" />
+                            Esperando há {elapsedString}
+                        </div>
                     </div>
-                )}
-
-                {/* Actions Footer */}
-                <div className="flex gap-2 items-center pt-2">
-                    {entry.status === 'WAITING' && (
-                        <>
-                            <Button
-                                size="md"
-                                variant="primary"
-                                onClick={() => onCall(entry.id)}
-                                className="flex-[2] rounded-xl shadow-sm hover:shadow-md transition-all font-semibold text-sm"
-                                isLoading={isActionLoading.call}
-                            >
-                                <Icon name="notify" size="sm" className="mr-2" />
-                                {t('actions.call')}
-                            </Button>
-                            <Button
-                                size="md"
-                                variant="outline"
-                                onClick={() => onSeat(entry.id)}
-                                className="flex-1 rounded-xl border-border-default text-text-secondary hover:bg-bg-subtle hover:text-text-primary transition-all font-medium text-sm"
-                                isLoading={isActionLoading.seat}
-                            >
-                                {t('actions.seat')}
-                            </Button>
-                            <OverflowMenu
-                                onCancel={() => onCancel(entry.id)}
-                                isLoading={isActionLoading.cancel}
-                                t={t}
-                            />
-                        </>
-                    )}
-                    {entry.status === 'CALLED' && (
-                        <>
-                            <Button
-                                size="md"
-                                variant="primary"
-                                onClick={() => onSeat(entry.id)}
-                                className="flex-[3] rounded-xl shadow-sm hover:shadow-md transition-all font-semibold text-sm"
-                                isLoading={isActionLoading.seat}
-                            >
-                                <Icon name="check" size="sm" className="mr-2" />
-                                {t('actions.seat')}
-                            </Button>
-                            <OverflowMenu
-                                onCancel={() => {
-                                    if (window.confirm(t('actions.noShowConfirm', 'Deseja realmente marcar este cliente como faltoso?'))) {
-                                        onNoShow(entry.id);
-                                    }
-                                }}
-                                cancelLabel={t('actions.noShow')}
-                                isLoading={isActionLoading.noShow}
-                                t={t}
-                            />
-                        </>
-                    )}
                 </div>
             </div>
-        </Card>
+
+            <div className="flex gap-4 w-full md:w-auto z-10">
+                <Button
+                    variant="outline"
+                    onClick={() => onCall(entry.id)}
+                    className="flex-1 md:flex-none h-14 px-8 border-2 border-amber-200 bg-white/50 backdrop-blur-md hover:bg-amber-50 hover:border-amber-500 text-amber-700 font-bold transition-all flex items-center justify-center gap-2 rounded-2xl"
+                    isLoading={isActionLoading.call}
+                >
+                    <DesignIcon name="notify" size="sm" />
+                    Chamar
+                </Button>
+                <Button
+                    variant="primary"
+                    onClick={() => onSeat(entry.id)}
+                    className="flex-1 md:flex-none h-14 px-10 bg-amber-600 text-white rounded-2xl font-black shadow-[0_15px_30px_-5px_rgba(217,119,6,0.3)] hover:bg-amber-700 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 font-display uppercase tracking-widest text-xs"
+                    isLoading={isActionLoading.seat}
+                >
+                    <DesignIcon name="tableService" size="sm" />
+                    Sentar
+                </Button>
+            </div>
+        </div>
     );
 }

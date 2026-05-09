@@ -22,8 +22,8 @@ export function MobileHeader({ title, showMenu = true }: MobileHeaderProps) {
 
     return (
         <>
-            <header className="lg:hidden fixed top-0 left-0 right-0 bg-bg-surface border-b border-border-subtle z-40 safe-area-top">
-                <div className="flex items-center justify-between h-12 px-4">
+            <header className="lg:hidden fixed top-0 left-0 right-0 bg-[#fcf9f8]/80 backdrop-blur-xl border-b border-amber-100/50 z-40 safe-area-top shadow-sm">
+                <div className="flex items-center justify-between h-14 px-6">
                     {/* Title */}
                     <h1 className="text-base font-semibold text-text-primary truncate flex-1">
                         {title}
