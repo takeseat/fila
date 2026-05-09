@@ -236,6 +236,13 @@ export function Waitlist() {
         return () => clearInterval(timer);
     }, []);
 
+    // Listen for the header "Adicionar Cliente" button event
+    useEffect(() => {
+        const handler = () => handleOpenModal();
+        window.addEventListener('openAddCustomerModal', handler);
+        return () => window.removeEventListener('openAddCustomerModal', handler);
+    }, []);
+
     // Filter Logic
     const activeEntries = waitlist.filter((e: any) => e.status === 'WAITING' || e.status === 'CALLED');
     
@@ -349,39 +356,46 @@ export function Waitlist() {
                     {/* 3. QUEUE LIST */}
                     <section className="space-y-8">
                         {activeEntries.length === 0 ? (
-                            <div className="py-24 flex flex-col items-center justify-center text-center animate-fade-in bg-white/40 backdrop-blur-md rounded-[3rem] border border-white shadow-2xl shadow-amber-500/5">
-                                {/* Enhanced Illustration Group */}
-                                <div className="relative mb-12 animate-float">
+                            <div className="relative overflow-hidden flex flex-col items-center justify-center py-20 px-8 bg-gradient-to-br from-white/80 to-slate-50/40 backdrop-blur-xl border border-white/50 rounded-3xl min-h-[480px] shadow-2xl shadow-indigo-500/10">
+                                {/* Dynamic Background Blobs */}
+                                <div className="absolute -top-24 -left-24 w-72 h-72 bg-indigo-600/15 rounded-full blur-[80px] animate-pulse"></div>
+                                <div className="absolute top-1/2 -right-24 w-60 h-60 bg-slate-500/20 rounded-full blur-[80px]" style={{ animationDelay: '2s' }}></div>
+                                <div className="absolute -bottom-24 left-1/4 w-96 h-72 bg-indigo-600/10 rounded-full blur-[100px]" style={{ animationDelay: '4s' }}></div>
+
+                                {/* Illustration */}
+                                <div className="relative mb-10 z-10">
                                     <div className="relative flex items-center justify-center">
-                                        <div className="absolute w-72 h-72 bg-amber-400/20 rounded-full blur-[80px]"></div>
-                                        <div className="relative bg-white p-10 rounded-full border border-amber-100 shadow-[0_20px_50px_rgba(217,119,6,0.15)]">
-                                            <div className="bg-amber-50 p-8 rounded-full shadow-inner">
-                                                <span className="material-symbols-outlined text-[80px] text-amber-600" style={{ fontVariationSettings: "'wght' 300, 'FILL' 1" }}>
-                                                    groups_3
-                                                </span>
+                                        <div className="absolute w-64 h-64 bg-indigo-600/15 rounded-full blur-[60px] animate-pulse"></div>
+                                        <div className="relative bg-gradient-to-br from-white/90 to-slate-50/90 p-10 rounded-full border border-white/80 shadow-[0_24px_48px_-12px_rgba(79,70,229,0.25)]">
+                                            <div className="bg-gradient-to-tr from-indigo-600 via-indigo-500 to-slate-500 p-8 rounded-full shadow-2xl shadow-indigo-600/40 flex items-center justify-center">
+                                                <span className="material-symbols-outlined text-[72px] text-white" style={{ fontVariationSettings: "'wght' 200, 'FILL' 1" }}>groups_3</span>
                                             </div>
-                                            <div className="absolute -top-4 -right-4 bg-amber-500 text-white p-4 rounded-[2rem] shadow-2xl border-4 border-white transform rotate-12">
-                                                <span className="material-symbols-outlined text-xl">auto_awesome</span>
+                                            <div className="absolute -top-6 -right-3 bg-gradient-to-br from-amber-500 to-orange-500 text-white p-3 rounded-2xl shadow-xl border-4 border-white transform rotate-12">
+                                                <span className="material-symbols-outlined text-xl">celebration</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="max-w-md mx-auto space-y-4 mb-10 px-6">
-                                    <h2 className="text-3xl font-black text-slate-900 tracking-tight font-display uppercase tracking-widest">Aguardando</h2>
-                                    <p className="text-slate-500 text-lg leading-relaxed font-medium">
-                                        Sua fila está vazia. Comece a transformar esperas em sorrisos agora mesmo.
+                                {/* Text */}
+                                <div className="text-center max-w-md mx-auto mb-8 relative z-10">
+                                    <h2 className="text-3xl font-bold text-slate-900 mb-3 leading-tight">
+                                        Sua fila de espera,{' '}
+                                        <span className="bg-gradient-to-r from-indigo-600 to-slate-500 bg-clip-text text-transparent">mais vibrante do que nunca.</span>
+                                    </h2>
+                                    <p className="text-slate-500 text-base leading-relaxed">
+                                        Adicione seu primeiro cliente e comece a gerenciar seu fluxo com excelência.
                                     </p>
                                 </div>
 
-                                <button 
+                                {/* CTA */}
+                                <button
                                     onClick={() => handleOpenModal()}
-                                    className="group relative bg-amber-600 text-white hover:bg-amber-700 font-black px-12 py-6 rounded-3xl flex items-center gap-4 transition-all shadow-2xl shadow-amber-600/40 hover:shadow-amber-600/50 active:scale-95 font-display uppercase tracking-[0.2em] text-sm"
+                                    className="group relative bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-10 py-4 rounded-2xl flex items-center gap-3 transition-all shadow-[0_16px_32px_-8px_rgba(79,70,229,0.4)] hover:shadow-indigo-600/50 active:scale-95 overflow-hidden z-10"
                                 >
-                                    <span className="material-symbols-outlined text-2xl relative z-10" style={{ fontVariationSettings: "'FILL' 1" }}>
-                                        person_add
-                                    </span>
-                                    <span className="relative z-10">Novo Atendimento</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+                                    <span className="material-symbols-outlined text-2xl relative z-10" style={{ fontVariationSettings: "'wght' 500" }}>person_add</span>
+                                    <span className="text-base font-bold relative z-10">Adicionar Primeiro Cliente</span>
                                 </button>
                             </div>
                         ) : filteredActiveEntries.length === 0 ? (
@@ -438,46 +452,48 @@ export function Waitlist() {
                         )}
                     </section>
 
-                    {/* 4. INSIGHTS BENTO GRID - Glassmorphism */}
-                    <section className="grid grid-cols-1 gap-6 md:grid-cols-3 pt-6 border-t border-amber-100">
-                        <div className="bg-white/60 backdrop-blur-lg border border-white/80 rounded-[2rem] p-8 shadow-xl shadow-slate-900/5 hover:shadow-2xl transition-all group relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
-                            <div className="flex items-center justify-between mb-8">
-                                <div className="flex items-center gap-3 text-slate-400 group-hover:text-amber-600 transition-colors">
-                                    <Icon name="waitTime" size="sm" />
-                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] font-display">Espera Média</span>
+                    {/* 4. INSIGHTS BENTO GRID — Stitch Screen 1 style */}
+                    <section className="grid grid-cols-1 gap-4 md:grid-cols-3 pt-6 border-t border-slate-100">
+                        {/* Card 1: Espera Média */}
+                        <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-2 text-slate-500">
+                                    <Icon name="waitTime" size="sm" tone="info" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">Espera Média</span>
                                 </div>
-                                <div className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full flex items-center gap-1 border border-emerald-100 shadow-sm">
-                                    <Icon name="trendingDown" size="xs" />
-                                    <span className="text-[10px] font-black font-display">2min</span>
+                                <div className="bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <Icon name="trendingDown" size="xs" tone="inherit" />
+                                    <span className="text-[10px] font-bold">2min</span>
                                 </div>
                             </div>
-                            <div className="flex items-baseline gap-2">
-                                <p className="text-6xl font-black text-amber-600 tracking-tighter font-display leading-none">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}</p>
-                                <p className="text-xl font-black text-slate-300 font-display">min</p>
+                            <div className="flex items-baseline gap-1">
+                                <p className="text-5xl font-black text-indigo-600">{metrics ? Math.round(metrics.averageWaitSeconds / 60) : 0}</p>
+                                <p className="text-2xl font-bold text-slate-400">min</p>
                             </div>
-                            <p className="text-[10px] font-bold text-slate-400 mt-4 uppercase tracking-widest font-display">Em relação à última hora</p>
+                            <p className="text-xs text-slate-400 mt-2">Em relação à última hora</p>
                         </div>
 
-                        <div className="bg-white/60 backdrop-blur-lg border border-white/80 rounded-[2rem] p-8 shadow-xl shadow-slate-900/5 hover:shadow-2xl transition-all group relative overflow-hidden">
-                            <div className="flex items-center gap-3 mb-8 text-slate-400 group-hover:text-amber-600 transition-colors">
-                                <Icon name="activity" size="sm" />
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] font-display">Fluxo Atual</span>
+                        {/* Card 2: Fluxo Atual */}
+                        <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+                            <div className="flex items-center gap-2 mb-4 text-slate-500">
+                                <Icon name="activity" size="sm" tone="info" />
+                                <span className="text-xs font-bold uppercase tracking-wider">Fluxo Atual</span>
                             </div>
-                            <p className="text-6xl font-black text-slate-900 tracking-tighter font-display leading-none">Alta</p>
-                            <div className="flex items-center gap-2 mt-4 text-slate-400 bg-slate-50 py-2 px-3 rounded-xl border border-slate-100 w-fit">
-                                <Icon name="waitTime" size="xs" />
-                                <p className="text-[10px] font-black uppercase tracking-widest font-display">Pico às 20:30</p>
+                            <p className="text-5xl font-black text-slate-900">Alta</p>
+                            <div className="flex items-center gap-1.5 mt-3 text-slate-500">
+                                <Icon name="waitTime" size="xs" tone="secondary" />
+                                <p className="text-xs font-medium">Pico esperado para às 20:30</p>
                             </div>
                         </div>
 
-                        <div className="bg-white/60 backdrop-blur-lg border border-white/80 rounded-[2rem] p-8 shadow-xl shadow-slate-900/5 hover:shadow-2xl transition-all group relative overflow-hidden">
-                            <div className="flex items-center gap-3 mb-8 text-slate-400 group-hover:text-amber-600 transition-colors">
-                                <Icon name="users" size="sm" />
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] font-display">Total na Fila</span>
+                        {/* Card 3: Total na Fila */}
+                        <div className="bg-gradient-to-br from-white to-indigo-50/30 border border-slate-200/60 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group">
+                            <div className="flex items-center gap-2 mb-4 text-slate-500">
+                                <Icon name="users" size="sm" tone="info" />
+                                <span className="text-xs font-bold uppercase tracking-wider">Total na Fila</span>
                             </div>
-                            <p className="text-6xl font-black text-slate-900 tracking-tighter font-display leading-none">{activeEntries.length}</p>
-                            <p className="text-[10px] font-black text-slate-400 mt-4 uppercase tracking-widest font-display">Clientes aguardando</p>
+                            <p className="text-5xl font-black text-slate-900">{activeEntries.length}</p>
+                            <p className="text-xs text-slate-500 mt-3 font-medium">Pessoas aguardando atendimento</p>
                         </div>
                     </section>
 

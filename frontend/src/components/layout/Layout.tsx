@@ -63,22 +63,59 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
                 {/* Desktop Header */}
                 {!simple && (
-                    <header className="hidden lg:flex h-16 bg-bg-surface border-b border-border-subtle px-6 items-center justify-between z-30 shadow-sm">
-                        <div className="flex items-center gap-4">
-                            <div className="flex items-center gap-3 cursor-pointer group" onClick={() => navigate('/waitlist')}>
-                                <div className="bg-amber-600 p-2 rounded-xl shadow-lg shadow-amber-600/20 group-hover:scale-110 transition-transform">
+                    <header className="hidden lg:flex h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/60 px-6 items-center justify-between z-30 shadow-sm sticky top-0">
+                        {/* Left: Logo + Nav */}
+                        <div className="flex items-center gap-8">
+                            <div className="flex items-center gap-2.5 cursor-pointer group" onClick={() => navigate('/waitlist')}>
+                                <div className="bg-indigo-600 p-1.5 rounded-lg shadow-sm group-hover:scale-105 transition-transform">
                                     <Icon name="tableService" size="sm" className="text-white" />
                                 </div>
-                                <span className="text-2xl font-black text-slate-900 tracking-tighter font-display">
-                                    Take<span className="text-amber-600">Seat</span>
+                                <span className="text-xl font-bold text-slate-800 tracking-tight">
+                                    Take<span className="text-indigo-600">Seat</span>
                                 </span>
                             </div>
+
+                            {/* Nav Links */}
+                            <nav className="flex items-center gap-1 h-16">
+                                {menuItems.map((item) => {
+                                    const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+                                    return (
+                                        <Link
+                                            key={item.path}
+                                            to={item.path}
+                                            className={`h-full flex items-center px-4 text-sm font-semibold border-b-2 transition-colors ${
+                                                isActive
+                                                    ? 'text-indigo-600 border-indigo-600'
+                                                    : 'text-slate-500 border-transparent hover:text-slate-800 hover:border-slate-300'
+                                            }`}
+                                        >
+                                            {item.label}
+                                        </Link>
+                                    );
+                                })}
+                            </nav>
                         </div>
 
-                        <div className="flex items-center gap-4 relative" ref={dropdownRef}>
+                        {/* Right: Add Button + Avatar */}
+                        <div className="flex items-center gap-3" ref={dropdownRef}>
+                            {/* "Adicionar Cliente" button — shown only on waitlist page */}
+                            {location.pathname === '/waitlist' && (
+                                <button
+                                    onClick={() => {
+                                        // Dispatch a custom event so Waitlist.tsx can open its modal
+                                        window.dispatchEvent(new CustomEvent('openAddCustomerModal'));
+                                    }}
+                                    className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                                >
+                                    <Icon name="add" size="xs" className="text-white" />
+                                    Adicionar Cliente
+                                </button>
+                            )}
+
+                            {/* Avatar / User Dropdown */}
                             <button
                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                                className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-xs flex-shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all focus:outline-none"
+                                className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white font-semibold text-sm flex-shrink-0 hover:ring-2 hover:ring-indigo-300 transition-all focus:outline-none border border-white shadow-sm"
                                 aria-label="Menu do usuário"
                             >
                                 {user?.name.charAt(0).toUpperCase()}
@@ -86,27 +123,27 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
 
                             {/* User Dropdown */}
                             {isDropdownOpen && (
-                                <div className="absolute top-12 right-0 mt-2 w-64 bg-bg-surface border border-border-default rounded-xl shadow-lg z-[100] overflow-hidden animate-slide-in-down">
+                                <div className="absolute top-16 right-6 mt-1 w-64 bg-white border border-slate-200 rounded-xl shadow-xl z-[100] overflow-hidden">
                                     {/* Seção 1 - Usuário */}
-                                    <div className="p-4 border-b border-border-default">
-                                        <p className="text-sm font-semibold text-text-primary truncate">{user?.name}</p>
-                                        <p className="text-xs text-text-muted truncate">{t('common:roles.' + user?.role)}</p>
+                                    <div className="p-4 border-b border-slate-100">
+                                        <p className="text-sm font-semibold text-slate-900 truncate">{user?.name}</p>
+                                        <p className="text-xs text-slate-500 truncate">{t('common:roles.' + user?.role)}</p>
                                     </div>
                                     
-                                    {/* Seção 2 - Contexto (Restaurante) */}
-                                    <div className="px-4 py-3 border-b border-border-default bg-bg-subtle">
+                                    {/* Seção 2 - Restaurante */}
+                                    <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
                                         <div className="flex items-center gap-2">
                                             <Icon name="home" size="xs" tone="secondary" />
-                                            <p className="text-xs font-medium text-text-secondary truncate">{restaurant?.name}</p>
+                                            <p className="text-xs font-medium text-slate-600 truncate">{restaurant?.name}</p>
                                         </div>
                                     </div>
 
                                     {/* Seção 3 - Navegação */}
-                                    <div className="p-2 border-b border-border-default">
+                                    <div className="p-2 border-b border-slate-100">
                                         <Link
                                             to="/settings/profile"
                                             onClick={() => setIsDropdownOpen(false)}
-                                            className="flex items-center gap-3 px-3 py-2 text-sm text-text-secondary hover:bg-bg-subtle hover:text-text-primary rounded-lg transition-colors"
+                                            className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"
                                         >
                                             <Icon name="users" size="xs" tone="inherit" />
                                             {t('user.profile')}
@@ -114,7 +151,7 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                         <Link
                                             to="/settings"
                                             onClick={() => setIsDropdownOpen(false)}
-                                            className="flex items-center gap-3 px-3 py-2 text-sm text-text-secondary hover:bg-bg-subtle hover:text-text-primary rounded-lg transition-colors"
+                                            className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"
                                         >
                                             <Icon name="settings" size="xs" tone="inherit" />
                                             {t('menu.settings')}
@@ -122,21 +159,18 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                                         <Link
                                             to="/reports"
                                             onClick={() => setIsDropdownOpen(false)}
-                                            className="flex items-center gap-3 px-3 py-2 text-sm text-text-secondary hover:bg-bg-subtle hover:text-text-primary rounded-lg transition-colors"
+                                            className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"
                                         >
                                             <Icon name="reports" size="xs" tone="inherit" />
                                             {t('menu.reports')}
                                         </Link>
                                     </div>
 
-                                    {/* Seção 4 - Ações */}
+                                    {/* Seção 4 - Logout */}
                                     <div className="p-2">
                                         <button
-                                            onClick={() => {
-                                                setIsDropdownOpen(false);
-                                                handleLogout();
-                                            }}
-                                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-status-danger hover:bg-status-danger-bg rounded-lg transition-colors"
+                                            onClick={() => { setIsDropdownOpen(false); handleLogout(); }}
+                                            className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                         >
                                             <Icon name="logout" size="xs" tone="inherit" />
                                             {t('user.logout')}
