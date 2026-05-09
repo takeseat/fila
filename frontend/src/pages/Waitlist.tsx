@@ -287,7 +287,7 @@ export function Waitlist() {
             <MobilePageHeader
                 title="Sequência da Fila"
                 actions={
-                    <Button onClick={() => handleOpenModal()} size="sm" leftIcon={<Icon name="add" size="sm" />} className="bg-amber-600 text-white rounded-xl shadow-lg shadow-amber-600/20">
+                    <Button onClick={() => handleOpenModal()} size="sm" leftIcon={<Icon name="add" size="sm" />} className="bg-indigo-600 text-white rounded-xl shadow-lg shadow-indigo-600/20">
                         Adicionar
                     </Button>
                 }
@@ -295,8 +295,8 @@ export function Waitlist() {
 
             <PageContent className="min-h-screen bg-[#fcf9f8] relative overflow-hidden">
                 {/* Background Blobs (Organic Shell) */}
-                <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-amber-400/20 rounded-full blur-[120px] -z-10 animate-pulse"></div>
-                <div className="absolute top-[20%] -left-[10%] w-[30%] h-[30%] bg-orange-300/10 rounded-full blur-[100px] -z-10"></div>
+                <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-indigo-400/20 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+                <div className="absolute top-[20%] -left-[10%] w-[30%] h-[30%] bg-indigo-300/10 rounded-full blur-[100px] -z-10"></div>
                 
                 <div className="p-6 sm:p-10 lg:p-12 space-y-12 animate-fade-in max-w-6xl mx-auto relative z-10">
                     
@@ -309,7 +309,7 @@ export function Waitlist() {
                         <Button 
                             onClick={() => handleOpenModal()} 
                             size="lg" 
-                            className="bg-amber-600 text-white shadow-2xl shadow-amber-600/30 px-10 py-7 rounded-[2rem] hover:bg-amber-700 hover:scale-[1.02] active:scale-[0.98] transition-all font-display uppercase tracking-[0.2em] text-xs font-black"
+                            className="bg-indigo-600 text-white shadow-2xl shadow-indigo-600/30 px-10 py-7 rounded-[2rem] hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all font-display uppercase tracking-[0.2em] text-xs font-black"
                             leftIcon={<Icon name="add" size="sm" />}
                         >
                             Novo Cliente
@@ -320,7 +320,7 @@ export function Waitlist() {
                     <section className="space-y-6">
                         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                             <div className="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm w-full md:w-auto">
-                                <span className="text-[10px] font-black text-amber-900/40 uppercase tracking-widest whitespace-nowrap font-display">Pessoas:</span>
+                                <span className="text-[10px] font-black text-indigo-900/40 uppercase tracking-widest whitespace-nowrap font-display">Pessoas:</span>
                                 <div className="flex gap-2">
                                     {['all', 1, 2, 3, 4, '5+'].map((size) => (
                                         <button
@@ -328,8 +328,8 @@ export function Waitlist() {
                                             onClick={() => setPartySizeFilter(size as any)}
                                             className={`h-10 min-w-[48px] px-4 flex items-center justify-center rounded-2xl text-xs font-bold transition-all border ${
                                                 partySizeFilter === size 
-                                                ? 'bg-amber-600 text-white border-amber-600 shadow-lg shadow-amber-600/30 scale-105' 
-                                                : 'bg-white/80 border-amber-100 text-slate-500 hover:border-amber-400 hover:text-amber-600'
+                                                ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/30 scale-105' 
+                                                : 'bg-white/80 border-indigo-100 text-slate-500 hover:border-indigo-400 hover:text-indigo-600'
                                             }`}
                                         >
                                             {size === 'all' ? 'Todos' : size}
@@ -339,7 +339,7 @@ export function Waitlist() {
                             </div>
 
                             <div className="relative w-full md:max-w-xs group">
-                                <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-amber-600 transition-colors">
+                                <span className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
                                     <Icon name="search" size="sm" />
                                 </span>
                                 <input
@@ -347,7 +347,7 @@ export function Waitlist() {
                                     placeholder="Buscar na fila..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="block w-full pl-11 pr-4 py-4 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-400 transition-all shadow-xl shadow-slate-200/40 font-medium"
+                                    className="block w-full pl-11 pr-4 py-4 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 transition-all shadow-xl shadow-slate-200/40 font-medium"
                                 />
                             </div>
                         </div>
@@ -370,7 +370,7 @@ export function Waitlist() {
                                             <div className="bg-gradient-to-tr from-indigo-600 via-indigo-500 to-slate-500 p-8 rounded-full shadow-2xl shadow-indigo-600/40 flex items-center justify-center">
                                                 <span className="material-symbols-outlined text-[72px] text-white" style={{ fontVariationSettings: "'wght' 200, 'FILL' 1" }}>groups_3</span>
                                             </div>
-                                            <div className="absolute -top-6 -right-3 bg-gradient-to-br from-amber-500 to-orange-500 text-white p-3 rounded-2xl shadow-xl border-4 border-white transform rotate-12">
+                                            <div className="absolute -top-6 -right-3 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-2xl shadow-xl border-4 border-white transform rotate-12">
                                                 <span className="material-symbols-outlined text-xl">celebration</span>
                                             </div>
                                         </div>
@@ -399,8 +399,8 @@ export function Waitlist() {
                                 </button>
                             </div>
                         ) : filteredActiveEntries.length === 0 ? (
-                            <div className="py-20 text-center text-slate-500 font-bold bg-white/30 backdrop-blur-sm border-2 border-dashed border-amber-200/50 rounded-[3rem] font-display uppercase tracking-widest text-xs">
-                                Nenhum cliente encontrado para "<span className="text-amber-600">{searchQuery}</span>"
+                            <div className="py-20 text-center text-slate-500 font-bold bg-white/30 backdrop-blur-sm border-2 border-dashed border-indigo-200/50 rounded-[3rem] font-display uppercase tracking-widest text-xs">
+                                Ningum cliente encontrado para "<span className="text-indigo-600">{searchQuery}</span>"
                             </div>
                         ) : (
                             <div className="space-y-8">
@@ -423,7 +423,7 @@ export function Waitlist() {
                                 {/* Subsequent Items in a List Style - Glass Container */}
                                 {remainingEntries.length > 0 && (
                                     <div className="bg-white/50 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-900/5 ring-1 ring-white/20">
-                                        <div className="divide-y divide-amber-100/50">
+                                        <div className="divide-y divide-indigo-100/50">
                                             {remainingEntries.map((entry: any) => (
                                                 <WaitlistCard
                                                     key={entry.id}
@@ -442,9 +442,9 @@ export function Waitlist() {
                                         </div>
                                         
                                         {/* Footer Info - Subtly Frosted */}
-                                        <div className="bg-white/30 p-5 flex items-center justify-between border-t border-amber-100/50">
-                                            <p className="text-[10px] text-amber-900/50 font-black uppercase tracking-widest font-display">Mostrando {filteredActiveEntries.length} de {activeEntries.length} ativos</p>
-                                            <button className="text-amber-600 font-black text-[10px] uppercase tracking-widest font-display hover:text-amber-700 transition-all">Ver Fila Completa</button>
+                                        <div className="bg-white/30 p-5 flex items-center justify-between border-t border-indigo-100/50">
+                                            <p className="text-[10px] text-indigo-900/50 font-black uppercase tracking-widest font-display">Mostrando {filteredActiveEntries.length} de {activeEntries.length} ativos</p>
+                                            <button className="text-indigo-600 font-black text-[10px] uppercase tracking-widest font-display hover:text-indigo-700 transition-all">Ver Fila Completa</button>
                                         </div>
                                     </div>
                                 )}
@@ -519,7 +519,7 @@ export function Waitlist() {
                                 required
                             />
                             {isLookingUp && (
-                                <p className="text-[10px] font-bold text-amber-500 flex items-center gap-2 px-1">
+                                <p className="text-[10px] font-bold text-indigo-500 flex items-center gap-2 px-1">
                                     <Spinner size="sm" />
                                     Buscando cadastro...
                                 </p>
@@ -577,7 +577,7 @@ export function Waitlist() {
                             </Button>
                             <Button
                                 type="submit"
-                                className="flex-2 bg-amber-600 text-white rounded-xl h-12 shadow-md shadow-amber-600/20 hover:bg-amber-700"
+                                className="flex-2 bg-indigo-600 text-white rounded-xl h-12 shadow-md shadow-indigo-600/20 hover:bg-indigo-700"
                                 isLoading={createMutation.isPending}
                             >
                                 Adicionar à Fila

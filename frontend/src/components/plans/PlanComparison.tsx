@@ -106,7 +106,7 @@ export function PlanComparison({
                         <button
                             onClick={onStartTrial}
                             disabled={isTrialLoading}
-                            className="w-full py-3 px-4 rounded-xl bg-orange-600 text-white font-bold hover:bg-orange-700 transition-colors shadow-md hover:shadow-lg transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full py-3 px-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isTrialLoading ? '...' : t('trial.start')}
                         </button>
@@ -115,7 +115,7 @@ export function PlanComparison({
                 ) : (
                     <button
                         onClick={onSelectPro}
-                        className="w-full py-3 px-4 rounded-xl bg-primary-600 text-white font-bold hover:bg-primary-700 transition-colors shadow-md hover:shadow-lg transform active:scale-[0.98]"
+                        className="w-full py-3 px-4 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors shadow-md hover:shadow-lg transform active:scale-[0.98]"
                     >
                         {isUpgrade ? t('upgrade.cta') : t('pro.cta')}
                     </button>

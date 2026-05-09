@@ -155,8 +155,8 @@ export function WaitlistCard({
         return (
             <div className="p-4 sm:p-6 flex items-center justify-between hover:bg-white/50 transition-colors group backdrop-blur-sm">
                 <div className="flex items-center gap-4 sm:gap-6">
-                    <span className="text-xs font-bold text-amber-900/40 w-6 text-center">{index + 1}</span>
-                    <div className="w-10 h-10 rounded-full bg-white border border-amber-100 flex items-center justify-center text-amber-700 font-bold text-xs shadow-sm">
+                    <span className="text-xs font-bold text-indigo-900/40 w-6 text-center">{index + 1}</span>
+                    <div className="w-10 h-10 rounded-full bg-white border border-indigo-100 flex items-center justify-center text-indigo-700 font-bold text-xs shadow-sm">
                         {initials}
                     </div>
                     <div>
@@ -173,7 +173,7 @@ export function WaitlistCard({
                 </div>
                 <div className="flex items-center gap-8">
                     <div className="hidden sm:block text-right">
-                        <p className="text-[10px] font-bold text-amber-900/40 uppercase tracking-wider">Espera</p>
+                        <p className="text-[10px] font-bold text-indigo-900/40 uppercase tracking-wider">Espera</p>
                         <p className="text-sm font-semibold text-slate-900 font-display">{elapsedString}</p>
                     </div>
                     <OverflowMenu
@@ -188,19 +188,19 @@ export function WaitlistCard({
 
     // Highlight Variant - Neumorphic + Glass
     return (
-        <div className="bg-white/70 backdrop-blur-2xl border border-white/50 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row justify-between items-center shadow-[0_20px_50px_-12px_rgba(217,119,6,0.15)] relative overflow-hidden group transition-all transform hover:scale-[1.01] ring-1 ring-white/20">
+        <div className="bg-white/70 backdrop-blur-2xl border border-white/50 rounded-[2rem] p-6 md:p-10 flex flex-col md:flex-row justify-between items-center shadow-[0_20px_50px_-12px_rgba(79,70,229,0.15)] relative overflow-hidden group transition-all transform hover:scale-[1.01] ring-1 ring-white/20">
             {/* Soft Ambient Glow */}
-            <div className="absolute -top-24 -left-24 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl"></div>
+            <div className="absolute -top-24 -left-24 w-48 h-48 bg-indigo-400/20 rounded-full blur-3xl"></div>
             
             {/* Status Badge - Neumorphic */}
             <div className="absolute top-0 right-0">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white bg-amber-600 px-6 py-3 rounded-bl-3xl shadow-lg shadow-amber-600/20 font-display">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white bg-indigo-600 px-6 py-3 rounded-bl-3xl shadow-lg shadow-indigo-600/20 font-display">
                     Próximo da Fila
                 </span>
             </div>
 
             <div className="flex items-center gap-8 w-full md:w-auto mb-8 md:mb-0 pl-2 z-10">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-amber-600 text-white border-4 border-white/80 flex items-center justify-center text-2xl md:text-3xl font-bold shrink-0 shadow-[0_10px_25px_-5px_rgba(217,119,6,0.4)]">
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-indigo-600 text-white border-4 border-white/80 flex items-center justify-center text-2xl md:text-3xl font-bold shrink-0 shadow-[0_10px_25px_-5px_rgba(79,70,229,0.4)]">
                     {initials}
                 </div>
                 <div>
@@ -212,11 +212,11 @@ export function WaitlistCard({
                     </h3>
                     <div className="flex flex-wrap gap-6 mt-4">
                         <div className="flex items-center gap-2 text-slate-600 text-sm md:text-base font-semibold">
-                            <Icon name="users" size="sm" className="text-amber-600" />
+                            <Icon name="users" size="sm" className="text-indigo-600" />
                             {entry.partySize} Pessoas
                         </div>
-                        <div className="flex items-center gap-2 text-slate-600 text-sm md:text-base border-l border-amber-100 pl-6 font-semibold">
-                            <Icon name="waitTime" size="sm" className="text-amber-600" />
+                        <div className="flex items-center gap-2 text-slate-600 text-sm md:text-base border-l border-indigo-100 pl-6 font-semibold">
+                            <Icon name="waitTime" size="sm" className="text-indigo-600" />
                             Esperando há {elapsedString}
                         </div>
                     </div>
@@ -227,7 +227,7 @@ export function WaitlistCard({
                 <Button
                     variant="outline"
                     onClick={() => onCall(entry.id)}
-                    className="flex-1 md:flex-none h-14 px-8 border-2 border-amber-200 bg-white/50 backdrop-blur-md hover:bg-amber-50 hover:border-amber-500 text-amber-700 font-bold transition-all flex items-center justify-center gap-2 rounded-2xl"
+                    className="flex-1 md:flex-none h-14 px-8 border-2 border-indigo-200 bg-white/50 backdrop-blur-md hover:bg-indigo-50 hover:border-indigo-500 text-indigo-700 font-bold transition-all flex items-center justify-center gap-2 rounded-2xl"
                     isLoading={isActionLoading.call}
                 >
                     <Icon name="notify" size="sm" />
@@ -236,7 +236,7 @@ export function WaitlistCard({
                 <Button
                     variant="primary"
                     onClick={() => onSeat(entry.id)}
-                    className="flex-1 md:flex-none h-14 px-10 bg-amber-600 text-white rounded-2xl font-black shadow-[0_15px_30px_-5px_rgba(217,119,6,0.3)] hover:bg-amber-700 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 font-display uppercase tracking-widest text-xs"
+                    className="flex-1 md:flex-none h-14 px-10 bg-indigo-600 text-white rounded-2xl font-black shadow-[0_15px_30px_-5px_rgba(79,70,229,0.3)] hover:bg-indigo-700 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 font-display uppercase tracking-widest text-xs"
                     isLoading={isActionLoading.seat}
                 >
                     <Icon name="tableService" size="sm" />

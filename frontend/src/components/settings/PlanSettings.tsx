@@ -48,7 +48,7 @@ export function PlanSettings() {
                                 {t('pro.description', { defaultValue: 'Acesso completo a todas as funcionalidades' })}
                             </p>
                             {isTrialing && (
-                                <p className="mt-1 text-xs md:text-sm font-medium text-orange-600">
+                                <p className="mt-1 text-xs md:text-sm font-medium text-indigo-600">
                                     {t('trial.expiresIn', { days: trialDaysRemaining, defaultValue: `Trial expira em ${trialDaysRemaining} dias` })}
                                 </p>
                             )}
