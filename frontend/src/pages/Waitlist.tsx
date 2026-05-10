@@ -299,7 +299,7 @@ export function Waitlist() {
                 <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-indigo-400/20 rounded-full blur-[120px] -z-10 animate-pulse"></div>
                 <div className="absolute top-[20%] -left-[10%] w-[30%] h-[30%] bg-indigo-300/10 rounded-full blur-[100px] -z-10"></div>
                 
-                <div className="p-6 sm:p-10 lg:p-12 space-y-12 animate-fade-in max-w-6xl mx-auto relative z-10">
+                <div className={`${activeEntries.length > 0 ? 'p-6 sm:p-10 lg:p-12 space-y-12 max-w-6xl mx-auto' : 'p-0 w-full'} animate-fade-in relative z-10`}>
                     
                     {/* 1. HEADER */}
                     {activeEntries.length > 0 && (
@@ -366,11 +366,10 @@ export function Waitlist() {
                     {/* 3. QUEUE LIST */}
                     <section className="space-y-8">
                         {activeEntries.length === 0 ? (
-                            <div className="relative overflow-hidden flex flex-col items-center justify-center py-20 px-8 bg-gradient-to-br from-white/80 to-slate-50/40 backdrop-blur-xl border border-white/50 rounded-3xl min-h-[480px] shadow-2xl shadow-indigo-500/10">
+                            <div className="relative overflow-hidden flex flex-col items-center justify-center py-20 px-8 min-h-[calc(100vh-64px)] w-full bg-gradient-to-br from-white to-slate-50/20">
                                 {/* Dynamic Background Blobs */}
-                                <div className="absolute -top-24 -left-24 w-72 h-72 bg-indigo-600/15 rounded-full blur-[80px] animate-pulse"></div>
-                                <div className="absolute top-1/2 -right-24 w-60 h-60 bg-slate-500/20 rounded-full blur-[80px]" style={{ animationDelay: '2s' }}></div>
-                                <div className="absolute -bottom-24 left-1/4 w-96 h-72 bg-indigo-600/10 rounded-full blur-[100px]" style={{ animationDelay: '4s' }}></div>
+                                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/5 rounded-full blur-[120px] animate-pulse"></div>
+                                <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-slate-500/10 rounded-full blur-[100px]" style={{ animationDelay: '2s' }}></div>
 
                                 {/* Illustration */}
                                 <div className="relative mb-10 z-10">
