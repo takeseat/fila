@@ -18,6 +18,7 @@ import usersRoutes from './routes/users.routes';
 import whatsappSettingsRouter from './routes/whatsapp-settings.routes';
 import adminRoutes from './routes/admin.routes';
 import billingRoutes from './routes/billing.routes';
+import customersRoutes from './routes/customers.routes';
 import { impersonationMiddleware } from './middleware/impersonation.middleware';
 import { checkSubscriptionAccess } from './middleware/subscription';
 import { WhatsAppWebhookController } from './controllers/whatsapp-webhook.controller';
@@ -76,6 +77,7 @@ app.use(authenticate);
 app.use('/billing', billingRoutes);
 app.use('/onboarding', onboardingRouter);
 app.use('/users', usersRoutes);
+app.use('/customers', customersRoutes);
 
 // --- ACCESS CONTROLLED ROUTES (Subscription Required) ---
 app.use(checkSubscriptionAccess);
