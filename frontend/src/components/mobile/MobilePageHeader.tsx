@@ -12,49 +12,36 @@ interface MobilePageHeaderProps {
 }
 
 export function MobilePageHeader({
-    title,
-    subtitle,
+    title: _title,
+    subtitle: _subtitle,
     leading,
     actions,
     className = ''
 }: MobilePageHeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { user } = useAuth();
 
     return (
-        <header className={`lg:hidden fixed top-0 left-0 right-0 bg-bg-surface border-b border-border-default shadow-sm z-50 safe-area-top ${className}`}>
+        <header className={`lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-100 shadow-sm z-50 safe-area-top ${className}`}>
             <div className="flex items-center justify-between h-14 px-4">
-                <div className="flex items-center gap-3 flex-1 min-w-0">
-                    {/* Leading or Menu Trigger */}
-                    <div className="flex-shrink-0">
-                        {leading ? (
-                            leading
-                        ) : (
-                            <Button
-                                variant="ghost"
-                                onClick={() => setIsMenuOpen(true)}
-                                className="p-2 -ml-2 text-text-secondary hover:text-text-primary"
-                                leftIcon={<Icon name="menu" size="md" />}
-                            />
-                        )}
+                <div className="flex items-center gap-2">
+                    <div className="bg-indigo-600 p-1.5 rounded-lg shadow-sm">
+                        <Icon name="tableService" size="xs" className="text-white" />
                     </div>
-
-                    <div className="flex flex-col min-w-0">
-                        <h1 className="text-lg font-semibold text-text-primary truncate leading-snug">
-                            {title}
-                        </h1>
-                        {subtitle && (
-                            <p className="text-xs text-text-muted truncate mt-0.5">
-                                {subtitle}
-                            </p>
-                        )}
-                    </div>
+                    <span className="text-lg font-bold text-slate-800 tracking-tight">
+                        Take<span className="text-indigo-600">Seat</span>
+                    </span>
                 </div>
 
-                {actions && (
-                    <div className="flex items-center gap-2 flex-shrink-0 ml-3">
-                        {actions}
-                    </div>
-                )}
+                <div className="flex items-center gap-3">
+                    {actions}
+                    <button 
+                        onClick={() => setIsMenuOpen(true)}
+                        className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition-colors"
+                    >
+                        <Icon name="user" size="sm" tone="inherit" />
+                    </button>
+                </div>
             </div>
 
             <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />

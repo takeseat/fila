@@ -331,17 +331,17 @@ export function Waitlist() {
                                 <div className="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm w-full md:w-auto">
                                     <span className="text-[10px] font-black text-indigo-900/40 uppercase tracking-widest whitespace-nowrap font-display">Filtrar pessoas:</span>
                                     <div className="flex gap-2">
-                                        {['all', 1, 2, 3, 4, '5+'].map((size) => (
+                                        {['all', '1-2', '3-4', '5+'].map((size) => (
                                             <button
                                                 key={size}
                                                 onClick={() => setPartySizeFilter(size as any)}
-                                                className={`h-10 min-w-[48px] px-4 flex items-center justify-center rounded-2xl text-xs font-bold transition-all border ${
+                                                className={`h-10 min-w-[48px] px-4 flex items-center justify-center rounded-2xl text-xs font-bold transition-all border whitespace-nowrap ${
                                                     partySizeFilter === size 
                                                     ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/30 scale-105' 
-                                                    : 'bg-white/80 border-indigo-100 text-slate-500 hover:border-indigo-400 hover:text-indigo-600'
+                                                    : 'bg-white border-slate-200 text-slate-500 hover:border-indigo-400 hover:text-indigo-600 shadow-sm'
                                                 }`}
                                             >
-                                                {size === 'all' ? 'Todos' : size}
+                                                {size === 'all' ? 'Todos' : `${size} Pessoas`}
                                             </button>
                                         ))}
                                     </div>
@@ -353,7 +353,7 @@ export function Waitlist() {
                                     </span>
                                     <input
                                         type="text"
-                                        placeholder="Buscar por nome..."
+                                        placeholder="Buscar cliente ou telefone..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
                                         className="block w-full pl-11 pr-4 py-4 bg-white/70 backdrop-blur-xl border border-white/50 rounded-2xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-400 transition-all shadow-xl shadow-slate-200/40 font-medium"
