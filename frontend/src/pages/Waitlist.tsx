@@ -302,12 +302,14 @@ export function Waitlist() {
                 <div className="p-6 sm:p-10 lg:p-12 space-y-12 animate-fade-in max-w-6xl mx-auto relative z-10">
                     
                     {/* 1. HEADER */}
-                    <div className="hidden md:flex items-center justify-between gap-8 mb-4">
-                        <div className="space-y-1">
-                            <h1 className="text-4xl font-black tracking-tight text-slate-900 font-display">Sequência da Fila</h1>
-                            <p className="text-slate-500 font-medium text-sm">Gerencie o fluxo de clientes com precisão.</p>
+                    {activeEntries.length > 0 && (
+                        <div className="hidden md:flex items-center justify-between gap-8 mb-4">
+                            <div className="space-y-1">
+                                <h1 className="text-4xl font-black tracking-tight text-slate-900 font-display">Sequência da Fila</h1>
+                                <p className="text-slate-500 font-medium text-sm">Gerencie o fluxo de clientes com precisão.</p>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Portal for Header Actions */}
                     {document.getElementById('header-actions') && createPortal(
