@@ -19,7 +19,7 @@ export function MobilePageHeader({
     className = ''
 }: MobilePageHeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { user } = useAuth();
+
 
     return (
         <header className={`lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-slate-100 shadow-sm z-50 safe-area-top ${className}`}>
