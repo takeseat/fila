@@ -327,21 +327,24 @@ export function Waitlist() {
                     {/* 2. FILTERS & SEARCH - Neumorphic Style */}
                     {activeEntries.length > 0 && (
                         <section className="space-y-6">
+                            <div className="hidden md:block">
+                                <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Sequência da Fila</h2>
+                            </div>
                             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                                 <div className="flex items-center gap-4 overflow-x-auto no-scrollbar py-2 px-4 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm w-full md:w-auto">
                                     <span className="text-[10px] font-black text-indigo-900/40 uppercase tracking-widest whitespace-nowrap font-display">Filtrar pessoas:</span>
                                     <div className="flex gap-2">
-                                        {['all', '1-2', '3-4', '5+'].map((size) => (
+                                        {['all', '1', '2', '3', '4', '5+'].map((size) => (
                                             <button
                                                 key={size}
                                                 onClick={() => setPartySizeFilter(size as any)}
-                                                className={`h-10 min-w-[48px] px-4 flex items-center justify-center rounded-2xl text-xs font-bold transition-all border whitespace-nowrap ${
+                                                className={`h-8 md:h-10 min-w-[36px] md:min-w-[48px] px-3 md:px-4 flex items-center justify-center rounded-xl md:rounded-2xl text-[10px] md:text-xs font-bold transition-all border whitespace-nowrap ${
                                                     partySizeFilter === size 
-                                                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/30 scale-105' 
+                                                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-600/30' 
                                                     : 'bg-white border-slate-200 text-slate-500 hover:border-indigo-400 hover:text-indigo-600 shadow-sm'
                                                 }`}
                                             >
-                                                {size === 'all' ? 'Todos' : `${size} Pessoas`}
+                                                {size === 'all' ? 'Todos' : size}
                                             </button>
                                         ))}
                                     </div>
