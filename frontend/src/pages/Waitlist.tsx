@@ -294,7 +294,7 @@ export function Waitlist() {
                 ) : null}
             />
 
-            <PageContent className="min-h-screen bg-[#fcf9f8] relative overflow-hidden">
+            <PageContent className="min-h-full bg-[#fcf9f8] relative overflow-hidden flex flex-col">
                 {/* Background Blobs (Organic Shell) */}
                 <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-indigo-400/20 rounded-full blur-[120px] -z-10 animate-pulse"></div>
                 <div className="absolute top-[20%] -left-[10%] w-[30%] h-[30%] bg-indigo-300/10 rounded-full blur-[100px] -z-10"></div>
@@ -366,7 +366,7 @@ export function Waitlist() {
                     {/* 3. QUEUE LIST */}
                     <section className="space-y-8">
                         {activeEntries.length === 0 ? (
-                            <div className="relative overflow-hidden flex flex-col items-center justify-center py-20 px-8 min-h-[calc(100vh-64px)] w-full bg-gradient-to-br from-white to-slate-50/20">
+                            <div className="relative overflow-hidden flex-1 flex flex-col items-center justify-center py-12 px-8 min-h-[500px] w-full bg-gradient-to-br from-white to-slate-50/20">
                                 {/* Dynamic Background Blobs */}
                                 <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-indigo-600/5 rounded-full blur-[120px] animate-pulse"></div>
                                 <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-slate-500/10 rounded-full blur-[100px]" style={{ animationDelay: '2s' }}></div>
