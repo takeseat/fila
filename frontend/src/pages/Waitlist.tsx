@@ -93,22 +93,21 @@ export function Waitlist() {
             try {
                 const { data } = await api.get(`/customers?fullPhone=${encodeURIComponent(fullPhone)}`, { signal });
 
-                if (data.success && data.data) {
-                    setCustomerFound(data.data);
+                // The backend returns a raw array of customers for this filter
+                const customer = Array.isArray(data) ? data[0] : (data.data || null);
+
+                if (customer) {
+                    setCustomerFound(customer);
                     setFormData(prev => ({
                         ...prev,
-                        customerName: data.data.name || '',
-                        notes: data.data.notes || '',
-                        whatsappOptIn: data.data.whatsappOptIn ?? !!whatsappSettings?.isEnabled,
+                        customerName: customer.name || '',
+                        notes: customer.notes || '',
+                        whatsappOptIn: customer.whatsappOptIn ?? !!whatsappSettings?.isEnabled,
                     }));
                 } else {
                     setCustomerFound(null);
-                    setFormData(prev => ({
-                        ...prev,
-                        customerName: '',
-                        notes: '',
-                        whatsappOptIn: !!whatsappSettings?.isEnabled,
-                    }));
+                    // Do not clear the name/notes if the user is in the middle of typing
+                    // only clear if we are sure it's a new entry and we want a clean state
                 }
             } catch (error: any) {
                 if (error.name === 'CanceledError' || error.message === 'canceled') return;
