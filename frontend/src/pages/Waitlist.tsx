@@ -433,7 +433,7 @@ export function Waitlist() {
                                 {/* Subsequent Items in a List Style - Glass Container */}
                                 {remainingEntries.length > 0 && (
                                     <div className="bg-white/50 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-900/5 ring-1 ring-white/20">
-                                        <div className="divide-y divide-indigo-100/50">
+                                        <div className="divide-y divide-indigo-100/50 max-h-[600px] overflow-y-auto custom-scrollbar">
                                             {remainingEntries.map((entry: any) => (
                                                 <WaitlistCard
                                                     key={entry.id}
@@ -603,7 +603,8 @@ export function Waitlist() {
                         </div>
                     </form>
                 </Modal>
-            </PageShell>
+            </PageContent>
+        </PageShell>
 
             {toast && (
                 <Toast
