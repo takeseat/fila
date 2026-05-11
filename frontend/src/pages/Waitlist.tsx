@@ -291,7 +291,8 @@ export function Waitlist() {
     }
 
     return (
-        <PageShell>
+        <>
+            <PageShell>
             {/* Mobile Header */}
             <MobilePageHeader
                 title="Sequência da Fila"
