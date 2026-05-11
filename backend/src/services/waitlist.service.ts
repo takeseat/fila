@@ -23,10 +23,24 @@ export class WaitlistService {
         const { buildFullPhone } = await import('../utils/phone.utils');
         const customersService = new (await import('./customers.service')).CustomersService();
 
-        // Build full phone number
+        // 1. Build full phone number
         const fullPhone = buildFullPhone(data.customerDdi, data.customerPhone);
 
-        // Calculate estimated wait time based on current queue
+        // 2. Check if customer already has an active entry (WAITING)
+        // Rule: Only allow new entry if existing one is already CALLED or finished
+        const activeEntry = await prisma.waitlistEntry.findFirst({
+            where: {
+                restaurantId,
+                customerPhone: fullPhone,
+                status: 'WAITING'
+            }
+        });
+
+        if (activeEntry) {
+            throw new Error('Este cliente já está na fila de espera e ainda não foi chamado.');
+        }
+
+        // 3. Calculate estimated wait time based on current queue
         const waitingCount = await prisma.waitlistEntry.count({
             where: {
                 restaurantId,
