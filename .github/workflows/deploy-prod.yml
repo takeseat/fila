@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  NODE_VERSION: '24'
+  NODE_VERSION: '20'
   S3_BUCKET: takeseat-web-prod-20251220142021589500000003
   CLOUDFRONT_DISTRIBUTION_ID: E25O4T36RJ44KE
   # Production Safety Variables
@@ -28,10 +28,10 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           # Disable cache - it's causing issues with lockfileVersion 3
@@ -42,7 +42,7 @@ jobs:
           #   frontend-admin/package-lock.json
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v6
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
