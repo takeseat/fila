@@ -13,6 +13,7 @@ import { MobilePageHeader } from '../components/mobile/MobilePageHeader';
 import { InternationalPhoneInput } from '../components/ui/InternationalPhoneInput';
 import { DEFAULT_COUNTRY, getCountryByCode } from '../data/countries';
 import { buildFullPhone } from '../utils/phoneUtils';
+import { Alert, Toast } from '../components/ui';
 
 export function Waitlist() {
     const { t } = useTranslation(['waitlist', 'plans', 'common']);
@@ -20,6 +21,8 @@ export function Waitlist() {
     
     // Modal & Form State
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
     const [formData, setFormData] = useState({
         country: DEFAULT_COUNTRY,
         phone: '',
@@ -168,6 +171,7 @@ export function Waitlist() {
             whatsappOptIn: !!whatsappSettings?.isEnabled 
         });
         
+        setError(null);
         setIsModalOpen(true);
     };
 
@@ -180,7 +184,12 @@ export function Waitlist() {
             setIsModalOpen(false);
             setSearchQuery(''); // clear search after add
             setCustomerFound(null);
+            setToast({ message: "Cliente adicionado com sucesso!", type: 'success' });
         },
+        onError: (err: any) => {
+            const message = err.response?.data?.error || err.message || 'Erro ao adicionar na fila';
+            setError(message);
+        }
     });
 
     const callMutation = useMutation({
@@ -510,6 +519,11 @@ export function Waitlist() {
                     title="Adicionar à Fila"
                 >
                     <form onSubmit={handleSubmit} className="p-2 space-y-6">
+                        {error && (
+                            <Alert severity="danger" className="mb-4">
+                                {error}
+                            </Alert>
+                        )}
                         <div className="space-y-2">
                             <InternationalPhoneInput
                                 label={t('form.customerPhone')}
@@ -589,7 +603,15 @@ export function Waitlist() {
                         </div>
                     </form>
                 </Modal>
-            </PageContent>
-        </PageShell>
+            </PageShell>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
+        </>
     );
 }
