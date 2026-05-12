@@ -304,6 +304,7 @@ export const ICONS = {
     cpu: Cpu,
     hardDriveDownload: HardDriveDownload,
     hardDriveUpload: HardDriveUpload,
+    priority: Zap,
 } as const;
 
 /**

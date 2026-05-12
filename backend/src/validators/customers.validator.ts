@@ -9,6 +9,7 @@ export const CreateCustomerInputSchema = z.object({
     email: z.string().email('Invalid email').optional().or(z.literal('')),
     notes: z.string().optional(),
     whatsappOptIn: z.boolean().optional(),
+    isPriority: z.boolean().optional(),
 });
 
 export const UpdateCustomerInputSchema = z.object({
@@ -20,6 +21,7 @@ export const UpdateCustomerInputSchema = z.object({
     email: z.string().email('Invalid email').optional().or(z.literal('')),
     notes: z.string().optional(),
     whatsappOptIn: z.boolean().optional(),
+    isPriority: z.boolean().optional(),
 });
 
 export type CreateCustomerInput = z.infer<typeof CreateCustomerInputSchema>;

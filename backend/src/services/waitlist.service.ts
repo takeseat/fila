@@ -12,9 +12,10 @@ export class WaitlistService {
             include: {
                 customer: true,
             },
-            orderBy: {
-                createdAt: 'asc',
-            },
+            orderBy: [
+                { isPriority: 'desc' },
+                { createdAt: 'asc' },
+            ],
         });
     }
 
@@ -66,6 +67,7 @@ export class WaitlistService {
                     data: {
                         name: data.customerName,
                         notes: data.notes || existingCustomer.notes,
+                        isPriority: data.isPriority ?? existingCustomer.isPriority,
                         // Update opt-in if provided or changed
                         ...(data.whatsappOptIn !== undefined && {
                             whatsappOptIn: data.whatsappOptIn,
@@ -84,7 +86,8 @@ export class WaitlistService {
                     fullPhone,
                     notes: data.notes,
                     whatsappOptIn: data.whatsappOptIn,
-                } as any); // Type cast needed until we update CreateWaitlistEntryInput
+                    isPriority: data.isPriority,
+                });
                 customerId = newCustomer.id;
             }
         }
@@ -111,6 +114,7 @@ export class WaitlistService {
                 status: 'WAITING',
                 whatsappOptIn: effectiveWhatsappOptIn ?? false,
                 whatsappOptInAt: effectiveWhatsappOptIn ? new Date() : null,
+                isPriority: data.isPriority ?? false,
             },
             include: {
                 customer: true,

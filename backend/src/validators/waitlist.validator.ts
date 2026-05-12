@@ -10,6 +10,7 @@ export const CreateWaitlistEntryInputSchema = z.object({
     estimatedWaitMinutes: z.number().int().optional(),
     notes: z.string().optional(),
     whatsappOptIn: z.boolean().optional(),
+    isPriority: z.boolean().optional(),
 });
 
 export type CreateWaitlistEntryInput = z.infer<typeof CreateWaitlistEntryInputSchema>;

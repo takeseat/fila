@@ -30,6 +30,7 @@ export function Waitlist() {
         partySize: 2,
         notes: '',
         whatsappOptIn: false,
+        isPriority: false,
     });
     
     // Lookup State
@@ -106,6 +107,7 @@ export function Waitlist() {
                         customerName: customer.name || '',
                         notes: customer.notes || '',
                         whatsappOptIn: customer.whatsappOptIn ?? !!whatsappSettings?.isEnabled,
+                        isPriority: customer.isPriority ?? false,
                     }));
                 } else {
                     setCustomerFound(null);
@@ -168,7 +170,8 @@ export function Waitlist() {
             customerName: defaultName, 
             partySize: 2, 
             notes: '', 
-            whatsappOptIn: !!whatsappSettings?.isEnabled 
+            whatsappOptIn: !!whatsappSettings?.isEnabled,
+            isPriority: false
         });
         
         setError(null);
@@ -234,6 +237,7 @@ export function Waitlist() {
             partySize: formData.partySize,
             notes: formData.notes,
             whatsappOptIn: canUseWhatsApp ? (whatsappSettings?.isEnabled ? true : false) : false,
+            isPriority: formData.isPriority,
         };
         createMutation.mutate(payload);
     };
@@ -308,7 +312,7 @@ export function Waitlist() {
                 <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] bg-indigo-400/20 rounded-full blur-[120px] -z-10 animate-pulse"></div>
                 <div className="absolute top-[20%] -left-[10%] w-[30%] h-[30%] bg-indigo-300/10 rounded-full blur-[100px] -z-10"></div>
                 
-                <div className={`${activeEntries.length > 0 ? 'p-6 sm:p-10 lg:p-12 space-y-12 max-w-6xl mx-auto' : 'p-0 w-full'} animate-fade-in relative z-10`}>
+                <div className="w-full max-w-6xl mx-auto p-4 sm:p-10 lg:p-12 space-y-12 animate-fade-in relative z-10">
                     
                     {/* Portal for Header Actions */}
                     {document.getElementById('header-actions') && createPortal(
@@ -410,7 +414,7 @@ export function Waitlist() {
                                 </button>
                             </div>
                         ) : filteredActiveEntries.length === 0 ? (
-                            <div className="py-20 text-center text-slate-500 font-bold bg-white/30 backdrop-blur-sm border-2 border-dashed border-indigo-200/50 rounded-[3rem] font-display uppercase tracking-widest text-xs">
+                            <div className="w-full py-20 text-center text-slate-500 font-bold bg-white/30 backdrop-blur-sm border-2 border-dashed border-indigo-200/50 rounded-[3rem] font-display uppercase tracking-widest text-xs">
                                 Nenhum cliente encontrado para "<span className="text-indigo-600">{searchQuery}</span>"
                             </div>
                         ) : (
@@ -572,6 +576,29 @@ export function Waitlist() {
                                 leftIcon={<Icon name="users" size="sm" className="text-slate-400" />}
                                 className="h-12 rounded-xl"
                             />
+                        </div>
+
+                        <div className="bg-amber-50/50 border border-amber-200/50 rounded-2xl p-4 space-y-2">
+                            <label className="flex items-center gap-3 cursor-pointer group">
+                                <div className="relative flex items-center justify-center w-6 h-6 rounded-lg border-2 border-amber-300 group-hover:border-amber-500 transition-colors bg-white">
+                                    <input 
+                                        type="checkbox"
+                                        className="sr-only"
+                                        checked={formData.isPriority}
+                                        onChange={(e) => setFormData({ ...formData, isPriority: e.target.checked })}
+                                    />
+                                    {formData.isPriority && (
+                                        <div className="w-3 h-3 bg-amber-500 rounded-sm animate-scale-in"></div>
+                                    )}
+                                </div>
+                                <span className="text-sm font-bold text-amber-900">Atendimento Prioritário</span>
+                                <div className="ml-auto bg-amber-100 text-amber-700 p-1.5 rounded-lg">
+                                    <Icon name="priority" size="xs" tone="inherit" />
+                                </div>
+                            </label>
+                            <p className="text-[11px] text-amber-800/70 leading-relaxed font-medium pl-9">
+                                Cliente com atendimento prioritário. Será considerado primeiro quando houver uma mesa compatível com o tamanho do grupo.
+                            </p>
                         </div>
 
                         <Input

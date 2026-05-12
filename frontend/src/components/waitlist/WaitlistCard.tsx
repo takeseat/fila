@@ -13,6 +13,7 @@ interface WaitlistEntry {
     updatedAt: string;
     calledAt?: string;
     notes?: string;
+    isPriority: boolean;
 }
 
 // Overflow Menu Component for secondary/destructive actions
@@ -160,8 +161,13 @@ export function WaitlistCard({
                         {initials}
                     </div>
                     <div>
-                        <h4 className="text-sm md:text-base font-bold text-slate-900 leading-tight">
                             {entry.customerName}
+                            {entry.isPriority && (
+                                <span className="inline-flex items-center gap-1 ml-2 px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wider">
+                                    <Icon name="priority" size={10} tone="inherit" />
+                                    Prioritário
+                                </span>
+                            )}
                             <span className="hidden md:inline text-xs font-normal text-slate-400 ml-3">
                                 {entry.customerPhone.slice(-4).padStart(entry.customerPhone.length, '*')}
                             </span>
@@ -227,9 +233,15 @@ export function WaitlistCard({
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <h3 className="text-2xl md:text-4xl font-bold text-slate-900 leading-tight tracking-tight">
+                    <h3 className="text-2xl md:text-4xl font-bold text-slate-900 leading-tight tracking-tight flex items-center gap-3 flex-wrap">
                         {entry.customerName}
-                        <span className="hidden md:inline text-base font-normal text-slate-400 ml-4 font-sans tracking-normal">
+                        {entry.isPriority && (
+                            <div className="bg-amber-100 text-amber-700 px-3 py-1 rounded-xl flex items-center gap-2 text-xs md:text-sm font-black uppercase tracking-widest border border-amber-200">
+                                <Icon name="priority" size="xs" tone="inherit" />
+                                <span>Prioritário</span>
+                            </div>
+                        )}
+                        <span className="hidden md:inline text-base font-normal text-slate-400 font-sans tracking-normal">
                             {entry.customerPhone.slice(-4).padStart(entry.customerPhone.length, '*')}
                         </span>
                     </h3>

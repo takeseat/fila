@@ -99,6 +99,7 @@ export class CustomersService {
                 whatsappOptIn: data.whatsappOptIn ?? false,
                 whatsappOptInAt: data.whatsappOptIn !== undefined ? new Date() : null,
                 whatsappOptInSource: data.whatsappOptIn !== undefined ? 'CRM' : null,
+                isPriority: data.isPriority ?? false,
             },
         });
     }
@@ -126,6 +127,7 @@ export class CustomersService {
                         whatsappOptInAt: new Date(),
                         whatsappOptInSource: 'CRM'
                     }),
+                    isPriority: data.isPriority !== undefined ? data.isPriority : existing.isPriority,
                 },
             });
         }
@@ -181,6 +183,7 @@ export class CustomersService {
                     whatsappOptInAt: new Date(),
                     whatsappOptInSource: 'CRM'
                 }),
+                isPriority: data.isPriority,
             },
         });
     }

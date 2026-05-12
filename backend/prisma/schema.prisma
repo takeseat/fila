@@ -140,6 +140,7 @@ model Customer {
   whatsappOptIn       Boolean   @default(false)
   whatsappOptInAt     DateTime?
   whatsappOptInSource String? // "QUEUE", "MANUAL", "IMPORT"
+  isPriority          Boolean   @default(false)
 
   restaurant      Restaurant      @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   waitlistEntries WaitlistEntry[]
@@ -167,6 +168,7 @@ model WaitlistEntry {
   seatedAt             DateTime?           @map("seated_at")
   cancelledAt          DateTime?           @map("cancelled_at")
   noShowAt             DateTime?           @map("no_show_at")
+  isPriority           Boolean             @default(false) @map("is_priority")
 
   // WhatsApp Integration
   whatsappOptIn        Boolean   @default(false) @map("whatsapp_opt_in")
