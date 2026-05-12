@@ -267,7 +267,7 @@ export function Waitlist() {
             if (partySizeFilter === '5+') {
                 matchesPartySize = entry.partySize >= 5;
             } else {
-                matchesPartySize = entry.partySize === partySizeFilter;
+                matchesPartySize = entry.partySize === Number(partySizeFilter);
             }
         }
 
@@ -411,12 +411,12 @@ export function Waitlist() {
                             </div>
                         ) : filteredActiveEntries.length === 0 ? (
                             <div className="py-20 text-center text-slate-500 font-bold bg-white/30 backdrop-blur-sm border-2 border-dashed border-indigo-200/50 rounded-[3rem] font-display uppercase tracking-widest text-xs">
-                                Ningum cliente encontrado para "<span className="text-indigo-600">{searchQuery}</span>"
+                                Nenhum cliente encontrado para "<span className="text-indigo-600">{searchQuery}</span>"
                             </div>
                         ) : (
                             <div className="space-y-8">
-                                {/* First Item Highlighted */}
-                                {firstEntry && (
+                                {/* First Item Highlighted (Only if it's truly the overall first) */}
+                                {firstEntry && activeEntries[0] && firstEntry.id === activeEntries[0].id && (
                                     <WaitlistCard
                                         entry={firstEntry}
                                         index={waitlist.findIndex((e: any) => e.id === firstEntry.id)}
@@ -431,31 +431,30 @@ export function Waitlist() {
                                     />
                                 )}
 
-                                {/* Subsequent Items in a List Style - Glass Container */}
-                                {remainingEntries.length > 0 && (
+                                {/* Subsequent Items or Filtered Results */}
+                                {filteredActiveEntries.length > 0 && (
                                     <div className="bg-white/50 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-900/5 ring-1 ring-white/20">
                                         <div className="divide-y divide-indigo-100/50 max-h-[600px] overflow-y-auto custom-scrollbar">
-                                            {remainingEntries.map((entry: any) => (
-                                                <WaitlistCard
-                                                    key={entry.id}
-                                                    entry={entry}
-                                                    index={waitlist.findIndex((e: any) => e.id === entry.id)}
-                                                    variant="row"
-                                                    metrics={metrics}
-                                                    settings={settings}
-                                                    currentTime={currentTime}
-                                                    onCall={(id: string) => callMutation.mutate(id)}
-                                                    onSeat={(id: string) => seatMutation.mutate(id)}
-                                                    onCancel={(id: string) => cancelMutation.mutate(id)}
-                                                    onNoShow={(id: string) => noShowMutation.mutate(id)}
-                                                />
-                                            ))}
-                                        </div>
-                                        
-                                        {/* Footer Info - Subtly Frosted */}
-                                        <div className="bg-white/30 p-5 flex items-center justify-between border-t border-indigo-100/50">
-                                            <p className="text-[10px] text-indigo-900/50 font-black uppercase tracking-widest font-display">Mostrando {filteredActiveEntries.length} de {activeEntries.length} ativos</p>
-                                            <button className="text-indigo-600 font-black text-[10px] uppercase tracking-widest font-display hover:text-indigo-700 transition-all">Ver Fila Completa</button>
+                                            {filteredActiveEntries.map((entry: any) => {
+                                                // Skip if it was already shown as highlight
+                                                if (entry.id === activeEntries[0]?.id) return null;
+                                                
+                                                return (
+                                                    <WaitlistCard
+                                                        key={entry.id}
+                                                        entry={entry}
+                                                        index={waitlist.findIndex((e: any) => e.id === entry.id)}
+                                                        variant="row"
+                                                        metrics={metrics}
+                                                        settings={settings}
+                                                        currentTime={currentTime}
+                                                        onCall={(id: string) => callMutation.mutate(id)}
+                                                        onSeat={(id: string) => seatMutation.mutate(id)}
+                                                        onCancel={(id: string) => cancelMutation.mutate(id)}
+                                                        onNoShow={(id: string) => noShowMutation.mutate(id)}
+                                                    />
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 )}
