@@ -278,7 +278,7 @@ export function Waitlist() {
         return matchesSearch && matchesPartySize;
     });
 
-    const [firstEntry, ...remainingEntries] = filteredActiveEntries;
+    const [firstEntry] = filteredActiveEntries;
 
 
     const [_showMetrics, _setShowMetrics] = useState(false);

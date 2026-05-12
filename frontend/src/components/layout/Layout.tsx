@@ -11,10 +11,9 @@ interface LayoutProps {
     pageTitle?: string;
     simple?: boolean;
     mobileShell?: boolean;
-    headerActions?: ReactNode;
 }
 
-export function Layout({ children, pageTitle, simple = false, mobileShell = false, headerActions }: LayoutProps) {
+export function Layout({ children, pageTitle, simple = false, mobileShell = false }: LayoutProps) {
     const { t } = useTranslation(['nav', 'common']);
     const location = useLocation();
     const navigate = useNavigate();

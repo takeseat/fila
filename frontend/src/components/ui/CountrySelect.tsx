@@ -74,7 +74,7 @@ export function CountrySelect({
                 <div className="flex items-center gap-2">
                     {showPhoneIcon && (
                         <div className="text-slate-400 mr-1">
-                            <Icon name="phone" size="sm" />
+                            <Icon name="call" size="sm" />
                         </div>
                     )}
                     <span className="text-lg leading-none">{selectedCountry.flag}</span>

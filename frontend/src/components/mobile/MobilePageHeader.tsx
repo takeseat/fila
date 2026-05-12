@@ -1,6 +1,5 @@
 import { ReactNode, useState } from 'react';
 import { MobileMenu } from './MobileMenu';
-import { Button } from '../ui/Button';
 import { Icon } from '../../design-system/icons/Icon';
 
 interface MobilePageHeaderProps {
@@ -14,7 +13,6 @@ interface MobilePageHeaderProps {
 export function MobilePageHeader({
     title: _title,
     subtitle: _subtitle,
-    leading,
     actions,
     className = ''
 }: MobilePageHeaderProps) {

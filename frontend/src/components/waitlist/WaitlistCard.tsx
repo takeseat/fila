@@ -31,7 +31,7 @@ interface OverflowMenuProps {
     t: any;
 }
 
-function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps) {
+function OverflowMenu({ onCall, onSeat, onCancel, cancelLabel, isLoading, t }: OverflowMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -195,6 +195,7 @@ export function WaitlistCard({
                         {initials}
                     </div>
                     <div>
+                        <h4 className="text-sm md:text-base font-bold text-slate-900 leading-tight">
                             {entry.customerName}
                             {entry.isPriority && (
                                 <span className="inline-flex items-center gap-1 ml-2 px-2 py-0.5 rounded-md bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wider">
