@@ -18,9 +18,15 @@ interface WaitlistEntry {
 
 // Overflow Menu Component for secondary/destructive actions
 interface OverflowMenuProps {
+    onCall: () => void;
+    onSeat: () => void;
     onCancel: () => void;
     cancelLabel?: string;
-    isLoading?: boolean;
+    isLoading?: {
+        call?: boolean;
+        seat?: boolean;
+        cancel?: boolean;
+    };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     t: any;
 }
@@ -46,6 +52,16 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
         setIsOpen(false);
     };
 
+    const handleCall = () => {
+        onCall();
+        setIsOpen(false);
+    };
+
+    const handleSeat = () => {
+        onSeat();
+        setIsOpen(false);
+    };
+
     return (
         <div ref={menuRef} className="relative">
             <Button
@@ -53,7 +69,7 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
                 variant="ghost"
                 onClick={() => setIsOpen(!isOpen)}
                 className="px-2"
-                disabled={isLoading}
+                disabled={isLoading?.call || isLoading?.seat || isLoading?.cancel}
             >
                 <Icon name="more" size="sm" />
             </Button>
@@ -61,11 +77,29 @@ function OverflowMenu({ onCancel, cancelLabel, isLoading, t }: OverflowMenuProps
             {isOpen && (
                 <div className="absolute right-0 top-full mt-1 bg-bg-surface border border-border-subtle rounded-lg shadow-md z-[1000] min-w-[160px] py-1">
                     <button
+                        onClick={handleCall}
+                        disabled={isLoading?.call}
+                        className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors disabled:opacity-50"
+                    >
+                        <Icon name="notify" size="sm" tone="brand" />
+                        {t('actions.call', 'Chamar')}
+                    </button>
+                    <button
+                        onClick={handleSeat}
+                        disabled={isLoading?.seat}
+                        className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors disabled:opacity-50"
+                    >
+                        <Icon name="tableService" size="sm" tone="success" />
+                        {t('actions.seat', 'Sentar')}
+                    </button>
+                    <div className="border-t border-slate-100 my-1" />
+                    <button
                         onClick={handleCancel}
-                        className="w-full px-4 py-2 text-left text-sm text-text-error hover:bg-bg-error/10 flex items-center gap-2 transition-colors"
+                        disabled={isLoading?.cancel}
+                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors disabled:opacity-50"
                     >
                         <Icon name="close" size="sm" tone="error" />
-                        {cancelLabel || t('actions.cancel')}
+                        {cancelLabel || t('actions.cancel', 'Cancelar')}
                     </button>
                 </div>
             )}
@@ -198,8 +232,10 @@ export function WaitlistCard({
                         </div>
                     </div>
                     <OverflowMenu
+                        onCall={() => onCall(entry.id)}
+                        onSeat={() => onSeat(entry.id)}
                         onCancel={() => onCancel(entry.id)}
-                        isLoading={isActionLoading.cancel}
+                        isLoading={isActionLoading}
                         t={t}
                     />
                 </div>
