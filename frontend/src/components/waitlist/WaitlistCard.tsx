@@ -1,4 +1,5 @@
 import { useMemo, useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../ui';
 import { Icon } from '../../design-system/icons/Icon';
@@ -35,6 +36,17 @@ interface OverflowMenuProps {
 function OverflowMenu({ onCall, onSeat, onCancel, onTogglePriority, isPriority, cancelLabel, isLoading, t }: OverflowMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const [coords, setCoords] = useState({ top: 0, left: 0 });
+
+    useEffect(() => {
+        if (isOpen && menuRef.current) {
+            const rect = menuRef.current.getBoundingClientRect();
+            setCoords({
+                top: rect.bottom + window.scrollY,
+                left: rect.right - 160 + window.scrollX // 160 is min-w
+            });
+        }
+    }, [isOpen]);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -80,8 +92,14 @@ function OverflowMenu({ onCall, onSeat, onCancel, onTogglePriority, isPriority, 
                 <Icon name="more" size="sm" />
             </Button>
 
-            {isOpen && (
-                <div className="absolute right-0 top-full mt-1 bg-bg-surface border border-border-subtle rounded-lg shadow-md z-[1000] min-w-[160px] py-1">
+            {isOpen && createPortal(
+                <div 
+                    className="fixed bg-bg-surface border border-border-subtle rounded-lg shadow-xl z-[9999] min-w-[160px] py-1 animate-in fade-in zoom-in duration-100"
+                    style={{ 
+                        top: coords.top + 4, 
+                        left: coords.left,
+                    }}
+                >
                     <button
                         onClick={handleCall}
                         disabled={isLoading?.call}
@@ -114,7 +132,8 @@ function OverflowMenu({ onCall, onSeat, onCancel, onTogglePriority, isPriority, 
                         <Icon name="close" size="sm" tone="error" />
                         {cancelLabel || t('actions.cancel', 'Cancelar')}
                     </button>
-                </div>
+                </div>,
+                document.body
             )}
         </div>
     );
