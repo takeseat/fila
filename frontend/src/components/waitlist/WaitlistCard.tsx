@@ -144,6 +144,94 @@ function OverflowMenu({ onCall, onSeat, onCancel, onTogglePriority, isPriority, 
     );
 }
 
+interface HighlightMenuProps {
+    onTogglePriority: () => void;
+    onCancel: () => void;
+    isPriority: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    t: any;
+}
+
+function HighlightMenu({ onTogglePriority, onCancel, isPriority, t }: HighlightMenuProps) {
+    const [isOpen, setIsOpen] = useState(false);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const [coords, setCoords] = useState({ top: 0, left: 0 });
+
+    useEffect(() => {
+        if (isOpen && triggerRef.current) {
+            const rect = triggerRef.current.getBoundingClientRect();
+            setCoords({
+                top: rect.bottom + window.scrollY,
+                left: rect.right - 180 + window.scrollX
+            });
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            const target = event.target as Node;
+            const insideTrigger = triggerRef.current?.contains(target);
+            const insideDropdown = dropdownRef.current?.contains(target);
+            if (!insideTrigger && !insideDropdown) {
+                setIsOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleTogglePriority = () => {
+        onTogglePriority();
+        setIsOpen(false);
+    };
+
+    const handleCancel = () => {
+        if (window.confirm(t('actions.cancelConfirm', 'Deseja realmente cancelar este atendimento?'))) {
+            onCancel();
+        }
+        setIsOpen(false);
+    };
+
+    return (
+        <>
+            <button
+                ref={triggerRef}
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
+                aria-label="Mais opções"
+            >
+                <Icon name="more" size="sm" />
+            </button>
+
+            {isOpen && createPortal(
+                <div
+                    ref={dropdownRef}
+                    className="fixed bg-bg-surface border border-border-subtle rounded-lg shadow-xl z-[9999] min-w-[180px] py-1"
+                    style={{ top: coords.top + 4, left: coords.left }}
+                >
+                    <button
+                        onClick={handleTogglePriority}
+                        className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
+                    >
+                        <Icon name="priority" size="sm" tone={isPriority ? 'secondary' : 'brand'} />
+                        {isPriority ? t('actions.removePriority', 'Tirar prioridade') : t('actions.setPriority', 'Definir prioridade')}
+                    </button>
+                    <div className="border-t border-slate-100 my-1" />
+                    <button
+                        onClick={handleCancel}
+                        className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                    >
+                        <Icon name="close" size="sm" tone="error" />
+                        {t('actions.cancel', 'Cancelar')}
+                    </button>
+                </div>,
+                document.body
+            )}
+        </>
+    );
+}
+
 interface WaitlistCardProps {
     entry: WaitlistEntry;
     index: number;
@@ -299,8 +387,16 @@ export function WaitlistCard({
                     <Icon name="star" size={12} fill="currentColor" />
                     Próximo da Fila
                 </div>
-                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
-                    Posição #{index + 1}
+                <div className="flex items-center gap-2">
+                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                        Posição #{index + 1}
+                    </div>
+                    <HighlightMenu
+                        onTogglePriority={() => onTogglePriority(entry.id)}
+                        onCancel={() => onCancel(entry.id)}
+                        isPriority={entry.isPriority}
+                        t={t}
+                    />
                 </div>
             </div>
 
@@ -339,7 +435,7 @@ export function WaitlistCard({
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3 md:gap-4 w-full md:w-auto z-10">
+            <div className="flex gap-3 md:gap-4 w-full md:w-auto z-10 items-center">
                 <Button
                     variant="outline"
                     onClick={() => onCall(entry.id)}
@@ -358,6 +454,15 @@ export function WaitlistCard({
                     <Icon name="tableService" size="sm" />
                     Sentar
                 </Button>
+                {/* Desktop three-dots menu */}
+                <div className="hidden md:block">
+                    <HighlightMenu
+                        onTogglePriority={() => onTogglePriority(entry.id)}
+                        onCancel={() => onCancel(entry.id)}
+                        isPriority={entry.isPriority}
+                        t={t}
+                    />
+                </div>
             </div>
         </div>
     );
