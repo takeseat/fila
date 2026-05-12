@@ -121,7 +121,7 @@ function OverflowMenu({ onCall, onSeat, onCancel, onTogglePriority, isPriority, 
                         className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
                     >
                         <Icon name="priority" size="sm" tone={isPriority ? "secondary" : "brand"} />
-                        {isPriority ? t('actions.removePriority', 'Remover Prioridade') : t('actions.setPriority', 'Prioridade')}
+                        {isPriority ? t('actions.removePriority', 'Tirar prioridade') : t('actions.setPriority', 'Definir prioridade')}
                     </button>
                     <div className="border-t border-slate-100 my-1" />
                     <button
@@ -177,6 +177,7 @@ export function WaitlistCard({
     onSeat,
     onCancel,
     onNoShow: _onNoShow,
+    onTogglePriority,
     isActionLoading = {},
 }: WaitlistCardProps) {
     const { t } = useTranslation('waitlist');
