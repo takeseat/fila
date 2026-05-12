@@ -16,11 +16,12 @@ interface WaitlistEntry {
     isPriority: boolean;
 }
 
-// Overflow Menu Component for secondary/destructive actions
 interface OverflowMenuProps {
     onCall: () => void;
     onSeat: () => void;
     onCancel: () => void;
+    onTogglePriority: () => void;
+    isPriority: boolean;
     cancelLabel?: string;
     isLoading?: {
         call?: boolean;
@@ -31,7 +32,7 @@ interface OverflowMenuProps {
     t: any;
 }
 
-function OverflowMenu({ onCall, onSeat, onCancel, cancelLabel, isLoading, t }: OverflowMenuProps) {
+function OverflowMenu({ onCall, onSeat, onCancel, onTogglePriority, isPriority, cancelLabel, isLoading, t }: OverflowMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -59,6 +60,11 @@ function OverflowMenu({ onCall, onSeat, onCancel, cancelLabel, isLoading, t }: O
 
     const handleSeat = () => {
         onSeat();
+        setIsOpen(false);
+    };
+
+    const handleTogglePriority = () => {
+        onTogglePriority();
         setIsOpen(false);
     };
 
@@ -92,6 +98,13 @@ function OverflowMenu({ onCall, onSeat, onCancel, cancelLabel, isLoading, t }: O
                         <Icon name="tableService" size="sm" tone="success" />
                         {t('actions.seat', 'Sentar')}
                     </button>
+                    <button
+                        onClick={handleTogglePriority}
+                        className="w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
+                    >
+                        <Icon name="priority" size="sm" tone={isPriority ? "secondary" : "brand"} />
+                        {isPriority ? t('actions.removePriority', 'Remover Prioridade') : t('actions.setPriority', 'Prioridade')}
+                    </button>
                     <div className="border-t border-slate-100 my-1" />
                     <button
                         onClick={handleCancel}
@@ -124,11 +137,13 @@ interface WaitlistCardProps {
     onSeat: (id: string) => void;
     onCancel: (id: string) => void;
     onNoShow: (id: string) => void;
+    onTogglePriority: (id: string) => void;
     isActionLoading?: {
         call?: boolean;
         seat?: boolean;
         cancel?: boolean;
         noShow?: boolean;
+        priority?: boolean;
     };
 }
 
@@ -236,6 +251,8 @@ export function WaitlistCard({
                         onCall={() => onCall(entry.id)}
                         onSeat={() => onSeat(entry.id)}
                         onCancel={() => onCancel(entry.id)}
+                        onTogglePriority={() => onTogglePriority(entry.id)}
+                        isPriority={entry.isPriority}
                         isLoading={isActionLoading}
                         t={t}
                     />

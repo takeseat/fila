@@ -277,6 +277,39 @@ export class WaitlistService {
             },
         });
     }
+    async togglePriority(restaurantId: string, entryId: string) {
+        const entry = await prisma.waitlistEntry.findFirst({
+            where: { id: entryId, restaurantId },
+        });
+
+        if (!entry) {
+            throw new Error('Entry not found');
+        }
+
+        const updatedEntry = await prisma.waitlistEntry.update({
+            where: { id: entryId },
+            data: {
+                isPriority: !entry.isPriority,
+            },
+            include: {
+                customer: true,
+            },
+        });
+
+        // Also update the customer record to persist this preference
+        if (entry.customerId) {
+            await prisma.customer.update({
+                where: { id: entry.customerId },
+                data: {
+                    isPriority: updatedEntry.isPriority,
+                },
+            });
+        }
+
+        this.notifyQueueUpdates(restaurantId);
+        return updatedEntry;
+    }
+
     async getQueueMetrics(restaurantId: string) {
         // 1. Get restaurant settings
         const restaurant = await prisma.restaurant.findUnique({

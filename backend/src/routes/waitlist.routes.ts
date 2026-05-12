@@ -151,4 +151,24 @@ router.patch('/:id/cancel', (req, res) => waitlistController.cancelEntry(req as 
  */
 router.patch('/:id/no-show', (req, res) => waitlistController.markNoShow(req as any, res));
 
+/**
+ * @swagger
+ * /waitlist/{id}/priority:
+ *   patch:
+ *     summary: Toggle entry priority status
+ *     tags: [Waitlist]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Priority toggled
+ */
+router.patch('/:id/priority', (req, res) => waitlistController.togglePriority(req as any, res));
+
 export default router;

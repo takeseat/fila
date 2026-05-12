@@ -227,6 +227,13 @@ export function Waitlist() {
         },
     });
 
+    const togglePriorityMutation = useMutation({
+        mutationFn: async (id: string) => await api.patch(`/waitlist/${id}/priority`),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['waitlist'] });
+        },
+    });
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const payload = {
@@ -432,6 +439,14 @@ export function Waitlist() {
                                         onSeat={(id: string) => seatMutation.mutate(id)}
                                         onCancel={(id: string) => cancelMutation.mutate(id)}
                                         onNoShow={(id: string) => noShowMutation.mutate(id)}
+                                        onTogglePriority={(id: string) => togglePriorityMutation.mutate(id)}
+                                        isActionLoading={{
+                                            call: callMutation.isPending,
+                                            seat: seatMutation.isPending,
+                                            cancel: cancelMutation.isPending,
+                                            noShow: noShowMutation.isPending,
+                                            priority: togglePriorityMutation.isPending,
+                                        }}
                                     />
                                 )}
 
@@ -456,6 +471,14 @@ export function Waitlist() {
                                                         onSeat={(id: string) => seatMutation.mutate(id)}
                                                         onCancel={(id: string) => cancelMutation.mutate(id)}
                                                         onNoShow={(id: string) => noShowMutation.mutate(id)}
+                                                        onTogglePriority={(id: string) => togglePriorityMutation.mutate(id)}
+                                                        isActionLoading={{
+                                                            call: callMutation.isPending,
+                                                            seat: seatMutation.isPending,
+                                                            cancel: cancelMutation.isPending,
+                                                            noShow: noShowMutation.isPending,
+                                                            priority: togglePriorityMutation.isPending,
+                                                        }}
                                                     />
                                                 );
                                             })}

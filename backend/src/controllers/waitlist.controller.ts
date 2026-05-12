@@ -85,4 +85,16 @@ export class WaitlistController {
             res.status(400).json({ error: error.message });
         }
     }
+
+    async togglePriority(req: AuthRequest, res: Response): Promise<void> {
+        try {
+            const restaurantId = req.user!.restaurantId;
+            const { id } = req.params;
+            const entry = await waitlistService.togglePriority(restaurantId, id);
+
+            res.json(entry);
+        } catch (error: any) {
+            res.status(400).json({ error: error.message });
+        }
+    }
 }
