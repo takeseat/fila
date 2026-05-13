@@ -420,12 +420,12 @@ export function WaitlistCard({
                             {entry.customerPhone.slice(-4).padStart(entry.customerPhone.length, '*')}
                         </span>
                     </h3>
-                    <div className="flex items-center gap-4 md:gap-8">
-                        <div className="bg-indigo-50 md:bg-transparent text-indigo-700 md:text-slate-500 px-3 py-1 md:px-0 md:py-0 rounded-lg flex items-center gap-1.5 md:gap-2 text-xs md:text-lg font-bold md:font-semibold">
+                    <div className="flex items-center gap-3 md:gap-6 flex-wrap">
+                        <div className="bg-indigo-50 md:bg-transparent text-indigo-700 md:text-slate-500 px-3 py-1 md:px-0 md:py-0 rounded-lg flex items-center gap-1.5 md:gap-2 text-xs md:text-sm font-bold md:font-semibold whitespace-nowrap">
                             <Icon name="users" size="sm" className="md:text-indigo-600" />
                             {entry.partySize} Pessoas
                         </div>
-                        <div className="bg-red-50 md:bg-transparent text-red-600 md:text-slate-500 px-3 py-1 md:px-0 md:py-0 rounded-lg md:border-l md:border-indigo-100 md:pl-8 flex items-center gap-1.5 md:gap-2 text-xs md:text-lg font-bold md:font-semibold">
+                        <div className="bg-red-50 md:bg-transparent text-red-600 md:text-slate-500 px-3 py-1 md:px-0 md:py-0 rounded-lg md:border-l md:border-indigo-100 md:pl-6 flex items-center gap-1.5 md:gap-2 text-xs md:text-sm font-bold md:font-semibold whitespace-nowrap">
                             <Icon name="waitTime" size="sm" className="md:text-indigo-600" />
                             <span className="md:hidden">{elapsedString}</span>
                             <span className="hidden md:inline">Esperando há {elapsedString}</span>
