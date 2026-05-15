@@ -453,7 +453,7 @@ export function Waitlist() {
                                 {/* Subsequent Items or Filtered Results */}
                                 {filteredActiveEntries.length > 0 && (
                                     <div className="bg-white/50 backdrop-blur-2xl border border-white/50 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-900/5 ring-1 ring-white/20">
-                                        <div className="divide-y divide-indigo-100/50 max-h-[600px] overflow-y-auto custom-scrollbar">
+                                        <div className="divide-y divide-indigo-100/50 md:max-h-[600px] md:overflow-y-auto custom-scrollbar">
                                             {filteredActiveEntries.map((entry: any) => {
                                                 // Skip if it was already shown as highlight
                                                 if (entry.id === activeEntries[0]?.id) return null;
