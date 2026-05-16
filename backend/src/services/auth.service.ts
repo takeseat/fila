@@ -87,13 +87,6 @@ export class AuthService {
                     yourTurnText: 'Olá {{customer_name}}, sua mesa está pronta! Por favor, dirija-se ao balcão de {{business_name}}. Até já!',
                     minSecondsBetweenUpdates: 300,
                     minPositionsChangeToNotify: 5,
-                    // Pickup order messages - enabled by default
-                    sendOrderCreated: true,
-                    sendOrderReady: true,
-                    sendOrderNotPickedUp: false,
-                    orderCreatedText: 'Olá {{customer_name}}! Seu pedido {{order_code}} foi recebido em {{business_name}} e já está sendo preparado. Aguarde a confirmação quando estiver pronto!',
-                    orderReadyText: 'Olá {{customer_name}}! Seu pedido {{order_code}} está pronto para retirada em {{business_name}}. Venha buscar! 🎉',
-                    orderNotPickedUpText: 'Olá {{customer_name}}, notamos que seu pedido {{order_code}} ainda não foi retirado em {{business_name}}. Estamos aguardando você!',
                 },
             });
 
