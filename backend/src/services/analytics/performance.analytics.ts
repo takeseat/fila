@@ -64,31 +64,26 @@ export class PerformanceAnalytics {
             this.repository.getWaitTimeSeries(filters, bucketSize),
         ]);
 
-        // Calculate peak concurrent groups (approximation)
-        // For MVP, we'll use the max "entered - seated - lost" in any bucket
-        const peak_concurrent_groups = volumeSeries.reduce((max, bucket) => {
-            const concurrent = bucket.entered - bucket.seated - bucket.lost;
-            return Math.max(max, concurrent);
-        }, 0);
+        // Build dailyData by merging volume and wait time series by bucket_time
+        const dailyData = volumeSeries.map(v => {
+            const waitEntry = waitTimeSeries.find(w => w.bucket_time === v.bucket_time);
+            return {
+                date: v.bucket_time,
+                totalServed: v.seated,
+                averageWaitTime: waitEntry?.avg_wait_min != null
+                    ? Math.round(waitEntry.avg_wait_min * 60) // convert minutes → seconds for frontend
+                    : 0,
+            };
+        });
 
         return {
-            kpis: {
-                ...kpis,
-                peak_concurrent_groups,
+            metrics: {
+                totalServed: kpis.groups_seated,
+                averageWaitTime: kpis.wait_avg_min != null
+                    ? Math.round(kpis.wait_avg_min * 60) // minutes → seconds
+                    : 0,
             },
-            series: {
-                wait_time_series: waitTimeSeries,
-                volume_series: volumeSeries,
-            },
-            metadata: {
-                bucket_size: bucketSize,
-                filters_applied: {
-                    time_range: !!params.timeRange,
-                    days_of_week: !!params.daysOfWeek,
-                    party_size: !!params.partySizeBucket,
-                    statuses: !!params.statuses,
-                },
-            },
+            dailyData,
         };
     }
 }

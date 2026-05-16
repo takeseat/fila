@@ -47,7 +47,7 @@ export function QueuePerformance() {
     return (
         <PageShell>
             <MobilePageHeader
-                title={t('reports:queuePerformance.title')}
+                title="Analytics"
                 subtitle={t('reports:queuePerformance.last7Days')}
             />
 
@@ -63,9 +63,7 @@ export function QueuePerformance() {
                     <div className="space-y-6 animate-fade-in max-w-5xl mx-auto">
                         {/* Desktop header — hidden on mobile (MobilePageHeader handles it) */}
                         <div className="hidden md:block">
-                            <h1 className="text-3xl font-bold text-text-primary mb-1">
-                                {t('reports:queuePerformance.title')}
-                            </h1>
+                            <h1 className="text-3xl font-bold text-text-primary mb-1">Analytics</h1>
                             <p className="text-text-secondary">
                                 {t('reports:queuePerformance.subtitle')}
                             </p>
