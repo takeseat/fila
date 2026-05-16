@@ -210,15 +210,7 @@ model RestaurantWhatsAppSettings {
   minSecondsBetweenUpdates   Int @default(300) // 5 minutes default
   minPositionsChangeToNotify Int @default(5) // Notify only if position changes by at least 5
 
-  // Order Message Toggles
-  sendOrderCreated       Boolean @default(true)
-  sendOrderReady         Boolean @default(true)
-  sendOrderNotPickedUp   Boolean @default(false)
 
-  // Order Message Templates
-  orderCreatedText       String? @db.Text
-  orderReadyText         String? @db.Text
-  orderNotPickedUpText   String? @db.Text
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

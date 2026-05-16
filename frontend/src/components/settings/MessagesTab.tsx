@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { usePlan } from '../../hooks/usePlan';
 import { Card, Button } from '../ui';
 // import { WhatsAppTab } from './WhatsAppTab'; // Unused
@@ -22,13 +21,6 @@ type WhatsAppSettings = {
     yourTurnText: string;
     minSecondsBetweenUpdates: number;
     minPositionsChangeToNotify: number;
-    // Order Messages
-    sendOrderCreated: boolean;
-    sendOrderReady: boolean;
-    sendOrderNotPickedUp: boolean;
-    orderCreatedText: string;
-    orderReadyText: string;
-    orderNotPickedUpText: string;
 };
 
 export function MessagesTab() {
@@ -36,13 +28,9 @@ export function MessagesTab() {
     const DEFAULTS = {
         welcomeText: "Olá {{customer_name}}! Você entrou na fila de {{business_name}}...",
         positionUpdateText: "Sua posição atual é: {{position}}...",
-        yourTurnText: "Olá {{customer_name}}, sua mesa está pronta!...",
-        orderCreatedText: "Seu pedido {{order_code}} foi recebido!...",
-        orderReadyText: "Seu pedido {{order_code}} está pronto!...",
-        orderNotPickedUpText: "Seu pedido {{order_code}} ainda não foi retirado..."
+        yourTurnText: "Olá {{customer_name}}, sua mesa está pronta!..."
     };
 
-    const { t } = useTranslation('settings');
     const { isPro } = usePlan();
     const queryClient = useQueryClient();
     const [successMessage, setSuccessMessage] = useState('');
@@ -53,9 +41,6 @@ export function MessagesTab() {
     const sendWelcome = watch('sendWelcome');
     const sendPositionUpdates = watch('sendPositionUpdates');
     const sendTurnMessage = watch('sendTurnMessage');
-    const sendOrderCreated = watch('sendOrderCreated');
-    const sendOrderReady = watch('sendOrderReady');
-    const sendOrderNotPickedUp = watch('sendOrderNotPickedUp');
 
     const { data: waSettings, isLoading: isWaLoading } = useQuery<WhatsAppSettings>({
         queryKey: ['whatsapp-settings'],
@@ -76,14 +61,6 @@ export function MessagesTab() {
                 yourTurnText: waSettings.yourTurnText || '',
                 minSecondsBetweenUpdates: waSettings.minSecondsBetweenUpdates || 300,
                 minPositionsChangeToNotify: waSettings.minPositionsChangeToNotify || 5,
-
-                // Order Defaults
-                sendOrderCreated: waSettings.sendOrderCreated ?? true,
-                sendOrderReady: waSettings.sendOrderReady ?? true,
-                sendOrderNotPickedUp: waSettings.sendOrderNotPickedUp ?? false,
-                orderCreatedText: waSettings.orderCreatedText || '',
-                orderReadyText: waSettings.orderReadyText || '',
-                orderNotPickedUpText: waSettings.orderNotPickedUpText || '',
             });
         }
     }, [waSettings, reset]);
@@ -115,7 +92,7 @@ export function MessagesTab() {
                         </div>
                         <h3 className="text-lg font-bold text-text-primary mb-2">Recurso Profissional</h3>
                         <p className="text-text-tertiary max-w-md mx-auto mb-6">
-                            O envio de mensagens automáticas via WhatsApp e o gerenciamento de Pedidos (Retirada) são exclusivos do plano Profissional.
+                            O envio de mensagens automáticas via WhatsApp é exclusivo do plano Profissional.
                         </p>
                         <Button
                             onClick={() => window.dispatchEvent(new CustomEvent('open-upgrade-modal'))}
@@ -268,130 +245,6 @@ export function MessagesTab() {
                             </div>
                         </div>
                     </Card>
-
-                    {/* Pickup Orders Section */}
-                    <Card className="flex flex-col shadow-md border-default radius-lg overflow-hidden">
-                        <div className="p-6 border-b border-default bg-elevated">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-brand-subtle rounded-lg">
-                                    <Icon name="shoppingBag" size="md" tone="brand" />
-                                </div>
-                                <div>
-                                    <h2 className="text-xl font-medium text-text-primary">Pedidos (Retirada)</h2>
-                                    <p className="text-sm text-text-secondary">Gerencie módulo de pedidos e notificações de retirada.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="p-6 space-y-8">
-                            <h3 className="text-lg font-medium text-text-primary border-b border-default pb-4">{t('orderMessages.title')}</h3>
-
-                            {/* Order Created */}
-                            <div className="space-y-4">
-                                <div className="flex items-center space-x-3">
-                                    <input
-                                        type="checkbox"
-                                        id="sendOrderCreated"
-                                        {...register('sendOrderCreated')}
-                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
-                                    />
-                                    <label htmlFor="sendOrderCreated" className="text-base font-medium text-text-primary flex items-center">
-                                        {t('orderMessages.created.label')}
-                                        {sendOrderCreated && <span className="text-error ml-1">*</span>}
-                                    </label>
-                                </div>
-                                <textarea
-                                    {...register('orderCreatedText', { required: sendOrderCreated })}
-                                    rows={3}
-                                    placeholder={DEFAULTS.orderCreatedText}
-                                    className={`w-full px-3 py-2 bg-primary border ${errors.orderCreatedText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
-                                />
-                                {errors.orderCreatedText && <span className="text-xs text-error block">{t('orderMessages.errors.required')}</span>}
-                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                                    <p className="text-sm text-text-tertiary italic">{t('orderMessages.created.help')}</p>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => setValue('orderCreatedText', DEFAULTS.orderCreatedText)}
-                                        className="text-text-brand hover:bg-brand-subtle"
-                                    >
-                                        Restaurar padrão
-                                    </Button>
-                                </div>
-                            </div>
-
-                            {/* Order Ready */}
-                            <div className="space-y-4 border-t border-subtle pt-6">
-                                <div className="flex items-center space-x-3">
-                                    <input
-                                        type="checkbox"
-                                        id="sendOrderReady"
-                                        {...register('sendOrderReady')}
-                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
-                                    />
-                                    <label htmlFor="sendOrderReady" className="text-base font-medium text-text-primary flex items-center">
-                                        {t('orderMessages.ready.label')}
-                                        {sendOrderReady && <span className="text-error ml-1">*</span>}
-                                    </label>
-                                </div>
-                                <textarea
-                                    {...register('orderReadyText', { required: sendOrderReady })}
-                                    rows={3}
-                                    placeholder={DEFAULTS.orderReadyText}
-                                    className={`w-full px-3 py-2 bg-primary border ${errors.orderReadyText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
-                                />
-                                {errors.orderReadyText && <span className="text-xs text-error block">{t('orderMessages.errors.required')}</span>}
-                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                                    <p className="text-sm text-text-tertiary italic">{t('orderMessages.ready.help')}</p>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => setValue('orderReadyText', DEFAULTS.orderReadyText)}
-                                        className="text-text-brand hover:bg-brand-subtle"
-                                    >
-                                        Restaurar padrão
-                                    </Button>
-                                </div>
-                            </div>
-
-                            {/* Not Picked Up */}
-                            <div className="space-y-4 border-t border-subtle pt-6">
-                                <div className="flex items-center space-x-3">
-                                    <input
-                                        type="checkbox"
-                                        id="sendOrderNotPickedUp"
-                                        {...register('sendOrderNotPickedUp')}
-                                        className="h-4 w-4 bg-primary border-default rounded text-brand focus:ring-brand focus:ring-offset-0 transition-colors"
-                                    />
-                                    <label htmlFor="sendOrderNotPickedUp" className="text-base font-medium text-text-primary flex items-center">
-                                        {t('orderMessages.notPickedUp.label')}
-                                        {sendOrderNotPickedUp && <span className="text-error ml-1">*</span>}
-                                    </label>
-                                </div>
-                                <textarea
-                                    {...register('orderNotPickedUpText', { required: sendOrderNotPickedUp })}
-                                    rows={3}
-                                    placeholder={DEFAULTS.orderNotPickedUpText}
-                                    className={`w-full px-3 py-2 bg-primary border ${errors.orderNotPickedUpText ? 'border-error' : 'border-default'} rounded-md focus:border-focus focus:ring-1 focus:ring-brand shadow-sm transition-all outline-none text-base text-text-primary placeholder:text-text-tertiary`}
-                                />
-                                {errors.orderNotPickedUpText && <span className="text-xs text-error block">{t('orderMessages.errors.required')}</span>}
-                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-                                    <p className="text-sm text-text-tertiary italic">{t('orderMessages.notPickedUp.help')}</p>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => setValue('orderNotPickedUpText', DEFAULTS.orderNotPickedUpText)}
-                                        className="text-text-brand hover:bg-brand-subtle"
-                                    >
-                                        Restaurar padrão
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </Card>
                 </div>
 
                 {/* Sticky Right Sidebar: Variables */}
@@ -413,14 +266,6 @@ export function MessagesTab() {
                                         <h5 className="text-xs font-bold text-text-tertiary uppercase tracking-wider mb-4">Fila de Espera</h5>
                                         <div className="flex flex-wrap gap-2">
                                             {['{{customer_name}}', '{{party_size}}', '{{position}}', '{{business_name}}', '{{eta_minutes}}'].map(v => (
-                                                <code key={v} className="px-2 py-1 bg-secondary border border-subtle rounded-md text-xs font-mono text-text-brand">{v}</code>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div className="border-t border-subtle pt-6">
-                                        <h5 className="text-xs font-bold text-text-tertiary uppercase tracking-wider mb-4">Pedidos / Outros</h5>
-                                        <div className="flex flex-wrap gap-2">
-                                            {['{{order_code}}', '{{business_name}}'].map(v => (
                                                 <code key={v} className="px-2 py-1 bg-secondary border border-subtle rounded-md text-xs font-mono text-text-brand">{v}</code>
                                             ))}
                                         </div>
