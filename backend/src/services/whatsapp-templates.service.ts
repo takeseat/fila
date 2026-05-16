@@ -19,7 +19,7 @@ export class WhatsAppTemplatesService {
             '{{party_size}}': entry.partySize.toString(),
             '{{position}}': position ? position.toString() : '?',
             '{{eta_minutes}}': entry.estimatedWaitMinutes ? entry.estimatedWaitMinutes.toString() : '?',
-            '{{avg_wait_minutes}}': restaurant.avgWaitFallbackMinutes ? restaurant.avgWaitFallbackMinutes.toString() : '?', // Simplified
+            '{{avg_wait_minutes}}': entry.estimatedWaitMinutes ? entry.estimatedWaitMinutes.toString() : '15', // Hardcoded default (15 min)
         };
 
         for (const [key, value] of Object.entries(variables)) {
