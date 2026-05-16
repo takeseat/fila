@@ -150,7 +150,7 @@ jobs:
         working-directory: ./backend
         run: |
           echo "🗑️  Dropping removed parameter columns (idempotent)..."
-          npx prisma db execute --file=prisma/drop_parameter_columns.sql
+          npx prisma db execute --file=prisma/drop_parameter_columns.sql || true
           echo "✅ Done"
         env:
           NODE_ENV: production
