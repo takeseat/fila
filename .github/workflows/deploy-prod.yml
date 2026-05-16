@@ -137,9 +137,21 @@ jobs:
           npx prisma generate
           
           # Run ONLY migrate deploy (safe for production)
+          # --accept-data-loss needed for DROP COLUMN operations
           npx prisma migrate deploy
           
           echo "✅ Migrations completed successfully"
+        env:
+          NODE_ENV: production
+          DB_ENV: production
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Drop Removed Parameter Columns
+        working-directory: ./backend
+        run: |
+          echo "🗑️  Dropping removed parameter columns (idempotent)..."
+          npx prisma db execute --file=prisma/drop_parameter_columns.sql
+          echo "✅ Done"
         env:
           NODE_ENV: production
           DB_ENV: production
