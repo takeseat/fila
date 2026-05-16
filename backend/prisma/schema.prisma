@@ -34,13 +34,6 @@ model Restaurant {
   createdAt         DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // Alert Settings
-  waitingAlertMinutes Int?
-  calledAlertMinutes  Int?
-
-  // Average Wait Time Settings
-  avgWaitWindowMinutes   Int? @default(90)
-  avgWaitFallbackMinutes Int? @default(15)
 
   // Pickup Orders Feature
   pickupOrdersEnabled         Boolean @default(false)

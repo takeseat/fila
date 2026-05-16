@@ -4,10 +4,6 @@ import prisma from '../config/database';
 import { z } from 'zod';
 
 const updateSettingsSchema = z.object({
-    waitingAlertMinutes: z.number().int().min(1).nullable().optional(),
-    calledAlertMinutes: z.number().int().min(1).nullable().optional(),
-    avgWaitWindowMinutes: z.number().int().min(1).nullable().optional(),
-    avgWaitFallbackMinutes: z.number().int().min(1).nullable().optional(),
     autoNotPickedUpMinutes: z.number().int().min(5).max(120).nullable().optional(),
 });
 
@@ -176,10 +172,6 @@ export class RestaurantsController {
             const restaurant = await prisma.restaurant.findUnique({
                 where: { id: restaurantId },
                 select: {
-                    waitingAlertMinutes: true,
-                    calledAlertMinutes: true,
-                    avgWaitWindowMinutes: true,
-                    avgWaitFallbackMinutes: true,
                     name: true,
                     email: true,
                     phone: true,
@@ -223,37 +215,20 @@ export class RestaurantsController {
 
             const currentConfig = (current?.pickupOrdersConfig as any) || {};
 
-            // Update JSON
             if (data.autoNotPickedUpMinutes !== undefined) {
                 currentConfig.autoNotPickedUpMinutes = data.autoNotPickedUpMinutes;
             }
 
             const updatedRestaurant = await prisma.restaurant.update({
                 where: { id: restaurantId },
-                data: {
-                    waitingAlertMinutes: data.waitingAlertMinutes,
-                    calledAlertMinutes: data.calledAlertMinutes,
-                    avgWaitWindowMinutes: data.avgWaitWindowMinutes,
-                    avgWaitFallbackMinutes: data.avgWaitFallbackMinutes,
-                    pickupOrdersConfig: currentConfig
-                },
-                select: {
-                    waitingAlertMinutes: true,
-                    calledAlertMinutes: true,
-                    avgWaitWindowMinutes: true,
-                    avgWaitFallbackMinutes: true,
-                    pickupOrdersConfig: true
-                }
+                data: { pickupOrdersConfig: currentConfig },
+                select: { pickupOrdersConfig: true }
             });
 
             const config = updatedRestaurant.pickupOrdersConfig as any;
-            const response = {
-                ...updatedRestaurant,
+            res.json({
                 autoNotPickedUpMinutes: config?.autoNotPickedUpMinutes ?? 30,
-                pickupOrdersConfig: undefined
-            };
-
-            res.json(response);
+            });
         } catch (error: any) {
             if (error instanceof z.ZodError) {
                 res.status(400).json({ error: 'Validation error', details: error.errors });

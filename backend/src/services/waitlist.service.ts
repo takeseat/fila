@@ -311,17 +311,9 @@ export class WaitlistService {
     }
 
     async getQueueMetrics(restaurantId: string) {
-        // 1. Get restaurant settings
-        const restaurant = await prisma.restaurant.findUnique({
-            where: { id: restaurantId },
-            select: {
-                avgWaitWindowMinutes: true,
-                avgWaitFallbackMinutes: true,
-            },
-        });
-
-        const windowMinutes = restaurant?.avgWaitWindowMinutes ?? 90;
-        const fallbackMinutes = restaurant?.avgWaitFallbackMinutes ?? 15;
+        // Hardcoded defaults (parameters tab removed)
+        const windowMinutes = 90;
+        const fallbackMinutes = 15;
 
         // 2. Calculate window start time
         const windowStart = new Date(Date.now() - windowMinutes * 60 * 1000);
