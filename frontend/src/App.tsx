@@ -126,7 +126,7 @@ function App() {
                                     <Route
                                         path="/reports"
                                         element={
-                                            <PrivateRoute>
+                                            <PrivateRoute mobileShell>
                                                 <QueuePerformance />
                                             </PrivateRoute>
                                         }

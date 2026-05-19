@@ -56,8 +56,8 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
     };
 
     return (
-        <div className="flex h-screen bg-bg-canvas w-full">
-            <div className="flex-1 flex flex-col overflow-hidden w-full">
+        <div className="flex min-h-dvh lg:h-screen bg-bg-canvas w-full">
+            <div className="flex-1 flex flex-col lg:overflow-hidden w-full">
                 {/* Mobile Header: Hide if using mobileShell or simple layout */}
                 {!simple && !mobileShell && <MobileHeader title={getCurrentPageTitle()} />}
 
@@ -168,12 +168,12 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                 <main className={`
                     flex-1 w-full
                     ${mobileShell
-                        ? 'overflow-hidden p-0'
-                        : 'overflow-y-auto px-4 py-4 sm:px-6 lg:px-8'
+                        ? 'p-0'
+                        : 'lg:overflow-y-auto px-4 py-4 sm:px-6 lg:px-8'
                     } 
                     pb-20 lg:pb-8
                 `}>
-                    <div className={mobileShell ? 'h-full w-full' : 'max-w-screen-2xl mx-auto w-full'}>
+                    <div className={mobileShell ? 'lg:h-full w-full' : 'max-w-screen-2xl mx-auto w-full'}>
                         {children}
                     </div>
                 </main>

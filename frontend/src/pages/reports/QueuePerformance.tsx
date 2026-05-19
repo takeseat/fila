@@ -51,7 +51,7 @@ export function QueuePerformance() {
                 subtitle={t('reports:queuePerformance.last7Days')}
             />
 
-            <PageContent>
+            <PageContent className="px-4 sm:px-6 lg:px-8 py-6 pb-24 lg:pb-8">
                 {isLoading ? (
                     <div className="flex items-center justify-center py-20">
                         <div className="text-center">
