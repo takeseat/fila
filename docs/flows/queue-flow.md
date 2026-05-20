@@ -1,39 +1,32 @@
-# Fluxo: Gestão da Fila
+# Queue Flow
 
-Descreve o ciclo de vida do cliente na fila, desde a entrada até a finalização.
+## Overview
+This flow maps the lifecycle of a guest party from joining the waitlist, checking position updates, being called, and being seated or marked as no-show/cancelled.
 
-## Estados da Fila (`QueueStatus`)
-1.  **WAITING:** Cliente aguardando na fila.
-2.  **CALLED:** Cliente foi chamado (mesa pronta).
-3.  **SEATED:** Cliente sentou (fluxo de sucesso).
-4.  **CANCELLED:** Cliente desistiu ou foi removido manualmente.
-5.  **NO_SHOW:** Cliente não apareceu após ser chamado.
+## Responsibilities
+- Track queue state transitions (`WAITING` -> `CALLED` -> `SEATED` / `NO_SHOW` / `CANCELLED`).
+- Verify guest data structures and prevent duplicate active waitlist entries.
+- Dispatch notifications on transition triggers.
 
-## Fluxo Principal
+## Architecture / Flow
+1. **Join Queue (`POST /queue`)**: Hostess registers guest details. The system matches/creates the customer profile, saves `WaitlistEntry` as `WAITING`, and dispatches the Welcome notification.
+2. **Track Status (`GET /queue/:publicToken`)**: Guest tracks position, estimated wait minutes, and status updates via their public mobile page link.
+3. **Call Party (`POST /queue/:id/call`)**: Hostess triggers the call. Status moves to `CALLED`, initiating a visual return timer on the dashboard and dispatching the WhatsApp notification.
+4. **Completion**:
+   - Seating: Call `POST /queue/:id/seat`. Status changes to `SEATED`, incrementing customer loyalty stats.
+   - Cancel: Call `POST /queue/:id/cancel`. Status changes to `CANCELLED`.
+   - No-Show: Call `POST /queue/:id/noshow`. Status changes to `NO_SHOW`.
 
-### 1. Entrada na Fila (`POST /queue`)
-*   **Atores:** Operador (via Admin) ou Cliente (via Link Público - *se habilitado*).
-*   **Dados:** Nome, Telefone, Tamanho da Mesa (Party Size), Notas.
-*   **Processo:**
-    1.  Procura `Customer` pelo telefone. Se não existir, cria. Se existir, atualiza.
-    2.  Verifica se cliente já está em fila ativa no mesmo restaurante (previne duplicidade).
-    3.  Cria entrada `QueueEntry` (Status: `WAITING`).
-    4.  *(Assíncrono)* Dispara envio de mensagem de Boas-vindas (se Opt-in `true`).
+## Rules
+- **Double Entry Prevention**: A customer cannot be added to the waitlist if they have an active `WAITING` or `CALLED` queue record.
+- **Loyalty Accrual**: Seating a guest is the only action that increments the customer's `totalVisits` and updates `lastVisitAt`.
 
-### 2. Acompanhamento
-*   O cliente recebe um link único.
-*   Acessa `GET /queue/:publicToken`.
-*   Visualiza: Posição atual, Tempo estimado (ETA), Status.
+## Edge Cases
+- **Priority Override**: Priority guests are sorted at the top of the queue (`isPriority desc, createdAt asc`), adjusting positions and estimated times for other parties.
 
-### 3. Chamada (`POST /queue/:id/call`)
-*   **Atores:** Operador.
-*   **Gatilho:** Mesa liberou.
-*   **Processo:**
-    1.  Atualiza status para `CALLED`.
-    2.  *(Assíncrono)* Dispara envio de mensagem "Sua vez!" via WhatsApp.
-    3.  Inicia cronômetro de retorno (visual no frontend).
+## Technical Notes
+- Implemented in `WaitlistService`.
 
-### 4. Finalização
-*   **Sentar (`POST /queue/:id/seat`):** Cliente chegou. Status -> `SEATED`. Sai da contagem da fila.
-*   **Desistir (`POST /queue/:id/cancel`):** Cliente avisou que não vem. Status -> `CANCELLED`.
-*   **No-Show:** Operador marca que cliente não apareceu. Status -> `NO_SHOW`.
+## Related Documents
+- [Queue Rules](../business-rules/queue-rules.md)
+- [Customer Rules](../business-rules/customer-rules.md)

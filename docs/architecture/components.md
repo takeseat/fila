@@ -1,75 +1,33 @@
-# Componentes e Responsabilidades
+# System Components
 
-A arquitetura do Fila é composta por uma aplicação web monolítica no frontend e microsserviços (funções Lambda) no backend, compartilhando um banco de dados relacional.
+## Overview
+TakeSeat is split into a client SPA Web Frontend, an Express API Backend running on AWS Lambda, a relational MySQL database, and pluggable messaging integration providers.
 
-## Diagrama de Container (Visão Lógica)
+## Responsibilities
+- **Frontend SPA**: Deliver the operator interface for queue management, reports, and settings.
+- **Backend API**: Expose authenticated endpoints, process business actions, and validate structures.
+- **Database Storage**: Store records with relational integrity.
+- **Migration Runner**: Perform database schema updates via CI/CD execution.
 
-```mermaid
-graph TD
-    User[Browser Usuário] --> |HTTPS| CDN[AWS CloudFront]
-    CDN --> |Serves| FE[Frontend Web (SPA)]
-    
-    FE --> |API Requests| APIG[AWS API Gateway]
-    APIG --> |Invoke| LambdaAPI[AWS Lambda (API Monolith)]
-    
-    LambdaAPI --> |Read/Write| DB[(Aurora Serverless MySQL)]
-    LambdaAPI --> |Envio msg| WhatsAppModule[Módulo WhatsApp]
-    
-    WhatsAppModule --> |HTTP| ExternalAPI[Z-API]
-    
-    MigrateLambda[AWS Lambda (Migrate)] --> |Schema Updates| DB
-```
+## Architecture / Flow
+- **Request Lifecycle**:
+  1. Client SPA captures user actions -> compiles payload -> sends REST request.
+  2. Backend Lambda Express middleware intercepts -> validates token -> executes controller -> queries database.
+  3. Service executes callbacks -> triggers WhatsApp integrations.
+- **Schema Management**:
+  1. CI/CD initiates build -> deploys `takeseat-migrate-prod` Lambda function.
+  2. Migration function runs `prisma migrate deploy` directly against the database inside the secure VPC.
 
-## Componentes Principais
+## Rules
+- **No Direct DB Access from UI**: The React client must never contact the MySQL database directly. All operations must route through the secure REST API.
+- **Domain Service Separation**: Core business rules (Waitlist, Customers, Auth) must remain isolated in dedicated Service classes inside the API.
 
-### 1. Frontend Web
-*   **Tecnologia:** React, Vite (provável), TypeScript.
-*   **Responsabilidade:**
-    *   Interface do Operador — Fila, Relatório de Desempenho, Configurações.
-    *   Gestão de estado da UI e comunicação via REST com o Backend.
-*   **O que NÃO faz:**
-    *   Regras de negócio críticas (ex: cálculo de posição oficial).
-    *   Comunicação direta com o banco de dados.
+## Edge Cases
+- **VPC Net Isolation**: Database instances are isolated inside private subnets. The API Lambda and Migration Lambda must reside inside the same VPC/Subnet route to resolve DB queries.
 
-### 2. Backend API (Lambda)
-*   **Tecnologia:** Node.js 20.x, TypeScript, Express (via `serverless-express`).
-*   **Responsabilidade:**
-    *   Expor endpoints REST seguros.
-    *   Autenticação (JWT) e Autorização.
-    *   Lógica de domínio (Fila, Restaurantes).
-    *   Validações de entrada.
-*   **Dependências:**
-    *   `prisma`: ORM para acesso ao banco.
-    *   `dotenv`: Gestão de configuração.
-    *   `bcrypt`: Hashing de senhas.
+## Technical Notes
+- Technologies: React (Vite/TypeScript), Node.js (TypeScript/Express), MySQL (Prisma ORM), AWS Lambda, Z-API.
 
-### 3. Banco de Dados
-*   **Tecnologia:** AWS Aurora Serverless v2 (MySQL compatível).
-*   **Responsabilidade:**
-    *   Persistência relacional de dados.
-    *   Garantia de integridade referencial.
-    *   Stored state (única fonte de verdade).
-
-### 4. Módulo de Integrações (WhatsApp)
-*   **Localização:** Dentro do Backend API (`src/services/whatsapp.service.ts` e `src/providers`).
-*   **Responsabilidade:**
-    *   Abstrair a complexidade do envio de mensagens.
-    *   Gerenciar templates de texto.
-    *   Tratar erros de timeout e falhas de rede (ex: logs de erro, retentativas se implementado).
-    *   Verificar configurações de opt-in e habilitação por restaurante.
-
-### 5. Migration Runner
-*   **Tecnologia:** AWS Lambda (`takeseat-migrate-prod`).
-*   **Responsabilidade:**
-    *   Executar `prisma migrate deploy` em ambiente produtivo.
-    *   Garantir que o schema do banco esteja sincronizado com o código.
-*   **Justificativa:** Como o acesso ao banco é restrito (ou idealmente seria), um Lambda dedicado dentro da mesma rede/permissão é a forma mais segura de evoluir o schema via CI/CD.
-
-## Separação de Responsabilidades (Domínios)
-
-O código backend é organizado em serviços por domínio:
-
-*   **WaitlistService:** Core do negócio. Adicionar, Chamar, Sentar, Cancelar.
-*   **CustomersService:** Identificação e lookup de clientes por telefone (usado internamente pelo WaitlistService).
-*   **WhatsAppService:** Orquestração de notificações.
-*   **AuthService:** Login, Refresh Token.
+## Related Documents
+- [System Architecture Overview](./overview.md)
+- [Database Schema](../database/schema-overview.md)

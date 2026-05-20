@@ -1,19 +1,28 @@
-# ADR 002: Estratégia de Internacionalização (i18n)
+# ADR 002: Internationalization Strategy
 
-## Contexto
-O sistema será usado em regiões diferentes (Brasil, EUA, Europa). Tanto a interface administrativa (Staff) quanto a pública (Cliente final) precisam suportar múltiplos idiomas.
+## Overview
+This document outlines the hierarchy used to resolve locales (English, Portuguese, Spanish) across admin views and guest-facing status screens.
 
-## Decisão
-A preferência de idioma será resolvida na seguinte ordem de prioridade:
+## Responsibilities
+- Select the correct language preference for staff operators and guest clients.
+- Provide a modular translation structure leveraging JSON dictionary files.
 
-1.  **Usuário Logado (Staff):** Campo `user.language` no banco de dados.
-2.  **Cliente Final (Public Link):**
-    *   Parâmetro de URL (ex: `?lang=en`).
-    *   Configuração do Restaurante (`restaurant.settings.defaultLanguage`).
-    *   Detecção do Browser (`navigator.language`).
+## Architecture / Flow
+1. **LoggedIn Operator**: Resolve locale from the `User.language` DB column.
+2. **Guest public screen**:
+   - Evaluate the `?lang=` URL parameter.
+   - Fall back to the host restaurant's default settings language.
+   - Fall back to the browser's language (`navigator.language`).
 
-No código (Frontend), utilizamos bibliotecas padrão de i18n (ex: `react-i18next`) com arquivos de tradução JSON separados.
+## Rules
+- Outbound WhatsApp notifications sent to guests must use the language configured by the restaurant profile, regardless of the active hostess interface locale.
 
-## Consequências
-*   O backend precisa armazenar o locale do usuário.
-*   Templates de mensagens (WhatsApp) precisam ter versões em cada idioma suportado e o backend deve selecionar o correto com base no idioma do **Restaurante** (não do operador logado, pois o cliente recebe a mensagem).
+## Edge Cases
+- **Missing Translations**: When a translation key is missing in the Portuguese or Spanish dictionaries, the i18n manager must fallback gracefully to the English key definition.
+
+## Technical Notes
+- Implemented in React using `react-i18next` and backend query intercepts.
+
+## Related Documents
+- [Frontend Architecture](../frontend/frontend-architecture.md)
+- [Features List](../product/features.md)

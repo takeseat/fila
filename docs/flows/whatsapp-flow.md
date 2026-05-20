@@ -1,38 +1,32 @@
-# Fluxo: Comunicação WhatsApp
+# WhatsApp Notification Flow
 
-Descreve como as notificações são geradas, processadas e enviadas.
+## Overview
+This flow governs how guest notifications are generated, compiled, dispatched, and audited across waitlist transition triggers.
 
-## Gatilhos de Envio
+## Responsibilities
+- Compile message templates with real-time variables.
+- Manage opt-in validation checks.
+- Audit outbound notifications in database logs.
 
-O envio de mensagens é disparado por eventos de mudança de estado na fila, orquestrados pelo `WaitlistService`.
+## Architecture / Flow
+1. **Trigger Event**: A guest action triggers a state change (e.g. hostess calls party -> status becomes `CALLED`).
+2. **Opt-in & Settings Check**:
+   - Check if guest `whatsappOptIn` is true.
+   - Check if restaurant settings has enabled the specific notification.
+3. **Template Interpolation**: Load text template from the database, substituting variables:
+   - `{{customer_name}}`, `{{business_name}}`, `{{position}}`, `{{eta_minutes}}`.
+4. **Provider Dispatch**: Dispatch payload containing recipient number and compiled message text to `WhatsAppProvider.sendText`.
+5. **Log Generation**: Persist notification status and reference codes in `WhatsAppMessageLog`.
 
-### 1. Mensagem de Boas-vindas (Welcome)
-*   **Gatilho:** Cliente entra na fila (`WAITING`).
-*   **Condições:**
-    *   `whatsappOptIn` do cliente é `true`.
-    *   Configuração `sendWelcome` do restaurante é `true`.
-*   **Conteúdo:** "Olá [Nome], você entrou na fila do [Restaurante]. Sua posição é [N]."
+## Rules
+- **No SMS Failover**: The application only uses WhatsApp notifications. If message dispatch fails, the system does not fallback to SMS.
 
-### 2. Mensagem de Chamada (Your Turn)
-*   **Gatilho:** Status muda para `CALLED`.
-*   **Condições:** Opt-in e `isEnabled`.
-*   **Conteúdo:** "Olá [Nome], sua mesa está pronta! Compareça à recepção."
+## Edge Cases
+- **Z-API Webhook Status Feeds**: If the recipient's phone is disconnected, the provider returns delivery failure payloads to the system webhook, updating `WhatsAppMessageLog.status` to `FAILED`.
 
-## Processo de Envio (Técnico)
+## Technical Notes
+- Controlled in `WhatsAppService` and executed asynchronously to prevent blocking API responses.
 
-1.  **Preparação:**
-    *   `WaitlistService` chama `WhatsAppService` (agora com `await`).
-    *   Service busca template de mensagem e faz interpolação de variáveis ({name}, {position}, etc).
-
-2.  **Envio ao Provider:**
-    *   `WhatsAppService` delega para o provider configurado (`ZApiWhatsAppProvider`).
-    *   **Normalização:** Telefone é limpo (apenas dígitos).
-    *   **Request:** `POST` para API externa com timeout de 10s.
-
-3.  **Logs:**
-    *   Registro em `console.log` (CloudWatch) para debug.
-    *   *(Planejado/Futuro)* Persistência em tabela `WhatsAppMessageLog` para auditoria no banco.
-
-## Webhooks (Retorno)
-*   A Z-API envia notificações de status (`SENT`, `DELIVERED`, `READ`) para o endpoint configurado no backend.
-*   O backend processa para atualizar estatísticas de entrega (se implementado).
+## Related Documents
+- [WhatsApp Integration](../integrations/whatsapp.md)
+- [Queue Rules](../business-rules/queue-rules.md)

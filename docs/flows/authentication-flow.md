@@ -1,26 +1,32 @@
-# Fluxo: Autenticação
+# Authentication Flow
 
-## Login de Operador
+## Overview
+This document describes the user access flows for administrative staff logging into the dashboard and guest customers accessing public tracking pages.
 
-1.  **Credenciais:** Usuário fornece Email e Senha no Frontend.
-2.  **Request:** `POST /auth/login`.
-3.  **Verificação:**
-    *   Busca usuário por email.
-    *   Compara hash da senha (bcrypt).
-    *   Verifica se usuário está ativo.
-4.  **Token:**
-    *   Gera **Access Token** (JWT, validade curta, ex: 15min-1h).
-    *   Gera **Refresh Token** (validade longa, ex: 7 dias) salvo no banco.
-5.  **Contexto:**
-    *   Retorna dados do User e do Restaurant vinculado.
-    *   Frontend armazena tokens (localStorage ou Cookie httpOnly) e define o idioma da interface baseado no `user.language`.
+## Responsibilities
+- Issue secure JSON Web Tokens (JWT) for authenticated operator sessions.
+- Authorize read-only guest tracking views using obfuscated endpoint tokens.
 
-## Sessão do Cliente (Public Link)
+## Architecture / Flow
+- **Staff Login Flow**:
+  1. Operator submits email and password via `POST /auth/login`.
+  2. Backend looks up email, evaluates bcrypt password hash, and checks if user profile is active.
+  3. Backend generates short-lived JWT Access Token and long-lived Refresh Token.
+  4. Frontend stores tokens, intercepts Axios requests to inject authorization headers, and initializes the layout language matching `user.language`.
+- **Guest Tracking Link Flow**:
+  1. Guest navigates to link delivered in WhatsApp notification (e.g., `/queue/abcd-1234`).
+  2. UI requests page info using `GET /queue/:publicToken`.
+  3. Backend parses token, checks database for associated `WaitlistEntry`, and returns wait metrics if valid.
 
-1.  **Acesso:** Cliente clica no link recebido por SMS/WhatsApp (`/queue/abcd-1234`).
-2.  **Resolução:**
-    *   Backend busca `QueueEntry` onde `token == abcd-1234`.
-    *   Se válido e ativo (não arquivado há muito tempo), retorna dados parciais.
-3.  **Segurança:**
-    *   O token permite apenas **LEITURA** daquela entrada específica.
-    *   Não permite ver outros clientes da fila nem alterar status.
+## Rules
+- **Access Privilege Limits**: Guests do not log in. Their access token allows read-only visibility for their specific waitlist record. Guests cannot query other queue entries or mutate queue statuses.
+
+## Edge Cases
+- **Revoking Active Users**: When a manager toggles a user to inactive (`isActive = false`), the session JWT remains valid until expiration. Future refresh token requests are immediately rejected.
+
+## Technical Notes
+- Signature algorithm: HMAC-SHA256.
+
+## Related Documents
+- [Security Overview](../security/security-overview.md)
+- [API Patterns](../backend/api-patterns.md)

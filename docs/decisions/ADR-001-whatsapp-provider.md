@@ -1,22 +1,25 @@
-# ADR 001: Padrão Provider para WhatsApp
+# ADR 001: WhatsApp Provider Pattern
 
-## Contexto
-O sistema precisa enviar notificações via WhatsApp. Existem múltiplos fornecedores no mercado (Twilio, MessageBird, Z-API, Meta Cloud API), cada um com APIs, custos e requisitos de setup diferentes.
+## Overview
+This document records the architectural decision to decouple outbound messaging integrations from specific providers using a Strategy/Provider pattern interface.
 
-## Decisão
-Adotamos o padrão **Strategy/Provider** para abstrair o envio de mensagens.
+## Responsibilities
+- Define a uniform service interface for dispatching text alerts.
+- Support swappable message transport implementations (Z-API, Meta Cloud API) without impacting business logic.
 
-1.  Criamos uma interface `IWhatsAppProvider` no backend.
-2.  A lógica de negócio (`WhatsAppService`) depende apenas desta interface, não de implementações concretas.
-3.  A implementação atual é injetada (ou instanciada) em tempo de execução.
+## Architecture / Flow
+`WaitlistService` -> Calls interface method `IWhatsAppProvider.sendText` -> Invokes active injected subclass (`ZApiWhatsAppProvider`) -> Issues API request.
 
-## Consequências
+## Rules
+- All business services must interact solely with the `IWhatsAppProvider` interface abstraction.
+- Subclass implementations must handle vendor-specific request layouts and response parsing internally.
 
-### Positivas
-*   **Baixo Acoplamento:** Mudar de Z-API para Meta Cloud API exigirá apenas criar uma nova classe `MetaWhatsAppProvider` e alterar uma linha de configuração/injeção.
-*   **Testabilidade:** Facilita a criação de `MockWhatsAppProvider` para testes automatizados, evitando custos e spam real durante o desenvolvimento.
-*   **Flexibilidade:** Permite estratégias híbridas (ex: usar Meta para alertas críticos e outro provider para marketing) no futuro.
+## Edge Cases
+- **Development Mocking**: In non-production environments, a `MockWhatsAppProvider` can be resolved to log dispatches in terminal consoles instead of issuing real billing requests.
 
-### Negativas
-*   Leve aumento na complexidade do código (indireção extra).
-*   Necessidade de normalizar os formatos de dados (ex: retorno de IDs de mensagem) entre diferentes providers.
+## Technical Notes
+- Current active subclass in production: `ZApiWhatsAppProvider`.
+
+## Related Documents
+- [WhatsApp Integration](../integrations/whatsapp.md)
+- [System Components](../architecture/components.md)
