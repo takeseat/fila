@@ -7,6 +7,7 @@ import { LanguageSelector } from '../components/LanguageSelector';
 import { AuthLayout } from '../components/auth/AuthLayout';
 import { BrandingSection } from '../components/auth/BrandingSection';
 import { Icon } from '../design-system/icons/Icon';
+import { TakeSeatLogo } from '../components/brand/TakeSeatLogo';
 
 export function Login() {
     const [email, setEmail] = useState('');
@@ -46,18 +47,9 @@ export function Login() {
 
             {/* Mobile Logo */}
             <div className="lg:hidden text-center mb-8">
-                <img
-                    src="/assets/logo-light.png"
-                    alt="TakeSeat"
-                    className="h-10 w-auto mx-auto mb-2"
-                    onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        const textLogo = document.createElement('div');
-                        textLogo.className = 'text-2xl font-bold text-white';
-                        textLogo.textContent = 'TakeSeat';
-                        e.currentTarget.parentElement?.appendChild(textLogo);
-                    }}
-                />
+                <div className="flex justify-center mb-2">
+                    <TakeSeatLogo size="md" variant="light" />
+                </div>
                 <p className="text-sm text-text-muted">{t('branding.headline')}</p>
             </div>
 
@@ -242,18 +234,9 @@ export function Register() {
             </div>
 
             <div className="lg:hidden text-center mb-8">
-                <img
-                    src="/assets/logo-light.png"
-                    alt="TakeSeat"
-                    className="h-8 w-auto mx-auto mb-2"
-                    onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        const textLogo = document.createElement('div');
-                        textLogo.className = 'text-2xl font-bold text-white';
-                        textLogo.textContent = 'TakeSeat';
-                        e.currentTarget.parentElement?.appendChild(textLogo);
-                    }}
-                />
+                <div className="flex justify-center mb-2">
+                    <TakeSeatLogo size="sm" variant="light" />
+                </div>
                 <p className="text-sm text-text-muted">{t('branding.headline')}</p>
             </div>
 

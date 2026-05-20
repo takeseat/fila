@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { TakeSeatLogo } from '../brand/TakeSeatLogo';
 
 interface BrandingSectionProps {
     className?: string;
@@ -17,19 +18,7 @@ export function BrandingSection({ className = '' }: BrandingSectionProps) {
         <div className={`hidden lg:flex lg:flex-col lg:justify-center lg:px-16 xl:px-24 ${className}`}>
             {/* Logo */}
             <div className="mb-12">
-                <img
-                    src="/assets/logo-dark.png"
-                    alt="TakeSeat"
-                    className="h-12 w-auto"
-                    onError={(e) => {
-                        // Fallback to text logo if image not found
-                        e.currentTarget.style.display = 'none';
-                        const textLogo = document.createElement('div');
-                        textLogo.className = 'text-3xl font-bold text-text-primary';
-                        textLogo.textContent = 'TakeSeat';
-                        e.currentTarget.parentElement?.appendChild(textLogo);
-                    }}
-                />
+                <TakeSeatLogo size="lg" />
             </div>
 
             {/* Headline */}

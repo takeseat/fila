@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { BottomNavigation } from './BottomNavigation';
 import { MobileHeader } from './MobileHeader';
 import { Icon } from '../../design-system/icons/Icon';
+import { TakeSeatLogo } from '../brand/TakeSeatLogo';
 
 interface LayoutProps {
     children: ReactNode;
@@ -66,13 +67,8 @@ export function Layout({ children, pageTitle, simple = false, mobileShell = fals
                     <header className="hidden lg:flex h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/60 px-6 items-center justify-between z-30 shadow-sm sticky top-0">
                         {/* Left: Logo + Nav */}
                         <div className="flex items-center gap-8">
-                            <div className="flex items-center gap-2.5 cursor-pointer group" onClick={() => navigate('/waitlist')}>
-                                <div className="bg-indigo-600 p-1.5 rounded-lg shadow-sm group-hover:scale-105 transition-transform">
-                                    <Icon name="tableService" size="sm" className="text-white" />
-                                </div>
-                                <span className="text-xl font-bold text-slate-800 tracking-tight">
-                                    Take<span className="text-indigo-600">Seat</span>
-                                </span>
+                            <div className="cursor-pointer group-hover:scale-105 transition-transform" onClick={() => navigate('/waitlist')}>
+                                <TakeSeatLogo size="md" />
                             </div>
 
                             {/* Nav Links */}
