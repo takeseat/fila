@@ -64,6 +64,13 @@ export function OnboardingWizard() {
                     className="mx-auto h-16 w-auto mb-6"
                     src="/assets/logo-icon.png"
                     alt="TakeSeat"
+                    onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const textLogo = document.createElement('div');
+                        textLogo.className = 'text-3xl font-bold text-text-primary';
+                        textLogo.textContent = 'TakeSeat';
+                        e.currentTarget.parentElement?.appendChild(textLogo);
+                    }}
                 />
                 <h2 className="text-3xl font-extrabold text-text-primary mb-2">
                     {t('onboarding.welcomeTitle', { defaultValue: 'Welcome to TakeSeat!' })}

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import restaurantLoungeImg from '../../assets/images/restaurant-lounge.png';
+import restaurantLoungeImg from '../../assets/images/restaurant-lounge.webp';
 
 interface AuthLayoutProps {
     children: ReactNode;

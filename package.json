@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "md-to-pdf": "^5.2.5"
+    "md-to-pdf": "^5.2.5",
+    "sharp": "^0.34.5"
   }
 }
