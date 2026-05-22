@@ -14,13 +14,13 @@ resource "aws_lambda_function" "api" {
   environment {
     variables = {
       NODE_ENV           = "production"
-      CORS_ORIGIN        = "https://${var.domain_name}"
+      CORS_ORIGIN        = "https://${var.domain_name},https://app.${var.domain_name},https://admin.${var.domain_name}"
       DB_SECRET_ARN      = aws_secretsmanager_secret.db_credentials.arn
       JWT_SECRET         = random_password.jwt_secret.result
       JWT_REFRESH_SECRET = random_password.jwt_refresh_secret.result
       SES_REGION         = var.aws_region
       SES_FROM_EMAIL     = "contato@${var.domain_name}"
-      APP_BASE_URL       = "https://${var.domain_name}"
+      APP_BASE_URL       = "https://app.${var.domain_name}"
     }
   }
 

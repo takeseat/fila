@@ -185,7 +185,7 @@ jobs:
         env:
           NODE_ENV: development
           VITE_API_URL: https://api.takeseat.me
-          VITE_APP_URL: https://takeseat.me
+          VITE_APP_URL: https://app.takeseat.me
         run: |
           npm ci
           npm run build
@@ -232,7 +232,8 @@ jobs:
         run: |
           echo "✅ Deployment completed successfully!"
           echo ""
-          echo "🌐 Main Portal: https://takeseat.me"
+          echo "🌐 Main Portal: https://app.takeseat.me"
+          echo "🌐 Legacy Portal: https://takeseat.me"
           echo "🔐 Admin Portal: https://admin.takeseat.me"
           echo "🔌 API: https://api.takeseat.me"
           echo ""

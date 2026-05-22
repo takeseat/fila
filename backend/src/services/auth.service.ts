@@ -32,7 +32,7 @@ export class AuthService {
         });
 
         // Send email
-        const appBaseUrl = process.env.APP_BASE_URL || 'https://takeseat.me';
+        const appBaseUrl = process.env.APP_BASE_URL || 'https://app.takeseat.me';
         // Link now points to frontend /verify-email which will ask for Name/Password + Token
         const verificationLink = `${appBaseUrl}/verify-email?token=${token}&locale=${locale}`;
 

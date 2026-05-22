@@ -28,6 +28,12 @@ variable "api_subdomain" {
   default     = "api"
 }
 
+variable "app_subdomain" {
+  description = "Application subdomain"
+  type        = string
+  default     = "app"
+}
+
 variable "vpc_cidr" {
   description = "VPC CIDR block"
   type        = string

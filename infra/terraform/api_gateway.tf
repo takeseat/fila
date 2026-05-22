@@ -8,7 +8,8 @@ resource "aws_apigatewayv2_api" "main" {
     allow_origins = [
       "https://${var.domain_name}",
       "https://www.${var.domain_name}",
-      "https://admin.${var.domain_name}"
+      "https://admin.${var.domain_name}",
+      "https://app.${var.domain_name}"
     ]
     allow_methods     = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
     allow_headers     = ["Content-Type", "Authorization", "X-Requested-With", "X-Impersonation-Token", "Accept-Language"]

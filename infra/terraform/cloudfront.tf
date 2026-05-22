@@ -13,7 +13,7 @@ resource "aws_cloudfront_distribution" "web" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
   price_class         = "PriceClass_100" # US, Canada, Europe
-  aliases             = [var.domain_name, "www.${var.domain_name}"]
+  aliases             = [var.domain_name, "www.${var.domain_name}", "app.${var.domain_name}"]
 
   origin {
     domain_name              = aws_s3_bucket.web.bucket_regional_domain_name
@@ -89,6 +89,19 @@ resource "aws_route53_record" "web_root" {
 resource "aws_route53_record" "web_www" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = "www.${var.domain_name}"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.web.domain_name
+    zone_id                = aws_cloudfront_distribution.web.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+# Route53 record for app subdomain
+resource "aws_route53_record" "web_app" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = "app.${var.domain_name}"
   type    = "A"
 
   alias {
