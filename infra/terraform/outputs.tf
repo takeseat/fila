@@ -38,6 +38,21 @@ output "s3_bucket_name" {
   value       = aws_s3_bucket.web.id
 }
 
+output "website_cloudfront_distribution_id" {
+  description = "CloudFront distribution ID for marketing website"
+  value       = aws_cloudfront_distribution.website.id
+}
+
+output "website_cloudfront_domain_name" {
+  description = "CloudFront distribution domain name for marketing website"
+  value       = aws_cloudfront_distribution.website.domain_name
+}
+
+output "website_s3_bucket_name" {
+  description = "S3 bucket name for marketing website"
+  value       = aws_s3_bucket.website.id
+}
+
 output "website_url" {
   description = "Website URL"
   value       = "https://${var.domain_name}"
