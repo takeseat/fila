@@ -29,7 +29,7 @@ export default function App() {
     },
     {
       title: "2. O cliente acompanha pelo celular",
-      description: "Ele recebe um link por WhatsApp para visualizar sua posição e o tempo estimado de espera em tempo real, sem precisar ficar na porta.",
+      description: "A cada movimentação na fila, o cliente recebe uma mensagem no WhatsApp com sua posição atualizada e o tempo estimado de espera. Sem precisar ficar na porta.",
       icon: <Smartphone className="w-6 h-6 text-indigo-400" />
     },
     {
@@ -392,12 +392,6 @@ export default function App() {
                       <div className="w-5 h-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
                         <Check className="w-3.5 h-3.5" />
                       </div>
-                      <span>Link de acompanhamento para o cliente</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-slate-300">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-                        <Check className="w-3.5 h-3.5" />
-                      </div>
                       <span>Painel operacional para recepção</span>
                     </li>
                   </ul>
@@ -451,19 +445,7 @@ export default function App() {
                       <div className="w-5 h-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
                         <Check className="w-3.5 h-3.5" />
                       </div>
-                      <span>Personalização total de cores e logotipos</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-slate-300">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-                        <Check className="w-3.5 h-3.5" />
-                      </div>
-                      <span>Métricas de equipe e relatórios consolidados</span>
-                    </li>
-                    <li className="flex items-center gap-3 text-slate-300">
-                      <div className="w-5 h-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-                        <Check className="w-3.5 h-3.5" />
-                      </div>
-                      <span>Suporte prioritário via gerente de conta</span>
+                      <span>Mensagens personalizadas enviadas ao cliente</span>
                     </li>
                   </ul>
                 </div>
