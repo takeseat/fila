@@ -6,12 +6,13 @@ import {
   Sparkles, 
   ChevronRight, 
   Smartphone, 
-  MessageSquare, 
   BarChart3, 
   Clock, 
   X,
   Menu,
-  AlertCircle
+  AlertCircle,
+  Users,
+  Bell
 } from 'lucide-react';
 
 export default function App() {
@@ -22,19 +23,24 @@ export default function App() {
 
   const steps = [
     {
-      title: "1. Entrada Rápida",
-      description: "O cliente escaneia um QR Code na entrada ou a recepção registra o nome e telefone dele no tablet em menos de 5 segundos.",
+      title: "1. Cadastre o cliente na fila",
+      description: "A equipe informa nome, telefone e quantidade de pessoas em poucos segundos. Sem papel, sem confusão na porta.",
+      icon: <Users className="w-6 h-6 text-indigo-400" />
+    },
+    {
+      title: "2. O cliente acompanha pelo celular",
+      description: "Ele recebe um link por WhatsApp para visualizar sua posição e o tempo estimado de espera em tempo real, sem precisar ficar na porta.",
       icon: <Smartphone className="w-6 h-6 text-indigo-400" />
     },
     {
-      title: "2. Acompanhamento em Tempo Real",
-      description: "O cliente recebe uma mensagem automática no WhatsApp com um link exclusivo para acompanhar sua posição na fila, sem precisar ficar esperando na porta.",
-      icon: <MessageSquare className="w-6 h-6 text-indigo-400" />
+      title: "3. Chame quando a mesa estiver pronta",
+      description: "A equipe dispara a chamada com um toque e o cliente recebe a notificação diretamente pelo WhatsApp. Sem gritos, sem pagers.",
+      icon: <Bell className="w-6 h-6 text-indigo-400" />
     },
     {
-      title: "3. Chamada Inteligente",
-      description: "Quando a mesa está pronta, a recepção clica em chamar. O cliente recebe um aviso no WhatsApp solicitando o retorno imediato. Prático, silencioso e sem stress.",
-      icon: <Check className="w-6 h-6 text-indigo-400" />
+      title: "4. Analise a operação",
+      description: "Acompanhe tempos médios de espera, volume de atendimentos, taxa de desistência e o comportamento da fila ao longo do dia.",
+      icon: <BarChart3 className="w-6 h-6 text-indigo-400" />
     }
   ];
 
@@ -150,11 +156,11 @@ export default function App() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight font-display">
-              Restaurantes cheios merecem uma recepção à altura.
+              Gestão inteligente de filas para restaurantes movimentados.
             </h1>
             
             <p className="text-lg md:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
-              Transforme filas caóticas em experiências premium de atendimento. Evite desistências silenciosas, retenha seus clientes e aumente o faturamento com uma gestão inteligente e elegante.
+              Organize a lista de espera, chame clientes pelo WhatsApp e reduza desistências com uma experiência simples para sua equipe e agradável para seus clientes.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -197,10 +203,10 @@ export default function App() {
               <span>O gargalo invisível</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white font-display">
-              Sua fila de espera está te fazendo perder dinheiro.
+              Clientes esperando na porta, equipe sobrecarregada e pouca visibilidade da fila.
             </h2>
             <p className="text-base md:text-lg text-slate-300 leading-relaxed font-light">
-              Anotar nomes em papel gera aglomerações desconfortáveis na porta e faz com que muitos clientes desistam silenciosamente sem que você perceba. O TakeSeat profissionaliza o primeiro ponto de contato com o seu cliente.
+              Sem controle digital, a recepção trabalha no escuro: anotações em papel se perdem, clientes desistem sem avisar e ninguém sabe o tempo real de espera. O TakeSeat transforma esse cenário em uma operação organizada, com clientes acompanhando a posição pelo celular e chamadas automáticas por WhatsApp.
             </p>
           </div>
         </section>
@@ -209,14 +215,14 @@ export default function App() {
         <section id="como-funciona" className="py-8 space-y-16 scroll-mt-24">
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold text-white font-display">
-              Uma fila organizada, sem esforço
+              Como funciona na prática
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto font-light">
-              Ofereça uma experiência premium e digital do momento em que o cliente chega até a hora de se sentar.
+              Do cadastro na fila até a chamada por WhatsApp, tudo acontece em poucos toques. Simples para a equipe, transparente para o cliente.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {steps.map((step, idx) => (
               <div 
                 key={idx} 
@@ -254,10 +260,10 @@ export default function App() {
         <section id="recursos" className="py-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center scroll-mt-24">
           <div className="space-y-8">
             <h2 className="text-3xl md:text-4xl font-bold text-white font-display leading-tight">
-              Tudo sob controle. Em tempo real.
+              Mais controle para a recepção. Menos abandono na fila.
             </h2>
             <p className="text-slate-300 font-light leading-relaxed">
-              Desenvolvemos uma plataforma rápida e simples para a equipe da recepção gerenciar a fila com precisão, liberando tempo para focar na hospitalidade.
+              O TakeSeat dá à hostess e ao gestor visibilidade total sobre a fila, com ferramentas práticas que reduzem o esforço operacional e mantêm os clientes informados.
             </p>
             
             <ul className="space-y-6">
@@ -266,8 +272,8 @@ export default function App() {
                   <Clock className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-base font-semibold text-white font-display">Tempo Estimado de Espera (ETA)</h4>
-                  <p className="text-sm text-slate-300 font-light mt-1">Estimativa de tempo calculada dinamicamente com base no comportamento recente para alinhar expectativas.</p>
+                  <h4 className="text-base font-semibold text-white font-display">Fila digital simples de operar</h4>
+                  <p className="text-sm text-slate-300 font-light mt-1">Cadastro rápido, visualização clara da fila e tempo estimado de espera calculado automaticamente para alinhar expectativas.</p>
                 </div>
               </li>
               <li className="flex gap-4">
@@ -275,8 +281,8 @@ export default function App() {
                   <Smartphone className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-base font-semibold text-white font-display">Comunicação Direta por WhatsApp</h4>
-                  <p className="text-sm text-slate-300 font-light mt-1">Sem aparelhos vibratórios caros ou chamadas em voz alta. O cliente recebe avisos e atualizações direto no celular.</p>
+                  <h4 className="text-base font-semibold text-white font-display">Chamadas automáticas pelo WhatsApp</h4>
+                  <p className="text-sm text-slate-300 font-light mt-1">Sem pagers, sem gritos na porta. O cliente recebe a chamada direto no celular quando a mesa está pronta.</p>
                 </div>
               </li>
               <li className="flex gap-4">
@@ -284,8 +290,8 @@ export default function App() {
                   <BarChart3 className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-base font-semibold text-white font-display">Painel de Analíticos & Insights</h4>
-                  <p className="text-sm text-slate-300 font-light mt-1">Identifique horários de pico, tempo de retenção médio e taxa de desistência para dimensionar a equipe.</p>
+                  <h4 className="text-base font-semibold text-white font-display">Métricas de fila e operação</h4>
+                  <p className="text-sm text-slate-300 font-light mt-1">Entenda tempos de espera, horários de pico, taxa de desistência e volume de atendimentos para tomar decisões melhores.</p>
                 </div>
               </li>
             </ul>
@@ -297,7 +303,7 @@ export default function App() {
               <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-20"></div>
               <img 
                 src="/images/restaurant.jpg" 
-                alt="Alta Gastronomia Restaurante" 
+                alt="Restaurante movimentado com fila organizada" 
                 className="rounded-2xl shadow-xl border border-[#213145] object-cover w-full h-[380px] md:h-[450px]"
               />
             </div>
@@ -311,10 +317,10 @@ export default function App() {
             
             <div className="text-center space-y-6 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-white font-display">
-                Planos sob medida para o seu negócio
+                Planos pensados para operações com fila
               </h2>
               <p className="text-slate-300 font-light max-w-2xl mx-auto">
-                Escolha o plano que melhor atende à estrutura do seu restaurante. Sem taxas de setup e sem taxas ocultas.
+                Escolha o plano que melhor atende ao volume do seu restaurante. Sem taxas de setup, sem cobrança por cliente atendido.
               </p>
               
               {/* Toggle Switch */}
@@ -416,7 +422,7 @@ export default function App() {
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-2xl font-bold text-white font-display">TakeSeat Signature</h3>
-                    <p className="text-xs text-slate-400 mt-1">A experiência máxima para marcas de alta gastronomia.</p>
+                    <p className="text-xs text-slate-400 mt-1">Para operações de alto volume que exigem personalização e controle total.</p>
                   </div>
                   
                   <div className="flex items-baseline">
@@ -484,12 +490,12 @@ export default function App() {
 
         {/* Final CTA */}
         <section className="py-16 text-center space-y-8 max-w-4xl mx-auto">
-          <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider font-display">Recepção Premium para seu Salão</span>
+          <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider font-display">Fila digital para restaurantes movimentados</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight font-display">
-            A fila do seu restaurante existe. Organize ela com elegância.
+            Seu restaurante já tem fila. Agora organize ela.
           </h2>
           <p className="text-slate-300 font-light max-w-2xl mx-auto">
-            Junte-se às marcas gastronômicas que já utilizam o TakeSeat para oferecer um acolhimento digital superior a seus clientes.
+            Restaurantes de todo o Brasil já usam o TakeSeat para gerenciar a espera, reduzir desistências e oferecer uma experiência melhor desde a porta.
           </p>
           <div className="pt-4">
             <a 
@@ -512,7 +518,7 @@ export default function App() {
               TakeSeat
             </span>
             <span className="text-xs text-slate-400 text-center md:text-left">
-              © {new Date().getFullYear()} TakeSeat. Gestão inteligente de esperas para alta gastronomia.
+              © {new Date().getFullYear()} TakeSeat. Gestão inteligente de filas para restaurantes movimentados.
             </span>
           </div>
           
@@ -543,7 +549,7 @@ export default function App() {
             <div className="space-y-2">
               <h3 className="text-2xl font-bold text-white font-display">Fale com um especialista</h3>
               <p className="text-sm text-slate-300 font-light">
-                Descubra como o plano TakeSeat Signature pode ser personalizado para o volume e identidade do seu restaurante.
+                Descubra como o plano TakeSeat Signature se adapta ao volume e à operação do seu restaurante.
               </p>
             </div>
             
