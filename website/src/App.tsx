@@ -410,7 +410,7 @@ export default function App() {
               {/* Signature Plan Card */}
               <div className="bg-indigo-950/20 border-2 border-indigo-500/50 rounded-2xl p-8 md:p-10 flex flex-col justify-between h-full relative overflow-hidden transition-all duration-300 shadow-[0_0_40px_rgba(99,102,241,0.1)]">
                 <div className="absolute top-0 right-0 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-bl-xl border-l border-b border-indigo-500/30">
-                  Premium
+                  Recomendado
                 </div>
                 
                 <div className="space-y-6">
